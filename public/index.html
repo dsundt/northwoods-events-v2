@@ -1,1 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Northwoods Events – Build Status</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+    header { margin-bottom: 1.5rem; }
+    code { background: #f3f3f3; padding: 0.15rem 0.35rem; border-radius: 4px; }
+    .ok { color: #0a7a0a; }
+    .warn { color: #a66f00; }
+    .err { color: #a30008; }
+    ul { padding-left: 1.2rem; }
+    .card { border: 1px solid #e6e6e6; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Northwoods Events – Build Status</h1>
+    <p>This page auto-updates after each scheduled build and deploy.</p>
+  </header>
+
+  <div id="status" class="card">Loading report…</div>
+
+  <div class="card">
+    <h2>Downloads</h2>
+    <ul>
+      <li><a href="combined.ics">combined.ics</a></li>
+    </ul>
+    <p>Per-source calendars (if any) will appear under <code>/by-source/</code>.</p>
+  </div>
+
+  <script>
+    fetch('report.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        const el = document.getElementById('status');
+        if (!data) {
+          el.innerHTML = '<p class="warn">No report.json found yet. It will appear after the first successful build.</p>';
+          return;
+        }
+        const ok = data.success === true;
+        el.innerHTML = `
+          <p>Run time (UTC): <strong>${data.run_started_utc}</strong></p>
+          <p>Success: <strong class="${ok ? 'ok' : 'err'}">${ok}</strong></p>
+          <p>Total events: <strong>${data.total_events}</strong></p>
+          <p>Sources processed: <strong>${data.sources_processed}</strong></p>
+          <details>
+            <summary>Details</summary>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          </details>
+        `;
+      })
+      .catch(() => {
+        document.getElementById('status').innerHTML =
+          '<p class="err">Failed to load report.json.</p>';
+      });
+  </script>
+</body>
+</html>
 
