@@ -1,0 +1,45 @@
+# v2 sources.yaml — strict, minimal YAML compatible with linters.
+# Mapping from v1:
+# - modern_tribe -> tec_html
+# - growthzone   -> growthzone_html
+# - ics          -> ics
+# - simpleview   -> (not yet supported in v2; kept disabled)
+
+sources:
+  - name: Boulder Junction (TEC)
+    type: tec_html
+    url: https://boulderjct.org/events/?eventDisplay=list
+    enabled: true
+    calendar: Boulder Junction
+
+  - name: Eagle River Chamber (TEC)
+    type: tec_html
+    url: https://eagleriver.org/events/?eventDisplay=list
+    enabled: true
+    calendar: Eagle River
+
+  - name: St. Germain Chamber (TEC)
+    type: tec_html
+    url: https://st-germain.com/events-calendar/?eventDisplay=list
+    enabled: true
+    calendar: St. Germain
+
+  - name: Rhinelander Chamber (GrowthZone)
+    type: growthzone_html
+    url: https://business.rhinelanderchamber.com/events/calendar
+    enabled: true
+    calendar: Rhinelander
+
+  # Simpleview is not yet supported by the v2 parser set.
+  # Keep disabled so it won't be processed; add a parser or replace with an ICS/JSON endpoint later.
+  - name: Let’s Minocqua (Simpleview)
+    type: simpleview_html
+    url: https://www.minocqua.org/things-to-do/events/?view=list&perpage=100
+    enabled: false
+    calendar: Minocqua
+
+  - name: Presque Isle Chamber (ICS)
+    type: ics
+    url: https://presqueisle.com/events.ics
+    enabled: true
+    calendar: Presque Isle
