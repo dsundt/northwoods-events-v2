@@ -1,31 +1,33 @@
-<!-- index.html (drop-in replacement for better debugging) -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Northwoods Events – Debug View</title>
+  <title>Northwoods Events • Debug Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font: 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
-    h1 { margin: 0 0 8px; }
-    .meta { color: #555; margin-bottom: 16px; }
-    .controls { display: flex; gap: 12px; align-items: center; margin: 16px 0; flex-wrap: wrap; }
+    :root { color-scheme: light dark; }
+    body { font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+    h1 { margin: 0 0 6px; }
+    .muted { color: #666; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 12px 0 16px; }
     select, input { padding: 6px 8px; }
+    .badge { display:inline-block; padding:2px 6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#f7f7f7; }
     table { border-collapse: collapse; width: 100%; }
     th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
     th { background: #f6f6f6; position: sticky; top: 0; z-index: 1; }
-    .muted { color: #777; }
-    .badge { display:inline-block; padding:2px 6px; border:1px solid #ccc; border-radius:4px; font-size:12px; background:#fafafa; }
-    .src { white-space: nowrap; }
+    .err { background: #fff3f3; border: 1px solid #e6b8b8; color: #a11; padding: 10px; border-radius: 6px; margin: 12px 0; }
+    .ok { background: #f3fff5; border: 1px solid #b8e6c0; color: #1a7f37; padding: 10px; border-radius: 6px; margin: 12px 0; }
+    .toolbar { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; }
+    a { word-break: break-all; }
   </style>
 </head>
 <body>
   <h1>Northwoods Events</h1>
-  <div class="meta">
-    <span id="run-meta" class="muted">loading…</span>
-  </div>
+  <div id="meta" class="muted">Loading…</div>
 
-  <div class="controls">
+  <div id="errors" hidden class="err"></div>
+
+  <div class="toolbar">
     <label>Source:
       <select id="sourceFilter">
         <option value="ALL">ALL SOURCES</option>
@@ -36,85 +38,128 @@
     </label>
     <label><input type="checkbox" id="futureOnly" checked /> Future only</label>
     <span id="count" class="badge">0 events</span>
+    <a id="rawLink" class="badge" href="#" target="_blank" rel="noopener">open report.json</a>
   </div>
 
   <table id="tbl">
     <thead>
       <tr>
-        <th style="width: 150px;">Date</th>
+        <th style="width: 180px;">Date</th>
         <th>Title</th>
-        <th style="width: 240px;">Location</th>
+        <th style="width: 260px;">Location</th>
         <th style="width: 360px;">URL</th>
-        <th style="width: 160px;">Source</th>
+        <th style="width: 210px;">Source</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
 
   <script>
-    const byId = (id) => document.getElementById(id);
-    const fmt = (iso) => {
+    const $ = (id) => document.getElementById(id);
+    const meta = $('meta');
+    const errBox = $('errors');
+    const sourceSel = $('sourceFilter');
+    const q = $('q');
+    const futureOnly = $('futureOnly');
+    const countEl = $('count');
+    const tbody = document.querySelector('#tbl tbody');
+    const rawLink = $('rawLink');
+
+    // Be robust on GitHub Pages pathing: try several candidates
+    function candidateReportUrls() {
+      const { origin, pathname } = window.location;
+      const base = pathname.endsWith('/') ? pathname : pathname.replace(/\/[^/]*$/, '/');
+      const repoBase = base; // typically "/northwoods-events-v2/"
+      return [
+        './report.json',
+        repoBase + 'report.json',
+        origin + repoBase + 'report.json',
+      ];
+    }
+
+    function fmtDate(iso) {
       try {
         const d = new Date(iso);
         if (Number.isNaN(+d)) return iso || '';
         return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
       } catch { return iso || ''; }
-    };
-
-    const srcSel = byId('sourceFilter');
-    const q = byId('q');
-    const futureOnly = byId('futureOnly');
-    const countEl = byId('count');
-    const tbody = document.querySelector('#tbl tbody');
-    const meta = byId('run-meta');
-
-    let report = null;
-
-    async function load() {
-      const r = await fetch('./report.json', { cache: 'no-store' });
-      if (!r.ok) throw new Error('report.json not found');
-      report = await r.json();
-
-      meta.textContent = `Run started: ${report.run_started_utc || 'unknown'} • sources: ${report.sources_processed ?? '—'} • events: ${report.total_events ?? '—'}`;
-
-      // Build source dropdown from events
-      const ids = new Set();
-      (report.events || []).forEach(ev => { if (ev.source_id) ids.add(ev.source_id); });
-
-      [...ids].sort().forEach(id => {
-        const opt = document.createElement('option');
-        opt.value = id;
-        opt.textContent = id;
-        srcSel.appendChild(opt);
-      });
-
-      render();
     }
 
-    function render() {
-      const term = (q.value || '').toLowerCase();
-      const sel = srcSel.value;
-      const now = new Date();
+    function addError(msg) {
+      errBox.hidden = false;
+      errBox.innerHTML += (errBox.innerHTML ? '<br>' : '') + msg;
+      console.error(msg);
+    }
 
-      const evs = (report?.events || []).filter(ev => {
-        if (sel !== 'ALL' && ev.source_id !== sel) return false;
-        if (term && !(ev.title || '').toLowerCase().includes(term)) return false;
+    // Accept multiple report shapes:
+    // 1) { events: [...] }
+    // 2) { events_by_source: { "<id>": [...] } }
+    // 3) legacy shapes – try best-effort normalization
+    function normalizeEvents(report) {
+      if (!report || typeof report !== 'object') return [];
+      if (Array.isArray(report.events)) return report.events;
+
+      if (report.events_by_source && typeof report.events_by_source === 'object') {
+        const all = [];
+        for (const [sid, arr] of Object.entries(report.events_by_source)) {
+          if (!Array.isArray(arr)) continue;
+          for (const ev of arr) {
+            if (ev && typeof ev === 'object') {
+              if (!ev.source_id) ev.source_id = sid;
+              all.push(ev);
+            }
+          }
+        }
+        return all;
+      }
+
+      // Some builds only shipped a flat array
+      if (Array.isArray(report)) return report;
+
+      // Fallback: look for "items"
+      if (Array.isArray(report.items)) return report.items;
+
+      return [];
+    }
+
+    function extractSources(evts) {
+      const ids = new Set();
+      for (const ev of evts) {
+        if (ev.source_id) ids.add(ev.source_id);
+        else if (ev.source) ids.add(ev.source);
+      }
+      return [...ids].sort();
+    }
+
+    function render(events) {
+      const term = (q.value || '').toLowerCase();
+      const sel = sourceSel.value;
+      const today = new Date(); today.setHours(0,0,0,0);
+
+      const filtered = events.filter(ev => {
+        const title = (ev.title || '').toLowerCase();
+        const sid = ev.source_id || ev.source || '';
+        if (sel !== 'ALL' && sid !== sel) return false;
+        if (term && !title.includes(term)) return false;
+
         if (futureOnly.checked) {
-          const d = new Date(ev.start || ev.dtstart || ev.date || 0);
-          if (Number.isNaN(+d)) return false;
-          if (d < new Date(now.getFullYear(), now.getMonth(), now.getDate())) return false;
+          const candidate = ev.start || ev.dtstart || ev.date || '';
+          const d = new Date(candidate);
+          if (!candidate || Number.isNaN(+d) || d < today) return false;
         }
         return true;
+      }).sort((a, b) => {
+        const ad = new Date(a.start || a.dtstart || a.date || 0);
+        const bd = new Date(b.start || b.dtstart || b.date || 0);
+        return ad - bd;
       });
 
       tbody.innerHTML = '';
-      evs.sort((a, b) => (new Date(a.start) - new Date(b.start)));
-
-      for (const ev of evs) {
+      for (const ev of filtered) {
         const tr = document.createElement('tr');
 
         const tdDate = document.createElement('td');
-        tdDate.textContent = fmt(ev.start || ev.dtstart || ev.date);
+        tdDate.textContent = fmtDate(ev.start || ev.dtstart || ev.date);
         tr.appendChild(tdDate);
 
         const tdTitle = document.createElement('td');
@@ -127,34 +172,64 @@
 
         const tdUrl = document.createElement('td');
         if (ev.url) {
-          const a = document.createElement('a');
-          a.href = ev.url;
-          a.textContent = ev.url;
-          a.target = '_blank'; a.rel = 'noopener';
+          const a = document.createElement('a'); a.href = ev.url; a.textContent = ev.url; a.target = '_blank'; a.rel = 'noopener';
           tdUrl.appendChild(a);
-        } else {
-          tdUrl.textContent = '';
         }
         tr.appendChild(tdUrl);
 
         const tdSrc = document.createElement('td');
-        tdSrc.innerHTML = `<span class="badge src">${ev.source_id || ''}</span>`;
+        tdSrc.textContent = ev.source_id || ev.source || '';
         tr.appendChild(tdSrc);
 
         tbody.appendChild(tr);
       }
 
-      countEl.textContent = `${evs.length} events`;
+      countEl.textContent = `${filtered.length} events`;
     }
 
-    srcSel.addEventListener('change', render);
-    q.addEventListener('input', render);
-    futureOnly.addEventListener('change', render);
+    async function loadReport() {
+      const candidates = candidateReportUrls();
+      let lastError = null;
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: 'no-store' });
+          if (!res.ok) { lastError = `HTTP ${res.status} for ${url}`; continue; }
+          const json = await res.json();
 
-    load().catch(err => {
-      meta.textContent = `Failed to load report.json: ${err.message}`;
-      console.error(err);
-    });
+          // Show run meta if present
+          const when = json.run_started_utc || json.generated_at || '';
+          const srcs = json.sources_processed != null ? ` • sources: ${json.sources_processed}` : '';
+          const total = json.total_events != null ? ` • events: ${json.total_events}` : '';
+          meta.textContent = `Run started: ${when || '(unknown)'}${srcs}${total}`;
+
+          rawLink.href = url;
+
+          const events = normalizeEvents(json);
+          if (!events.length) addError('report.json loaded but contains 0 normalized events');
+          // Populate source dropdown
+          const ids = extractSources(events);
+          for (const id of ids) {
+            const opt = document.createElement('option');
+            opt.value = id; opt.textContent = id;
+            sourceSel.appendChild(opt);
+          }
+          render(events);
+
+          // Attach for live filtering
+          sourceSel.onchange = () => render(events);
+          q.oninput = () => render(events);
+          futureOnly.onchange = () => render(events);
+
+          return; // success
+        } catch (e) {
+          lastError = `Failed parsing ${url}: ${e.message || e}`;
+        }
+      }
+      addError(lastError || 'report.json not found via any known path.');
+      meta.textContent = 'Unable to load report.json – see error above.';
+    }
+
+    loadReport();
   </script>
 </body>
 </html>
