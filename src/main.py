@@ -15,9 +15,10 @@ from src.parsers import (
     parse_tec_html,
     parse_growthzone_html,
     parse_ai1ec_html,
+    parse_simpleview_html,  # NEW
 )
+from src.public_fallback import ensure_index
 
-# Resolve repo root relative to this file
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 PUBLIC_DIR = os.path.join(ROOT_DIR, "public")
 CONFIG_PATH = os.path.join(ROOT_DIR, "config", "sources.yaml")
@@ -68,10 +69,11 @@ def process_sources(cfg: Dict[str, Any]) -> (List[Event], Dict[str, List[Event]]
                 events = parse_growthzone_html(content, name, calendar, base_url=url)
             elif typ == "ai1ec_html":
                 events = parse_ai1ec_html(content, name, calendar, base_url=url)
+            elif typ == "simpleview_html":  # NEW
+                events = parse_simpleview_html(content, name, calendar, base_url=url)
             else:
                 raise ValueError(f"Unsupported source type: {typ}")
 
-            # Deduplicate within this source
             seen = set()
             unique = []
             for e in events:
@@ -93,7 +95,6 @@ def process_sources(cfg: Dict[str, Any]) -> (List[Event], Dict[str, List[Event]]
 
         logs.append(entry_log)
 
-    # Global dedupe and sort
     final_events = []
     seen_global = set()
     for e in all_events:
@@ -112,6 +113,7 @@ def main() -> int:
 
     try:
         events, by_source, logs = process_sources(cfg)
+        ensure_index(PUBLIC_DIR)
         write_outputs(PUBLIC_DIR, events, by_source)
 
         report = {
@@ -122,14 +124,16 @@ def main() -> int:
             "sources_processed": len(cfg.get("sources", [])),
             "source_logs": logs,
         }
-        os.makedirs(PUBLIC_DIR, exist_ok=True)
         write_report(PUBLIC_DIR, report)
 
         print(json.dumps({"ok": True, "events": len(events)}, indent=2))
         return 0
 
     except Exception as exc:
-        # Always write report on failure
+        try:
+            ensure_index(PUBLIC_DIR)
+        except Exception:
+            pass
         err_report = {
             "version": "2.0",
             "run_started_utc": run_started.isoformat(),
