@@ -1,126 +1,136 @@
+# src/parsers/growthzone_html.py
+
 from __future__ import annotations
-from typing import List, Dict, Any
-from urllib.parse import urljoin
-from datetime import datetime
-from dateutil import parser as dtp, tz
-import json
+
+from typing import Dict, List, Set
+from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
+from dateutil import parser as dtp
+from datetime import datetime
+import json
+import re
 
 from src.fetch import get
 
-CENTRAL = tz.gettz("America/Chicago")
-
-def _coerce_utc(dt_str: str | None) -> str | None:
-    if not dt_str:
-        return None
-    try:
-        d = dtp.parse(dt_str)
-        if d.tzinfo is None:
-            d = d.replace(tzinfo=CENTRAL)
-        return d.astimezone(tz.UTC).strftime("%Y-%m-%d %H:%M:%S")
-    except Exception:
-        return None
-
-def _make_uid(source_id: str, url: str | None, title: str | None, start_utc: str | None) -> str:
-    base = f"{source_id}|{url or title or ''}|{start_utc or ''}"
-    return f"{abs(hash(base))}@northwoods-v2"
-
-def _from_ld(block: dict, source: dict) -> Dict[str, Any] | None:
-    if not isinstance(block, dict) or block.get("@type") != "Event":
-        return None
-    title = block.get("name") or ""
-    url = block.get("url")
-    sd = _coerce_utc(block.get("startDate"))
-    ed = _coerce_utc(block.get("endDate"))
-    loc = ""
-    loc_obj = block.get("location")
-    if isinstance(loc_obj, dict):
-        loc = loc_obj.get("name") or loc_obj.get("address") or ""
-        if isinstance(loc_obj.get("address"), dict):
-            a = loc_obj["address"]
-            loc = a.get("streetAddress") or a.get("addressLocality") or loc
-    if not title or not sd:
-        return None
-    return {
-        "uid": _make_uid(source["id"], url, title, sd),
-        "title": title,
-        "start_utc": sd,
-        "end_utc": ed,
-        "url": url,
-        "location": loc or None,
-        "source": source["name"],
-        "calendar": source["name"],
-    }
-
-def fetch_growthzone_html(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    GrowthZone HTML scraper:
-      1) Parse listing page JSON-LD Event blocks.
-      2) Fallback: read <time datetime> and the nearest anchor for title+url.
-    Ensures dates are captured (previous issue) and normalized to UTC.
-    """
-    url = source.get("url")
-    resp = get(url)
-    soup = BeautifulSoup(resp.text, "html.parser")
-
-    events: List[Dict[str, Any]] = []
-
-    # 1) JSON-LD (GrowthZone frequently outputs Event schema)
-    for tag in soup.find_all("script", type="application/ld+json"):
-        txt = tag.string or ""
+def _jsonld_events(soup: BeautifulSoup) -> List[Dict]:
+    out = []
+    for tag in soup.find_all("script", {"type": "application/ld+json"}):
         try:
-            data = json.loads(txt)
+            data = json.loads(tag.string or tag.text or "")
         except Exception:
             continue
-        if isinstance(data, dict):
-            if data.get("@type") == "Event":
-                ev = _from_ld(data, source)
-                if ev: events.append(ev)
-            elif "@graph" in data and isinstance(data["@graph"], list):
-                for node in data["@graph"]:
-                    ev = _from_ld(node, source)
-                    if ev: events.append(ev)
-        elif isinstance(data, list):
-            for node in data:
-                ev = _from_ld(node, source)
-                if ev: events.append(ev)
+        # Normalize array vs object
+        items = data if isinstance(data, list) else [data]
+        for it in items:
+            if isinstance(it, dict) and it.get("@type") in ("Event","MusicEvent","TheaterEvent","ExhibitionEvent"):
+                out.append(it)
+    return out
 
-    # 2) Heuristic fallback: <time datetime> + adjacent <a>
-    if not events:
-        for row in soup.select("time[datetime]"):
-            dt_iso = row.get("datetime")
-            title = None
-            href = None
-            # Look nearby for the event link
-            a = row.find_next("a")
-            if a and a.get_text(strip=True):
-                title = a.get_text(strip=True)
-                href = urljoin(url, a.get("href"))
-            sd = _coerce_utc(dt_iso)
-            if title and sd:
-                events.append({
-                    "uid": _make_uid(source["id"], href, title, sd),
-                    "title": title,
-                    "start_utc": sd,
-                    "end_utc": None,
-                    "url": href,
-                    "location": None,
-                    "source": source["name"],
-                    "calendar": source["name"],
-                })
+def _extract_dates_from_jsonld(items: List[Dict]) -> Dict[str,str]:
+    start = end = None
+    for it in items:
+        start = start or it.get("startDate")
+        end = end or it.get("endDate")
+    return {"start": start, "end": end}
 
-    # Window filter if both dates provided
-    try:
-        if start_date and end_date:
-            lo = dtp.parse(start_date).replace(tzinfo=tz.UTC)
-            hi = dtp.parse(end_date).replace(tzinfo=tz.UTC)
-            def in_win(ev):
-                su = ev.get("start_utc")
-                if not su: return False
-                d = dtp.parse(su).replace(tzinfo=tz.UTC)
-                return lo <= d <= hi
-            events = [e for e in events if in_win(e)]
-    except Exception:
-        pass
+def _first_text(soup: BeautifulSoup, selectors: List[str]) -> str | None:
+    for sel in selectors:
+        n = soup.select_one(sel)
+        if n:
+            t = n.get_text(" ", strip=True)
+            if t: return t
+    return None
+
+def _parse_event_detail(url: str, source_name: str) -> Dict | None:
+    r = get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    # JSON-LD first
+    jl = _jsonld_events(soup)
+    dates = _extract_dates_from_jsonld(jl)
+
+    # Title
+    title = _first_text(soup, [
+        "h1", ".headline", ".page-title", ".event-title", ".details-title"
+    ])
+
+    # Location best-effort
+    location = _first_text(soup, [
+        "[itemprop='location'] [itemprop='name']",
+        "[itemprop='location']",
+        ".venue", ".location", ".event-venue"
+    ])
+
+    # Fallback date scraping if JSON-LD absent
+    start = dates["start"]
+    end = dates["end"]
+    if not start:
+        txt = _first_text(soup, [".event-date", ".date", ".dates", ".detail-date"])
+        if txt:
+            try: start = dtp.parse(txt, fuzzy=True).isoformat()
+            except Exception: pass
+    if not end and start:
+        # Try derive duration window; GrowthZone often single-slot
+        end = start
+
+    if not (title and start):
+        return None
+
+    def to_utc_str(s):
+        try:
+            dt = dtp.parse(s)
+            return dt.isoformat()
+        except Exception:
+            return None
+
+    return {
+        "uid": f"{hash(url)}@northwoods-v2",
+        "title": title,
+        "start_utc": to_utc_str(start),
+        "end_utc": to_utc_str(end) or to_utc_str(start),
+        "url": url,
+        "location": location,
+        "source": source_name,
+        "calendar": source_name,
+    }
+
+def fetch_growthzone_html(source: Dict, start_date: str, end_date: str) -> List[Dict]:
+    """
+    Signature standardized as (source, start_date, end_date).
+    Strategy: collect detail links from the list page, then parse each detail (JSON-LD first).
+    """
+    base = source.get("url", "").strip()
+    name = source.get("name") or source.get("id") or "GrowthZone"
+    if not base:
+        return []
+
+    r = get(base)
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    # Collect detail links
+    links: Set[str] = set()
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if "/events/details/" in href or "/events/details" in href:
+            links.add(urljoin(base, href))
+        elif re.search(r"/event[s]?/details", href, flags=re.I):
+            links.add(urljoin(base, href))
+
+    # If no detail links were found, attempt to use list-items (some GrowthZone skins)
+    if not links:
+        for a in soup.select(".event-title a, .list-item a, .event a"):
+            href = a.get("href")
+            if href:
+                links.add(urljoin(base, href))
+
+    events: List[Dict] = []
+    for href in list(links)[:120]:  # cap to keep runtime safe
+        try:
+            ev = _parse_event_detail(href, name)
+            if ev and ev.get("start_utc"):
+                events.append(ev)
+        except Exception:
+            # continue best-effort
+            continue
 
     return events
