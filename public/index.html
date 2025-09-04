@@ -5,25 +5,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Northwoods Events • Debug Viewer</title>
 <style>
-  :root { --muted:#6b7280; --bg:#fafafa; --card:#fff; --bd:#e5e7eb; }
-  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 1rem; background: var(--bg); }
+  :root { --muted:#6b7280; --border:#e5e7eb; --pill-bg:#eef; --pill-fg:#113; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 1rem; }
   header { display:flex; gap:1rem; align-items: baseline; flex-wrap: wrap; }
-  .pill { background:#eef; color:#113; padding:.25rem .5rem; border-radius:999px; font-size:.85rem; }
-  #filters { display:flex; gap:.75rem; flex-wrap: wrap; margin:.5rem 0 1rem; }
-  .card { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:1rem; margin:.5rem 0; }
+  .pill { background:var(--pill-bg); color:var(--pill-fg); padding:.25rem .5rem; border-radius:999px; font-size:.85rem; }
+  #filters { display:flex; gap:1rem; flex-wrap: wrap; margin:.5rem 0 1rem; align-items:center; }
+  .card { border:1px solid var(--border); border-radius:12px; padding:1rem; margin:.5rem 0; }
   .when { font: 600 .9rem/1.3 system-ui; color:#333; }
   .title { font: 600 1.05rem/1.3 system-ui; margin:.25rem 0; }
-  .src { color:#555; font-size:.85rem; }
+  .src { color:#374151; font-size:.9rem; }
   .loc, .url { color:#333; font-size:.9rem; }
   .muted { color:var(--muted); }
   details { margin:.5rem 0 1rem; }
   code { background:#f6f6f6; padding:.25rem .35rem; border-radius:6px; }
   footer { margin:2rem 0 1rem; color:#666; font-size:.85rem; }
   .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: .75rem; }
-  .error { background:#fff9f9; border:1px solid #f5c2c7; color:#842029; padding:.75rem; border-radius:8px; }
-  .ok    { color:#065f46; font-weight:600; }
-  .bad   { color:#991b1b; font-weight:600; }
-  .kbd   { font: 500 .85rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  .controls { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+  input[type="search"] { padding:.4rem .5rem; border:1px solid var(--border); border-radius:8px; min-width:260px; }
+  button.small { padding:.3rem .6rem; border:1px solid var(--border); border-radius:8px; background:white; cursor:pointer; }
+  .badge-ok { color:#065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:.1rem .35rem; border-radius:6px; font-size:.8rem; }
+  .badge-err { color:#9b1c1c; background:#fef2f2; border:1px solid #fecaca; padding:.1rem .35rem; border-radius:6px; font-size:.8rem; }
 </style>
 </head>
 <body>
@@ -37,7 +38,11 @@
   <div id="sources" class="grid"></div>
 
   <h3>Show calendars</h3>
-  <div id="filters"></div>
+  <div id="filters" class="controls">
+    <button id="allOn"  class="small">Select all</button>
+    <button id="allOff" class="small">Select none</button>
+    <input id="q" type="search" placeholder="Search title/location/url…"/>
+  </div>
 </section>
 
 <section>
@@ -51,131 +56,161 @@
 
 <script>
 (async function(){
+  // Load report.json (no caching so each deploy is fresh)
+  const res = await fetch('report.json', {cache:'no-store'});
+  const data = await res.json();
+
+  // --- Normalize report schema (accept old/new shapes) ---
+  // Backends seen so far:
+  // - v1-style: { ok, total_events, sources:[...], events:[...] }
+  // - current: { version, success, total_events, sources_processed, source_logs:[...], events_preview:[...] }
+  // Map to { ok, total_events, sources[], events[] } for the viewer.
+
+  const ok           = typeof data.ok === 'boolean' ? data.ok
+                     : (typeof data.success === 'boolean' ? data.success : true);
+  const totalEvents  = data.total_events || (Array.isArray(data.events) ? data.events.length : 0);
+
+  // Sources
+  const rawSources = Array.isArray(data.sources) ? data.sources
+                    : (Array.isArray(data.source_logs) ? data.source_logs : []);
+  const sources = rawSources.map(s => ({
+    id: s.id || s.slug || s.name || '',
+    name: s.name || s.id || 'Unknown source',
+    type: s.type || 'unknown',
+    url:  s.url  || '',
+    count: typeof s.count === 'number' ? s.count : 0,
+    ok:   typeof s.ok === 'boolean' ? s.ok : (s.error ? false : true),
+    error: s.error || '',
+    diag:  s.diag  || {}
+  }));
+
+  // Hostname map for inferring event->source
+  const toHost = (u) => {
+    try { return new URL(u).hostname.replace(/^www\./,''); } catch(e){ return ''; }
+  };
+  const hostToSourceName = {};
+  sources.forEach(s => {
+    const h = toHost(s.url);
+    if (h) hostToSourceName[h] = s.name;
+  });
+
+  // Events
+  const rawEvents = Array.isArray(data.events) ? data.events
+                    : (Array.isArray(data.sample) ? data.sample
+                    : (Array.isArray(data.events_preview) ? data.events_preview : []));
+  const events = rawEvents.map(e => {
+    // Infer calendar/source if missing by hostname match
+    let calendar = (e.calendar && e.calendar.trim()) || (e.source && e.source.trim()) || '';
+    if (!calendar && e.url) {
+      const h = toHost(e.url);
+      if (hostToSourceName[h]) calendar = hostToSourceName[h];
+    }
+    if (!calendar) calendar = 'Unknown';
+    return {
+      uid: e.uid || '',
+      title: e.title || '(untitled)',
+      start_utc: e.start_utc || '',
+      end_utc: e.end_utc || '',
+      url: e.url || '',
+      location: e.location || '',
+      calendar
+    };
+  });
+
+  // --- DOM refs ---
   const sourcesDiv = document.getElementById('sources');
   const eventsDiv  = document.getElementById('events');
   const filters    = document.getElementById('filters');
   const summary    = document.getElementById('summary');
   const evcount    = document.getElementById('evcount');
+  const q          = document.getElementById('q');
+  const allOnBtn   = document.getElementById('allOn');
+  const allOffBtn  = document.getElementById('allOff');
 
-  let data;
-  try {
-    const res = await fetch('report.json', {cache:'no-store'});
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    data = await res.json();
-  } catch (err) {
-    summary.textContent = 'Failed to load report.json';
-    const box = document.createElement('div');
-    box.className = 'error';
-    box.innerHTML = `<strong>Could not load <span class="kbd">report.json</span></strong><br/>${String(err)}`;
-    eventsDiv.replaceChildren(box);
-    return;
-  }
+  summary.textContent = `OK: ${ok ? 'yes' : 'no'} • total events: ${totalEvents} • sources: ${sources.length}`;
 
-  // Normalize fields from v2 writer:
-  const srcLogs = Array.isArray(data.source_logs) ? data.source_logs : (Array.isArray(data.sources) ? data.sources : []);
-  const eventsRaw =
-    Array.isArray(data.events_preview) ? data.events_preview :
-    (Array.isArray(data.events) ? data.events : []);
-  const total = typeof data.total_events === 'number' ? data.total_events : eventsRaw.length;
-
-  summary.textContent = `OK: ${data.success ? 'yes' : 'no'} • total events: ${total} • sources: ${srcLogs.length}`;
-
-  // Build source cards
-  const sourceNames = [];
-  srcLogs.forEach(s => {
-    sourceNames.push(s.name);
+  // --- Source cards + filter checkboxes ---
+  const filterMap = new Map(); // name -> checkbox
+  sources.forEach(s => {
+    // Source card
     const card = document.createElement('div');
     card.className = 'card';
-    const status = s.ok ? `<span class="ok">ok</span>` : `<span class="bad">error</span>`;
+    const statusBadge = s.ok ? `<span class="badge-ok">ok</span>` : `<span class="badge-err">error</span>`;
     card.innerHTML = `
       <div><strong>${s.name}</strong> <span class="muted">[${s.type}]</span></div>
-      <div class="muted">${s.url || ''}</div>
-      <div>count: <strong>${s.count ?? 0}</strong> • status: ${status}</div>
+      <div class="muted">${s.url || '<em>no url</em>'}</div>
+      <div>count: <strong>${s.count}</strong> • status: ${statusBadge}</div>
       ${s.error ? `<div class="muted">error: ${s.error}</div>` : ''}
-      ${s.diag ? `<details><summary>diagnostics</summary><pre>${escapeHtml(JSON.stringify(s.diag, null, 2))}</pre></details>` : ''}
+      <details><summary>diagnostics</summary><pre>${JSON.stringify(s.diag, null, 2)}</pre></details>
     `;
     sourcesDiv.appendChild(card);
-  });
 
-  // Build filters (All + each source)
-  const allLabel = document.createElement('label');
-  allLabel.innerHTML = `<input type="checkbox" id="f_all" checked> All`;
-  allLabel.style.marginRight = '1rem';
-  filters.appendChild(allLabel);
-  sourceNames.forEach(n => {
-    const id = 'f_' + btoa(n).replace(/=/g,'');
+    // Filter checkbox
+    const id = 'f_' + btoa(s.name).replace(/=/g,'');
     const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" id="${id}" checked> ${n}`;
+    label.innerHTML = `<input type="checkbox" id="${id}" checked> ${s.name}`;
     label.style.marginRight = '1rem';
     filters.appendChild(label);
+    const cb = label.querySelector('input');
+    filterMap.set(s.name, cb);
+    cb.addEventListener('change', render);
   });
 
-  // Normalize events for rendering
-  const events = eventsRaw.map(e => {
-    const cal = e.calendar || e.source || 'Uncategorized';
-    return {
-      start_utc: e.start_utc || '',
-      end_utc: e.end_utc || '',
-      title: e.title || '(untitled)',
-      url: e.url || '',
-      location: e.location || '',
-      calendar: cal
-    };
+  // Batch toggle
+  allOnBtn.addEventListener('click', () => {
+    filterMap.forEach(cb => cb.checked = true);
+    render();
+  });
+  allOffBtn.addEventListener('click', () => {
+    filterMap.forEach(cb => cb.checked = false);
+    render();
   });
 
-  // Re-render when filters change
-  filters.addEventListener('change', render);
-  render();
-
-  function activeCalendars() {
-    const cbs = [...filters.querySelectorAll('input[type=checkbox]')];
-    const allOn = cbs.find(cb => cb.id === 'f_all')?.checked;
-    if (allOn) return new Set(['__ALL__']);
-    const labels = [...filters.querySelectorAll('label')].slice(1); // skip "All"
-    const active = new Set(
-      labels
-        .filter(l => l.querySelector('input').checked)
-        .map(l => l.textContent.trim())
-    );
-    return active;
-  }
+  // Live search
+  q.addEventListener('input', render);
 
   function render(){
-    const active = activeCalendars();
+    const active = new Set(
+      [...filterMap.entries()]
+      .filter(([,cb]) => cb.checked)
+      .map(([name]) => name)
+    );
+    const term = (q.value || '').trim().toLowerCase();
+
     eventsDiv.innerHTML = '';
-    const filtered = [...events].filter(e => active.has('__ALL__') || active.has(e.calendar));
+    const filtered = events.filter(e => {
+      const inActive = active.has(e.calendar);
+      if (!inActive) return false;
+      if (!term) return true;
+      const hay = [e.title, e.location, e.url, e.calendar].join(' ').toLowerCase();
+      return hay.includes(term);
+    });
+
     evcount.textContent = `(${filtered.length} shown)`;
 
     if(!filtered.length){
       eventsDiv.innerHTML = `<p class="muted">No events match the current filter.</p>`;
       return;
     }
+
+    // Render
+    const frag = document.createDocumentFragment();
     filtered.forEach(e => {
       const card = document.createElement('div');
       card.className = 'card';
-      const when = e.start_utc ? `${e.start_utc}${e.end_utc ? ' → ' + e.end_utc : ''}` : '<span class="muted">no start time</span>';
-      const loc = e.location ? e.location : '<span class="muted">no location</span>';
-      const link = e.url ? `<a href="${e.url}" target="_blank" rel="noopener">Open</a>` : '<span class="muted">no url</span>';
       card.innerHTML = `
-        <div class="when">${when}</div>
-        <div class="title">${escapeHtml(e.title)}</div>
-        <div class="src">${escapeHtml(e.calendar)}</div>
-        <div class="loc">${escapeHtmlStrOrHtml(loc)}</div>
-        <div class="url">${link}</div>
+        <div class="when">${e.start_utc || '—'} ${e.end_utc ? ' → ' + e.end_utc : ''}</div>
+        <div class="title">${e.title}</div>
+        <div class="src">${e.calendar}</div>
+        <div class="loc">${e.location ? e.location : '<span class="muted">no location</span>'}</div>
+        <div class="url">${e.url ? `<a href="${e.url}" target="_blank" rel="noopener">Open</a>` : '<span class="muted">no url</span>'}</div>
       `;
-      eventsDiv.appendChild(card);
+      frag.appendChild(card);
     });
+    eventsDiv.appendChild(frag);
   }
 
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  }
-  function escapeHtmlStrOrHtml(sOrHtml){
-    // For the '<span class="muted">…</span>' case, pass through; otherwise escape string content.
-    if (typeof sOrHtml !== 'string') return '';
-    if (sOrHtml.startsWith('<span ')) return sOrHtml;
-    return escapeHtml(sOrHtml);
-  }
+  render();
 })();
 </script>
 </body>
