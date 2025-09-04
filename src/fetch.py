@@ -1,31 +1,33 @@
-from typing import Optional
+from __future__ import annotations
+
+import json
 import time
+from typing import Dict, Any
 import requests
 
-DEFAULT_TIMEOUT = 20  # seconds
-MAX_RETRIES = 3
-BACKOFF_SEC = 2
+UA = "northwoods-events-v2/2.0 (+https://github.com/)"
+TIMEOUT = 30
+RETRIES = 3
 
 
-def get(url: str, user_agent: Optional[str] = None) -> requests.Response:
-    """
-    Simple robust GET with retries and exponential backoff.
-    Raises the last exception if all retries fail.
-    """
-    headers = {
-        "User-Agent": user_agent or "NorthwoodsEventsBot/2.0 (+github)"
-    }
-    last_exc = None
-    for attempt in range(1, MAX_RETRIES + 1):
+def _req(method: str, url: str, **kw) -> requests.Response:
+    headers = kw.pop("headers", {})
+    headers.setdefault("user-agent", UA)
+    for i in range(RETRIES):
         try:
-            resp = requests.get(url, headers=headers, timeout=DEFAULT_TIMEOUT)
+            resp = requests.request(method, url, headers=headers, timeout=TIMEOUT, **kw)
             resp.raise_for_status()
             return resp
-        except Exception as exc:
-            last_exc = exc
-            if attempt < MAX_RETRIES:
-                time.sleep(BACKOFF_SEC * attempt)
-            else:
-                raise last_exc
-    # Unreachable
-    raise RuntimeError("Unreachable")
+        except requests.RequestException as e:
+            last = e
+            time.sleep(1 + i)
+    raise last  # type: ignore[name-defined]
+
+
+def get(url: str) -> requests.Response:
+    return _req("GET", url)
+
+
+def get_json(url: str) -> Dict[str, Any]:
+    r = _req("GET", url, headers={"accept": "application/json"})
+    return r.json()
