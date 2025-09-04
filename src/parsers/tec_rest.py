@@ -1,79 +1,68 @@
+# src/parsers/tec_rest.py
 from __future__ import annotations
-import datetime as dt
+from datetime import datetime
+from typing import Dict, List, Tuple, Optional
 from urllib.parse import urljoin, urlencode
-import json
-import requests
-from typing import Dict, Any, List, Tuple
 
-def _iso(d: dt.date | dt.datetime) -> str:
-    if isinstance(d, dt.datetime):
-        return d.date().isoformat()
-    return d.isoformat()
+from dateutil import parser as dtp
+from src.fetch import get, session
 
-def _build_api_url(base: str, start: dt.date, end: dt.date, page: int, per_page: int) -> str:
-    # Standard The Events Calendar REST path
-    api_path = "/wp-json/tribe/events/v1/events"
-    qs = {
-        "start_date": _iso(start),
-        "end_date": _iso(end),
-        "per_page": per_page,
+def _build_api_url(site_root: str, start: datetime, end: datetime, page: int = 1) -> str:
+    base = urljoin(site_root, "/wp-json/tribe/events/v1/events")
+    qs = urlencode({
+        "start_date": start.date().isoformat(),
+        "end_date": end.date().isoformat(),
+        "per_page": 50,
         "page": page,
-    }
-    return urljoin(base, api_path) + "?" + urlencode(qs)
+    })
+    return f"{base}?{qs}"
 
-def _page(base: str, start: dt.date, end: dt.date, page: int, per_page: int) -> Dict[str, Any]:
-    url = _build_api_url(base, start, end, page, per_page)
-    resp = requests.get(url, timeout=30)
-    resp.raise_for_status()
-    return resp.json()
-
-def _as_events(items: List[Dict[str, Any]], source_label: str) -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
-    for it in items:
-        # TEC provides UTC times under 'utc_start_date' / 'utc_end_date' (if available),
-        # but some sites only supply 'start_date' (site tz). Keep UTC if present.
-        start_utc = it.get("utc_start_date") or it.get("start_date")
-        end_utc = it.get("utc_end_date") or it.get("end_date")
-        out.append({
-            "uid": f"{it.get('id')}@northwoods-v2",
-            "title": it.get("title") or "",
-            "start_utc": start_utc,
-            "end_utc": end_utc,
-            "url": it.get("url") or "",
-            "location": (it.get("venue", {}) or {}).get("address"),
-            "source": source_label,
-            "calendar": source_label,
-        })
-    return out
-
-def fetch_tec_rest(base_url: str, start: dt.date, end: dt.date, per_page: int = 50, max_pages: int = 12
-) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+def fetch_tec_rest(src: Dict, start: datetime, end: datetime) -> Tuple[List[Dict], Dict]:
     """
-    Pulls events from TEC REST. If the REST endpoint 404s (as with St. Germain or Oneida),
-    we return [] and include a diag showing the failing URL. We do NOT try HTML fallbacks here
-    to keep behavior isolated and predictable for working sources.
+    Returns (events, diag). Raises on network errors other than 403/404 (so caller can decide).
     """
-    events: List[Dict[str, Any]] = []
-    diag = {"api_url": _build_api_url(base_url, start, end, 1, per_page), "pages": []}
+    site = src["url"]
+    s = session()
+    page = 1
+    events: List[Dict] = []
+    pages_diag = []
+    api_url = _build_api_url(site, start, end, page=page)
+
     try:
-        for page in range(1, max_pages + 1):
-            data = _page(base_url, start, end, page, per_page)
-            items = data.get("events", []) or data.get("data", []) or []
-            if not items:
+        while True:
+            api_url = _build_api_url(site, start, end, page=page)
+            resp = get(api_url, s=s, retries=1)
+            data = resp.json()
+            items = data.get("events", [])
+            for ev in items:
+                start_str = ev.get("start_date") or ev.get("start_date_details", {}).get("datetime")
+                end_str = ev.get("end_date") or ev.get("end_date_details", {}).get("datetime")
+                start_utc = dtp.parse(start_str).strftime("%Y-%m-%d %H:%M:%S") if start_str else None
+                end_utc = dtp.parse(end_str).strftime("%Y-%m-%d %H:%M:%S") if end_str else None
+                url = ev.get("url") or ev.get("website")
+                location = None
+                venue = ev.get("venue")
+                if isinstance(venue, dict):
+                    location = venue.get("address") or venue.get("venue")
+
+                events.append({
+                    "uid": f"{ev.get('id')}@northwoods-v2",
+                    "title": ev.get("title"),
+                    "start_utc": start_utc,
+                    "end_utc": end_utc,
+                    "url": url,
+                    "location": location,
+                    "source": src["name"],
+                    "calendar": src["name"],
+                })
+            pages_diag.append({"page": page, "count": len(items)})
+            if not data.get("next_rest_url") or len(items) == 0:
                 break
-            events.extend(_as_events(items, source_label=""))
-            diag["pages"].append({"page": page, "count": len(items)})
-            if len(items) < per_page:  # last page
-                break
-        # fill source_label now to avoid copying on each event
-        for e in events:
-            e["source"] = e["calendar"] = ""
-        ok = True
-        error = ""
-    except requests.HTTPError as e:
-        ok = False
-        error = f"HTTPError: {e}"
+            page += 1
+
+        diag = {"ok": True, "error": "", "diag": {"api_url": _build_api_url(site, start, end, 1), "pages": pages_diag}}
+        return events, diag
+
     except Exception as e:
-        ok = False
-        error = f"{type(e).__name__}: {e}"
-    return events, {"ok": ok, "error": error, "diag": diag}
+        # Bubble up to let caller decide on fallback.
+        raise
