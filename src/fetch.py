@@ -1,33 +1,30 @@
 from __future__ import annotations
-
-import json
 import time
-from typing import Dict, Any
+from typing import Optional, Tuple
 import requests
 
-UA = "northwoods-events-v2/2.0 (+https://github.com/)"
-TIMEOUT = 30
-RETRIES = 3
+DEFAULT_HEADERS = {
+    "User-Agent": "northwoods-events-v2 (+https://github.com/dsundt/northwoods-events-v2)",
+    "Accept": "text/html,application/json;q=0.9,*/*;q=0.8",
+}
 
-
-def _req(method: str, url: str, **kw) -> requests.Response:
-    headers = kw.pop("headers", {})
-    headers.setdefault("user-agent", UA)
-    for i in range(RETRIES):
+def get(url: str, headers: Optional[dict] = None, timeout: int = 30, retries: int = 3, backoff: float = 0.7) -> requests.Response:
+    last_exc = None
+    hdrs = {**DEFAULT_HEADERS, **(headers or {})}
+    for attempt in range(retries):
         try:
-            resp = requests.request(method, url, headers=headers, timeout=TIMEOUT, **kw)
+            resp = requests.get(url, headers=hdrs, timeout=timeout)
             resp.raise_for_status()
             return resp
         except requests.RequestException as e:
-            last = e
-            time.sleep(1 + i)
-    raise last  # type: ignore[name-defined]
+            last_exc = e
+            if attempt < retries - 1:
+                time.sleep(backoff * (2 ** attempt))
+            else:
+                raise last_exc
+    # unreachable
+    assert False
 
-
-def get(url: str) -> requests.Response:
-    return _req("GET", url)
-
-
-def get_json(url: str) -> Dict[str, Any]:
-    r = _req("GET", url, headers={"accept": "application/json"})
-    return r.json()
+def json(url: str, **kw) -> Tuple[dict, requests.Response]:
+    resp = get(url, **kw)
+    return resp.json(), resp
