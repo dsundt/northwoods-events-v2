@@ -1,58 +1,28 @@
+sources:
+  - name: "Boulder Junction (TEC)"
+    type: "tec_rest"
+    url: "https://boulderjct.org/"
 
----
+  - name: "Eagle River Chamber (TEC)"
+    type: "tec_rest"
+    url: "https://eagleriver.org/"
 
-## sources.yaml
+  - name: "St. Germain Chamber (TEC)"
+    type: "tec_rest"   # 404s: we keep it here on purpose for explicit failure + diagnostics
+    url: "https://st-germain.com/"
 
-```yaml
-# Stable TEC via REST (keep as-is)
-- name: Boulder Junction (TEC)
-  slug: boulder-junction-tec
-  type: tec_rest
-  url: https://boulderjct.org/
-  days_ahead: 120
-  max_events: 1000
+  - name: "Rhinelander Chamber (GrowthZone)"
+    type: "growthzone_html"
+    url: "https://business.rhinelanderchamber.com/events/calendar"
 
-- name: Eagle River Chamber (TEC)
-  slug: eagle-river-chamber-tec
-  type: tec_rest
-  url: https://eagleriver.org/
-  days_ahead: 120
-  max_events: 2000
+  - name: "Let's Minocqua (Simpleview)"
+    type: "simpleview_html"
+    url: "https://www.minocqua.org/events/"
 
-- name: Vilas County Tourism (TEC)
-  slug: vilas-county-tourism-tec
-  type: tec_rest
-  url: https://vilaswi.com/
-  days_ahead: 120
-  max_events: 1000
+  - name: "Vilas County Tourism (TEC)"
+    type: "tec_rest"
+    url: "https://vilaswi.com/"
 
-# TEC sites that 404 on REST → use auto (REST first, else HTML+JSON-LD fallback)
-- name: St. Germain Chamber (TEC)
-  slug: st-germain-chamber-tec
-  type: tec_auto
-  url: https://st-germain.com/
-  days_ahead: 120
-  max_events: 1000
-
-- name: Oneida County Tourism (TEC)
-  slug: oneida-county-tourism-tec
-  type: tec_auto
-  url: https://oneidacountywi.com/
-  days_ahead: 120
-  max_events: 1000
-
-# GrowthZone (multi-month HTML with JSON-LD extraction)
-- name: Rhinelander Chamber (GrowthZone)
-  slug: rhinelander-chamber-growthzone
-  type: growthzone_html
-  url: https://business.rhinelanderchamber.com/events/calendar
-  months_ahead: 4
-  max_events: 1000
-
-# Simpleview (Minocqua) – list scrape + JSON-LD detail extraction + absolute URLs
-- name: Let's Minocqua (Simpleview)
-  slug: let-s-minocqua-simpleview
-  type: simpleview_html
-  url: https://www.minocqua.org/events/
-  days_ahead: 180
-  max_events: 1000
+  - name: "Oneida County Tourism (TEC)"
+    type: "tec_rest"   # 404s: same as St. Germain—diagnostics maintained
+    url: "https://oneidacountywi.com/"
