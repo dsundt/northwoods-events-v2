@@ -1,28 +1,43 @@
+# Northwoods Events v2 — hardened sources
+# Notes:
+# - For TEC sites we use type: tec_rest so main() can fall back to HTML on 403/404 or empty.
+# - GrowthZone and Simpleview stay on their dedicated parsers.
+# - URLs are the stable listing/home roots for each platform.
+
 sources:
-  - name: "Boulder Junction (TEC)"
-    type: "tec_rest"
-    url: "https://boulderjct.org/"
+  - id: boulder-junction-tec
+    name: Boulder Junction (TEC)
+    type: tec_rest
+    url: https://boulderjct.org/
 
-  - name: "Eagle River Chamber (TEC)"
-    type: "tec_rest"
-    url: "https://eagleriver.org/"
+  - id: eagle-river-chamber-tec
+    name: Eagle River Chamber (TEC)
+    type: tec_rest
+    url: https://eagleriver.org/
 
-  - name: "St. Germain Chamber (TEC)"
-    type: "tec_rest"   # 404s: we keep it here on purpose for explicit failure + diagnostics
-    url: "https://st-germain.com/"
+  - id: st-germain-chamber-tec
+    name: St. Germain Chamber (TEC)
+    type: tec_rest
+    url: https://st-germain.com/
 
-  - name: "Rhinelander Chamber (GrowthZone)"
-    type: "growthzone_html"
-    url: "https://business.rhinelanderchamber.com/events/calendar"
+  - id: rhinelander-chamber-growthzone
+    name: Rhinelander Chamber (GrowthZone)
+    type: growthzone_html
+    url: https://business.rhinelanderchamber.com/events/
 
-  - name: "Let's Minocqua (Simpleview)"
-    type: "simpleview_html"
-    url: "https://www.minocqua.org/events/"
+  - id: let-s-minocqua-simpleview
+    name: Let's Minocqua (Simpleview)
+    type: simpleview_html
+    url: https://www.minocqua.org/events/
 
-  - name: "Vilas County Tourism (TEC)"
-    type: "tec_rest"
-    url: "https://vilaswi.com/"
+  - id: vilas-county-tourism-tec
+    name: Vilas County Tourism (TEC)
+    type: tec_rest
+    url: https://vilaswi.com/
 
-  - name: "Oneida County Tourism (TEC)"
-    type: "tec_rest"   # 404s: same as St. Germain—diagnostics maintained
-    url: "https://oneidacountywi.com/"
+  # Oneida’s events are exposed under a custom slug rather than /events/.
+  # Using tec_html directly improves reliability vs REST here.
+  - id: oneida-county-tourism-tec
+    name: Oneida County Tourism (TEC)
+    type: tec_html
+    url: https://oneidacountywi.com/festivals-events/
