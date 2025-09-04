@@ -1,14 +1,16 @@
-from typing import List, Dict, Iterable
+from __future__ import annotations
+
+from typing import List
 from icalendar import Calendar, Event as IcsEvent
 from datetime import datetime, timezone
-import hashlib
 import os
-import json
 
 from src.models import Event
+from src.sources import SourceCfg
+from src.util import PUBLIC_DIR, BY_SOURCE_DIR
 
 
-def _ics_for_events(events: List[Event], cal_name: str) -> Calendar:
+def _ics_for(events: List[Event], cal_name: str) -> Calendar:
     cal = Calendar()
     cal.add("prodid", "-//Northwoods Events v2.0//EN")
     cal.add("version", "2.0")
@@ -16,6 +18,8 @@ def _ics_for_events(events: List[Event], cal_name: str) -> Calendar:
     cal.add("x-wr-calname", cal_name)
     now = datetime.now(timezone.utc)
     for e in events:
+        if not e.start_utc:
+            continue
         ics_e = IcsEvent()
         ics_e.add("uid", e.uid)
         ics_e.add("summary", e.title or "(no title)")
@@ -33,47 +37,28 @@ def _ics_for_events(events: List[Event], cal_name: str) -> Calendar:
     return cal
 
 
-def write_outputs(
-    public_dir: str,
-    events: List[Event],
-    by_source: Dict[str, List[Event]],
-    all_source_names: Iterable[str],
-) -> None:
+def write_per_source_ics(source: SourceCfg, events: List[Event]) -> str:
     """
-    Writes:
-      - public/combined.ics
-      - public/by-source/<slug>.ics for **every enabled source**, even if it had 0 events
+    Write a per-source ICS file under public/by-source/<slug>.ics
+    Returns the file path written.
     """
-    os.makedirs(public_dir, exist_ok=True)
-
-    # Combined ICS (always written)
-    combined = _ics_for_events(events, "Northwoods – Combined")
-    with open(os.path.join(public_dir, "combined.ics"), "wb") as f:
-        f.write(combined.to_ical())
-
-    # Per-source ICS
-    base = os.path.join(public_dir, "by-source")
-    os.makedirs(base, exist_ok=True)
-
-    # Ensure a file for every enabled source (even empty)
-    for source_name in all_source_names:
-        src_events = by_source.get(source_name, [])
-        safe = _slugify(source_name)
-        cal = _ics_for_events(src_events, f"Northwoods – {source_name}")
-        with open(os.path.join(base, f"{safe}.ics"), "wb") as f:
-            f.write(cal.to_ical())
+    os.makedirs(BY_SOURCE_DIR, exist_ok=True)
+    filename = f"{source.slug}.ics"
+    path = os.path.join(BY_SOURCE_DIR, filename)
+    cal = _ics_for(events, f"Northwoods – {source.name}")
+    with open(path, "wb") as f:
+        f.write(cal.to_ical())
+    return path
 
 
-def _slugify(name: str) -> str:
-    cleaned = "".join(c.lower() if c.isalnum() else "-" for c in name).strip("-")
-    while "--" in cleaned:
-        cleaned = cleaned.replace("--", "-")
-    if not cleaned:
-        cleaned = hashlib.sha1(name.encode("utf-8")).hexdigest()[:8]
-    return cleaned
-
-
-def write_report(public_dir: str, report: dict) -> None:
-    path = os.path.join(public_dir, "report.json")
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=2)
+def write_combined_ics(all_events: List[Event]) -> str:
+    """
+    Write the combined ICS file under public/combined.ics
+    Returns the file path written.
+    """
+    os.makedirs(PUBLIC_DIR, exist_ok=True)
+    path = os.path.join(PUBLIC_DIR, "combined.ics")
+    cal = _ics_for(all_events, "Northwoods – Combined")
+    with open(path, "wb") as f:
+        f.write(cal.to_ical())
+    return path
