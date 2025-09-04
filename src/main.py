@@ -3,9 +3,12 @@
 northwoods-events-v2 main entrypoint
 
 Fix in this revision:
-- _find_sources_file() now searches for config/sources.yaml first (the location you already use).
-- Still supports SOURCES_FILE env override, then falls back to ./sources.yaml and ./src/sources.yaml.
-- Prints which path was loaded for traceability.
+- _load_sources() now supports config/sources.yaml defined as either:
+  (A) a list of sources
+  (B) a mapping with key 'sources' that holds the list
+  (C) a mapping keyed by source id -> source object
+- For (C), the dict key is injected as 'id' if missing.
+- Still logs which sources file was loaded for traceability.
 """
 
 from __future__ import annotations
@@ -59,6 +62,39 @@ def _find_sources_file() -> str:
     )
 
 
+def _normalize_sources(data: Any, path: str) -> List[Dict[str, Any]]:
+    """
+    Accept several YAML shapes and normalize to a list of {id,name,type,url,...}.
+      - If data is a list: return as-is (validated later).
+      - If data is a dict:
+          * If it contains 'sources' key and that value is a list -> return it.
+          * Else treat it as { <id>: { ... }, ... }:
+              - Convert each entry to a source dict, injecting 'id' if missing.
+    """
+    if isinstance(data, list):
+        return data
+
+    if isinstance(data, dict):
+        # Case B: { sources: [...] }
+        if "sources" in data:
+            s = data["sources"]
+            if not isinstance(s, list):
+                raise ValueError(f"In {path}, 'sources' should be a list, got {type(s)}")
+            return s
+
+        # Case C: { <id>: { ... }, ... }
+        normalized: List[Dict[str, Any]] = []
+        for sid, cfg in data.items():
+            if not isinstance(cfg, dict):
+                raise ValueError(f"In {path}, source '{sid}' should be a mapping, got {type(cfg)}")
+            item = dict(cfg)  # shallow copy
+            item.setdefault("id", sid)
+            normalized.append(item)
+        return normalized
+
+    raise ValueError(f"Unsupported YAML structure in {path}: {type(data)}")
+
+
 def _load_sources() -> List[Dict[str, Any]]:
     import yaml
 
@@ -66,17 +102,17 @@ def _load_sources() -> List[Dict[str, Any]]:
     print(f"[northwoods] Loading sources from: {path}")
 
     with open(path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f) or []
+        raw = yaml.safe_load(f)
 
-    if not isinstance(data, list):
-        raise ValueError(f"Expected a list of sources in {path}, got {type(data)}")
+    sources = _normalize_sources(raw, path)
 
-    for idx, s in enumerate(data):
+    # minimal validation
+    for idx, s in enumerate(sources):
         for key in ("id", "name", "type", "url"):
             if key not in s or not s[key]:
                 raise ValueError(f"Source #{idx} missing required key: {key}")
 
-    return data
+    return sources
 
 
 def _date_window() -> Tuple[date, date]:
