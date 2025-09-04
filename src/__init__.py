@@ -1,1 +1,1 @@
-# Marks 'src' as a package so 'python -m src.main' works.
+# Marks 'src' as a package.
