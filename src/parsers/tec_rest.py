@@ -1,69 +1,49 @@
 from __future__ import annotations
+from typing import List, Dict, Any, Tuple
+from urllib.parse import urlencode
+from bs4 import BeautifulSoup
+from dateutil import parser as dtp
 
-import datetime as dt
-from urllib.parse import urljoin, urlencode
-from typing import List, Tuple, Dict, Any
+from src.fetch import json, get
+from src.util import sanitize_event
 
-from src.fetch import get_json
-from src.models import Event
+def _build_api(base: str, start_iso: str, end_iso: str, page: int, per_page: int = 50) -> str:
+    # TEC REST: /wp-json/tribe/events/v1/events
+    base = base.rstrip("/") + "/wp-json/tribe/events/v1/events"
+    qs = urlencode({"start_date": start_iso, "end_date": end_iso, "per_page": per_page, "page": page})
+    return f"{base}?{qs}"
 
-API_PATH = "/wp-json/tribe/events/v1/events"
-
-
-def iso_date(d):
-    if isinstance(d, (dt.date, dt.datetime)):
-        return d.strftime("%Y-%m-%d")
-    return str(d)
-
-
-def fetch_tec_rest(base_url: str, start_date, end_date, per_page=50, max_pages=8) -> Tuple[List[Event], Dict[str, Any]]:
-    """
-    Fetch from The Events Calendar REST API.
-    Returns (events, diag) where diag has api_url and per-page counts.
-    """
-    start = iso_date(start_date)
-    end = iso_date(end_date)
-    events: List[Event] = []
-    diag: Dict[str, Any] = {"api_url": None, "pages": []}
-
-    api_root = urljoin(base_url.rstrip("/") + "/", API_PATH.lstrip("/"))
-
+def fetch_tec_rest(source: dict, start_iso: str, end_iso: str) -> Tuple[List[dict], dict]:
+    diag = {"api_url": None, "pages": []}
+    items: List[dict] = []
     page = 1
-    while page <= max_pages:
-        params = {"start_date": start, "end_date": end, "per_page": per_page, "page": page}
-        url = f"{api_root}?{urlencode(params)}"
-        if page == 1:
+    while True:
+        url = _build_api(source["url"], start_iso, end_iso, page)
+        if diag["api_url"] is None:
             diag["api_url"] = url
-
-        data = get_json(url)
-        items = data.get("events", []) or []
-        diag["pages"].append({"page": page, "count": len(items)})
-
-        for e in items:
-            title = e.get("title")
-            url_e = e.get("url") or e.get("website")
-            start_iso = e.get("start_date")
-            end_iso = e.get("end_date")
-            loc = e.get("venue") or {}
-            venue = None
-            if isinstance(loc, dict):
-                venue = ", ".join([x for x in [loc.get("venue"), loc.get("address"), loc.get("city"), loc.get("region")] if x])
-
-            events.append(Event(
-                title=title or "(no title)",
-                start_utc=start_iso,
-                end_utc=end_iso,
-                url=url_e,
-                location=venue,
-                source_name=None,
-                calendar=None,
-                source_url=base_url,
-                meta={"tec_rest_id": e.get("id")},
-            ))
-
-        total_pages = data.get("total_pages") or 1
-        if page >= total_pages:
+        try:
+            payload, resp = json(url)
+        except Exception as e:
+            raise
+        events = payload.get("events") or []
+        for ev in events:
+            title = (ev.get("title") or {}).get("rendered") or ev.get("title") or ""
+            website = ev.get("url") or ev.get("link") or ""
+            start = ev.get("start_date") or ev.get("start") or ev.get("date")
+            end = ev.get("end_date") or ev.get("end")
+            # Normalize time
+            start_iso2 = dtp.parse(start).isoformat() if start else None
+            end_iso2 = dtp.parse(end).isoformat() if end else None
+            norm = sanitize_event(
+                {"title": title, "url": website, "start_utc": start_iso2, "end_utc": end_iso2, "location": ev.get("venue") or None},
+                source["name"], source["name"]
+            )
+            if norm:
+                items.append(norm)
+        diag["pages"].append({"page": page, "count": len(events)})
+        if len(events) < 50:
             break
         page += 1
-
-    return events, diag
+        if len(items) >= int(source.get("max_events", 100000)):
+            break
+    return items, diag
