@@ -1,19 +1,16 @@
 from __future__ import annotations
 import json
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any, Dict, List
 
-def write_report(path: Path, run_meta: Dict[str, Any], per_source: List[Dict[str, Any]], events_preview: List[Dict[str, Any]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+def write_report(ok: bool, events: List[Dict], source_logs: List[Dict[str, Any]]):
+    Path("public").mkdir(parents=True, exist_ok=True)
     payload = {
         "version": "2.0",
-        "run_started_utc": run_meta["run_started_utc"],
-        "success": True,
-        "total_events": sum(s["count"] for s in per_source),
-        "sources_processed": len(per_source),
-        "source_logs": per_source,
-        "events_preview": events_preview[:100],
-        "events_preview_count": min(100, sum(s["count"] for s in per_source)),
+        "ok": ok,
+        "total_events": len(events),
+        "sources": source_logs,
+        "sample": events[:100],
     }
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
+    with open("public/report.json", "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
