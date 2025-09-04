@@ -1,30 +1,37 @@
+# src/fetch.py
 from __future__ import annotations
 import time
-from typing import Optional, Tuple
+from typing import Optional
 import requests
 
-DEFAULT_HEADERS = {
-    "User-Agent": "northwoods-events-v2 (+https://github.com/dsundt/northwoods-events-v2)",
-    "Accept": "text/html,application/json;q=0.9,*/*;q=0.8",
-}
+_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/126.0 Safari/537.36"
+)
 
-def get(url: str, headers: Optional[dict] = None, timeout: int = 30, retries: int = 3, backoff: float = 0.7) -> requests.Response:
+def session(timeout: int = 30) -> requests.Session:
+    s = requests.Session()
+    s.headers.update({
+        "User-Agent": _UA,
+        "Accept": "text/html,application/json;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Connection": "keep-alive",
+    })
+    s.timeout = timeout  # type: ignore[attr-defined]
+    return s
+
+def get(url: str, s: Optional[requests.Session] = None, retries: int = 2) -> requests.Response:
+    s = s or session()
     last_exc = None
-    hdrs = {**DEFAULT_HEADERS, **(headers or {})}
-    for attempt in range(retries):
+    for i in range(retries + 1):
         try:
-            resp = requests.get(url, headers=hdrs, timeout=timeout)
+            resp = s.get(url, timeout=getattr(s, "timeout", 30))
             resp.raise_for_status()
             return resp
         except requests.RequestException as e:
             last_exc = e
-            if attempt < retries - 1:
-                time.sleep(backoff * (2 ** attempt))
-            else:
-                raise last_exc
-    # unreachable
-    assert False
-
-def json(url: str, **kw) -> Tuple[dict, requests.Response]:
-    resp = get(url, **kw)
-    return resp.json(), resp
+            if i < retries:
+                time.sleep(0.7 * (i + 1))
+                continue
+            raise last_exc
