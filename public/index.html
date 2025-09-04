@@ -1,62 +1,72 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Northwoods Events – Build Status</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
-    header { margin-bottom: 1.5rem; }
-    code { background: #f3f3f3; padding: 0.15rem 0.35rem; border-radius: 4px; }
-    .ok { color: #0a7a0a; }
-    .warn { color: #a66f00; }
-    .err { color: #a30008; }
-    ul { padding-left: 1.2rem; }
-    .card { border: 1px solid #e6e6e6; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Northwoods Events – Build Status</h1>
-    <p>This page auto-updates after each scheduled build and deploy.</p>
-  </header>
+<script>
+  function fmt(x) { return x == null ? "" : String(x); }
 
-  <div id="status" class="card">Loading report…</div>
+  fetch('report.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      const status = document.getElementById('status');
+      if (!data) {
+        status.innerHTML = '<p class="warn">No report.json found yet.</p>';
+        return;
+      }
 
-  <div class="card">
-    <h2>Downloads</h2>
-    <ul>
-      <li><a href="combined.ics">combined.ics</a></li>
-    </ul>
-    <p>Per-source calendars (if any) will appear under <code>/by-source/</code>.</p>
-  </div>
+      const ok = data.success === true;
+      const logs = Array.isArray(data.source_logs) ? data.source_logs : [];
+      const events = Array.isArray(data.events_preview) ? data.events_preview : [];
 
-  <script>
-    fetch('report.json', { cache: 'no-store' })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        const el = document.getElementById('status');
-        if (!data) {
-          el.innerHTML = '<p class="warn">No report.json found yet. It will appear after the first successful build.</p>';
-          return;
-        }
-        const ok = data.success === true;
-        el.innerHTML = `
-          <p>Run time (UTC): <strong>${data.run_started_utc}</strong></p>
-          <p>Success: <strong class="${ok ? 'ok' : 'err'}">${ok}</strong></p>
-          <p>Total events: <strong>${data.total_events}</strong></p>
-          <p>Sources processed: <strong>${data.sources_processed}</strong></p>
-          <details>
-            <summary>Details</summary>
-            <pre>${JSON.stringify(data, null, 2)}</pre>
-          </details>
-        `;
-      })
-      .catch(() => {
-        document.getElementById('status').innerHTML =
-          '<p class="err">Failed to load report.json.</p>';
-      });
-  </script>
-</body>
-</html>
+      // High-level summary
+      status.innerHTML = `
+        <p>Run time (UTC): <strong>${fmt(data.run_started_utc)}</strong></p>
+        <p>Success: <strong class="${ok ? 'ok' : 'err'}">${ok}</strong></p>
+        <p>Total events: <strong>${fmt(data.total_events)}</strong></p>
+        <p>Sources processed: <strong>${fmt(data.sources_processed)}</strong></p>
+      `;
 
+      // Source logs
+      const srcDiv = document.createElement('div');
+      srcDiv.className = 'card';
+      let srcRows = logs.map(l => `
+        <tr>
+          <td>${fmt(l.name)}</td>
+          <td><code>${fmt(l.type)}</code></td>
+          <td>${fmt(l.count)}</td>
+          <td class="${l.ok ? 'ok' : 'err'}">${l.ok}</td>
+          <td>${l.error ? `<code>${fmt(l.error)}</code>` : ''}</td>
+        </tr>`).join('');
+      if (!srcRows) srcRows = '<tr><td colspan="5">No sources.</td></tr>';
+      srcDiv.innerHTML = `
+        <h2>Source Results</h2>
+        <table border="1" cellspacing="0" cellpadding="6">
+          <thead><tr><th>Source</th><th>Type</th><th>Events</th><th>OK</th><th>Error</th></tr></thead>
+          <tbody>${srcRows}</tbody>
+        </table>
+      `;
+      status.insertAdjacentElement('afterend', srcDiv);
+
+      // Events preview
+      const evDiv = document.createElement('div');
+      evDiv.className = 'card';
+      let evRows = events.map(e => `
+        <tr>
+          <td>${fmt(e.title)}</td>
+          <td><code>${fmt(e.start_utc)}</code></td>
+          <td>${fmt(e.source)}</td>
+          <td>${e.url ? `<a href="${e.url}" target="_blank" rel="noopener">link</a>` : ''}</td>
+          <td>${fmt(e.location)}</td>
+        </tr>`).join('');
+      if (!evRows) evRows = '<tr><td colspan="5">No preview events embedded in report.json.</td></tr>';
+      evDiv.innerHTML = `
+        <h2>Events Preview</h2>
+        <p>Showing up to ${fmt(data.events_preview_count)} events from report.json.</p>
+        <table border="1" cellspacing="0" cellpadding="6">
+          <thead><tr><th>Title</th><th>Start (UTC)</th><th>Source</th><th>URL</th><th>Location</th></tr></thead>
+          <tbody>${evRows}</tbody>
+        </table>
+      `;
+      srcDiv.insertAdjacentElement('afterend', evDiv);
+    })
+    .catch(() => {
+      document.getElementById('status').innerHTML =
+        '<p class="err">Failed to load report.json.</p>';
+    });
+</script>
