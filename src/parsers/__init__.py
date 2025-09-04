@@ -1,5 +1,10 @@
-from .ics_parser import parse_ics_feed
-from .tec_parser import parse_tec_html
-from .growthzone_parser import parse_growthzone_html
-from .ai1ec_parser import parse_ai1ec_html
-from .simpleview_parser import parse_simpleview_html  # NEW
+# v2 parser package initializer.
+# Intentionally avoids side-effect imports to keep module loading predictable.
+# Import concrete parsers explicitly from their modules, e.g.:
+#   from src.parsers.tec_rest import fetch_tec_rest
+#   from src.parsers.tec_html import fetch_tec_html
+#   from src.parsers.growthzone_html import fetch_growthzone_html
+#   from src.parsers.simpleview_html import fetch_simpleview_html
+#   from src.parsers.ics_feed import fetch_ics
+
+__all__ = []
