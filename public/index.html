@@ -5,20 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Northwoods Events • Debug Viewer</title>
 <style>
-  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 1rem; }
+  :root { --muted:#6b7280; --bg:#fafafa; --card:#fff; --bd:#e5e7eb; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 1rem; background: var(--bg); }
   header { display:flex; gap:1rem; align-items: baseline; flex-wrap: wrap; }
   .pill { background:#eef; color:#113; padding:.25rem .5rem; border-radius:999px; font-size:.85rem; }
   #filters { display:flex; gap:.75rem; flex-wrap: wrap; margin:.5rem 0 1rem; }
-  .card { border:1px solid #ddd; border-radius:12px; padding:1rem; margin:.5rem 0; }
+  .card { background:var(--card); border:1px solid var(--bd); border-radius:12px; padding:1rem; margin:.5rem 0; }
   .when { font: 600 .9rem/1.3 system-ui; color:#333; }
   .title { font: 600 1.05rem/1.3 system-ui; margin:.25rem 0; }
   .src { color:#555; font-size:.85rem; }
   .loc, .url { color:#333; font-size:.9rem; }
-  .muted { color:#777; }
+  .muted { color:var(--muted); }
   details { margin:.5rem 0 1rem; }
   code { background:#f6f6f6; padding:.25rem .35rem; border-radius:6px; }
   footer { margin:2rem 0 1rem; color:#666; font-size:.85rem; }
   .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: .75rem; }
+  .error { background:#fff9f9; border:1px solid #f5c2c7; color:#842029; padding:.75rem; border-radius:8px; }
+  .ok    { color:#065f46; font-weight:600; }
+  .bad   { color:#991b1b; font-weight:600; }
+  .kbd   { font: 500 .85rem/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
 </style>
 </head>
 <body>
@@ -46,61 +51,101 @@
 
 <script>
 (async function(){
-  const res = await fetch('report.json', {cache:'no-store'});
-  const data = await res.json();
-
   const sourcesDiv = document.getElementById('sources');
   const eventsDiv  = document.getElementById('events');
   const filters    = document.getElementById('filters');
   const summary    = document.getElementById('summary');
   const evcount    = document.getElementById('evcount');
 
-  const sources = (data.sources || []).map(s => ({
-    name: s.name, type: s.type, url: s.url, count: s.count,
-    ok: s.ok, error: s.error || "", diag: s.diag || {}
-  }));
+  let data;
+  try {
+    const res = await fetch('report.json', {cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    data = await res.json();
+  } catch (err) {
+    summary.textContent = 'Failed to load report.json';
+    const box = document.createElement('div');
+    box.className = 'error';
+    box.innerHTML = `<strong>Could not load <span class="kbd">report.json</span></strong><br/>${String(err)}`;
+    eventsDiv.replaceChildren(box);
+    return;
+  }
 
-  summary.textContent = `OK: ${data.ok ? 'yes' : 'no'} • total events: ${data.total_events}`;
+  // Normalize fields from v2 writer:
+  const srcLogs = Array.isArray(data.source_logs) ? data.source_logs : (Array.isArray(data.sources) ? data.sources : []);
+  const eventsRaw =
+    Array.isArray(data.events_preview) ? data.events_preview :
+    (Array.isArray(data.events) ? data.events : []);
+  const total = typeof data.total_events === 'number' ? data.total_events : eventsRaw.length;
 
-  // Source cards + filters
-  const byName = {};
-  sources.forEach(s => {
-    byName[s.name] = s;
+  summary.textContent = `OK: ${data.success ? 'yes' : 'no'} • total events: ${total} • sources: ${srcLogs.length}`;
 
+  // Build source cards
+  const sourceNames = [];
+  srcLogs.forEach(s => {
+    sourceNames.push(s.name);
     const card = document.createElement('div');
     card.className = 'card';
+    const status = s.ok ? `<span class="ok">ok</span>` : `<span class="bad">error</span>`;
     card.innerHTML = `
       <div><strong>${s.name}</strong> <span class="muted">[${s.type}]</span></div>
-      <div class="muted">${s.url}</div>
-      <div>count: <strong>${s.count}</strong> • status: <strong>${s.ok ? 'ok' : 'error'}</strong></div>
+      <div class="muted">${s.url || ''}</div>
+      <div>count: <strong>${s.count ?? 0}</strong> • status: ${status}</div>
       ${s.error ? `<div class="muted">error: ${s.error}</div>` : ''}
-      <details><summary>diagnostics</summary><pre>${JSON.stringify(s.diag, null, 2)}</pre></details>
+      ${s.diag ? `<details><summary>diagnostics</summary><pre>${escapeHtml(JSON.stringify(s.diag, null, 2))}</pre></details>` : ''}
     `;
     sourcesDiv.appendChild(card);
-
-    // filter checkbox
-    const id = 'f_' + btoa(s.name).replace(/=/g,'');
-    const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" id="${id}" checked> ${s.name}`;
-    filters.appendChild(label);
-    label.style.marginRight = '1rem';
-
-    label.querySelector('input').addEventListener('change', render);
   });
 
-  const events = (data.sample || data.events || []).length ? (data.sample || []) : [];
-  // If writer used "sample", we only preview; that’s enough to verify parsing.
-  // If you later put full events list into report.json (e.g. under "events"), this viewer will use it automatically.
+  // Build filters (All + each source)
+  const allLabel = document.createElement('label');
+  allLabel.innerHTML = `<input type="checkbox" id="f_all" checked> All`;
+  allLabel.style.marginRight = '1rem';
+  filters.appendChild(allLabel);
+  sourceNames.forEach(n => {
+    const id = 'f_' + btoa(n).replace(/=/g,'');
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" id="${id}" checked> ${n}`;
+    label.style.marginRight = '1rem';
+    filters.appendChild(label);
+  });
+
+  // Normalize events for rendering
+  const events = eventsRaw.map(e => {
+    const cal = e.calendar || e.source || 'Uncategorized';
+    return {
+      start_utc: e.start_utc || '',
+      end_utc: e.end_utc || '',
+      title: e.title || '(untitled)',
+      url: e.url || '',
+      location: e.location || '',
+      calendar: cal
+    };
+  });
+
+  // Re-render when filters change
+  filters.addEventListener('change', render);
+  render();
+
+  function activeCalendars() {
+    const cbs = [...filters.querySelectorAll('input[type=checkbox]')];
+    const allOn = cbs.find(cb => cb.id === 'f_all')?.checked;
+    if (allOn) return new Set(['__ALL__']);
+    const labels = [...filters.querySelectorAll('label')].slice(1); // skip "All"
+    const active = new Set(
+      labels
+        .filter(l => l.querySelector('input').checked)
+        .map(l => l.textContent.trim())
+    );
+    return active;
+  }
 
   function render(){
-    const active = new Set(
-      [...filters.querySelectorAll('input[type=checkbox]')]
-      .filter(cb => cb.checked)
-      .map(cb => cb.nextSibling.textContent.trim())
-    );
+    const active = activeCalendars();
     eventsDiv.innerHTML = '';
-    const filtered = events.filter(e => active.has(e.calendar));
+    const filtered = [...events].filter(e => active.has('__ALL__') || active.has(e.calendar));
     evcount.textContent = `(${filtered.length} shown)`;
+
     if(!filtered.length){
       eventsDiv.innerHTML = `<p class="muted">No events match the current filter.</p>`;
       return;
@@ -108,18 +153,29 @@
     filtered.forEach(e => {
       const card = document.createElement('div');
       card.className = 'card';
+      const when = e.start_utc ? `${e.start_utc}${e.end_utc ? ' → ' + e.end_utc : ''}` : '<span class="muted">no start time</span>';
+      const loc = e.location ? e.location : '<span class="muted">no location</span>';
+      const link = e.url ? `<a href="${e.url}" target="_blank" rel="noopener">Open</a>` : '<span class="muted">no url</span>';
       card.innerHTML = `
-        <div class="when">${e.start_utc || '—'} ${e.end_utc ? ' → ' + e.end_utc : ''}</div>
-        <div class="title">${e.title || '(untitled)'}</div>
-        <div class="src">${e.calendar}</div>
-        <div class="loc">${e.location ? e.location : '<span class="muted">no location</span>'}</div>
-        <div class="url">${e.url ? `<a href="${e.url}" target="_blank" rel="noopener">Open</a>` : '<span class="muted">no url</span>'}</div>
+        <div class="when">${when}</div>
+        <div class="title">${escapeHtml(e.title)}</div>
+        <div class="src">${escapeHtml(e.calendar)}</div>
+        <div class="loc">${escapeHtmlStrOrHtml(loc)}</div>
+        <div class="url">${link}</div>
       `;
       eventsDiv.appendChild(card);
     });
   }
 
-  render();
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+  function escapeHtmlStrOrHtml(sOrHtml){
+    // For the '<span class="muted">…</span>' case, pass through; otherwise escape string content.
+    if (typeof sOrHtml !== 'string') return '';
+    if (sOrHtml.startsWith('<span ')) return sOrHtml;
+    return escapeHtml(sOrHtml);
+  }
 })();
 </script>
 </body>
