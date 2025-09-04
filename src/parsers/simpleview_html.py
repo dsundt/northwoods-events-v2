@@ -1,130 +1,111 @@
+# src/parsers/simpleview_html.py
+
 from __future__ import annotations
-from typing import List, Dict, Any, Set
+
+from typing import Dict, List, Set
 from urllib.parse import urljoin
-from dateutil import parser as dtp, tz
-import json
 from bs4 import BeautifulSoup
+from dateutil import parser as dtp
+import json
+import re
 
 from src.fetch import get
 
-CENTRAL = tz.gettz("America/Chicago")
+def _jsonld_events(soup: BeautifulSoup) -> List[Dict]:
+    out = []
+    for tag in soup.find_all("script", {"type": "application/ld+json"}):
+        try:
+            data = json.loads(tag.string or tag.text or "")
+        except Exception:
+            continue
+        items = data if isinstance(data, list) else [data]
+        for it in items:
+            if isinstance(it, dict) and it.get("@type") in ("Event","MusicEvent","TheaterEvent","ExhibitionEvent"):
+                out.append(it)
+    return out
 
-def _coerce_utc(dt_str: str | None) -> str | None:
-    if not dt_str:
-        return None
+def _to_utc(s: str) -> str | None:
     try:
-        d = dtp.parse(dt_str)
-        if d.tzinfo is None:
-            d = d.replace(tzinfo=CENTRAL)
-        return d.astimezone(tz.UTC).strftime("%Y-%m-%d %H:%M:%S")
+        return dtp.parse(s).isoformat()
     except Exception:
         return None
 
-def _make_uid(source_id: str, url: str | None, title: str | None, start_utc: str | None) -> str:
-    base = f"{source_id}|{url or title or ''}|{start_utc or ''}"
-    return f"{abs(hash(base))}@northwoods-v2"
+def _parse_detail(url: str, source_name: str) -> Dict | None:
+    r = get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    jl = _jsonld_events(soup)
 
-def _ev_from_ld(ld: dict, source: dict) -> Dict[str, Any] | None:
-    if not isinstance(ld, dict) or ld.get("@type") != "Event":
-        return None
-    title = ld.get("name") or ""
-    url = ld.get("url")
-    sd = _coerce_utc(ld.get("startDate"))
-    ed = _coerce_utc(ld.get("endDate"))
+    title = None
+    start = end = None
+    location = None
 
-    loc = ""
-    loc_obj = ld.get("location")
-    if isinstance(loc_obj, dict):
-        loc = loc_obj.get("name") or loc_obj.get("address") or ""
-        if isinstance(loc_obj.get("address"), dict):
-            a = loc_obj["address"]
-            loc = a.get("streetAddress") or a.get("addressLocality") or loc
+    # Prefer JSON-LD
+    if jl:
+        for it in jl:
+            title = title or it.get("name")
+            start = start or it.get("startDate")
+            end = end or it.get("endDate")
+            loc = it.get("location")
+            if isinstance(loc, dict):
+                location = location or loc.get("name") or loc.get("addressLocality")
+    # Minimal fallbacks
+    if not title:
+        h = soup.select_one("h1, .event-title, .page-title")
+        title = h.get_text(" ", strip=True) if h else None
+    if not location:
+        v = soup.select_one(".venue, .location, [itemprop='location']")
+        location = v.get_text(" ", strip=True) if v else None
 
-    if not title or not sd:
+    if not start:
+        # Try to find a date block with text
+        dt_node = soup.select_one(".date, .event-date, .dates")
+        if dt_node:
+            try: start = dtp.parse(dt_node.get_text(" ", strip=True), fuzzy=True).isoformat()
+            except Exception: pass
+    if not end:
+        end = start
+
+    if not (title and start):
         return None
 
     return {
-        "uid": _make_uid(source["id"], url, title, sd),
+        "uid": f"{hash(url)}@northwoods-v2",
         "title": title,
-        "start_utc": sd,
-        "end_utc": ed,
+        "start_utc": _to_utc(start),
+        "end_utc": _to_utc(end) or _to_utc(start),
         "url": url,
-        "location": loc or None,
-        "source": source["name"],
-        "calendar": source["name"],
+        "location": location,
+        "source": source_name,
+        "calendar": source_name,
     }
 
-def _parse_ld_json_blocks(html: str, base_url: str, source: dict) -> List[Dict[str, Any]]:
-    soup = BeautifulSoup(html, "html.parser")
-    out: List[Dict[str, Any]] = []
-    for tag in soup.find_all("script", type="application/ld+json"):
+def fetch_simpleview_html(source: Dict, start_date: str, end_date: str) -> List[Dict]:
+    """
+    Signature standardized as (source, start_date, end_date).
+    Collect detail URLs from the listing, then parse each via JSON-LD.
+    """
+    base = source.get("url", "").strip()
+    name = source.get("name") or source.get("id") or "Simpleview"
+    if not base:
+        return []
+
+    r = get(base)
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    links: Set[str] = set()
+    # Simpleview detail URLs often contain /event/ or /events/
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if re.search(r"/event[s]?/", href, flags=re.I):
+            links.add(urljoin(base, href))
+
+    events: List[Dict] = []
+    for href in list(links)[:150]:
         try:
-            data = json.loads(tag.string or "null")
+            ev = _parse_detail(href, name)
+            if ev and ev.get("start_utc"):
+                events.append(ev)
         except Exception:
             continue
-        if isinstance(data, dict) and data.get("@type") == "Event":
-            ev = _ev_from_ld(data, source)
-            if ev: out.append(ev)
-        elif isinstance(data, dict) and "@graph" in data and isinstance(data["@graph"], list):
-            for node in data["@graph"]:
-                ev = _ev_from_ld(node, source)
-                if ev: out.append(ev)
-        elif isinstance(data, list):
-            for node in data:
-                ev = _ev_from_ld(node, source)
-                if ev: out.append(ev)
-    return out
-
-def fetch_simpleview_html(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    Simpleview listing often lacks structured dates per item, but detail pages do.
-    Strategy:
-      1) Fetch listing and collect candidate event URLs.
-      2) Visit each detail page and parse JSON-LD Event.
-      3) Normalize to UTC and return.
-    Also fixes previously-seen 'invalid URLs' by urljoin with the base.
-    """
-    base = source.get("url")
-    listing = get(base).text
-    soup = BeautifulSoup(listing, "html.parser")
-
-    # Candidate detail links (avoid nav/filters)
-    candidates: Set[str] = set()
-    for a in soup.select("a[href]"):
-        href = a.get("href")
-        text = (a.get_text(strip=True) or "").lower()
-        if not href:
-            continue
-        # Heuristic: Simpleview event URLs typically contain "/event/" or "/events/"
-        if "/event/" in href and "submit" not in href and "search" not in href:
-            candidates.add(urljoin(base, href))
-
-    events: List[Dict[str, Any]] = []
-    for href in list(candidates)[:80]:  # safety bound
-        try:
-            detail = get(href).text
-        except Exception:
-            continue
-        evs = _parse_ld_json_blocks(detail, href, source)
-        if evs:
-            # Ensure canonical detail URL
-            for ev in evs:
-                if not ev.get("url"):
-                    ev["url"] = href
-            events.extend(evs)
-
-    # Optional window filter (only if dates are valid)
-    try:
-        if start_date and end_date:
-            lo = dtp.parse(start_date).replace(tzinfo=tz.UTC)
-            hi = dtp.parse(end_date).replace(tzinfo=tz.UTC)
-            def in_win(ev):
-                su = ev.get("start_utc")
-                if not su: return False
-                d = dtp.parse(su).replace(tzinfo=tz.UTC)
-                return lo <= d <= hi
-            events = [e for e in events if in_win(e)]
-    except Exception:
-        pass
 
     return events
