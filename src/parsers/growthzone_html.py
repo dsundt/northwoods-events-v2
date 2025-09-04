@@ -1,74 +1,107 @@
+# src/parsers/growthzone_html.py
 from __future__ import annotations
-import datetime as dt
+from datetime import datetime
+from typing import Dict, List, Tuple
 import re
-from typing import Dict, Any, List, Tuple
-import requests
+from urllib.parse import urljoin
+
 from bs4 import BeautifulSoup
+from dateutil import parser as dtp
+from src.fetch import get, session
 
-MONTHS_AHEAD = 3  # small, surgical crawl
+_DATE_IN_URL = re.compile(r"-([01]\d)-([0-3]\d)-(\d{4})-")
 
-def _month_iter(start: dt.date, months: int):
-    y, m = start.year, start.month
-    for _ in range(months):
-        yield y, m
-        m += 1
-        if m > 12:
-            m = 1
-            y += 1
-
-def _parse_month(html: str, source_label: str) -> List[Dict[str, Any]]:
-    soup = BeautifulSoup(html, "html.parser")
-    events: List[Dict[str, Any]] = []
-
-    # GrowthZone calendar has anchor links per event; robustness: match event row anchors
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if "/events/details/" in href or "/events/details/" in href.lower():
-            title = a.get_text(strip=True)
-            # try to pull datetime nearby
-            cell = a.find_parent()
-            when = ""
-            # look for sibling text/date spans
-            for sib in (cell or a).parent.find_all(["div", "span"], recursive=True):
-                txt = sib.get_text(" ", strip=True)
-                if re.search(r"\d{1,2}:\d{2}\s*(AM|PM)|\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b", txt, re.I):
-                    when = txt
-                    break
-
-            events.append({
-                "uid": f"gz-{hash(href)}@northwoods-v2",
-                "title": title,
-                "start_utc": None,  # exact times require detail page; we keep lightweight
-                "end_utc": None,
-                "url": href if href.startswith("http") else requests.compat.urljoin("https://business.rhinelanderchamber.com", href),
-                "location": None,
-                "source": source_label,
-                "calendar": source_label,
-            })
-    return events
-
-def fetch_growthzone_html(base_url: str, start: dt.date, end: dt.date
-) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-    """
-    Crawl a few months of GrowthZone calendar list pages. If the calendar renders empty (what you've seen),
-    we still return the diag with HTTP 200 but zero events, matching the behavior captured in report.json.
-    """
-    source_label = "Rhinelander Chamber (GrowthZone)"
-    diag = {"months": []}
-    all_events: List[Dict[str, Any]] = []
-    ok = True
-    error = ""
-
+def _extract_date_from_url(url: str) -> datetime | None:
+    m = _DATE_IN_URL.search(url)
+    if not m:
+        return None
+    mm, dd, yyyy = m.groups()
     try:
-        for (y, m) in _month_iter(start, MONTHS_AHEAD):
-            url = f"{base_url}?CalendarType=0&term=&from={y}-{m:02d}-01"
-            resp = requests.get(url, timeout=30)
-            resp.raise_for_status()
-            month_events = _parse_month(resp.text, source_label)
-            diag["months"].append({"month": f"{y}-{m:02d}", "count": len(month_events)})
-            all_events.extend(month_events)
-    except Exception as e:
-        ok = False
-        error = f"{type(e).__name__}: {e}"
+        return dtp.parse(f"{yyyy}-{mm}-{dd}")
+    except Exception:
+        return None
 
-    return all_events, {"ok": ok, "error": error, "diag": diag}
+def _extract_datetime_from_detail(detail_html: str) -> datetime | None:
+    soup = BeautifulSoup(detail_html, "html.parser")
+
+    # 1) Try <time datetime="">
+    t = soup.select_one("time[datetime]")
+    if t and t.has_attr("datetime"):
+        try:
+            return dtp.parse(t["datetime"])
+        except Exception:
+            pass
+
+    # 2) Try JSON-LD (schema.org Event)
+    for script in soup.select('script[type="application/ld+json"]'):
+        try:
+            import json
+            data = json.loads(script.string or "")
+            # may be dict or list
+            items = data if isinstance(data, list) else [data]
+            for it in items:
+                if isinstance(it, dict) and it.get("@type") in ("Event", "MusicEvent", "Festival"):
+                    if it.get("startDate"):
+                        return dtp.parse(it["startDate"])
+        except Exception:
+            continue
+
+    # 3) Try common label text (very tolerant)
+    text = soup.get_text("\n", strip=True)
+    m = re.search(r"(?:Date|When)\s*[:\-]\s*(.+)", text, re.I)
+    if m:
+        try:
+            return dtp.parse(m.group(1), fuzzy=True)
+        except Exception:
+            pass
+    return None
+
+def fetch_growthzone_html(src: Dict, start: datetime, end: datetime) -> Tuple[List[Dict], Dict]:
+    """
+    Parse GrowthZone calendar. We read the month grid(s) page for anchors,
+    then parse date from URL slug; if missing, we fetch the detail page.
+    """
+    base = src["url"]
+    s = session()
+    resp = get(base, s=s, retries=1)
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    anchors = soup.select('a[href*="/events/details/"], a[href*="/events/details"]')
+    events: List[Dict] = []
+    months_diag = []
+    seen = set()
+
+    for a in anchors:
+        href = a.get("href")
+        if not href:
+            continue
+        url_abs = urljoin(base, href)
+        if url_abs in seen:
+            continue
+        seen.add(url_abs)
+
+        title = a.get_text(strip=True) or "(untitled)"
+        dt_guess = _extract_date_from_url(url_abs)
+        if not dt_guess:
+            # visit detail for time
+            try:
+                detail_resp = get(url_abs, s=s, retries=1)
+                dt_guess = _extract_datetime_from_detail(detail_resp.text)
+            except Exception:
+                dt_guess = None
+
+        start_utc = dt_guess.strftime("%Y-%m-%d %H:%M:%S") if dt_guess else None
+
+        events.append({
+            "uid": f"gz-{hash(url_abs)}@northwoods-v2",
+            "title": title,
+            "start_utc": start_utc,
+            "end_utc": None,
+            "url": url_abs,
+            "location": None,
+            "source": src["name"],
+            "calendar": src["name"],
+        })
+
+    diag = {"ok": bool(events), "error": "" if events else "No GrowthZone events found", "diag": {"found": len(events)}}
+    return events, diag
