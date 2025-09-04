@@ -15,13 +15,21 @@ from src.parsers import (
     parse_tec_html,
     parse_growthzone_html,
     parse_ai1ec_html,
-    parse_simpleview_html,  # NEW
 )
-from src.public_fallback import ensure_index
+# optional: include other parsers you’ve added, e.g. simpleview
+try:
+    from src.parsers.simpleview_parser import parse_simpleview_html  # noqa: F401
+    HAS_SIMPLEVIEW = True
+except Exception:
+    HAS_SIMPLEVIEW = False
 
+# Resolve repo root relative to this file
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 PUBLIC_DIR = os.path.join(ROOT_DIR, "public")
 CONFIG_PATH = os.path.join(ROOT_DIR, "config", "sources.yaml")
+
+# Controls how many events get embedded in report.json for quick browser inspection.
+REPORT_EVENTS_LIMIT = int(os.environ.get("REPORT_EVENTS_LIMIT", "50"))
 
 
 def load_config(path: str) -> Dict[str, Any]:
@@ -45,35 +53,50 @@ def load_config(path: str) -> Dict[str, Any]:
     return {"sources": cleaned}
 
 
-def process_sources(cfg: Dict[str, Any]) -> (List[Event], Dict[str, List[Event]], List[Dict[str, Any]]):
+def parse_dispatch(typ: str, content: bytes, name: str, calendar: str, url: str) -> List[Event]:
+    if typ == "ics":
+        return parse_ics_feed(content, name, calendar)
+    if typ == "tec_html":
+        return parse_tec_html(content, name, calendar, base_url=url)
+    if typ == "growthzone_html":
+        return parse_growthzone_html(content, name, calendar, base_url=url)
+    if typ == "ai1ec_html":
+        return parse_ai1ec_html(content, name, calendar, base_url=url)
+    if typ == "simpleview_html" and HAS_SIMPLEVIEW:
+        from src.parsers.simpleview_parser import parse_simpleview_html  # local import
+        return parse_simpleview_html(content, name, calendar, base_url=url)
+    raise ValueError(f"Unsupported source type: {typ}")
+
+
+def process_sources(cfg: Dict[str, Any]) -> (List[Event], Dict[str, List[Event]], List[Dict[str, Any]], List[str]):
+    """
+    Returns:
+      final_events: deduped, sorted
+      by_source: dict[name] -> events
+      logs: per-source logs
+      all_source_names: every enabled source name (for empty ICS creation)
+    """
     all_events: List[Event] = []
     by_source: Dict[str, List[Event]] = {}
     logs: List[Dict[str, Any]] = []
+    all_source_names: List[str] = []
 
     for src in cfg.get("sources", []):
         name = src["name"]
         url = src["url"]
         typ = src["type"]
         calendar = src.get("calendar", "General")
+        all_source_names.append(name)
 
         entry_log = {"name": name, "type": typ, "url": url, "count": 0, "ok": False, "error": ""}
+
         try:
             resp = get(url)
             content = resp.content
 
-            if typ == "ics":
-                events = parse_ics_feed(content, name, calendar)
-            elif typ == "tec_html":
-                events = parse_tec_html(content, name, calendar, base_url=url)
-            elif typ == "growthzone_html":
-                events = parse_growthzone_html(content, name, calendar, base_url=url)
-            elif typ == "ai1ec_html":
-                events = parse_ai1ec_html(content, name, calendar, base_url=url)
-            elif typ == "simpleview_html":  # NEW
-                events = parse_simpleview_html(content, name, calendar, base_url=url)
-            else:
-                raise ValueError(f"Unsupported source type: {typ}")
+            events = parse_dispatch(typ, content, name, calendar, url)
 
+            # Deduplicate within this source
             seen = set()
             unique = []
             for e in events:
@@ -95,6 +118,7 @@ def process_sources(cfg: Dict[str, Any]) -> (List[Event], Dict[str, List[Event]]
 
         logs.append(entry_log)
 
+    # Global dedupe and sort
     final_events = []
     seen_global = set()
     for e in all_events:
@@ -102,19 +126,38 @@ def process_sources(cfg: Dict[str, Any]) -> (List[Event], Dict[str, List[Event]]
             continue
         seen_global.add(e.uid)
         final_events.append(e)
-
     final_events.sort(key=lambda e: e.start_utc)
-    return final_events, by_source, logs
+
+    return final_events, by_source, logs, all_source_names
+
+
+def _event_to_preview(e: Event) -> Dict[str, Any]:
+    # Keep this tiny; it’s for visual verification in the browser.
+    return {
+        "uid": e.uid,
+        "title": e.title,
+        "start_utc": e.start_utc.isoformat(),
+        "end_utc": e.end_utc.isoformat() if e.end_utc else None,
+        "source": e.source_name,
+        "calendar": e.calendar,
+        "url": e.url,
+        "location": e.location,
+    }
 
 
 def main() -> int:
     run_started = datetime.now(timezone.utc)
+    os.makedirs(PUBLIC_DIR, exist_ok=True)  # Ensure output path exists early
     cfg = load_config(CONFIG_PATH)
 
     try:
-        events, by_source, logs = process_sources(cfg)
-        ensure_index(PUBLIC_DIR)
-        write_outputs(PUBLIC_DIR, events, by_source)
+        events, by_source, logs, all_source_names = process_sources(cfg)
+
+        # Build a small event preview into the report for browser verification
+        preview = [_event_to_preview(e) for e in events[:REPORT_EVENTS_LIMIT]]
+
+        # Write outputs (and ensure empty per-source files also exist)
+        write_outputs(PUBLIC_DIR, events, by_source, all_source_names)
 
         report = {
             "version": "2.0",
@@ -123,6 +166,8 @@ def main() -> int:
             "total_events": len(events),
             "sources_processed": len(cfg.get("sources", [])),
             "source_logs": logs,
+            "events_preview": preview,
+            "events_preview_count": len(preview),
         }
         write_report(PUBLIC_DIR, report)
 
@@ -130,10 +175,7 @@ def main() -> int:
         return 0
 
     except Exception as exc:
-        try:
-            ensure_index(PUBLIC_DIR)
-        except Exception:
-            pass
+        # Always attempt to write a failure report
         err_report = {
             "version": "2.0",
             "run_started_utc": run_started.isoformat(),
@@ -141,9 +183,10 @@ def main() -> int:
             "error": f"{exc.__class__.__name__}: {exc}",
             "trace": traceback.format_exc(),
         }
-        os.makedirs(PUBLIC_DIR, exist_ok=True)
-        write_report(PUBLIC_DIR, err_report)
-        print(json.dumps({"ok": False, "error": str(exc)}, indent=2))
+        try:
+            write_report(PUBLIC_DIR, err_report)
+        finally:
+            print(json.dumps({"ok": False, "error": str(exc)}, indent=2))
         return 1
 
 
