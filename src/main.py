@@ -2,22 +2,25 @@
 """
 northwoods-events-v2 main entrypoint
 
-Fix in this revision:
-- _load_sources() now supports config/sources.yaml defined as either:
-  (A) a list of sources
-  (B) a mapping with key 'sources' that holds the list
-  (C) a mapping keyed by source id -> source object
-- For (C), the dict key is injected as 'id' if missing.
-- Still logs which sources file was loaded for traceability.
+Revisions in this drop-in:
+- Robust YAML normalization (list, {sources: [...]}, or {id: {...}}) retained.
+- NEW: Autogenerate stable, unique 'id' for any source missing it:
+    * Prefer slug(name); fallback to slug(hostname from url); finally slug(url).
+    * Deduplicate with -2/-3 suffixes if needed.
+    * Log each auto-generated id for traceability.
+- Validation remains strict for required keys (id, name, type, url) AFTER backfilling.
+- No file/dir names or paths changed; continues to prefer config/sources.yaml.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from datetime import date, timedelta
 from typing import Any, Dict, List, Tuple
+from urllib.parse import urlparse
 
 from src.parsers import fetch_tec_rest, fetch_growthzone_html, fetch_simpleview_html
 from src.ics_writer import write_per_source_ics, write_combined_ics
@@ -62,10 +65,52 @@ def _find_sources_file() -> str:
     )
 
 
+def _slug(value: str) -> str:
+    """
+    Make a conservative, filesystem/URL-friendly slug:
+    - Lowercase
+    - Replace non-alphanumerics with hyphens
+    - Compress repeated hyphens
+    - Trim leading/trailing hyphens
+    """
+    v = value.strip().lower()
+    v = re.sub(r"[^a-z0-9]+", "-", v)
+    v = re.sub(r"-{2,}", "-", v).strip("-")
+    return v or "source"
+
+
+def _hostname_from_url(u: str) -> str:
+    try:
+        host = urlparse(u).hostname or ""
+        return host.split(":")[0] if host else ""
+    except Exception:
+        return ""
+
+
+def _autogen_id_for(source: Dict[str, Any]) -> str:
+    """
+    Generate a deterministic id for a source that lacks one.
+    Priority for base string:
+      1) name
+      2) hostname from url
+      3) full url
+    Also include type as a suffix if present to reduce collisions.
+    """
+    name = (source.get("name") or "").strip()
+    url = (source.get("url") or "").strip()
+    typ = (source.get("type") or "").strip()
+
+    base = name or _hostname_from_url(url) or url or "source"
+    slug = _slug(base)
+    if typ:
+        slug = f"{slug}-{_slug(typ)}"
+    return slug
+
+
 def _normalize_sources(data: Any, path: str) -> List[Dict[str, Any]]:
     """
     Accept several YAML shapes and normalize to a list of {id,name,type,url,...}.
-      - If data is a list: return as-is (validated later).
+      - If data is a list: return as-is (we'll backfill ids and validate later).
       - If data is a dict:
           * If it contains 'sources' key and that value is a list -> return it.
           * Else treat it as { <id>: { ... }, ... }:
@@ -95,6 +140,40 @@ def _normalize_sources(data: Any, path: str) -> List[Dict[str, Any]]:
     raise ValueError(f"Unsupported YAML structure in {path}: {type(data)}")
 
 
+def _backfill_and_validate_ids(sources: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Ensure every source has a stable, unique 'id'.
+    - Autogenerate if missing (using name/hostname/url + type).
+    - Deduplicate by appending -2/-3/... suffix.
+    """
+    seen: Dict[str, int] = {}
+    for idx, s in enumerate(sources):
+        sid = (s.get("id") or "").strip()
+        if not sid:
+            auto_id = _autogen_id_for(s)
+            print(f"[northwoods] Source #{idx} missing 'id' -> auto-generated '{auto_id}'")
+            sid = auto_id
+
+        sid = _slug(sid)
+        # Deduplicate if necessary
+        base = sid
+        n = seen.get(base, 0)
+        if n:
+            # already seen; find next available suffix
+            k = n + 1
+            while f"{base}-{k}" in seen:
+                k += 1
+            sid = f"{base}-{k}"
+            seen[base] = k  # update base count
+            print(f"[northwoods] Duplicate id '{base}' -> using '{sid}'")
+        else:
+            seen[base] = 1
+
+        s["id"] = sid
+
+    return sources
+
+
 def _load_sources() -> List[Dict[str, Any]]:
     import yaml
 
@@ -105,8 +184,9 @@ def _load_sources() -> List[Dict[str, Any]]:
         raw = yaml.safe_load(f)
 
     sources = _normalize_sources(raw, path)
+    sources = _backfill_and_validate_ids(sources)
 
-    # minimal validation
+    # minimal validation (AFTER id backfill)
     for idx, s in enumerate(sources):
         for key in ("id", "name", "type", "url"):
             if key not in s or not s[key]:
@@ -188,6 +268,7 @@ def main() -> int:
             "ok": ok,
             "error": err,
             "diag": diag,
+            "id": sid,
         })
 
     write_combined_ics(all_events, COMBINED_ICS_PATH)
