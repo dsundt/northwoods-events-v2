@@ -1,132 +1,138 @@
+# src/parsers/tec_html.py
+
 from __future__ import annotations
-from typing import List, Dict, Any
-from urllib.parse import urljoin
-from datetime import datetime
-from dateutil import parser as dtp, tz
-import json
+
+from typing import Dict, List
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+from dateutil import parser as dtp
+from datetime import datetime
+import json
 
 from src.fetch import get
+from src.parsers.tec_rest import fetch_tec_rest  # reuse the robust REST code
 
-CENTRAL = tz.gettz("America/Chicago")
+def _site_root(url: str) -> str:
+    p = urlparse(url)
+    return f"{p.scheme}://{p.netloc}/"
 
-def _coerce_utc(dt_str: str | None) -> str | None:
-    if not dt_str:
-        return None
-    try:
-        d = dtp.parse(dt_str)
-        if d.tzinfo is None:
-            d = d.replace(tzinfo=CENTRAL)
-        return d.astimezone(tz.UTC).strftime("%Y-%m-%d %H:%M:%S")
-    except Exception:
-        return None
-
-def _make_uid(source_id: str, url: str | None, title: str | None, start_utc: str | None) -> str:
-    base = f"{source_id}|{url or title or ''}|{start_utc or ''}"
-    return f"{abs(hash(base))}@northwoods-v2"
-
-def _event_from_ld(item: dict, source: dict) -> Dict[str, Any]:
-    name = item.get("name") or ""
-    url = item.get("url")
-    sd = item.get("startDate")
-    ed = item.get("endDate")
-
-    loc = ""
-    loc_obj = item.get("location")
-    if isinstance(loc_obj, dict):
-        loc = loc_obj.get("name") or loc_obj.get("address") or ""
-        if isinstance(loc_obj.get("address"), dict):
-            addr = loc_obj["address"]
-            loc = addr.get("streetAddress") or addr.get("addressLocality") or loc
-
-    start_utc = _coerce_utc(sd)
-    end_utc = _coerce_utc(ed)
-    uid = _make_uid(source["id"], url, name, start_utc)
-
-    return {
-        "uid": uid,
-        "title": name,
-        "start_utc": start_utc,
-        "end_utc": end_utc,
-        "url": url,
-        "location": loc or None,
-        "source": source["name"],
-        "calendar": source["name"],
-    }
-
-def fetch_tec_html(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+def _parse_html_list(url: str, source_name: str) -> List[Dict]:
     """
-    HTML fallback for The Events Calendar sites where REST is disabled.
-    Strategy:
-      1) Load listing URL (source['url']), parse any JSON-LD Event blocks.
-      2) If nothing found, heuristically parse <time datetime> + surrounding anchors.
-    Keeps a 3-arg signature, even if dates are only used for post-filtering.
+    Very generic HTML fallback for TEC list pages.
+    Tries several common TEC list selectors; normalizes minimal fields.
     """
-    url = source.get("url")
-    resp = get(url)
-    soup = BeautifulSoup(resp.text, "html.parser")
+    events: List[Dict] = []
+    r = get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
 
-    events: List[Dict[str, Any]] = []
+    # Common TEC list patterns
+    candidates = []
+    candidates += soup.select("article.type-tribe_events")
+    candidates += soup.select(".tribe-events-calendar-list__event")
+    candidates += soup.select("[data-tribe-event-id]")
 
-    # 1) JSON-LD blocks (robust across TEC skins)
-    for tag in soup.find_all("script", type="application/ld+json"):
-        try:
-            data = json.loads(tag.string or "null")
-        except Exception:
+    seen = set()
+    for node in candidates:
+        # Title + URL
+        a = node.select_one("a.tribe-event-url, a.tribe-events-c-events-bar__event-title-link, h3 a, .tribe-events-calendar-list__event-title-link")
+        title = (a.get_text(strip=True) if a else node.get_text(" ", strip=True)[:120])
+        href = a["href"] if a and a.has_attr("href") else None
+
+        # Dates (prefer <time datetime=...>)
+        start_iso = None
+        end_iso = None
+        tstart = node.select_one("time[datetime]")
+        if tstart and tstart.has_attr("datetime"):
+            start_iso = tstart["datetime"]
+        tend = node.select("time[datetime]")
+        if len(tend) >= 2 and tend[1].has_attr("datetime"):
+            end_iso = tend[1]["datetime"]
+
+        # Fallbacks with text parsing
+        if not start_iso:
+            txt = " ".join(x.get_text(" ", strip=True) for x in node.select(".tribe-event-date-start, .tribe-events-calendar-list__event-date, .tribe-events-abbr"))
+            if txt:
+                try:
+                    start_iso = dtp.parse(txt, fuzzy=True).isoformat()
+                except Exception:
+                    pass
+
+        # Location (best-effort)
+        loc = None
+        locnode = node.select_one(".tribe-events-venue-details, .tribe-events-venue, .tribe-events-calendar-list__event-venue")
+        if locnode:
+            loc = locnode.get_text(" ", strip=True)
+
+        uid = None
+        if node.has_attr("data-tribe-event-id"):
+            uid = f"{node['data-tribe-event-id']}@northwoods-v2"
+        elif href:
+            uid = f"{hash(href)}@northwoods-v2"
+
+        if uid and uid in seen:
             continue
-        # Could be a single Event, a list, or a graph
-        candidates = []
-        if isinstance(data, dict):
-            if data.get("@type") == "Event":
-                candidates = [data]
-            elif "@graph" in data and isinstance(data["@graph"], list):
-                candidates = [n for n in data["@graph"] if isinstance(n, dict) and n.get("@type") == "Event"]
-        elif isinstance(data, list):
-            candidates = [n for n in data if isinstance(n, dict) and n.get("@type") == "Event"]
+        seen.add(uid)
 
-        for item in candidates:
-            ev = _event_from_ld(item, source)
-            if ev["title"] and (ev["start_utc"] or ev["end_utc"]):
-                events.append(ev)
+        # Normalize UTC-ish
+        def to_utc_str(s):
+            if not s: return None
+            try:
+                dt = dtp.parse(s)
+                if not dt.tzinfo:
+                    dt = dt.replace(tzinfo=None)
+                return dt.isoformat().replace("+00:00", "")
+            except Exception:
+                return None
 
-    # 2) Heuristic fallback if JSON-LD not present
-    if not events:
-        # TEC often renders <time class="tribe-events-c-small-date__start-time" datetime="...">
-        for ev_wrap in soup.select("[class*='tribe-events']"):
-            time_el = ev_wrap.find("time")
-            a_el = ev_wrap.find("a")
-            title = (a_el.get_text(strip=True) if a_el else "").strip()
-            href = urljoin(url, a_el["href"]) if a_el and a_el.has_attr("href") else None
-            dt_val = None
-            if time_el and time_el.has_attr("datetime"):
-                dt_val = time_el["datetime"]
-            elif time_el and time_el.string:
-                dt_val = time_el.string.strip()
-            start_utc = _coerce_utc(dt_val)
-            if title and start_utc:
-                events.append({
-                    "uid": _make_uid(source["id"], href, title, start_utc),
-                    "title": title,
-                    "start_utc": start_utc,
-                    "end_utc": None,
-                    "url": href,
-                    "location": None,
-                    "source": source["name"],
-                    "calendar": source["name"],
-                })
+        start_utc = to_utc_str(start_iso)
+        end_utc = to_utc_str(end_iso)
 
-    # Post-filter by requested window if we have valid UTCs
-    if start_date or end_date:
-        try:
-            start_boundary = dtp.parse(start_date).replace(tzinfo=tz.UTC)
-            end_boundary = dtp.parse(end_date).replace(tzinfo=tz.UTC)
-            def in_window(ev):
-                su = ev.get("start_utc")
-                if not su: return False
-                d = dtp.parse(su).replace(tzinfo=tz.UTC)
-                return start_boundary <= d <= end_boundary
-            events = [e for e in events if in_window(e)]
-        except Exception:
-            pass
+        if title and start_utc:
+            events.append({
+                "uid": uid or f"{len(events)}@northwoods-v2",
+                "title": title,
+                "start_utc": start_utc,
+                "end_utc": end_utc,
+                "url": href,
+                "location": loc,
+                "source": source_name,
+                "calendar": source_name,
+            })
 
     return events
+
+def fetch_tec_html(source: Dict, start_date: str, end_date: str) -> List[Dict]:
+    """
+    Signature standardized as (source, start_date, end_date).
+
+    Strategy:
+    1) Attempt TEC REST at the site root (most TEC installs expose it).
+    2) If REST yields no events, fall back to HTML list scraping on the provided URL.
+    """
+    src_name = source.get("name") or source.get("id") or "TEC"
+    base_url = source.get("url", "").strip()
+    if not base_url:
+        return []
+
+    # 1) Try REST at root
+    try:
+        rest_source = dict(source)
+        rest_source["url"] = _site_root(base_url)
+        rest_events = fetch_tec_rest(rest_source, start_date, end_date)
+        if rest_events:
+            return rest_events
+    except Exception:
+        # Swallow here; we’ll try HTML fallback next
+        pass
+
+    # 2) HTML fallback – try common list URL if caller gave a homepage
+    if base_url.rstrip("/").endswith("/"):
+        list_url = base_url.rstrip("/") + "/events/?eventDisplay=list"
+    else:
+        # If they already supplied a list page, just use it
+        list_url = base_url
+
+    try:
+        return _parse_html_list(list_url, src_name)
+    except Exception:
+        return []
