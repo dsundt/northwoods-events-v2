@@ -1,77 +1,102 @@
 from __future__ import annotations
+import os, sys, json
+from pathlib import Path
+from datetime import datetime, timedelta, timezone
+import yaml
 
-import datetime as dt
-from typing import List, Tuple
-
-from src.util import ensure_dirs
-from src.yaml_cfg import load_sources
-from src.report import Report
-from src.models import Event
-from src.sources import SourceCfg
-
-from src.parsers.tec_rest import fetch_tec_rest
-from src.parsers.tec_html import fetch_tec_html
-from src.parsers.growthzone_html import fetch_growthzone_html
-from src.parsers.simpleview_html import fetch_simpleview_html
-from src.parsers.ics_feed import fetch_ics
-
+from src.parsers import (
+    fetch_tec_rest,
+    fetch_tec_auto,
+    fetch_growthzone_html,
+    fetch_simpleview_html,
+)
 from src.ics_writer import write_per_source_ics, write_combined_ics
+from src.report_writer import write_report
+from src.index_writer import write_index
 
-DATE_RANGE_DAYS = 120
-
-FETCHERS = {
+PARSER_MAP = {
     "tec_rest": fetch_tec_rest,
-    "tec_html": fetch_tec_html,
+    "tec_auto": fetch_tec_auto,
     "growthzone_html": fetch_growthzone_html,
     "simpleview_html": fetch_simpleview_html,
-    "ics": fetch_ics,
 }
 
+def _daterange(days_ahead: int):
+    start = datetime.now(timezone.utc).date()
+    end = start + timedelta(days=days_ahead)
+    return start.isoformat(), end.isoformat()
 
 def main():
-    ensure_dirs()
-    start = dt.date.today()
-    end = start + dt.timedelta(days=DATE_RANGE_DAYS)
+    project_root = Path(__file__).resolve().parents[1]
+    sources_file = project_root / "sources.yaml"
+    public_dir = project_root / "public"
+    by_source_dir = public_dir / "by-source"
 
-    report = Report.start()
-    sources = load_sources()
+    with open(sources_file, "r", encoding="utf-8") as f:
+        sources = yaml.safe_load(f)
 
-    all_events: List[Event] = []
-    per_source: List[Tuple[SourceCfg, List[Event]]] = []
+    run_meta = {"run_started_utc": datetime.now(timezone.utc).isoformat()}
+    per_source_logs = []
+    all_events = []
+    grouped = {}
 
-    for s in sources:
-        fetcher = FETCHERS.get(s.type)
-        ok = True
-        err = ""
+    for src in sources:
+        name = src["name"]; slug = src["slug"]; typ = src["type"]
+        days = int(src.get("days_ahead", 120))
+        start_iso, end_iso = _daterange(days)
+        parser = PARSER_MAP.get(typ)
+        ok = True; err = ""
         diag = {}
-        items: List[Event] = []
-        try:
-            items, diag = fetcher(s.url, start, end)
-            # annotate source fields for traceability
-            for e in items:
-                e.source_name = s.name
-                if not e.calendar:
-                    e.calendar = s.name
-        except Exception as ex:
+        if parser is None:
             ok = False
-            err = f"{ex.__class__.__name__}: {ex}"
+            err = f"Unknown parser type: {typ}"
+            items = []
+        else:
+            try:
+                items, diag = parser(src, start_iso, end_iso)
+            except Exception as e:
+                ok = False
+                err = f"{type(e).__name__}: {e}"
+                items = []
 
-        report.add_log(s.name, s.type, s.url, len(items), ok, err, diag)
-        # Always write per-source ICS, even if zero, so gaps are visible
-        write_per_source_ics(s, items)
+        # Build log
+        per_source_logs.append({
+            "name": name, "type": typ, "url": src["url"],
+            "count": len(items), "ok": ok, "error": err, "diag": diag, "slug": slug
+        })
 
+        if not ok and not src.get("allow_zero", False):
+            # If the parser failed completely, keep going, but we'll fail the build later.
+            pass
+
+        grouped[slug] = items
         all_events.extend(items)
-        per_source.append((s, items))
 
-    # sort combined by start date
-    all_events.sort(key=lambda e: (e.start_utc or dt.datetime.max.replace(tzinfo=dt.timezone.utc)))
+    # Write ICS per-source and combined
+    write_per_source_ics(by_source_dir, grouped)
+    write_combined_ics(public_dir / "combined.ics", all_events)
 
-    write_combined_ics(all_events)
-    report.finish(all_events, per_source)
-    report.write_files()
+    # Report & viewer
+    # For viewer, include a 100-event preview
+    preview = []
+    for src in sources:
+        for ev in grouped.get(src["slug"], []):
+            if len(preview) >= 100: break
+            preview.append(ev)
+        if len(preview) >= 100: break
 
-    print({"ok": True, "events": len(all_events)})
+    write_report(public_dir / "report.json", run_meta, per_source_logs, preview)
+    write_index(public_dir / "index.html")
 
+    # Fail build if any source had 0 events and doesn't allow zero (regression guard)
+    failures = [s for s in per_source_logs if (s["count"] == 0 and not next((x for x in sources if x["name"]==s["name"]), {}).get("allow_zero", False))]
+    # Also fail if any source explicitly error'ed
+    failed_errors = [s for s in per_source_logs if (not s["ok"] and not next((x for x in sources if x["name"]==s["name"]), {}).get("allow_zero", False))]
+    if failures or failed_errors:
+        print(json.dumps({"ok": False, "failures": failures, "errors": failed_errors}, indent=2))
+        sys.exit(1)
+    else:
+        print(json.dumps({"ok": True, "events": len(all_events)}, indent=2))
 
 if __name__ == "__main__":
     main()
