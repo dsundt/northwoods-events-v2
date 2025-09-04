@@ -1,9 +1,3 @@
-# Northwoods Events v2 — hardened sources
-# Notes:
-# - For TEC sites we use type: tec_rest so main() can fall back to HTML on 403/404 or empty.
-# - GrowthZone and Simpleview stay on their dedicated parsers.
-# - URLs are the stable listing/home roots for each platform.
-
 sources:
   - id: boulder-junction-tec
     name: Boulder Junction (TEC)
@@ -35,9 +29,10 @@ sources:
     type: tec_rest
     url: https://vilaswi.com/
 
-  # Oneida’s events are exposed under a custom slug rather than /events/.
-  # Using tec_html directly improves reliability vs REST here.
+  # Oneida County is currently editorial/aggregated content, not a clean feed.
+  # Disable to keep the pipeline stable until a bespoke parser is added.
   - id: oneida-county-tourism-tec
     name: Oneida County Tourism (TEC)
     type: tec_html
     url: https://oneidacountywi.com/festivals-events/
+    enabled: false
