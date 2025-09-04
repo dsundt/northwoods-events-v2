@@ -1,168 +1,126 @@
-# src/parsers/growthzone_html.py
 from __future__ import annotations
-
-from dataclasses import dataclass
-from datetime import datetime, timezone
-from typing import List, Dict, Tuple
-import re
+from typing import List, Dict, Any
 from urllib.parse import urljoin
-
-import requests
+from datetime import datetime
+from dateutil import parser as dtp, tz
+import json
 from bs4 import BeautifulSoup
-from dateutil import parser as dtparse
 
+from src.fetch import get
 
-@dataclass
-class Source:
-    id: str
-    name: str
-    url: str
-    type: str
+CENTRAL = tz.gettz("America/Chicago")
 
+def _coerce_utc(dt_str: str | None) -> str | None:
+    if not dt_str:
+        return None
+    try:
+        d = dtp.parse(dt_str)
+        if d.tzinfo is None:
+            d = d.replace(tzinfo=CENTRAL)
+        return d.astimezone(tz.UTC).strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return None
 
-USER_AGENT = "northwoods-events-v2 (+https://dsundt.github.io/northwoods-events-v2/)"
+def _make_uid(source_id: str, url: str | None, title: str | None, start_utc: str | None) -> str:
+    base = f"{source_id}|{url or title or ''}|{start_utc or ''}"
+    return f"{abs(hash(base))}@northwoods-v2"
 
+def _from_ld(block: dict, source: dict) -> Dict[str, Any] | None:
+    if not isinstance(block, dict) or block.get("@type") != "Event":
+        return None
+    title = block.get("name") or ""
+    url = block.get("url")
+    sd = _coerce_utc(block.get("startDate"))
+    ed = _coerce_utc(block.get("endDate"))
+    loc = ""
+    loc_obj = block.get("location")
+    if isinstance(loc_obj, dict):
+        loc = loc_obj.get("name") or loc_obj.get("address") or ""
+        if isinstance(loc_obj.get("address"), dict):
+            a = loc_obj["address"]
+            loc = a.get("streetAddress") or a.get("addressLocality") or loc
+    if not title or not sd:
+        return None
+    return {
+        "uid": _make_uid(source["id"], url, title, sd),
+        "title": title,
+        "start_utc": sd,
+        "end_utc": ed,
+        "url": url,
+        "location": loc or None,
+        "source": source["name"],
+        "calendar": source["name"],
+    }
 
-def _get(url: str, timeout: int = 30) -> requests.Response:
-    return requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=timeout)
-
-
-def _clean(s: str) -> str:
-    return re.sub(r"\s+", " ", s or "").strip()
-
-
-def fetch_growthzone_html(src: Dict) -> Tuple[List[Dict], Dict]:
+def fetch_growthzone_html(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
     """
-    Parse GrowthZone events. Strategy:
-    - If landing on /events/calendar (grid), follow "Events List View" -> /events/search
-    - Parse list view items: title, date line, details URL
+    GrowthZone HTML scraper:
+      1) Parse listing page JSON-LD Event blocks.
+      2) Fallback: read <time datetime> and the nearest anchor for title+url.
+    Ensures dates are captured (previous issue) and normalized to UTC.
     """
-    source = Source(
-        id=src.get("id") or src["name"].lower().replace(" ", "-"),
-        name=src["name"],
-        url=src["url"],
-        type=src["type"],
-    )
+    url = source.get("url")
+    resp = get(url)
+    soup = BeautifulSoup(resp.text, "html.parser")
 
-    diag = {"source": source.id, "page_used": None, "notes": [], "count": 0}
-    events: List[Dict] = []
+    events: List[Dict[str, Any]] = []
 
-    # 1) Fetch landing page
-    r = _get(source.url)
-    r.raise_for_status()
-    html = r.text
-    soup = BeautifulSoup(html, "html.parser")
-
-    # 2) Prefer List View if available
-    list_href = None
-    # anchor with visible text "Events List View" (GrowthZone)
-    for a in soup.find_all("a"):
-        t = _clean(a.get_text())
-        href = a.get("href") or ""
-        if "events/search" in href or t.lower() == "events list view":
-            list_href = urljoin(source.url, href)
-            break
-
-    # If the landing page is already list view or we didn't locate the link,
-    # try a direct guess of /events/search; otherwise stay on given URL.
-    candidates = []
-    if list_href:
-        candidates.append(list_href)
-    elif "/events/search" in source.url:
-        candidates.append(source.url)
-    else:
-        # common GrowthZone pattern
-        base = source.url.rstrip("/")
-        candidates.append(base.replace("/events/calendar", "/events/search"))
-
-        # last resort: try /events/search directly off domain
-        if "/events/" in base and "/search" not in base:
-            root = base.split("/events/")[0]
-            candidates.append(urljoin(root + "/", "/events/search"))
-
-    # Ensure we at least try the original page as a fallback
-    candidates.append(source.url)
-
-    used_url = None
-    list_soup = None
-    for u in candidates:
-        if not u or u == "None":
-            continue
+    # 1) JSON-LD (GrowthZone frequently outputs Event schema)
+    for tag in soup.find_all("script", type="application/ld+json"):
+        txt = tag.string or ""
         try:
-            rr = _get(u)
-            if rr.status_code != 200:
-                continue
-            ss = BeautifulSoup(rr.text, "html.parser")
-            # Heuristic: list view usually has many details links
-            links = ss.select('a[href*="/events/details/"]')
-            if links:
-                used_url = u
-                list_soup = ss
-                break
-        except Exception as e:
-            diag["notes"].append(f"probe failed {u}: {e}")
-
-    if not list_soup:
-        # Fall back to the landing soup; we'll still try to parse something
-        used_url = source.url
-        list_soup = soup
-
-    diag["page_used"] = used_url
-
-    # 3) Extract items
-    # GrowthZone list view typically renders items with anchors to /events/details/<slug>/<id>
-    items = list_soup.select('a[href*="/events/details/"]')
-    for a in items:
-        title = _clean(a.get_text())
-        href = urljoin(used_url, a.get("href") or "")
-        # The date line is often near the anchor, sometimes in the parent container
-        container = a.find_parent(["li", "div", "article"]) or a.parent
-
-        text_blob = _clean(container.get_text(" ", strip=True))
-        # Look for Month Day, Year pattern (with optional weekday/time)
-        # Examples: "Monday Sep 1, 2025", "Sep 1, 2025 5:00 PM"
-        m = re.search(
-            r"(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+)?"
-            r"(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+\d{1,2},\s+\d{4}(?:\s+\d{1,2}:\d{2}\s*(AM|PM))?",
-            text_blob,
-            flags=re.IGNORECASE,
-        )
-
-        start_dt = None
-        if m:
-            try:
-                start_dt = dtparse.parse(m.group(0), fuzzy=True)
-            except Exception:
-                start_dt = None
-
-        if not start_dt:
-            # As a fallback, parse any ISO-like date in the blob
-            m2 = re.search(r"\d{4}-\d{2}-\d{2}(?:[T\s]\d{2}:\d{2}(:\d{2})?)?", text_blob)
-            if m2:
-                try:
-                    start_dt = dtparse.parse(m2.group(0), fuzzy=True)
-                except Exception:
-                    start_dt = None
-
-        # If still unknown, skip (we don't want date-less entries)
-        if not start_dt:
-            diag["notes"].append(f"skip (no date): {title}")
+            data = json.loads(txt)
+        except Exception:
             continue
+        if isinstance(data, dict):
+            if data.get("@type") == "Event":
+                ev = _from_ld(data, source)
+                if ev: events.append(ev)
+            elif "@graph" in data and isinstance(data["@graph"], list):
+                for node in data["@graph"]:
+                    ev = _from_ld(node, source)
+                    if ev: events.append(ev)
+        elif isinstance(data, list):
+            for node in data:
+                ev = _from_ld(node, source)
+                if ev: events.append(ev)
 
-        # Normalize TZ (naive -> UTC)
-        if start_dt.tzinfo is None:
-            start_dt = start_dt.replace(tzinfo=timezone.utc)
+    # 2) Heuristic fallback: <time datetime> + adjacent <a>
+    if not events:
+        for row in soup.select("time[datetime]"):
+            dt_iso = row.get("datetime")
+            title = None
+            href = None
+            # Look nearby for the event link
+            a = row.find_next("a")
+            if a and a.get_text(strip=True):
+                title = a.get_text(strip=True)
+                href = urljoin(url, a.get("href"))
+            sd = _coerce_utc(dt_iso)
+            if title and sd:
+                events.append({
+                    "uid": _make_uid(source["id"], href, title, sd),
+                    "title": title,
+                    "start_utc": sd,
+                    "end_utc": None,
+                    "url": href,
+                    "location": None,
+                    "source": source["name"],
+                    "calendar": source["name"],
+                })
 
-        ev = {
-            "source_id": source.id,
-            "title": title,
-            "start": start_dt.isoformat(),
-            "end": start_dt.isoformat(),
-            "url": href,
-            "location": None,
-            "all_day": False,
-        }
-        events.append(ev)
+    # Window filter if both dates provided
+    try:
+        if start_date and end_date:
+            lo = dtp.parse(start_date).replace(tzinfo=tz.UTC)
+            hi = dtp.parse(end_date).replace(tzinfo=tz.UTC)
+            def in_win(ev):
+                su = ev.get("start_utc")
+                if not su: return False
+                d = dtp.parse(su).replace(tzinfo=tz.UTC)
+                return lo <= d <= hi
+            events = [e for e in events if in_win(e)]
+    except Exception:
+        pass
 
-    diag["count"] = len(events)
-    return events, diag
+    return events
