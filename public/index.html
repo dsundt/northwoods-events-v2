@@ -2,220 +2,265 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Northwoods Events • Debug Viewer</title>
+  <title>Northwoods Events Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root { color-scheme: light dark; }
-    body { font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
-    h1 { margin: 0 0 6px; }
-    .muted { color: #666; }
-    .err { background: #fff3f3; border: 1px solid #e6b8b8; color: #a11; padding: 10px; border-radius: 6px; margin: 12px 0; }
-    .badge { display:inline-block; padding:2px 6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#f7f7f7; }
-    .toolbar { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; margin: 12px 0 16px; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
-    th { background: #f6f6f6; position: sticky; top: 0; z-index: 1; }
-    a { word-break: break-all; }
+    :root { --bg:#0e1116; --card:#171a21; --muted:#9aa5b1; --fg:#e5e7eb; --acc:#6ee7b7; --warn:#f59e0b; --bad:#ef4444; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background:var(--bg); color:var(--fg); }
+    header { padding: 20px; background: var(--card); display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; }
+    header h1 { font-size: 18px; margin:0; }
+    .status { font-size: 12px; color: var(--muted); }
+    .wrap { padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap: wrap; }
+    .card { background: var(--card); border-radius: 12px; padding: 12px 14px; }
+    select, button { background:#0b0d12; color:var(--fg); border:1px solid #2a2f3a; border-radius:8px; padding:8px 10px; }
+    a { color:var(--acc); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    table { width:100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border-bottom: 1px solid #2a2f3a; padding: 10px; vertical-align: top; }
+    th { text-align:left; font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+    .pill { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background:#0b0d12; border:1px solid #2a2f3a; color:var(--muted) }
+    .ok { color:#10b981; }
+    .warn { color:var(--warn); }
+    .bad { color:var(--bad); }
+    .src { display:flex; gap:8px; align-items:center; }
+    .grid { display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); margin-top: 12px; }
+    .small { font-size:12px; color:var(--muted); }
+    .hidden { display:none; }
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin: 8px 0; }
+    .spacer { flex:1; }
   </style>
 </head>
 <body>
-  <h1>Northwoods Events</h1>
-  <div id="meta" class="muted">Loading…</div>
-  <div id="errors" hidden class="err"></div>
+  <header>
+    <h1>Northwoods Events — Debug Viewer</h1>
+    <div class="status" id="status">Loading report.json…</div>
+  </header>
 
-  <div class="toolbar">
-    <label>Source:
+  <div class="wrap">
+    <div class="row">
+      <div class="card">
+        <div><b>Total events:</b> <span id="totalEvents">—</span></div>
+        <div class="small">From <span id="sourcesProcessed">—</span> sources</div>
+      </div>
+      <div class="card">
+        <div><b>Combined ICS:</b> <a href="combined.ics">combined.ics</a></div>
+        <div class="small">Per-source feeds appear after a successful run.</div>
+      </div>
+    </div>
+
+    <div id="sources" class="grid"></div>
+
+    <div class="toolbar">
+      <label for="sourceFilter">Show source:</label>
       <select id="sourceFilter">
-        <option value="ALL">ALL SOURCES</option>
+        <option value="__ALL__">All sources</option>
       </select>
-    </label>
-    <label>Search title:
-      <input id="q" type="search" placeholder="filter by title…" />
-    </label>
-    <label><input type="checkbox" id="futureOnly" checked /> Future only</label>
-    <span id="count" class="badge">0 events</span>
-    <a id="rawLink" class="badge" href="#" target="_blank" rel="noopener">open report.json</a>
+
+      <label for="search">Search title/location:</label>
+      <input id="search" type="text" placeholder="Type to filter…" style="background:#0b0d12;color:var(--fg);border:1px solid #2a2f3a;border-radius:8px;padding:8px 10px;min-width:260px" />
+
+      <div class="spacer"></div>
+
+      <button id="reloadBtn">Reload</button>
+    </div>
+
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Location</th>
+          <th>URL</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="5" class="small">Loading…</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <table id="tbl">
-    <thead>
-      <tr>
-        <th style="width: 180px;">Date</th>
-        <th>Title</th>
-        <th style="width: 260px;">Location</th>
-        <th style="width: 360px;">URL</th>
-        <th style="width: 210px;">Source</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
   <script>
-    const $ = (id) => document.getElementById(id);
-    const meta = $('meta');
-    const errBox = $('errors');
-    const sourceSel = $('sourceFilter');
-    const q = $('q');
-    const futureOnly = $('futureOnly');
-    const countEl = $('count');
-    const tbody = document.querySelector('#tbl tbody');
-    const rawLink = $('rawLink');
+    const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Chicago";
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const statusEl = $("#status");
+    const rowsEl = $("#rows");
+    const totalEl = $("#totalEvents");
+    const sourcesEl = $("#sources");
+    const sourcesProcessedEl = $("#sourcesProcessed");
+    const filterEl = $("#sourceFilter");
+    const searchEl = $("#search");
+    const reloadBtn = $("#reloadBtn");
 
-    function addError(msg) {
-      errBox.hidden = false;
-      errBox.innerHTML += (errBox.innerHTML ? '<br>' : '') + msg;
-      console.error(msg);
-    }
+    let REPORT = null;
+    let ALL_EVENTS = [];
+    let SOURCE_MAP = new Map();
 
-    function candidateReportUrls() {
-      const { origin, pathname } = window.location;
-      const base = pathname.endsWith('/') ? pathname : pathname.replace(/\/[^/]*$/, '/');
-      return [
-        './report.json',
-        base + 'report.json',
-        origin + base + 'report.json',
-      ];
-    }
-
-    function fmtDate(iso) {
+    function niceDate(s) {
+      if (!s) return "";
       try {
-        const d = new Date(iso);
-        if (Number.isNaN(+d)) return iso || '';
-        return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-      } catch { return iso || ''; }
+        const dt = new Date(s.replace(" ", "T") + "Z"); // treat as UTC if formatted "YYYY-MM-DD HH:mm:ss"
+        return new Intl.DateTimeFormat(undefined, {
+          year: "numeric", month: "short", day: "2-digit",
+          hour: "2-digit", minute: "2-digit", hour12: false, timeZone: TZ
+        }).format(dt);
+      } catch { return s; }
     }
 
-    function normalizeEvents(report) {
-      if (!report || typeof report !== 'object') return [];
-      if (Array.isArray(report.events)) return report.events;
+    function buildEventsFromReport(report) {
+      // Accept any of these shapes:
+      // 1) Array root
+      if (Array.isArray(report)) return report;
 
-      if (report.events_by_source && typeof report.events_by_source === 'object') {
-        const all = [];
-        for (const [sid, arr] of Object.entries(report.events_by_source)) {
-          if (!Array.isArray(arr)) continue;
-          for (const ev of arr) {
-            if (ev && typeof ev === 'object') {
-              if (!ev.source_id) ev.source_id = sid;
-              all.push(ev);
-            }
+      // 2) events (array) or items (array)
+      if (Array.isArray(report.events)) return report.events;
+      if (Array.isArray(report.items)) return report.items;
+
+      // 3) events_by_source (object of arrays)
+      if (report && typeof report.events_by_source === "object") {
+        const out = [];
+        for (const [src, arr] of Object.entries(report.events_by_source)) {
+          if (Array.isArray(arr)) {
+            for (const ev of arr) out.push({ ...ev, calendar: ev.calendar || src, source: ev.source || src });
           }
         }
-        return all;
+        return out;
       }
 
-      if (Array.isArray(report)) return report;
-      if (Array.isArray(report.items)) return report.items;
+      // 4) events_preview (array) – the format you currently publish
+      if (Array.isArray(report.events_preview)) return report.events_preview;
+
       return [];
     }
 
-    function getStart(ev) {
-      // Added start_utc to support your current report.json
-      return ev.start_utc || ev.start || ev.dtstart || ev.date || '';
-    }
-
-    function extractSources(evts) {
-      const ids = new Set();
-      for (const ev of evts) {
-        ids.add(ev.source_id || ev.source || ev.calendar || '');
+    function buildSourceMap(report) {
+      const map = new Map();
+      const logs = Array.isArray(report?.source_logs) ? report.source_logs : [];
+      for (const s of logs) {
+        const id = s.id || (s.name || "").toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, "");
+        map.set(id, {
+          id,
+          name: s.name,
+          count: s.count || 0,
+          ok: !!s.ok,
+          type: s.type,
+          url: s.url,
+          error: s.error || ""
+        });
       }
-      ids.delete('');
-      return [...ids].sort();
+      // Also learn ids from events
+      for (const ev of ALL_EVENTS) {
+        const cid = (ev.source_id || ev.calendar_id || ev.calendar || ev.source || "").toString().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9\-]/g,"");
+        const cname = ev.calendar || ev.source || cid || "Unknown";
+        if (cid && !map.has(cid)) map.set(cid, { id: cid, name: cname, count: 0, ok: true, type: "unknown", url: "", error: "" });
+      }
+      // Recount
+      for (const v of map.values()) v.count = 0;
+      for (const ev of ALL_EVENTS) {
+        const cid = (ev.source_id || ev.calendar_id || ev.calendar || ev.source || "").toString().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9\-]/g,"");
+        if (map.has(cid)) map.get(cid).count++;
+      }
+      return map;
     }
 
-    function render(events) {
-      const term = (q.value || '').toLowerCase();
-      const sel = sourceSel.value;
-      const today = new Date(); today.setHours(0,0,0,0);
+    function renderSourceCards() {
+      sourcesEl.innerHTML = "";
+      const items = Array.from(SOURCE_MAP.values());
+      items.sort((a,b) => a.name.localeCompare(b.name));
+      for (const s of items) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="src">
+            <span class="pill">${s.type}</span>
+            <b>${s.name || s.id}</b>
+          </div>
+          <div class="small">Events: <b>${s.count}</b> • Status: 
+            <b class="${s.ok ? 'ok':'bad'}">${s.ok ? 'OK' : 'ERROR'}</b>
+          </div>
+          <div class="small">Source URL: ${s.url ? `<a href="${s.url}" target="_blank" rel="nofollow noopener">${s.url}</a>` : '—'}</div>
+          <div class="small">${s.error ? `<span class="bad">${s.error}</span>` : ''}</div>
+          <div class="small">ICS: <a href="by-source/${s.id}.ics">by-source/${s.id}.ics</a></div>
+        `;
+        sourcesEl.appendChild(card);
+      }
+      // Rebuild filter options
+      const cur = filterEl.value;
+      filterEl.innerHTML = `<option value="__ALL__">All sources</option>` + 
+        items.map(s => `<option value="${s.id}">${s.name || s.id} (${s.count})</option>`).join("");
+      if ([...filterEl.options].some(o => o.value === cur)) filterEl.value = cur;
+    }
 
-      const filtered = events.filter(ev => {
-        const title = (ev.title || '').toLowerCase();
-        const sid = ev.source_id || ev.source || ev.calendar || '';
-        if (sel !== 'ALL' && sid !== sel) return false;
-        if (term && !title.includes(term)) return false;
+    function renderTable() {
+      const want = filterEl.value;
+      const q = (searchEl.value || "").trim().toLowerCase();
+      const filtered = ALL_EVENTS.filter(ev => {
+        const idGuess = (ev.source_id || ev.calendar_id || ev.calendar || ev.source || "").toString().toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9\-]/g,"");
+        const okSrc = want === "__ALL__" ? true : idGuess === want;
+        const blob = `${ev.title||""} ${ev.location||""} ${ev.url||""}`.toLowerCase();
+        const okQ = !q || blob.includes(q);
+        return okSrc && okQ;
+      }).sort((a,b) => (a.start_utc||"").localeCompare(b.start_utc||""));
 
-        if (futureOnly.checked) {
-          const s = getStart(ev);
-          const d = new Date(s);
-          if (!s || Number.isNaN(+d) || d < today) return false;
-        }
-        return true;
-      }).sort((a, b) => {
-        const ad = new Date(getStart(a) || 0);
-        const bd = new Date(getStart(b) || 0);
-        return ad - bd;
-      });
+      rowsEl.innerHTML = "";
+      if (filtered.length === 0) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="5" class="small">No events match the current filters.</td>`;
+        rowsEl.appendChild(tr);
+        return;
+      }
 
-      tbody.innerHTML = '';
       for (const ev of filtered) {
-        const tr = document.createElement('tr');
-
-        const tdDate = document.createElement('td');
-        tdDate.textContent = fmtDate(getStart(ev));
-        tr.appendChild(tdDate);
-
-        const tdTitle = document.createElement('td');
-        tdTitle.textContent = ev.title || '(no title)';
-        tr.appendChild(tdTitle);
-
-        const tdLoc = document.createElement('td');
-        tdLoc.textContent = ev.location || '';
-        tr.appendChild(tdLoc);
-
-        const tdUrl = document.createElement('td');
-        if (ev.url) {
-          const a = document.createElement('a'); a.href = ev.url; a.textContent = ev.url; a.target = '_blank'; a.rel = 'noopener';
-          tdUrl.appendChild(a);
-        }
-        tr.appendChild(tdUrl);
-
-        const tdSrc = document.createElement('td');
-        tdSrc.textContent = ev.source_id || ev.source || ev.calendar || '';
-        tr.appendChild(tdSrc);
-
-        tbody.appendChild(tr);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="white-space:nowrap">${niceDate(ev.start_utc)}</td>
+          <td>${ev.title ? ev.title : ""}</td>
+          <td>${ev.location ? ev.location : ""}</td>
+          <td>${ev.url ? `<a href="${ev.url}" target="_blank" rel="nofollow noopener">Open</a>` : ""}</td>
+          <td>${ev.calendar || ev.source || ""}</td>
+        `;
+        rowsEl.appendChild(tr);
       }
-
-      countEl.textContent = `${filtered.length} events`;
     }
 
     async function loadReport() {
-      const candidates = candidateReportUrls();
-      let lastError = null;
-      for (const url of candidates) {
-        try {
-          const res = await fetch(url, { cache: 'no-store' });
-          if (!res.ok) { lastError = `HTTP ${res.status} for ${url}`; continue; }
-          const json = await res.json();
-
-          const when = json.run_started_utc || json.generated_at || '';
-          const srcs = json.sources_processed != null ? ` • sources: ${json.sources_processed}` : '';
-          const total = json.total_events != null ? ` • events: ${json.total_events}` : '';
-          meta.textContent = `Run started: ${when || '(unknown)'}${srcs}${total}`;
-
-          rawLink.href = url;
-
-          const events = normalizeEvents(json);
-          if (!events.length) addError('report.json loaded but contains 0 normalized events');
-
-          const ids = extractSources(events);
-          for (const id of ids) {
-            const opt = document.createElement('option');
-            opt.value = id; opt.textContent = id;
-            sourceSel.appendChild(opt);
-          }
-          render(events);
-
-          sourceSel.onchange = () => render(events);
-          q.oninput = () => render(events);
-          futureOnly.onchange = () => render(events);
-          return;
-        } catch (e) {
-          lastError = `Failed parsing ${url}: ${e.message || e}`;
-        }
+      statusEl.textContent = "Loading report.json…";
+      rowsEl.innerHTML = `<tr><td colspan="5" class="small">Loading…</td></tr>`;
+      try {
+        const resp = await fetch(`report.json?ts=${Date.now()}`, { cache: "no-store" });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        REPORT = await resp.json();
+      } catch (e) {
+        statusEl.innerHTML = `Failed to load report.json: <span class="bad">${e.message}</span>`;
+        rowsEl.innerHTML = `<tr><td colspan="5" class="small">Fetch error.</td></tr>`;
+        return;
       }
-      addError(lastError || 'report.json not found via any known path.');
-      meta.textContent = 'Unable to load report.json – see error above.';
+
+      ALL_EVENTS = buildEventsFromReport(REPORT);
+      SOURCE_MAP = buildSourceMap(REPORT);
+
+      const total = Array.isArray(REPORT?.events) ? REPORT.events.length
+                   : typeof REPORT?.total_events === "number" ? REPORT.total_events
+                   : ALL_EVENTS.length;
+
+      totalEl.textContent = total.toString();
+      sourcesProcessedEl.textContent = (REPORT?.sources_processed ?? SOURCE_MAP.size).toString();
+
+      renderSourceCards();
+
+      if (ALL_EVENTS.length === 0) {
+        statusEl.innerHTML = `report.json loaded but contains <b>0</b> normalized events.`;
+      } else {
+        statusEl.textContent = `Loaded ${ALL_EVENTS.length} events (showing table below).`;
+      }
+      renderTable();
     }
+
+    filterEl.addEventListener("change", renderTable);
+    searchEl.addEventListener("input", renderTable);
+    reloadBtn.addEventListener("click", loadReport);
 
     loadReport();
   </script>
