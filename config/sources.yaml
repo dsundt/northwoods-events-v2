@@ -1,42 +1,34 @@
-# v2 sources.yaml — strict, minimal YAML.
-# All v1 sources represented (TEC, GrowthZone, ICS, and now Simpleview).
-# Toggle enabled: true/false as needed.
-
+version: "2.0"
 sources:
-  - name: Boulder Junction (TEC)
-    type: tec_html
-    url: https://boulderjct.org/events/?eventDisplay=list
-    enabled: true
-    calendar: Boulder Junction
+  - name: "Boulder Junction (TEC)"
+    type: "tec_rest"
+    url: "https://boulderjct.org/"
 
-  - name: Eagle River Chamber (TEC)
-    type: tec_html
-    url: https://eagleriver.org/events/?eventDisplay=list
-    enabled: true
-    calendar: Eagle River
+  - name: "Eagle River Chamber (TEC)"
+    type: "tec_rest"
+    url: "https://eagleriver.org/"
 
-  - name: St. Germain Chamber (TEC)
-    type: tec_html
-    url: https://st-germain.com/events/?eventDisplay=list
-    enabled: true
-    calendar: St. Germain
+  - name: "St. Germain Chamber (TEC)"
+    type: "tec_rest"
+    url: "https://st-germain.com/"
 
-  - name: Rhinelander Chamber (GrowthZone)
-    type: growthzone_html
-    url: https://business.rhinelanderchamber.com/events/search
-    enabled: true
-    calendar: Rhinelander
+  - name: "Rhinelander Chamber (GrowthZone)"
+    type: "growthzone_html"
+    url: "https://business.rhinelanderchamber.com/events/calendar"
 
-  # Minocqua Visitors Bureau uses Simpleview. We parse the list view directly.
-  - name: Let’s Minocqua (Simpleview)
-    type: simpleview_html
-    url: https://www.minocqua.org/things-to-do/events/?view=list&perpage=100
-    enabled: true
-    calendar: Minocqua
+  - name: "Let's Minocqua (Simpleview)"
+    type: "simpleview_html"
+    url: "https://www.minocqua.org/events/"
 
-  # v1 ICS for Presque Isle returned 404 in your last run; keep disabled until a valid endpoint is confirmed.
-  - name: Presque Isle Chamber (ICS)
-    type: ics
-    url: https://presqueisle.com/events.ics
-    enabled: false
-    calendar: Presque Isle
+  - name: "Vilas County Tourism (TEC)"
+    type: "tec_rest"
+    url: "https://vilaswi.com/"
+
+  - name: "Oneida County Tourism (TEC)"
+    type: "tec_rest"
+    url: "https://oneidacountywi.com/"
+
+  # Re-add if ICS endpoint becomes valid
+  # - name: "Presque Isle Chamber (ICS)"
+  #   type: "ics"
+  #   url: "https://presqueisle.com/events.ics"
