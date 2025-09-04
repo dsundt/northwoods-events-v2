@@ -9,22 +9,18 @@
     body { font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
     h1 { margin: 0 0 6px; }
     .muted { color: #666; }
-    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 12px 0 16px; }
-    select, input { padding: 6px 8px; }
+    .err { background: #fff3f3; border: 1px solid #e6b8b8; color: #a11; padding: 10px; border-radius: 6px; margin: 12px 0; }
     .badge { display:inline-block; padding:2px 6px; border:1px solid #ccc; border-radius:6px; font-size:12px; background:#f7f7f7; }
+    .toolbar { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; margin: 12px 0 16px; }
     table { border-collapse: collapse; width: 100%; }
     th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
     th { background: #f6f6f6; position: sticky; top: 0; z-index: 1; }
-    .err { background: #fff3f3; border: 1px solid #e6b8b8; color: #a11; padding: 10px; border-radius: 6px; margin: 12px 0; }
-    .ok { background: #f3fff5; border: 1px solid #b8e6c0; color: #1a7f37; padding: 10px; border-radius: 6px; margin: 12px 0; }
-    .toolbar { display:flex; gap: 10px; align-items:center; flex-wrap: wrap; }
     a { word-break: break-all; }
   </style>
 </head>
 <body>
   <h1>Northwoods Events</h1>
   <div id="meta" class="muted">Loading…</div>
-
   <div id="errors" hidden class="err"></div>
 
   <div class="toolbar">
@@ -65,15 +61,19 @@
     const tbody = document.querySelector('#tbl tbody');
     const rawLink = $('rawLink');
 
-    // Be robust on GitHub Pages pathing: try several candidates
+    function addError(msg) {
+      errBox.hidden = false;
+      errBox.innerHTML += (errBox.innerHTML ? '<br>' : '') + msg;
+      console.error(msg);
+    }
+
     function candidateReportUrls() {
       const { origin, pathname } = window.location;
       const base = pathname.endsWith('/') ? pathname : pathname.replace(/\/[^/]*$/, '/');
-      const repoBase = base; // typically "/northwoods-events-v2/"
       return [
         './report.json',
-        repoBase + 'report.json',
-        origin + repoBase + 'report.json',
+        base + 'report.json',
+        origin + base + 'report.json',
       ];
     }
 
@@ -85,16 +85,6 @@
       } catch { return iso || ''; }
     }
 
-    function addError(msg) {
-      errBox.hidden = false;
-      errBox.innerHTML += (errBox.innerHTML ? '<br>' : '') + msg;
-      console.error(msg);
-    }
-
-    // Accept multiple report shapes:
-    // 1) { events: [...] }
-    // 2) { events_by_source: { "<id>": [...] } }
-    // 3) legacy shapes – try best-effort normalization
     function normalizeEvents(report) {
       if (!report || typeof report !== 'object') return [];
       if (Array.isArray(report.events)) return report.events;
@@ -113,21 +103,22 @@
         return all;
       }
 
-      // Some builds only shipped a flat array
       if (Array.isArray(report)) return report;
-
-      // Fallback: look for "items"
       if (Array.isArray(report.items)) return report.items;
-
       return [];
+    }
+
+    function getStart(ev) {
+      // Added start_utc to support your current report.json
+      return ev.start_utc || ev.start || ev.dtstart || ev.date || '';
     }
 
     function extractSources(evts) {
       const ids = new Set();
       for (const ev of evts) {
-        if (ev.source_id) ids.add(ev.source_id);
-        else if (ev.source) ids.add(ev.source);
+        ids.add(ev.source_id || ev.source || ev.calendar || '');
       }
+      ids.delete('');
       return [...ids].sort();
     }
 
@@ -138,19 +129,19 @@
 
       const filtered = events.filter(ev => {
         const title = (ev.title || '').toLowerCase();
-        const sid = ev.source_id || ev.source || '';
+        const sid = ev.source_id || ev.source || ev.calendar || '';
         if (sel !== 'ALL' && sid !== sel) return false;
         if (term && !title.includes(term)) return false;
 
         if (futureOnly.checked) {
-          const candidate = ev.start || ev.dtstart || ev.date || '';
-          const d = new Date(candidate);
-          if (!candidate || Number.isNaN(+d) || d < today) return false;
+          const s = getStart(ev);
+          const d = new Date(s);
+          if (!s || Number.isNaN(+d) || d < today) return false;
         }
         return true;
       }).sort((a, b) => {
-        const ad = new Date(a.start || a.dtstart || a.date || 0);
-        const bd = new Date(b.start || b.dtstart || b.date || 0);
+        const ad = new Date(getStart(a) || 0);
+        const bd = new Date(getStart(b) || 0);
         return ad - bd;
       });
 
@@ -159,7 +150,7 @@
         const tr = document.createElement('tr');
 
         const tdDate = document.createElement('td');
-        tdDate.textContent = fmtDate(ev.start || ev.dtstart || ev.date);
+        tdDate.textContent = fmtDate(getStart(ev));
         tr.appendChild(tdDate);
 
         const tdTitle = document.createElement('td');
@@ -178,7 +169,7 @@
         tr.appendChild(tdUrl);
 
         const tdSrc = document.createElement('td');
-        tdSrc.textContent = ev.source_id || ev.source || '';
+        tdSrc.textContent = ev.source_id || ev.source || ev.calendar || '';
         tr.appendChild(tdSrc);
 
         tbody.appendChild(tr);
@@ -196,7 +187,6 @@
           if (!res.ok) { lastError = `HTTP ${res.status} for ${url}`; continue; }
           const json = await res.json();
 
-          // Show run meta if present
           const when = json.run_started_utc || json.generated_at || '';
           const srcs = json.sources_processed != null ? ` • sources: ${json.sources_processed}` : '';
           const total = json.total_events != null ? ` • events: ${json.total_events}` : '';
@@ -206,7 +196,7 @@
 
           const events = normalizeEvents(json);
           if (!events.length) addError('report.json loaded but contains 0 normalized events');
-          // Populate source dropdown
+
           const ids = extractSources(events);
           for (const id of ids) {
             const opt = document.createElement('option');
@@ -215,12 +205,10 @@
           }
           render(events);
 
-          // Attach for live filtering
           sourceSel.onchange = () => render(events);
           q.oninput = () => render(events);
           futureOnly.onchange = () => render(events);
-
-          return; // success
+          return;
         } catch (e) {
           lastError = `Failed parsing ${url}: ${e.message || e}`;
         }
