@@ -1,110 +1,97 @@
 # src/parsers/tec_rest.py
 from __future__ import annotations
 
-import json
-import re
-from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Tuple
-from urllib.parse import urlparse, urlunparse
+import datetime as dt
+from typing import List, Dict, Any, Optional
+from urllib.parse import urljoin, urlencode
 
+from bs4 import BeautifulSoup  # installed but not used; kept for parity
 import requests
-from dateutil import parser as dtp
 
+def _date_only(s: str) -> str:
+    # Accept "YYYY-MM-DD" or "YYYY-MM-DD HH:MM:SS" and always return date only.
+    return s[:10]
 
-def _to_origin(site_url: str) -> str:
-    """
-    Normalize any TEC site/page URL to its scheme://host origin.
-    """
-    u = urlparse(site_url)
-    return urlunparse((u.scheme or "https", u.netloc, "", "", "", ""))
-
-
-def _api_url(origin: str, page: int, start_date: str, end_date: str) -> str:
-    return f"{origin}/wp-json/tribe/events/v1/events?start_date={start_date}&end_date={end_date}&per_page=50&page={page}"
-
-
-def _request_json(url: str) -> Dict[str, Any]:
-    r = requests.get(url, timeout=30)
-    r.raise_for_status()
-    return r.json()
-
-
-def _normalize_event(e: Dict[str, Any], source_name: str, source_id: str) -> Dict[str, Any]:
-    # TEC REST returns ISO strings; they often include timezone offsets.
-    def to_utc(s: str | None) -> str | None:
-        if not s:
-            return None
+def _fmt_dt(s: Optional[str]) -> Optional[str]:
+    if not s:
+        return None
+    # TEC REST commonly returns ISO 8601 with TZ. Normalize to "YYYY-MM-DD HH:MM:SS"
+    try:
+        # Handle strings like "2025-09-06 10:00:00" or ISO with timezone
         try:
-            return dtp.parse(s).astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-        except Exception:
-            return None
+            d = dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
+        except ValueError:
+            # Fallback: just slice safely
+            return s[:19] if len(s) >= 19 else s
+        return d.astimezone(dt.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return s[:19] if len(s) >= 19 else s
 
-    title = (e.get("title") or {}).get("rendered") or e.get("title") or ""
-    url = e.get("url") or e.get("link")
-    venue = (e.get("venue") or {}).get("address") or (e.get("venue") or {}).get("venue") or None
-    start_utc = to_utc(e.get("start_date"))
-    end_utc = to_utc(e.get("end_date"))
+def _events_from_page(payload: Dict[str, Any], source_name: str) -> List[Dict[str, Any]]:
+    items = payload.get("events") or []
+    out: List[Dict[str, Any]] = []
+    for ev in items:
+        eid = ev.get("id") or ev.get("uid") or ev.get("slug") or ev.get("url")
+        title = (ev.get("title") or {}).get("rendered") if isinstance(ev.get("title"), dict) else ev.get("title")
+        url = ev.get("url") or ev.get("website_url") or ev.get("permalink")
+        venue = ev.get("venue") or {}
+        location = None
+        if isinstance(venue, dict):
+            # Prefer address line if provided
+            location = venue.get("address") or venue.get("venue") or venue.get("city")
+        start_raw = ev.get("start_date") or ev.get("start") or ev.get("startDate") or ev.get("start_date_details", {}).get("date")
+        end_raw = ev.get("end_date") or ev.get("end") or ev.get("endDate") or ev.get("end_date_details", {}).get("date")
 
-    # TEC's numeric id is stable; combine with repo tag for UID
-    uid = f"{e.get('id', 'evt')}@northwoods-v2"
+        out.append({
+            "uid": f"{eid}@northwoods-v2",
+            "title": title or "(untitled)",
+            "start_utc": _fmt_dt(start_raw) or None,
+            "end_utc": _fmt_dt(end_raw) or None,
+            "url": url,
+            "location": location,
+            "source": source_name,
+            "calendar": source_name,
+        })
+    return out
 
-    return {
-        "uid": uid,
-        "title": title.strip(),
-        "start_utc": start_utc,
-        "end_utc": end_utc,
-        "url": url,
-        "location": venue,
-        "source": source_name,
-        "calendar": source_name,
-        "source_id": source_id,
+def _build_api_url(root: str, start_date: str, end_date: str) -> str:
+    # root is like "https://boulderjct.org/".
+    base = urljoin(root, "/wp-json/tribe/events/v1/events")
+    qs = {
+        "start_date": _date_only(start_date),
+        "end_date": _date_only(end_date),
+        "per_page": 50,
+        "page": 1,
     }
+    return f"{base}?{urlencode(qs)}"
 
-
-def fetch_tec_rest(url: str, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+def fetch_tec_rest(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
     """
-    Pulls events via The Events Calendar REST API.
-
-    Args:
-        url: Any page on the TEC site (home, /events/, etc.)
-        start_date: YYYY-MM-DD
-        end_date:   YYYY-MM-DD
-
-    Returns:
-        List of normalized event dicts.
+    Fetch via The Events Calendar REST API.
+    Expects source['url'] to be the site root (e.g., 'https://boulderjct.org/').
     """
-    origin = _to_origin(url)
+    root = source.get("url")
+    name = source.get("name") or source.get("id") or "Unknown TEC Site"
+    if not root:
+        return []
+
+    all_events: List[Dict[str, Any]] = []
     page = 1
-    events: List[Dict[str, Any]] = []
-    source_name = None
-    source_id = None  # filled by main.py after normalization; safe to keep placeholder now
-
     while True:
-        api = _api_url(origin, page, start_date, end_date)
-        data = _request_json(api)
-        items = data.get("events") or []
-        if not items:
-            break
-        for e in items:
-            ev = _normalize_event(e, source_name or "", source_id or "")
-            events.append(ev)
+        api_url = _build_api_url(root, start_date, end_date).replace("page=1", f"page={page}")
+        resp = requests.get(api_url, timeout=30)
+        resp.raise_for_status()
+        payload = resp.json()
+        batch = _events_from_page(payload, name)
+        all_events.extend(batch)
+        # TEC REST includes "total_pages" or simply returns fewer than per_page at the end
+        total_pages = payload.get("total_pages")
+        if total_pages:
+            if page >= int(total_pages):
+                break
+        else:
+            if len(batch) < 50:
+                break
         page += 1
-        if not data.get("rest_url") and len(items) < 50:
-            # Conservative exit if pagination hints are missing
-            break
-        if page > 20:  # hard safety cap
-            break
 
-    return events
-
-
-def fetch_tec_html(url: str, start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    Wrapper for historical 'tec_html' type.
-
-    Most TEC sites expose REST; prefer that. We derive origin from the HTML/list
-    URL and call the REST loader to keep behavior identical.
-
-    Keeping this ensures old configs that still say 'tec_html' continue working.
-    """
-    return fetch_tec_rest(url, start_date, end_date)
+    return all_events
