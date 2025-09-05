@@ -1,164 +1,108 @@
 # src/parsers/growthzone_html.py
-"""
-GrowthZone HTML parser (Rhinelander).
-
-Fixes:
-- Signature now (source, start_date, end_date).
-- More robust discovery of event detail links.
-- Stronger parsing of the "Date and Time" block (varies by tenant/theme).
-- Filters within requested window.
-"""
-
 from __future__ import annotations
-import re
+
+import datetime as dt
+from typing import List, Dict, Any, Optional
 from urllib.parse import urljoin
-from dateutil import parser as dtparse
+
 import requests
 from bs4 import BeautifulSoup
 
+def _to_iso(dt_s: Optional[str]) -> Optional[str]:
+    if not dt_s:
+        return None
+    dt_s = dt_s.strip()
+    # GrowthZone often exposes ISO-ish strings in time/@datetime or data-* attrs
+    try:
+        d = dt.datetime.fromisoformat(dt_s.replace("Z", "+00:00"))
+        return d.strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return None
 
-def _to_iso_naive(dt_obj):
-    return dt_obj.replace(tzinfo=None).strftime("%Y-%m-%d %H:%M:%S") if dt_obj else None
-
-
-def _normalize_event(source, title, start_dt, end_dt, url, location):
-    uid = f"{abs(hash(url)) % 10**8}@northwoods-v2"
+def fetch_growthzone_html(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+    """
+    Parse GrowthZone 'events' pages (e.g., https://business.rhinelanderchamber.com/events/).
+    We look for cards with time elements or data attributes that provide start/end.
+    """
+    url = source.get("url")
     name = source.get("name") or source.get("id") or "GrowthZone"
-    return {
-        "uid": uid,
-        "title": title or "Untitled",
-        "start_utc": _to_iso_naive(start_dt),
-        "end_utc": _to_iso_naive(end_dt or start_dt),
-        "url": url,
-        "location": (location or "").strip() or None,
-        "source": name,
-        "calendar": name,
-    }
-
-
-def _extract_datetime_text(soup):
-    # Look for a heading or label that says "Date and Time" (common on GrowthZone)
-    candidates = soup.find_all(text=re.compile(r"Date\s+and\s+Time", re.I))
-    for t in candidates:
-        parent = t.parent
-        # Try the next sibling blocks first (details often sit there)
-        for node in [parent.find_next_sibling(), parent.find_next()]:
-            if node:
-                txt = node.get_text(" ", strip=True)
-                if txt:
-                    return txt
-    # Fallback: search the whole body text for a likely date line
-    body = soup.get_text(" ", strip=True)
-    # Look for weekday Month DD, YYYY ... pattern
-    m = re.search(r"(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\w*\s+[A-Za-z]{3,9}\s+\d{1,2},\s+\d{4}.*", body)
-    if m:
-        return m.group(0)
-    return None
-
-
-def _parse_range(dt_text):
-    """
-    Parse a date range like "Thu Sep 4, 2025 8:00 AM — 5:00 PM CDT"
-    or "Sep 4, 2025 8:00 AM - Sep 4, 2025 5:00 PM".
-    """
-    if not dt_text:
-        return None, None
-
-    text = re.sub(r"\s+", " ", dt_text)
-    text = text.replace("—", "-")  # normalize em dashes
-    # remove TZ abbrevs that confuse parser
-    text = re.sub(r"\b([A-Z]{2,4})\b", "", text)
-
-    # Split on range dash or " to "
-    parts = re.split(r"\s+-\s+|\s+to\s+", text, flags=re.I)
-    try:
-        if len(parts) == 1:
-            start = dtparse.parse(parts[0], fuzzy=True)
-            return start, None
-        elif len(parts) >= 2:
-            start = dtparse.parse(parts[0], fuzzy=True)
-            end_txt = parts[1]
-            # if end lacks a date, inherit from start
-            if re.search(r"\d{1,2}:\d{2}", end_txt) and not re.search(r"\d{4}", end_txt):
-                end_txt = f"{start.strftime('%B %d, %Y')} {end_txt}"
-            end = dtparse.parse(end_txt, fuzzy=True)
-            return start, end
-    except Exception:
-        return None, None
-    return None, None
-
-
-def fetch_growthzone_html(source, start_date, end_date):
-    base_url = (source.get("url") or "").strip()
-    if not base_url:
+    if not url:
         return []
 
-    session = requests.Session()
-    session.headers.update({"User-Agent": "northwoods-events-v2 (+github)"})
+    out: List[Dict[str, Any]] = []
+    page_url = url
+    seen = set()
 
-    win_start = dtparse.parse(start_date).replace(tzinfo=None) if start_date else None
-    win_end = dtparse.parse(end_date).replace(tzinfo=None) if end_date else None
+    # Crawl a few pages by following "Next" if present
+    for page in range(1, 5):
+        resp = requests.get(page_url, timeout=30)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
 
-    try:
-        r = session.get(base_url, timeout=30)
-        r.raise_for_status()
-    except Exception:
-        return []
+        cards = soup.select("[itemtype*='Event'], .gz-event, .chamber-master-event, .card")
+        if not cards:
+            cards = soup.select(".event, .event-list-item")
 
-    soup = BeautifulSoup(r.text, "html.parser")
+        for c in cards:
+            # Title + link
+            a = c.select_one("a[href*='/events/'], a.event-title, h3 a, .card-title a")
+            title = (a.get_text(strip=True) if a else None) or c.select_one("h3, h4")
+            title = title.get_text(strip=True) if hasattr(title, "get_text") else (title or "(untitled)")
+            href = a.get("href") if a and a.has_attr("href") else None
+            href = urljoin(page_url, href) if href else None
+            eid = href or title
 
-    # Collect candidate detail links
-    links = set()
-    # GrowthZone often uses /events/details/ or /events/<slug>/
-    for a in soup.select('a[href*="/events/"]'):
-        href = a.get("href") or ""
-        full = urljoin(base_url, href)
-        if "/events/" in full and "/calendar" not in full and "#/" not in full:
-            links.add(full)
+            # Datetimes
+            start = None
+            end = None
+            # Prefer <time datetime="...">
+            t_start = c.select_one("time[datetime]")
+            if t_start and t_start.has_attr("datetime"):
+                start = _to_iso(t_start["datetime"])
+            t_end = c.select_one("time[datetime].end, time.end")
+            if t_end and t_end.has_attr("datetime"):
+                end = _to_iso(t_end["datetime"])
 
-    detail_urls = list(links)[:250]
+            # Fallback: GrowthZone sometimes uses data-* on container
+            if not start:
+                for attr in ("data-start", "data-startdate", "data-start-time", "data-begin"):
+                    if c.has_attr(attr):
+                        start = _to_iso(c[attr])
+                        if start:
+                            break
+            if not end:
+                for attr in ("data-end", "data-enddate", "data-end-time", "data-finish"):
+                    if c.has_attr(attr):
+                        end = _to_iso(c[attr])
+                        if end:
+                            break
 
-    def in_window(dtobj):
-        if not dtobj:
-            return True
-        n = dtobj.replace(tzinfo=None)
-        if win_start and n < win_start:
-            return False
-        if win_end and n > win_end:
-            return False
-        return True
+            # Location
+            loc = None
+            loc_el = c.select_one("[itemprop='location'], .location, .event-location, .card-subtitle")
+            if loc_el:
+                loc = loc_el.get_text(" ", strip=True)
 
-    events = []
-    for url in detail_urls:
-        try:
-            d = session.get(url, timeout=30)
-            d.raise_for_status()
-            ds = BeautifulSoup(d.text, "html.parser")
-
-            title_tag = ds.find("h1") or ds.find("h2") or ds.find("title")
-            title = title_tag.get_text(" ", strip=True) if title_tag else "Untitled"
-
-            dt_text = _extract_datetime_text(ds)
-            start_dt, end_dt = _parse_range(dt_text)
-
-            # If no dates found, skip (this was your prior symptom)
-            if start_dt and not in_window(start_dt):
+            uid = f"{eid}@northwoods-v2"
+            if uid in seen:
                 continue
+            seen.add(uid)
 
-            # Location heuristics
-            location = None
-            loc_hdrs = ds.find_all(text=re.compile(r"Location", re.I))
-            for hdr in loc_hdrs:
-                parent = hdr.parent
-                for node in [parent.find_next_sibling(), parent.find_next()]:
-                    if node and node.get_text(strip=True):
-                        location = node.get_text(" ", strip=True)
-                        break
-                if location:
-                    break
+            out.append({
+                "uid": uid,
+                "title": title,
+                "start_utc": start,
+                "end_utc": end,
+                "url": href,
+                "location": loc,
+                "source": name,
+                "calendar": name,
+            })
 
-            events.append(_normalize_event(source, title, start_dt, end_dt, url, location))
-        except Exception:
-            continue
+        # Next page?
+        next_link = soup.find("a", string=lambda s: s and s.strip().lower().startswith("next"))
+        if not next_link or not next_link.has_attr("href"):
+            break
+        page_url = urljoin(page_url, next_link["href"])
 
-    return events
+    return out
