@@ -1,79 +1,60 @@
 # src/parsers/simpleview_html.py
-# Surgical fix:
-# - Update signature to (source, start_date, end_date) to stop TypeError.
-# - Simpleview listing -> detail scrape (bounded), tolerant selectors.
+# Simpleview events list parser with unified signature.
 
-from __future__ import annotations
-from typing import List, Dict, Any
+from bs4 import BeautifulSoup
+from dateutil import parser as dtparse
 from urllib.parse import urljoin
-
-from bs4 import BeautifulSoup  # type: ignore
 from src.fetch import get
 
-MAX_DETAIL_PAGES = 50
+def _text(el):
+    return (el.get_text(" ", strip=True) if el else "").strip()
 
-def _norm(s: str | None) -> str | None:
-    if not s:
+def _guess_dt(txt):
+    try:
+        return dtparse.parse(txt, fuzzy=True)
+    except Exception:
         return None
-    import re
-    return re.sub(r"\s+", " ", s).strip()
 
-def _parse_detail(url: str) -> Dict[str, Any]:
-    resp = get(url)
+def _fmt(dt):
+    return dt.strftime("%Y-%m-%d %H:%M:%S") if dt else None
+
+def fetch_simpleview_html(source, start_date=None, end_date=None, session=None):
+    base_url = source.get("url")
+    name = source.get("name", source.get("id", "Calendar"))
+    resp = get(base_url)
     soup = BeautifulSoup(resp.text, "html.parser")
 
-    # Title
-    title_node = soup.select_one("h1, .detail-intro h1, .event-title, .sv-event-title")
-    title = _norm(title_node.get_text()) if title_node else "Event"
-
-    # Date/time
-    t = soup.select_one("time[datetime]")
-    start = None
-    end = None
-    if t and t.has_attr("datetime"):
-        dt = (t["datetime"] or "").strip()
-        # normalize 'YYYY-MM-DDTHH:MM:SS±ZZ:ZZ' to 'YYYY-MM-DD HH:MM:SS'
-        start = dt.replace("T", " ").split("+")[0].split("Z")[0]
-
-    # Location
-    loc_node = soup.select_one(".address, .location, .event-details__location, .sv-event-venue, [itemprop='location']")
-    location = _norm(loc_node.get_text()) if loc_node else None
-
-    return {
-        "title": title or "Event",
-        "url": url,
-        "start_utc": start,
-        "end_utc": end,
-        "location": location,
-    }
-
-def fetch_simpleview_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None) -> List[Dict[str, Any]]:
-    """
-    Match main.py signature. Scrape listing for detail URLs, parse each detail page.
-    """
-    base = source.get("url") or ""
-    if not base:
-        return []
-
-    # 1) Fetch listing
-    resp = get(base)
-    soup = BeautifulSoup(resp.text, "html.parser")
-
-    # 2) Find event detail links (common Simpleview pattern contains '/event/' or query ?event=)
-    links: List[str] = []
-    for a in soup.select('a[href*="/event/"], a[href*="event="]'):
-        href = a.get("href") or ""
+    events = []
+    # Broad selectors for Simpleview cards:
+    # anchor for each event (often /event/…)
+    for a in soup.select('a[href*="/event/"]'):
+        href = a.get("href")
         if not href:
             continue
-        abs_url = urljoin(base, href)
-        if abs_url not in links:
-            links.append(abs_url)
+        full = urljoin(base_url, href)
+        # Title commonly near/inside the anchor or in a heading sibling
+        title = _text(a) or _text(a.find(["h2", "h3"]))
+        block = a.find_parent(["div", "li", "article"]) or soup
+        date_txt = _text(block.select_one(".date, .event-date, time, [class*='date']"))
+        start = _guess_dt(date_txt)
+        loc = _text(block.select_one(".venue, .location, [class*='venue']"))
 
-    events: List[Dict[str, Any]] = []
-    for url in links[:MAX_DETAIL_PAGES]:
-        try:
-            events.append(_parse_detail(url))
-        except Exception:
-            continue
+        evt = {
+            "uid": None,
+            "title": title or full,
+            "start_utc": _fmt(start),
+            "end_utc": None,
+            "url": full,
+            "location": loc or None,
+            "source": name,
+            "calendar": name,
+        }
+        if evt["title"]:
+            events.append(evt)
 
-    return events
+    # De-dup by URL
+    uniq = {}
+    for e in events:
+        uniq[e["url"]] = e
+    events = list(uniq.values())
+    return events, {"ok": True, "error": "", "diag": {"count": len(events)}}
