@@ -1,38 +1,46 @@
-sources:
-  - id: boulder-junction-tec
-    name: Boulder Junction (TEC)
-    type: tec_rest
-    url: https://boulderjct.org/
+# config/sources.yaml
+# Minimal, surgical adjustments based on live site inspection
 
-  - id: eagle-river-chamber-tec
-    name: Eagle River Chamber (TEC)
-    type: tec_rest
-    url: https://eagleriver.org/
+- id: boulder-junction-tec
+  name: Boulder Junction (TEC)
+  type: tec_rest
+  url: https://boulderjct.org/
+  enabled: true
 
-  - id: st-germain-chamber-tec
-    name: St. Germain Chamber (TEC)
-    type: tec_html
-    url: https://st-germain.com/
+- id: eagle-river-chamber-tec
+  name: Eagle River Chamber (TEC)
+  type: tec_rest
+  url: https://eagleriver.org/
+  enabled: true
 
-  - id: rhinelander-chamber-growthzone
-    name: Rhinelander Chamber (GrowthZone)
-    type: growthzone_html
-    url: https://business.rhinelanderchamber.com/events/
+- id: st-germain-chamber-tec
+  name: St. Germain Chamber (Eventastic on WP)
+  # Keep parser label stable to avoid file/path changes;
+  # the tec_html fetcher must auto-detect and parse Eventastic markup too.
+  type: tec_html
+  url: https://st-germain.com/events/
+  enabled: true
 
-  - id: let-s-minocqua-simpleview
-    name: Let's Minocqua (Simpleview)
-    type: simpleview_html
-    url: https://www.minocqua.org/events/
+- id: rhinelander-chamber-growthzone
+  name: Rhinelander Chamber (GrowthZone)
+  type: growthzone_html
+  url: https://business.rhinelanderchamber.com/events/
+  enabled: true
 
-  - id: vilas-county-tourism-tec
-    name: Vilas County Tourism (TEC)
-    type: tec_rest
-    url: https://vilaswi.com/
+- id: let-s-minocqua-simpleview
+  name: Let's Minocqua (Simpleview)
+  type: simpleview_html
+  url: https://www.minocqua.org/events/
+  enabled: true
 
-  # Oneida County is currently editorial/aggregated content, not a clean feed.
-  # Disable to keep the pipeline stable until a bespoke parser is added.
-  - id: oneida-county-tourism-tec
-    name: Oneida County Tourism (TEC)
-    type: tec_html
-    url: https://oneidacountywi.com/festivals-events/
-    enabled: false
+- id: vilas-county-tourism-tec
+  name: Vilas County Tourism (TEC)
+  type: tec_rest
+  url: https://vilaswi.com/
+  enabled: true
+
+- id: oneida-county-tourism
+  name: Oneida County Tourism (Aggregate page; no calendar)
+  type: disabled
+  url: https://oneidacountywi.com/festivals-events/
+  enabled: false
