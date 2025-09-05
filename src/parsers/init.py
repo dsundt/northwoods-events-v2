@@ -1,14 +1,20 @@
 # src/parsers/__init__.py
-# Minimal, explicit exports to avoid dynamic import surprises.
+from importlib import import_module
 
-from .tec_rest import fetch_tec_rest
-from .tec_html import fetch_tec_html
-from .growthzone_html import fetch_growthzone_html
-from .simpleview_html import fetch_simpleview_html
+__all__ = []
 
-__all__ = [
-    "fetch_tec_rest",
-    "fetch_tec_html",
-    "fetch_growthzone_html",
-    "fetch_simpleview_html",
-]
+def _export(public_name: str, module_name: str, attr_name: str):
+    mod = import_module(f"src.parsers.{module_name}")
+    fn = getattr(mod, attr_name, None)
+    if fn is None:
+        raise ImportError(
+            f"Failed to expose '{attr_name}' from parsers.{module_name}"
+        )
+    globals()[public_name] = fn
+    __all__.append(public_name)
+
+# Keep these stable; main.py imports from src.parsers
+_export("fetch_tec_rest", "tec_rest", "fetch_tec_rest")
+_export("fetch_tec_html", "tec_html", "fetch_tec_html")
+_export("fetch_growthzone_html", "growthzone_html", "fetch_growthzone_html")
+_export("fetch_simpleview_html", "simpleview_html", "fetch_simpleview_html")
