@@ -1,107 +1,157 @@
 # src/parsers/simpleview_html.py
+"""
+Simpleview HTML parser (Let's Minocqua).
+
+Fixes:
+- Signature (source, start_date, end_date).
+- Prefer JSON-LD @type: Event, including when embedded under @graph.
+- Robust link discovery on listing.
+- Date window filtering.
+
+If a page lacks JSON-LD, we fall back to light heuristics.
+"""
+
 from __future__ import annotations
-
 import json
-from datetime import timezone
-from typing import Any, Dict, List
-from urllib.parse import urljoin, urlparse
-
+import re
+from urllib.parse import urljoin
+from dateutil import parser as dtparse
 import requests
 from bs4 import BeautifulSoup
-from dateutil import parser as dtp
 
 
-def _to_utc(s: str | None) -> str | None:
-    if not s:
-        return None
-    try:
-        return dtp.parse(s).astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-    except Exception:
-        return None
+def _to_iso_naive(dt_obj):
+    return dt_obj.replace(tzinfo=None).strftime("%Y-%m-%d %H:%M:%S") if dt_obj else None
 
 
-def fetch_simpleview_html(url: str, start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    Simpleview list page scraper.
+def _normalize_event(source, title, start_dt, end_dt, url, location):
+    uid = f"{abs(hash(url)) % 10**8}@northwoods-v2"
+    name = source.get("name") or source.get("id") or "Simpleview"
+    return {
+        "uid": uid,
+        "title": title or "Untitled",
+        "start_utc": _to_iso_naive(start_dt),
+        "end_utc": _to_iso_naive(end_dt or start_dt),
+        "url": url,
+        "location": (location or "").strip() or None,
+        "source": name,
+        "calendar": name,
+    }
 
-    Strategy:
-      1) Prefer JSON-LD <script type="application/ld+json"> blocks (many SV sites include schema.org/Event).
-      2) Fallback to obvious card links + nearby dates.
-    """
-    r = requests.get(url, timeout=30)
-    r.raise_for_status()
-    html = r.text
-    base = "{uri.scheme}://{uri.netloc}/".format(uri=urlparse(url))
-    soup = BeautifulSoup(html, "html.parser")
 
-    events: List[Dict[str, Any]] = []
-
-    # JSON-LD
-    for tag in soup.find_all("script", type="application/ld+json"):
+def _extract_event_jsonld(soup):
+    """Return the first JSON-LD Event object found, or None."""
+    for script in soup.find_all("script", {"type": "application/ld+json"}):
         try:
-            data = json.loads(tag.string or "")
+            data = json.loads(script.string or "")
         except Exception:
             continue
 
-        def iter_ev(obj):
-            if isinstance(obj, dict):
-                if obj.get("@type") == "Event":
-                    yield obj
-                for v in obj.values():
-                    yield from iter_ev(v)
-            elif isinstance(obj, list):
-                for x in obj:
-                    yield from iter_ev(x)
+        # Direct object
+        if isinstance(data, dict):
+            if data.get("@type") in ("Event", ["Event"]):
+                return data
+            # @graph with events
+            graph = data.get("@graph")
+            if isinstance(graph, list):
+                for obj in graph:
+                    if isinstance(obj, dict) and obj.get("@type") in ("Event", ["Event"]):
+                        return obj
 
-        for e in iter_ev(data):
-            name = (e.get("name") or "").strip()
-            if not name:
+        # Array of objects
+        if isinstance(data, list):
+            for obj in data:
+                if isinstance(obj, dict) and obj.get("@type") in ("Event", ["Event"]):
+                    return obj
+    return None
+
+
+def fetch_simpleview_html(source, start_date, end_date):
+    base_url = (source.get("url") or "").strip()
+    if not base_url:
+        return []
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": "northwoods-events-v2 (+github)"})
+
+    win_start = dtparse.parse(start_date).replace(tzinfo=None) if start_date else None
+    win_end = dtparse.parse(end_date).replace(tzinfo=None) if end_date else None
+
+    try:
+        r = session.get(base_url, timeout=30)
+        r.raise_for_status()
+    except Exception:
+        return []
+
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    # Discover event detail links. Simpleview typically uses /event/<slug>/...
+    links = set()
+    for a in soup.select('a[href*="/event/"], a.m-event-card__link'):
+        href = a.get("href") or ""
+        full = urljoin(base_url, href)
+        if "/event/" in full and "#" not in full:
+            links.add(full)
+    detail_urls = list(links)[:250]
+
+    def in_window(dtobj):
+        if not dtobj:
+            return True
+        n = dtobj.replace(tzinfo=None)
+        if win_start and n < win_start:
+            return False
+        if win_end and n > win_end:
+            return False
+        return True
+
+    events = []
+    for url in detail_urls:
+        try:
+            d = session.get(url, timeout=30)
+            d.raise_for_status()
+            ds = BeautifulSoup(d.text, "html.parser")
+
+            meta = _extract_event_jsonld(ds)
+            if meta:
+                title = meta.get("name") or (ds.find("h1").get_text(" ", strip=True) if ds.find("h1") else "Untitled")
+                start_dt = dtparse.parse(meta["startDate"]) if meta.get("startDate") else None
+                end_dt = dtparse.parse(meta["endDate"]) if meta.get("endDate") else None
+                if start_dt and not in_window(start_dt):
+                    continue
+                loc = None
+                loc_obj = meta.get("location")
+                if isinstance(loc_obj, dict):
+                    loc = loc_obj.get("name") or (
+                        loc_obj.get("address", {}).get("streetAddress")
+                        if isinstance(loc_obj.get("address"), dict)
+                        else None
+                    )
+                events.append(_normalize_event(source, title, start_dt, end_dt, url, loc))
                 continue
-            loc = e.get("location")
-            location = None
-            if isinstance(loc, dict):
-                location = loc.get("name") or loc.get("address")
-            url_e = e.get("url")
-            if isinstance(url_e, list):
-                url_e = url_e[0] if url_e else None
-            if url_e:
-                url_e = urljoin(base, url_e)
-            events.append({
-                "uid": f"{(e.get('identifier') or hash(url_e)%10**8)}-sv@northwoods-v2",
-                "title": name,
-                "start_utc": _to_utc(e.get("startDate")),
-                "end_utc": _to_utc(e.get("endDate")),
-                "url": url_e,
-                "location": location,
-                "source": "",
-                "calendar": "",
-                "source_id": "",
-            })
 
-    if events:
-        return events
+            # Fallback if no JSON-LD: derive title/date from text
+            title_tag = ds.find("h1")
+            title = title_tag.get_text(" ", strip=True) if title_tag else "Untitled"
+            body = ds.get_text(" ", strip=True)
 
-    # Fallback: pick card anchors with obvious date siblings
-    for a in soup.select("a"):
-        title = a.get_text(strip=True)
-        href = a.get("href", "").strip()
-        if not title or not href:
+            # Try ISOish date first
+            start_dt = None
+            end_dt = None
+            m = re.search(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}", body)
+            if m:
+                start_dt = dtparse.parse(m.group(0))
+
+            if start_dt and not in_window(start_dt):
+                continue
+
+            # Basic location fallback
+            loc = None
+            mloc = re.search(r"(Location|Venue)\s*:\s*(.+?)\s{2,}", body)
+            if mloc:
+                loc = mloc.group(2).strip()
+
+            events.append(_normalize_event(source, title, start_dt, end_dt, url, loc))
+        except Exception:
             continue
-        href = urljoin(base, href)
-        date_el = a.find_previous("time") or a.find_next("time")
-        iso = date_el.get("datetime") if date_el and date_el.has_attr("datetime") else (date_el.get_text(strip=True) if date_el else None)
-        start_utc = _to_utc(iso)
-        if start_utc:
-            events.append({
-                "uid": f"{hash(href)%10**8}-sv@northwoods-v2",
-                "title": title,
-                "start_utc": start_utc,
-                "end_utc": None,
-                "url": href,
-                "location": None,
-                "source": "",
-                "calendar": "",
-                "source_id": "",
-            })
 
     return events
