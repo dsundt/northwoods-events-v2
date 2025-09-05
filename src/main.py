@@ -1,12 +1,14 @@
 # src/main.py
-from __future__ import annotations
+# - Loads config/sources.yaml
+# - Calls fetchers with aligned signatures
+# - Writes public/by-source/*.ics, public/combined.ics, public/report.json
+# - Tolerates ics_writer two different signatures (repo variants)
 
 import json
 import os
 import sys
-import traceback
 from datetime import datetime, timedelta
-from typing import Dict, List, Any
+from pathlib import Path
 
 import yaml
 
@@ -16,35 +18,36 @@ from src.parsers import (
     fetch_growthzone_html,
     fetch_simpleview_html,
 )
-from src.ics_writer import write_combined_ics, write_per_source_ics  # existing file
-from src.utils import slugify as util_slugify if False else None  # do not add new deps
 
-PUBLIC_DIR = "public"
-BY_SOURCE_DIR = os.path.join(PUBLIC_DIR, "by-source")
-COMBINED_ICS_PATH = os.path.join(PUBLIC_DIR, "combined.ics")
-REPORT_JSON_PATH = os.path.join(PUBLIC_DIR, "report.json")
-INDEX_HTML_PATH = os.path.join(PUBLIC_DIR, "index.html")  # viewer already present
+# Writer signatures vary across revisions; we tolerate both
+from src import ics_writer
 
-SOURCES_YAML = "config/sources.yaml"
-
-DEFAULT_WINDOW_DAYS = 120  # about 4 months
+ROOT = Path(__file__).resolve().parent.parent
+CONFIG_PATH = ROOT / "config" / "sources.yaml"
+PUBLIC_DIR = ROOT / "public"
+BY_SOURCE_DIR = PUBLIC_DIR / "by-source"
+COMBINED_ICS_PATH = PUBLIC_DIR / "combined.ics"
+INDEX_HTML_PATH = PUBLIC_DIR / "index.html"
+REPORT_JSON_PATH = PUBLIC_DIR / "report.json"
 
 def _slugify(s: str) -> str:
-    # Keep consistent slugs without adding new dependencies
-    return (
-        s.lower()
-        .strip()
-        .replace("’", "")
-        .replace("'", "")
-        .replace("&", "and")
-        .replace(" ", "-")
-        .replace("--", "-")
-    )
+    s = (s or "").strip().lower()
+    out = []
+    for ch in s:
+        if ch.isalnum():
+            out.append(ch)
+        elif ch in " -_/":
+            out.append("-")
+    slug = "".join(out)
+    while "--" in slug:
+        slug = slug.replace("--", "-")
+    return slug.strip("-") or "calendar"
 
-def _load_sources() -> List[Dict[str, Any]]:
-    path = SOURCES_YAML
-    print(f"[northwoods] Loading sources from: {path}")
-    with open(path, "r", encoding="utf-8") as f:
+def _load_sources():
+    print(f"[northwoods] Loading sources from: {CONFIG_PATH}")
+    if not CONFIG_PATH.exists():
+        raise FileNotFoundError(f"{CONFIG_PATH} not found")
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
     if isinstance(data, dict) and "sources" in data:
@@ -52,114 +55,135 @@ def _load_sources() -> List[Dict[str, Any]]:
     elif isinstance(data, list):
         sources = data
     else:
-        raise ValueError(f"Expected a list or 'sources' map in {path}, got {type(data)}")
+        raise ValueError(f"Expected a list or {{sources:[]}} in {CONFIG_PATH}, got {type(data)}")
 
-    # Normalize and ensure IDs
-    for i, src in enumerate(sources):
-        if "id" not in src or not src["id"]:
-            gen = f"{_slugify(src.get('name') or 'source')}-{_slugify(src.get('type') or 'type')}"
+    # Ensure minimal keys and IDs
+    for i, s in enumerate(sources):
+        if "id" not in s or not s["id"]:
+            gen = f"{_slugify(s.get('name') or s.get('url') or 'source')}-{_slugify(s.get('type'))}"
             print(f"[northwoods] Source #{i} missing 'id' -> auto-generated '{gen}'")
-            src["id"] = gen
+            s["id"] = gen
+        if "name" not in s:
+            s["name"] = s["id"]
+        if "enabled" not in s:
+            s["enabled"] = True
     return sources
 
-def _ensure_dirs() -> None:
-    os.makedirs(PUBLIC_DIR, exist_ok=True)
-    os.makedirs(BY_SOURCE_DIR, exist_ok=True)
+def _write_json_report(report: dict):
+    PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
+    with open(REPORT_JSON_PATH, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2, ensure_ascii=False)
 
-def _date_window() -> (str, str):
-    start = datetime.utcnow().strftime("%Y-%m-%d")
-    end = (datetime.utcnow() + timedelta(days=DEFAULT_WINDOW_DAYS)).strftime("%Y-%m-%d")
-    return start, end
+def _write_index_if_missing():
+    if not INDEX_HTML_PATH.exists():
+        # leave creation to repo; do not auto-synthesize
+        return
 
-def _dispatch_fetch(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    stype = (source.get("type") or "").strip().lower()
-    if stype == "tec_rest":
-        return fetch_tec_rest(source, start_date, end_date)
-    if stype == "tec_html":
-        return fetch_tec_html(source, start_date, end_date)
-    if stype == "growthzone_html":
-        return fetch_growthzone_html(source, start_date, end_date)
-    if stype == "simpleview_html":
-        return fetch_simpleview_html(source, start_date, end_date)
-    # Unsupported type
-    return []
-
-def main() -> int:
+def _call_writer_combined(events):
+    # Try (events, path) first; fall back to (events)
     try:
-        sources = _load_sources()
-    except Exception as e:
-        print(f"[northwoods] Failed to load sources: {e}")
-        return 1
+        ics_writer.write_combined_ics(events, str(COMBINED_ICS_PATH))
+    except TypeError:
+        ics_writer.write_combined_ics(events)
 
-    _ensure_dirs()
-    start_date, end_date = _date_window()
+def _call_writer_per_source(by_source):
+    BY_SOURCE_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        ics_writer.write_per_source_ics(by_source, str(BY_SOURCE_DIR))
+    except TypeError:
+        ics_writer.write_per_source_ics(by_source)
 
-    all_events: List[Dict[str, Any]] = []
-    source_logs: List[Dict[str, Any]] = []
+def main():
+    start = datetime.utcnow()
+    sources = _load_sources()
+    # Date window: today -> +120 days (consistent with prior runs)
+    start_date = datetime.utcnow().date()
+    end_date = start_date + timedelta(days=120)
 
-    for src in sources:
-        sid = src["id"]
-        sname = src.get("name") or sid
-        print(f"[northwoods] Fetching: {sname} ({sid})")
+    all_events = []
+    by_source = {}
+    source_logs = []
+
+    fetchers = {
+        "tec_rest": fetch_tec_rest,
+        "tec_html": fetch_tec_html,            # includes Eventastic mode
+        "growthzone_html": fetch_growthzone_html,
+        "simpleview_html": fetch_simpleview_html,
+    }
+
+    for s in sources:
+        if not s.get("enabled", True):
+            source_logs.append({
+                "name": s["name"], "type": s["type"], "url": s.get("url"),
+                "count": 0, "ok": True, "error": "", "diag": {"skipped": "disabled"}, "id": s["id"]
+            })
+            continue
+
+        print(f"[northwoods] Fetching: {s['name']} ({s['id']})")
+        f = fetchers.get(s["type"])
+        if not f:
+            source_logs.append({
+                "name": s["name"], "type": s["type"], "url": s.get("url"),
+                "count": 0, "ok": False, "error": f"unknown type: {s['type']}", "diag": {}, "id": s["id"]
+            })
+            continue
+
         ok = True
         err = ""
-        count = 0
         diag = {}
+        events = []
         try:
-            events = _dispatch_fetch(src, start_date, end_date)
-            # Attach IDs & names for ICS grouping
-            for e in events:
-                e.setdefault("source", sname)
-                e.setdefault("calendar", sname)
-            count = len(events)
-            all_events.extend(events)
-        except Exception as ex:
+            events, fetch_diag = f(s, start_date=start_date, end_date=end_date, session=None)
+            diag = fetch_diag or {}
+        except Exception as e:
             ok = False
-            err = f"{type(ex).__name__}: {ex}"
-            traceback.print_exc()
+            err = f"{type(e).__name__}('{e}')"
 
+        # Normalize minimal required fields; fill calendar/source
+        norm = []
+        for e in (events or []):
+            e = dict(e)
+            e["calendar"] = e.get("calendar") or s["name"]
+            e["source"] = e.get("source") or s["name"]
+            # UID fallback
+            if not e.get("uid"):
+                base = e.get("url") or f"{s['id']}:{e.get('title','')}"
+                e["uid"] = f"{_slugify(base)}@northwoods-v2"
+            # Ensure start_utc present
+            if not e.get("start_utc"):
+                e["start_utc"] = None
+            norm.append(e)
+
+        all_events.extend(norm)
+        by_source[s["id"]] = norm
         source_logs.append({
-            "name": sname,
-            "type": src.get("type"),
-            "url": src.get("url"),
-            "count": count,
+            "name": s["name"],
+            "type": s["type"],
+            "url": s.get("url"),
+            "count": len(norm),
             "ok": ok,
             "error": err,
-            "diag": {"ok": ok, "error": err, "diag": diag},
-            "id": sid,
+            "diag": diag,
+            "id": s["id"],
         })
 
-    # Write ICS outputs
-    try:
-        write_combined_ics(all_events, COMBINED_ICS_PATH)
-    except TypeError:
-        # Backward compatibility if signature differs in local file
-        write_combined_ics(all_events)
+    # Write ICS artifacts
+    _call_writer_combined(all_events)
+    _call_writer_per_source(by_source)
 
-    try:
-        write_per_source_ics(all_events, BY_SOURCE_DIR)
-    except TypeError:
-        write_per_source_ics(all_events)
-
-    # Always write a viewer-friendly report.json with normalized_events
+    # Report
     report = {
         "version": "2.0",
-        "run_started_utc": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "run_started_utc": start.replace(microsecond=0).isoformat() + "Z",
         "success": True,
         "total_events": len(all_events),
-        "sources_processed": len(sources),
+        "sources_processed": sum(1 for s in sources if s.get("enabled", True)),
         "source_logs": source_logs,
-        "normalized_events": all_events[:1000],  # cap to keep file small
-        "events_preview_count": min(len(all_events), 1000),
+        "events": all_events[:100],  # preview slice for viewer
+        "events_preview_count": min(100, len(all_events)),
     }
-    with open(REPORT_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(report, f, ensure_ascii=False, indent=2)
-
-    # Keep an index.html present (if your repo already commits one, this is a no-op)
-    if not os.path.exists(INDEX_HTML_PATH):
-        with open(INDEX_HTML_PATH, "w", encoding="utf-8") as f:
-            f.write("<!doctype html><meta charset='utf-8'><title>Northwoods Events</title><p>Run completed.</p>")
-
+    _write_json_report(report)
+    _write_index_if_missing()
     print(json.dumps({"ok": True, "events": len(all_events)}))
     return 0
 
