@@ -1,11 +1,21 @@
 # src/parsers/__init__.py
 """
-Unified exports for parser entrypoints. This keeps main.py stable and ensures
-every fetch_* function accepts the same signature:
-    fetch_*(source: dict, start_date: str, end_date: str) -> list[dict]
+Stable export surface for all parsers.
+
+This module exposes a consistent function signature for each parser:
+
+    fetch_tec_rest(url: str, start_date: str, end_date: str) -> list[dict]
+    fetch_tec_html(url: str, start_date: str, end_date: str) -> list[dict]
+    fetch_growthzone_html(url: str, start_date: str, end_date: str) -> list[dict]
+    fetch_simpleview_html(url: str, start_date: str, end_date: str) -> list[dict]
+
+All functions MUST exist and accept exactly three positional args, even if a
+specific parser ignores dates internally. This keeps main.py simple & robust.
 """
 
-from importlib import import_module
+from .tec_rest import fetch_tec_rest, fetch_tec_html
+from .growthzone_html import fetch_growthzone_html
+from .simpleview_html import fetch_simpleview_html
 
 __all__ = [
     "fetch_tec_rest",
@@ -13,19 +23,3 @@ __all__ = [
     "fetch_growthzone_html",
     "fetch_simpleview_html",
 ]
-
-def _load(module_name, func_name):
-    mod = import_module(f"src.parsers.{module_name}")
-    fn = getattr(mod, func_name, None)
-    if fn is None:
-        raise ImportError(
-            f"Failed to expose '{func_name}' from parsers.{module_name}: "
-            f"module 'src.parsers.{module_name}' has no attribute '{func_name}'"
-        )
-    return fn
-
-# Export callables with consistent names
-fetch_tec_rest = _load("tec_rest", "fetch_tec_rest")
-fetch_tec_html = _load("tec_html", "fetch_tec_html")
-fetch_growthzone_html = _load("growthzone_html", "fetch_growthzone_html")
-fetch_simpleview_html = _load("simpleview_html", "fetch_simpleview_html")
