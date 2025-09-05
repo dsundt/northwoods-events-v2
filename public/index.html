@@ -1,211 +1,157 @@
-<!-- public/index.html -->
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Northwoods Events — Debug Viewer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <title>Northwoods Events v2 — Debug Viewer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <style>
-    :root { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
-    body { margin: 16px; }
-    .muted { color: #666; }
-    .ok { color: #0b7300; }
-    .bad { color: #b00020; }
-    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-    th, td { border: 1px solid #ddd; padding: 8px; vertical-align: top; }
-    th { background: #fafafa; position: sticky; top: 0; }
-    .controls { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 16px; }
-    .pill { border: 1px solid #ccc; border-radius: 999px; padding: 4px 10px; cursor: pointer; }
-    .pill.active { background: #222; color: #fff; border-color: #222; }
-    .src { font-size: 12px; color: #555; }
-    .grid { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 1rem 1rem 3rem; }
+    h1 { margin: 0.2rem 0 0.5rem; }
+    .row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    label { font-weight: 600; }
+    select, input[type="search"] { padding: 0.4rem 0.5rem; font-size: 0.95rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 0.75rem; }
+    th, td { border-bottom: 1px solid #e5e7eb; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+    th { background: #f9fafb; position: sticky; top: 0; }
+    .muted { color: #6b7280; }
+    .badge { display:inline-block; font-size:.75rem; background:#eef2ff; color:#3730a3; padding:.15rem .4rem; border-radius:.4rem; }
+    .err { color: #b91c1c; font-weight: 600; }
+    .ok { color: #065f46; }
+    .src { margin:.3rem 0 .6rem; }
+    .wrap { word-break: break-word; }
   </style>
 </head>
 <body>
-  <h1>Northwoods Events — Debug Viewer</h1>
-  <p class="muted">This page reads <code>report.json</code> produced by the workflow and lists parsed events. Use the source toggles to filter.</p>
+  <h1>Northwoods Events v2 — Build Output</h1>
 
-  <div id="stats" class="muted">Loading…</div>
+  <div id="meta" class="muted"></div>
 
-  <div class="controls" id="sourceToggles"></div>
-
-  <div class="grid">
-    <label>
-      Search:
-      <input id="searchBox" type="search" placeholder="title, location, url…" />
-    </label>
-    <div>
-      <a href="./combined.ics">Download combined.ics</a>
-      &nbsp;|&nbsp;
-      <a href="./report.json">View report.json</a>
-    </div>
+  <div class="row">
+    <label for="calendarFilter">Calendar:</label>
+    <select id="calendarFilter">
+      <option value="">All calendars</option>
+    </select>
+    <label for="q">Search:</label>
+    <input id="q" type="search" placeholder="Filter by title/location/url…"/>
   </div>
+
+  <div id="sources"></div>
 
   <table id="tbl">
     <thead>
       <tr>
-        <th style="width: 160px;">Date (UTC)</th>
+        <th style="width:12rem">Date</th>
         <th>Title</th>
-        <th style="width: 22%;">Location</th>
-        <th style="width: 28%;">URL</th>
-        <th style="width: 16%;">Source</th>
+        <th style="width:28%">Location</th>
+        <th style="width:28%">URL</th>
       </tr>
     </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-
-  <h2>Source Status</h2>
-  <table id="srcTbl">
-    <thead>
-      <tr>
-        <th>Source</th>
-        <th>Type</th>
-        <th>URL</th>
-        <th>OK</th>
-        <th>Count</th>
-        <th>Error</th>
-      </tr>
-    </thead>
-    <tbody id="srcBody"></tbody>
+    <tbody></tbody>
   </table>
 
   <script>
-    const state = {
-      raw: null,
-      events: [],
-      sources: [],
-      activeSources: new Set(),
-      q: ""
-    };
+    const byCal = new Map();
+    let all = [];
 
-    const $ = s => document.querySelector(s);
-    const tbody = $("#tbody");
-    const srcBody = $("#srcBody");
-    const stats = $("#stats");
-    const toggles = $("#sourceToggles");
-    const searchBox = $("#searchBox");
-
-    fetch("./report.json", { cache: "no-store" })
-      .then(r => r.json())
-      .then(data => {
-        state.raw = data;
-        // Prefer normalized_events; fall back to events_preview
-        const ev = Array.isArray(data.normalized_events) ? data.normalized_events
-                  : (Array.isArray(data.events_preview) ? data.events_preview : []);
-        // Normalize fields defensively
-        state.events = ev.map(e => ({
-          start_utc: e.start_utc || "",
-          end_utc: e.end_utc || "",
-          title: e.title || "(untitled)",
-          location: e.location || "",
-          url: e.url || "",
-          source: e.source || e.calendar || "Unknown",
-          calendar: e.calendar || e.source || "Unknown"
-        }));
-
-        state.sources = Array.isArray(data.source_logs) ? data.source_logs : [];
-        // If we have no events, still render source table so errors are visible
-        renderSourceTable();
-
-        // Default: enable all sources with ok==true, or all if none ok
-        const okAny = state.sources.some(s => s.ok);
-        const toEnable = okAny ? state.sources.map(s => s.ok ? s.id || s.name : null).filter(Boolean)
-                               : state.sources.map(s => s.id || s.name).filter(Boolean);
-        toEnable.forEach(id => state.activeSources.add(id));
-        renderToggles();
-        renderTable();
-
-        stats.textContent =
-          `sources: ${state.sources.length}, events: ${state.events.length}, showing: ${visible().length}`;
-      })
-      .catch(err => {
-        stats.innerHTML = `<span class="bad">Failed to load report.json: ${String(err)}</span>`;
-      });
-
-    function visible() {
-      const q = state.q.trim().toLowerCase();
-      return state.events.filter(e => {
-        const id = findSourceId(e);
-        const passSrc = state.activeSources.size === 0 || state.activeSources.has(id);
-        if (!passSrc) return false;
-        if (!q) return true;
-        const hay = `${e.title} ${e.location} ${e.url} ${e.source}`.toLowerCase();
-        return hay.includes(q);
-      });
+    function row(e){
+      const tr = document.createElement('tr');
+      const date = e.start_utc || '';
+      const title = e.title || '';
+      const loc = e.location || '';
+      const url = e.url || '';
+      tr.innerHTML = `
+        <td class="wrap">${date}</td>
+        <td class="wrap">${title}</td>
+        <td class="wrap">${loc}</td>
+        <td class="wrap">${url ? `<a href="${url}" target="_blank" rel="noopener">${url}</a>` : ''}</td>
+      `;
+      return tr;
     }
 
-    function findSourceId(e) {
-      // Map by exact log name to id if present
-      const s = state.sources.find(s => s.name === (e.source || e.calendar));
-      return (s && (s.id || s.name)) || (e.source || e.calendar);
-    }
-
-    function renderTable() {
-      const rows = visible()
-        .sort((a,b) => String(a.start_utc).localeCompare(String(b.start_utc)))
-        .map(e => `
-          <tr>
-            <td>${escapeHtml(e.start_utc || "")}</td>
-            <td>${escapeHtml(e.title)}</td>
-            <td>${escapeHtml(e.location || "")}</td>
-            <td>${e.url ? `<a href="${escapeAttr(e.url)}" target="_blank" rel="noopener">link</a>` : ""}</td>
-            <td class="src">${escapeHtml(e.source || e.calendar || "")}</td>
-          </tr>
-        `).join("");
-      tbody.innerHTML = rows || `<tr><td colspan="5" class="muted">No events to display.</td></tr>`;
-    }
-
-    function renderSourceTable() {
-      const rows = state.sources.map(s => `
-        <tr>
-          <td>${escapeHtml(s.name || s.id)}</td>
-          <td>${escapeHtml(s.type || "")}</td>
-          <td>${s.url ? `<a href="${escapeAttr(s.url)}" target="_blank" rel="noopener">open</a>` : ""}</td>
-          <td class="${s.ok ? 'ok' : 'bad'}">${s.ok ? "yes" : "no"}</td>
-          <td>${s.count ?? 0}</td>
-          <td>${escapeHtml(s.error || "")}</td>
-        </tr>
-      `).join("");
-      srcBody.innerHTML = rows || `<tr><td colspan="6" class="muted">No sources recorded.</td></tr>`;
-    }
-
-    function renderToggles() {
-      toggles.innerHTML = "";
-      state.sources.forEach(s => {
-        const id = s.id || s.name;
-        const btn = document.createElement("button");
-        btn.className = "pill" + (state.activeSources.has(id) ? " active" : "");
-        btn.textContent = s.name || id;
-        btn.onclick = () => {
-          if (state.activeSources.has(id)) state.activeSources.delete(id);
-          else state.activeSources.add(id);
-          btn.classList.toggle("active");
-          renderTable();
-        };
-        toggles.appendChild(btn);
-      });
-
-      if (!state.sources.length) {
-        const p = document.createElement("span");
-        p.className = "muted";
-        p.textContent = "No source logs found in report.json";
-        toggles.appendChild(p);
+    function rebuild(){
+      const cal = document.getElementById('calendarFilter').value;
+      const q = document.getElementById('q').value.toLowerCase();
+      const tbody = document.querySelector('#tbl tbody');
+      tbody.innerHTML = '';
+      let list = cal ? (byCal.get(cal) || []) : all;
+      if(q){
+        list = list.filter(e => (e.title||'').toLowerCase().includes(q)
+          || (e.location||'').toLowerCase().includes(q)
+          || (e.url||'').toLowerCase().includes(q));
       }
+      list.sort((a,b) => (a.start_utc||'').localeCompare(b.start_utc||''));
+      list.forEach(e => tbody.appendChild(row(e)));
     }
 
-    searchBox.addEventListener("input", () => {
-      state.q = searchBox.value || "";
-      renderTable();
-    });
+    function badge(ok, text){
+      return `<span class="badge" style="background:${ok?'#ecfdf5':'#fef2f2'};color:${ok?'#065f46':'#991b1b'}">${text}</span>`;
+    }
 
-    function escapeHtml(s) {
-      return (s ?? "").replace(/[&<>"']/g, c => ({
-        "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-      }[c]));
+    function renderSources(srcLogs){
+      const c = document.getElementById('sources');
+      c.innerHTML = srcLogs.map(s => {
+        const ok = s.ok && !s.error;
+        return `<div class="src">
+          ${badge(ok, ok? 'ok' : 'error')}
+          <strong>${s.name}</strong> <span class="muted">(${s.type})</span>
+          — <span>${s.count} events</span>
+          ${s.error ? `<div class="err">${s.error}</div>` : ''}
+        </div>`;
+      }).join('');
     }
-    function escapeAttr(s) {
-      return (s ?? "").replace(/"/g, "&quot;");
+
+    async function boot(){
+      let report;
+      try {
+        // cache-bust to avoid stale GitHub Pages CDN
+        const r = await fetch(`report.json?ts=${Date.now()}`, {cache:'no-store'});
+        if(!r.ok) throw new Error(`HTTP ${r.status}`);
+        report = await r.json();
+      } catch(err){
+        document.getElementById('meta').innerHTML = `<span class="err">Failed to load report.json: ${err}</span>`;
+        return;
+      }
+
+      const srcLogs = report.source_logs || [];
+      renderSources(srcLogs);
+
+      // Prefer full normalized list if present; otherwise preview keys used by older runs
+      let ev = report.events || report.events_preview || report.normalized || report.data || [];
+      if(!Array.isArray(ev)) ev = [];
+
+      // Populate calendar filter
+      const sel = document.getElementById('calendarFilter');
+      const calendars = Array.from(new Set(ev.map(e => e.calendar || e.source || 'Unknown'))).sort();
+      calendars.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        sel.appendChild(opt);
+      });
+      sel.addEventListener('change', rebuild);
+      document.getElementById('q').addEventListener('input', rebuild);
+
+      all = ev.map(e => ({
+        start_utc: e.start_utc || '', title: e.title || '',
+        location: e.location || '', url: e.url || '',
+        calendar: e.calendar || e.source || 'Unknown'
+      }));
+      byCal.clear();
+      all.forEach(e => {
+        const key = e.calendar || 'Unknown';
+        if(!byCal.has(key)) byCal.set(key, []);
+        byCal.get(key).push(e);
+      });
+
+      const meta = document.getElementById('meta');
+      meta.innerHTML = `
+        Build started: <strong>${report.run_started_utc || 'n/a'}</strong> —
+        Sources: <strong>${report.sources_processed ?? srcLogs.length}</strong> —
+        Events (in this file): <strong>${all.length}</strong>
+      `;
+
+      rebuild();
     }
+    boot();
   </script>
 </body>
 </html>
