@@ -1,85 +1,148 @@
 # src/parsers/tec_html.py
-# Surgical fix:
-# - Match main.py's call signature: (source, start_date, end_date)
-# - Delegate to the TEC REST implementation when possible (most TEC sites expose it).
-# - If delegation fails, fall back to a tolerant HTML scrape (kept very simple).
+# Dual-mode parser:
+#  - TEC HTML (classic front-end markup)
+#  - Eventastic (used by St. Germain) – parsed via generic WP archive structure
+#
+# Signature accepts extra args to match main.py calls.
 
-from __future__ import annotations
-from typing import List, Dict, Any
-from urllib.parse import urlsplit, urlunsplit
-from bs4 import BeautifulSoup  # type: ignore
-
+from bs4 import BeautifulSoup
+from datetime import datetime
+from dateutil import parser as dtparse
+from urllib.parse import urljoin
 from src.fetch import get
-from .tec_rest import fetch_tec_rest
 
+def _text(el):
+    return (el.get_text(" ", strip=True) if el else "").strip()
 
-def _site_root(url: str) -> str:
-    parts = urlsplit(url)
-    # keep scheme + netloc; empty path
-    return urlunsplit((parts.scheme, parts.netloc, "", "", ""))
+def _dt_guess(txt):
+    if not txt:
+        return None
+    try:
+        # allow ambiguous inputs; return naive UTC-like string
+        dt = dtparse.parse(txt, fuzzy=True)
+        return dt
+    except Exception:
+        return None
 
+def _fmt(dt):
+    if not dt:
+        return None
+    # emit as 'YYYY-MM-DD HH:MM:SS' to match existing report.json style
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
 
-def _fallback_scrape_list(source: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """
-    Very basic HTML list fallback for older TEC list views.
-    If used, dates might be less precise; we prefer REST wherever possible.
-    """
-    url = source.get("url") or ""
-    resp = get(url)
-    html = resp.text
-    soup = BeautifulSoup(html, "html.parser")
-
-    events: List[Dict[str, Any]] = []
-
-    # Try common TEC list selectors (newer & older themes)
-    # Newer TEC often uses "tribe-events-calendar-list__event" or "tribe-common--event"
-    candidates = soup.select(
-        ".tribe-events-calendar-list__event, .tribe-common--event, .tribe-events-calendar-list__event-row"
+def _is_tec_html(soup):
+    # Loose markers for TEC front-end
+    return bool(
+        soup.select_one(".tribe-events, [data-js='tribe-events-view'], .tribe-common")
     )
-    if not candidates:
-        # fallback: any card with link to /event/ or /events/
-        candidates = [a.parent for a in soup.select('a[href*="/event/"], a[href*="/events/"]')]
 
-    for node in candidates:
-        a = node.select_one('a[href*="/event/"], a[href*="/events/"]')
-        if not a:
-            continue
-        href = a.get("href") or url
-        title = (a.get_text() or "").strip()
+def _parse_tec_list(soup, base_url, calendar_name):
+    events = []
+    # Try modern list cards first
+    cards = soup.select(".tribe-events-calendar-list__event, .tribe-events-calendar-list__event-row")
+    if not cards:
+        # Fallback – generic 'tribe-event' items
+        cards = soup.select(".tribe-event, .tribe-events-list-event, article.tribe_events")
 
-        # Date can be in <time> tags or data attributes; try a few places
+    for card in cards:
+        a = card.select_one("a[href]")
+        title = _text(card.select_one("h3, h2, .tribe-events-calendar-list__event-title, .tribe-event-title, .tribe-events-list-event-title"))
+        href = a["href"] if a else None
         start = None
         end = None
 
-        t = node.select_one("time[datetime]")
-        if t and t.has_attr("datetime"):
-            dt = (t["datetime"] or "").strip()
-            if dt:
-                # keep as-is, main/ics_writer tolerate "YYYY-MM-DDTHH:MM:SS±ZZ:ZZ" or "YYYY-MM-DD"
-                start = dt.replace("T", " ").split("+")[0].split("Z")[0]
+        # Look for time tags first
+        tstart = card.select_one("time[datetime]")
+        if tstart and tstart.has_attr("datetime"):
+            start = _dt_guess(tstart["datetime"])
+        if not start:
+            # Try text in date/time containers
+            datebits = _text(card.select_one("[class*='time'], [class*='date'], .tribe-events-calendar-list__event-datetime"))
+            start = _dt_guess(datebits)
 
-        # location heuristic
-        loc_node = node.select_one(".tribe-events-venue__name, .tribe-events-venue, .tribe-venue, .venue, .tribe-events-meta-group-venue")
-        location = (loc_node.get_text().strip() if loc_node else None) or None
+        # End time (best-effort)
+        tend = card.select("time[datetime]")
+        if len(tend) > 1 and tend[1].has_attr("datetime"):
+            end = _dt_guess(tend[1]["datetime"])
 
-        events.append({
-            "title": title or "Event",
-            "url": href,
-            "start_utc": start,  # may be None if not found; writer will handle date-less events defensively
-            "end_utc": end,
-            "location": location,
-        })
-
+        loc = _text(card.select_one(".tribe-events-calendar-list__event-venue, .tribe-venue, .tribe-events-venue, .venue, .location"))
+        evt = {
+            "uid": None,  # filled by caller if desired
+            "title": title or (href or "").rstrip("/").split("/")[-1].replace("-", " ").title(),
+            "start_utc": _fmt(start),
+            "end_utc": _fmt(end) if end else None,
+            "url": urljoin(base_url, href) if href else None,
+            "location": loc or None,
+            "source": calendar_name,
+            "calendar": calendar_name,
+        }
+        if evt["url"] and evt["title"]:
+            events.append(evt)
     return events
 
+def _parse_eventastic_archive(soup, base_url, calendar_name):
+    # Eventastic archive pages tend to be simple WP loops: h2.entry-title > a + meta/date nearby
+    events = []
+    posts = soup.select("article, .hentry, .post")
+    if not posts:
+        # Try a simpler list (links under entry-title)
+        posts = soup.select("h2.entry-title, h2 a[href]")
 
-def fetch_tec_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None) -> List[Dict[str, Any]]:
+    for p in posts:
+        # Title + URL
+        a = p.select_one("h2.entry-title a[href]") or p.select_one("a[href]")
+        title = _text(p.select_one("h2.entry-title")) or _text(a)
+        href = a["href"] if a and a.has_attr("href") else None
+
+        # Date: time[datetime] or text near meta/date elements
+        t = p.select_one("time[datetime]")
+        start = None
+        if t and t.has_attr("datetime"):
+            start = _dt_guess(t["datetime"])
+        if not start:
+            date_txt = _text(
+                p.select_one(".entry-meta, .post-meta, .event-date, .date, .posted-on")
+            )
+            # If not on the card, check global meta around it
+            if not date_txt and a:
+                parent = p.parent
+                if parent:
+                    date_txt = _text(parent.select_one(".entry-meta, .event-date, time"))
+            start = _dt_guess(date_txt)
+
+        loc = _text(p.select_one(".venue, .location, .event-location"))
+        evt = {
+            "uid": None,
+            "title": title or (href or "").rstrip("/").split("/")[-1].replace("-", " ").title(),
+            "start_utc": _fmt(start),
+            "end_utc": None,
+            "url": urljoin(base_url, href) if href else None,
+            "location": loc or None,
+            "source": calendar_name,
+            "calendar": calendar_name,
+        }
+        if evt["url"] and evt["title"]:
+            events.append(evt)
+    return events
+
+def fetch_tec_html(source, start_date=None, end_date=None, session=None):
     """
-    Signature now matches main.py. Prefer TEC REST (reliable) but keep an HTML fallback.
+    HTML fetcher that handles:
+      * TEC HTML list pages
+      * Eventastic (St. Germain) WordPress archive
     """
-    # 1) Prefer TEC REST path (reuses battle-tested code)
-    try:
-        return fetch_tec_rest(source, start_date, end_date)
-    except Exception:
-        # 2) Fallback to HTML list scraping (best effort)
-        return _fallback_scrape_list(source)
+    base_url = source.get("url")
+    name = source.get("name", source.get("id", "Calendar"))
+    diag = {"mode": None, "counts": {}}
+
+    resp = get(base_url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    if _is_tec_html(soup):
+        diag["mode"] = "tec_html"
+        events = _parse_tec_list(soup, base_url, name)
+    else:
+        diag["mode"] = "eventastic"
+        events = _parse_eventastic_archive(soup, base_url, name)
+
+    return events, {"ok": True, "error": "", "diag": diag}
