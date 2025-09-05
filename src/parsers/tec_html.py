@@ -1,109 +1,85 @@
 # src/parsers/tec_html.py
+# Surgical fix:
+# - Match main.py's call signature: (source, start_date, end_date)
+# - Delegate to the TEC REST implementation when possible (most TEC sites expose it).
+# - If delegation fails, fall back to a tolerant HTML scrape (kept very simple).
+
 from __future__ import annotations
+from typing import List, Dict, Any
+from urllib.parse import urlsplit, urlunsplit
+from bs4 import BeautifulSoup  # type: ignore
 
-import datetime as dt
-from typing import List, Dict, Any, Optional
-from urllib.parse import urljoin
+from src.fetch import get
+from .tec_rest import fetch_tec_rest
 
-import requests
-from bs4 import BeautifulSoup
 
-def _fmt_dt_local(text: str) -> Optional[str]:
+def _site_root(url: str) -> str:
+    parts = urlsplit(url)
+    # keep scheme + netloc; empty path
+    return urlunsplit((parts.scheme, parts.netloc, "", "", ""))
+
+
+def _fallback_scrape_list(source: Dict[str, Any]) -> List[Dict[str, Any]]:
     """
-    Best-effort: parse date/time fragments commonly found in TEC list HTML and
-    normalize to "YYYY-MM-DD HH:MM:SS" in UTC if TZ can be inferred; otherwise keep local naive.
+    Very basic HTML list fallback for older TEC list views.
+    If used, dates might be less precise; we prefer REST wherever possible.
     """
-    text = (text or "").strip()
-    if not text:
-        return None
-    # Very defensive: try a few common formats
-    fmts = [
-        "%B %d @ %I:%M %p",     # "September 6 @ 10:00 am"
-        "%B %d, %Y @ %I:%M %p", # "September 6, 2025 @ 10:00 am"
-        "%Y-%m-%d %H:%M",
-        "%B %d, %Y",
-        "%Y-%m-%d",
-    ]
-    today_year = dt.datetime.utcnow().year
-    for f in fmts:
-        try:
-            dt_obj = dt.datetime.strptime(text, f)
-            # If no year provided, assume current or next year depending on month roll-over
-            if "%Y" not in f:
-                dt_obj = dt_obj.replace(year=today_year)
-            return dt_obj.strftime("%Y-%m-%d %H:%M:%S")
-        except Exception:
+    url = source.get("url") or ""
+    resp = get(url)
+    html = resp.text
+    soup = BeautifulSoup(html, "html.parser")
+
+    events: List[Dict[str, Any]] = []
+
+    # Try common TEC list selectors (newer & older themes)
+    # Newer TEC often uses "tribe-events-calendar-list__event" or "tribe-common--event"
+    candidates = soup.select(
+        ".tribe-events-calendar-list__event, .tribe-common--event, .tribe-events-calendar-list__event-row"
+    )
+    if not candidates:
+        # fallback: any card with link to /event/ or /events/
+        candidates = [a.parent for a in soup.select('a[href*="/event/"], a[href*="/events/"]')]
+
+    for node in candidates:
+        a = node.select_one('a[href*="/event/"], a[href*="/events/"]')
+        if not a:
             continue
-    return None
+        href = a.get("href") or url
+        title = (a.get_text() or "").strip()
 
-def fetch_tec_html(source: dict, start_date: str, end_date: str) -> List[Dict[str, Any]]:
+        # Date can be in <time> tags or data attributes; try a few places
+        start = None
+        end = None
+
+        t = node.select_one("time[datetime]")
+        if t and t.has_attr("datetime"):
+            dt = (t["datetime"] or "").strip()
+            if dt:
+                # keep as-is, main/ics_writer tolerate "YYYY-MM-DDTHH:MM:SS±ZZ:ZZ" or "YYYY-MM-DD"
+                start = dt.replace("T", " ").split("+")[0].split("Z")[0]
+
+        # location heuristic
+        loc_node = node.select_one(".tribe-events-venue__name, .tribe-events-venue, .tribe-venue, .venue, .tribe-events-meta-group-venue")
+        location = (loc_node.get_text().strip() if loc_node else None) or None
+
+        events.append({
+            "title": title or "Event",
+            "url": href,
+            "start_utc": start,  # may be None if not found; writer will handle date-less events defensively
+            "end_utc": end,
+            "location": location,
+        })
+
+    return events
+
+
+def fetch_tec_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None) -> List[Dict[str, Any]]:
     """
-    HTML fallback for sites that do not expose (or block) TEC REST.
-    Expects `source.url` to be a *list view* page like:
-        https://oneidacountywi.com/festivals-events/?eventDisplay=list
-        https://st-germain.com/events-calendar/?eventDisplay=list
+    Signature now matches main.py. Prefer TEC REST (reliable) but keep an HTML fallback.
     """
-    url = source.get("url")
-    name = source.get("name") or source.get("id") or "TEC HTML"
-    if not url:
-        return []
-
-    out: List[Dict[str, Any]] = []
-    page_url = url
-    seen = set()
-
-    # Crawl a few pages of list view (TEC uses ?eventDisplay=list&tribe_paged=2)
-    for page in range(1, 5):
-        resp = requests.get(page_url, timeout=30)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "html.parser")
-
-        cards = soup.select(".tribe-events-calendar-list__event, .tribe-common-g-row")
-        if not cards:
-            # Try legacy selectors
-            cards = soup.select(".tribe-events-list-event, .tribe-events-calendar-list__event-row")
-        for card in cards:
-            # Title
-            a = card.select_one("a.tribe-events-calendar-list__event-title-link, a.tribe-event-url, a.tribe-events-list-event-title, h3 a")
-            title = (a.get_text(strip=True) if a else None) or "(untitled)"
-            href = a.get("href") if a and a.has_attr("href") else None
-            eid = href or title
-
-            # Start/End
-            start_el = card.select_one("[data-dtstart], time.tribe-event-date-start, time[datetime]")
-            end_el = card.select_one("[data-dtend], time.tribe-event-date-end")
-            start_text = start_el.get("datetime") if start_el and start_el.has_attr("datetime") else (start_el.get_text(" ", strip=True) if start_el else "")
-            end_text = end_el.get("datetime") if end_el and end_el.has_attr("datetime") else (end_el.get_text(" ", strip=True) if end_el else "")
-
-            start_norm = _fmt_dt_local(start_text)
-            end_norm = _fmt_dt_local(end_text) if end_text else None
-
-            # Location
-            loc = None
-            ven = card.select_one(".tribe-events-venue, .tribe-events-calendar-list__event-venue, .tribe-venue")
-            if ven:
-                loc = ven.get_text(" ", strip=True)
-
-            uid = f"{eid}@northwoods-v2"
-            if uid in seen:
-                continue
-            seen.add(uid)
-
-            out.append({
-                "uid": uid,
-                "title": title,
-                "start_utc": start_norm,
-                "end_utc": end_norm,
-                "url": href,
-                "location": loc,
-                "source": name,
-                "calendar": name,
-            })
-
-        # Next page link
-        next_link = soup.select_one("a.tribe-events-c-nav__next, a.tribe-events-nav-next, a.tribe-events-c-nav__next-link")
-        if not next_link or not next_link.has_attr("href"):
-            break
-        page_url = urljoin(page_url, next_link["href"])
-
-    return out
+    # 1) Prefer TEC REST path (reuses battle-tested code)
+    try:
+        return fetch_tec_rest(source, start_date, end_date)
+    except Exception:
+        # 2) Fallback to HTML list scraping (best effort)
+        return _fallback_scrape_list(source)
