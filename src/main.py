@@ -17,22 +17,22 @@ from src.parsers import (
     fetch_simpleview_html,
 )
 from src.ics_writer import write_combined_ics, write_per_source_ics  # existing file
+from src.utils import slugify as util_slugify if False else None  # do not add new deps
 
 PUBLIC_DIR = "public"
 BY_SOURCE_DIR = os.path.join(PUBLIC_DIR, "by-source")
 COMBINED_ICS_PATH = os.path.join(PUBLIC_DIR, "combined.ics")
 REPORT_JSON_PATH = os.path.join(PUBLIC_DIR, "report.json")
-INDEX_HTML_PATH = os.path.join(PUBLIC_DIR, "index.html")
+INDEX_HTML_PATH = os.path.join(PUBLIC_DIR, "index.html")  # viewer already present
 
 SOURCES_YAML = "config/sources.yaml"
+
 DEFAULT_WINDOW_DAYS = 120  # about 4 months
 
-
 def _slugify(s: str) -> str:
-    """Lightweight slugify (no external deps)."""
+    # Keep consistent slugs without adding new dependencies
     return (
-        (s or "")
-        .lower()
+        s.lower()
         .strip()
         .replace("’", "")
         .replace("'", "")
@@ -40,7 +40,6 @@ def _slugify(s: str) -> str:
         .replace(" ", "-")
         .replace("--", "-")
     )
-
 
 def _load_sources() -> List[Dict[str, Any]]:
     path = SOURCES_YAML
@@ -63,17 +62,14 @@ def _load_sources() -> List[Dict[str, Any]]:
             src["id"] = gen
     return sources
 
-
 def _ensure_dirs() -> None:
     os.makedirs(PUBLIC_DIR, exist_ok=True)
     os.makedirs(BY_SOURCE_DIR, exist_ok=True)
-
 
 def _date_window() -> (str, str):
     start = datetime.utcnow().strftime("%Y-%m-%d")
     end = (datetime.utcnow() + timedelta(days=DEFAULT_WINDOW_DAYS)).strftime("%Y-%m-%d")
     return start, end
-
 
 def _dispatch_fetch(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
     stype = (source.get("type") or "").strip().lower()
@@ -87,7 +83,6 @@ def _dispatch_fetch(source: Dict[str, Any], start_date: str, end_date: str) -> L
         return fetch_simpleview_html(source, start_date, end_date)
     # Unsupported type
     return []
-
 
 def main() -> int:
     try:
@@ -134,10 +129,11 @@ def main() -> int:
             "id": sid,
         })
 
-    # Write ICS outputs (support both old/new signatures in your local ics_writer)
+    # Write ICS outputs
     try:
         write_combined_ics(all_events, COMBINED_ICS_PATH)
     except TypeError:
+        # Backward compatibility if signature differs in local file
         write_combined_ics(all_events)
 
     try:
@@ -159,14 +155,13 @@ def main() -> int:
     with open(REPORT_JSON_PATH, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
-    # Keep an index.html present (no-op if already committed)
+    # Keep an index.html present (if your repo already commits one, this is a no-op)
     if not os.path.exists(INDEX_HTML_PATH):
         with open(INDEX_HTML_PATH, "w", encoding="utf-8") as f:
             f.write("<!doctype html><meta charset='utf-8'><title>Northwoods Events</title><p>Run completed.</p>")
 
     print(json.dumps({"ok": True, "events": len(all_events)}))
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
