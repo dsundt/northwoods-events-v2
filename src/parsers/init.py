@@ -1,21 +1,24 @@
 # src/parsers/__init__.py
 """
-Stable export surface for all parsers.
+Unified export surface for parser callables.
 
-This module exposes a consistent function signature for each parser:
+Each callable MUST use the signature:
+    fetch_*(source: dict, start_date: str, end_date: str) -> list[dict]
 
-    fetch_tec_rest(url: str, start_date: str, end_date: str) -> list[dict]
-    fetch_tec_html(url: str, start_date: str, end_date: str) -> list[dict]
-    fetch_growthzone_html(url: str, start_date: str, end_date: str) -> list[dict]
-    fetch_simpleview_html(url: str, start_date: str, end_date: str) -> list[dict]
-
-All functions MUST exist and accept exactly three positional args, even if a
-specific parser ignores dates internally. This keeps main.py simple & robust.
+Where each dict is a normalized event with (at minimum):
+    {
+      "uid": str,
+      "title": str,
+      "start_utc": str,     # "YYYY-MM-DD HH:MM:SS"
+      "end_utc": str | None,
+      "url": str | None,
+      "location": str | None,
+      "source": str,        # human-friendly name
+      "calendar": str       # usually same as source
+    }
 """
 
-from .tec_rest import fetch_tec_rest, fetch_tec_html
-from .growthzone_html import fetch_growthzone_html
-from .simpleview_html import fetch_simpleview_html
+from importlib import import_module
 
 __all__ = [
     "fetch_tec_rest",
@@ -23,3 +26,19 @@ __all__ = [
     "fetch_growthzone_html",
     "fetch_simpleview_html",
 ]
+
+def _export(name: str, module: str, attr: str) -> None:
+    mod = import_module(f"src.parsers.{module}")
+    fn = getattr(mod, attr, None)
+    if fn is None:
+        raise ImportError(
+            f"Failed to expose '{attr}' from parsers.{module}: "
+            f"module 'src.parsers.{module}' has no attribute '{attr}'"
+        )
+    globals()[name] = fn
+
+# Make sure each binding points to the *correct* module/attr.
+_export("fetch_tec_rest", "tec_rest", "fetch_tec_rest")
+_export("fetch_tec_html", "tec_html", "fetch_tec_html")
+_export("fetch_growthzone_html", "growthzone_html", "fetch_growthzone_html")
+_export("fetch_simpleview_html", "simpleview_html", "fetch_simpleview_html")
