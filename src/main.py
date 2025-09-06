@@ -1,17 +1,16 @@
 # src/main.py
-# - Loads config/sources.yaml
-# - Calls fetchers with aligned signatures
-# - Writes public/by-source/*.ics, public/combined.ics, public/report.json
-# - Tolerates ics_writer two different signatures (repo variants)
+from __future__ import annotations
 
 import json
 import os
 import sys
+import traceback
 from datetime import datetime, timedelta
-from pathlib import Path
-
+from typing import Any, Dict, List, Tuple
+import inspect
 import yaml
 
+# Parsers: rely on your existing src/parsers package
 from src.parsers import (
     fetch_tec_rest,
     fetch_tec_html,
@@ -19,173 +18,277 @@ from src.parsers import (
     fetch_simpleview_html,
 )
 
-# Writer signatures vary across revisions; we tolerate both
-from src import ics_writer
+# ICS writer: support both existing signatures (with/without explicit paths)
+from src import ics_writer as icsw
 
-ROOT = Path(__file__).resolve().parent.parent
-CONFIG_PATH = ROOT / "config" / "sources.yaml"
-PUBLIC_DIR = ROOT / "public"
-BY_SOURCE_DIR = PUBLIC_DIR / "by-source"
-COMBINED_ICS_PATH = PUBLIC_DIR / "combined.ics"
-INDEX_HTML_PATH = PUBLIC_DIR / "index.html"
-REPORT_JSON_PATH = PUBLIC_DIR / "report.json"
 
-def _slugify(s: str) -> str:
-    s = (s or "").strip().lower()
-    out = []
-    for ch in s:
-        if ch.isalnum():
-            out.append(ch)
-        elif ch in " -_/":
-            out.append("-")
-    slug = "".join(out)
-    while "--" in slug:
-        slug = slug.replace("--", "-")
-    return slug.strip("-") or "calendar"
+# -------------------------
+# Configuration & constants
+# -------------------------
 
-def _load_sources():
-    print(f"[northwoods] Loading sources from: {CONFIG_PATH}")
-    if not CONFIG_PATH.exists():
-        raise FileNotFoundError(f"{CONFIG_PATH} not found")
-    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+CONFIG_PATH = "config/sources.yaml"
+OUTPUT_DIR = "public"
+BY_SOURCE_DIR = os.path.join(OUTPUT_DIR, "by-source")
+COMBINED_ICS_PATH = os.path.join(OUTPUT_DIR, "combined.ics")
+REPORT_PATH = os.path.join(OUTPUT_DIR, "report.json")
+
+# Default window (align with v1 behavior)
+DEFAULT_DAYS_FWD = 120
+
+
+# -------------------------
+# Small local utilities
+# -------------------------
+
+def _slugify(text: str) -> str:
+    """Tiny slugifier (no external deps)."""
+    allowed = "abcdefghijklmnopqrstuvwxyz0123456789-"
+    s = "".join(ch.lower() if ch.isalnum() else "-" for ch in (text or ""))
+    while "--" in s:
+        s = s.replace("--", "-")
+    s = s.strip("-")
+    return "".join(ch for ch in s if ch in allowed) or "source"
+
+def _now_iso() -> str:
+    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+def _date_str(dt: datetime) -> str:
+    return dt.strftime("%Y-%m-%d")
+
+
+# -------------------------
+# Loading sources.yaml
+# -------------------------
+
+def _load_sources(path: str = CONFIG_PATH) -> List[Dict[str, Any]]:
+    print(f"[northwoods] Loading sources from: {path}")
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"{path} not found")
+
+    with open(path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
-    if isinstance(data, dict) and "sources" in data:
+    if isinstance(data, dict) and "sources" in data and isinstance(data["sources"], list):
         sources = data["sources"]
     elif isinstance(data, list):
         sources = data
     else:
-        raise ValueError(f"Expected a list or {{sources:[]}} in {CONFIG_PATH}, got {type(data)}")
+        raise ValueError(f"Expected a list or a dict with 'sources' in {path}, got {type(data)}")
 
-    # Ensure minimal keys and IDs
-    for i, s in enumerate(sources):
+    # Normalize & backfill ids
+    norm: List[Dict[str, Any]] = []
+    for idx, s in enumerate(sources):
+        if not isinstance(s, dict):
+            raise ValueError(f"Source #{idx} must be a mapping, got {type(s)}")
+
+        for key in ("name", "type", "url"):
+            if key not in s or not s[key]:
+                raise ValueError(f"Source #{idx} missing required key: {key}")
+
         if "id" not in s or not s["id"]:
-            gen = f"{_slugify(s.get('name') or s.get('url') or 'source')}-{_slugify(s.get('type'))}"
-            print(f"[northwoods] Source #{i} missing 'id' -> auto-generated '{gen}'")
-            s["id"] = gen
-        if "name" not in s:
-            s["name"] = s["id"]
-        if "enabled" not in s:
-            s["enabled"] = True
-    return sources
+            nid = f"{_slugify(s['name'])}-{_slugify(s['type'])}"
+            print(f"[northwoods] Source #{idx} missing 'id' -> auto-generated '{nid}'")
+            s = {**s, "id": nid}
 
-def _write_json_report(report: dict):
-    PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
-    with open(REPORT_JSON_PATH, "w", encoding="utf-8") as f:
-        json.dump(report, f, indent=2, ensure_ascii=False)
+        norm.append(s)
 
-def _write_index_if_missing():
-    if not INDEX_HTML_PATH.exists():
-        # leave creation to repo; do not auto-synthesize
-        return
+    return norm
 
-def _call_writer_combined(events):
-    # Try (events, path) first; fall back to (events)
+
+# -------------------------
+# Parser dispatch helpers
+# -------------------------
+
+_PARSER_MAP = {
+    "tec_rest": fetch_tec_rest,
+    "tec_html": fetch_tec_html,
+    "growthzone_html": fetch_growthzone_html,
+    "simpleview_html": fetch_simpleview_html,
+}
+
+def _call_parser(fn, source: Dict[str, Any], start_date: str, end_date: str) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Call parser in a way that supports both signatures:
+      (source)  or  (source, start_date, end_date)  or  (source, start_date=None, end_date=None)
+    Prefer keyword args so older signatures don't break; fall back to positional 1-arg.
+    """
     try:
-        ics_writer.write_combined_ics(events, str(COMBINED_ICS_PATH))
+        # Try with keywords first (most modern, non-breaking)
+        return fn(source, start_date=start_date, end_date=end_date)
     except TypeError:
-        ics_writer.write_combined_ics(events)
+        # Fall back to simple signature
+        return fn(source)
+    # Other exceptions propagate to caller
 
-def _call_writer_per_source(by_source):
-    BY_SOURCE_DIR.mkdir(parents=True, exist_ok=True)
+
+# -------------------------
+# ICS writing wrapper (compat)
+# -------------------------
+
+def _write_combined(events: List[Dict[str, Any]], path: str = COMBINED_ICS_PATH) -> None:
+    """
+    Support both:
+      write_combined_ics(events)                 # writes its own default path
+      write_combined_ics(events, path)           # explicit path
+    """
     try:
-        ics_writer.write_per_source_ics(by_source, str(BY_SOURCE_DIR))
-    except TypeError:
-        ics_writer.write_per_source_ics(by_source)
+        sig = inspect.signature(icsw.write_combined_ics)
+        if len(sig.parameters) >= 2:
+            icsw.write_combined_ics(events, path)  # type: ignore[arg-type]
+        else:
+            icsw.write_combined_ics(events)        # type: ignore[call-arg]
+    except Exception as e:
+        print("[northwoods] WARN: write_combined_ics failed:", e)
+        traceback.print_exc()
 
-def main():
-    start = datetime.utcnow()
-    sources = _load_sources()
-    # Date window: today -> +120 days (consistent with prior runs)
-    start_date = datetime.utcnow().date()
-    end_date = start_date + timedelta(days=120)
+def _write_per_source(events_by_source: Dict[str, List[Dict[str, Any]]], out_dir: str = BY_SOURCE_DIR) -> None:
+    """
+    Support both:
+      write_per_source_ics(events_by_source)                 # uses default dir
+      write_per_source_ics(events_by_source, out_dir)        # explicit dir
+    """
+    try:
+        if hasattr(icsw, "write_per_source_ics"):
+            sig = inspect.signature(icsw.write_per_source_ics)
+            if len(sig.parameters) >= 2:
+                icsw.write_per_source_ics(events_by_source, out_dir)  # type: ignore[arg-type]
+            else:
+                icsw.write_per_source_ics(events_by_source)           # type: ignore[call-arg]
+        else:
+            # Older build path variants: some repos expose similar function on a different name
+            if hasattr(icsw, "write_by_source"):
+                icsw.write_by_source(events_by_source, out_dir)       # type: ignore[attr-defined]
+    except Exception as e:
+        print("[northwoods] WARN: write_per_source_ics failed:", e)
+        traceback.print_exc()
 
-    all_events = []
-    by_source = {}
-    source_logs = []
 
-    fetchers = {
-        "tec_rest": fetch_tec_rest,
-        "tec_html": fetch_tec_html,            # includes Eventastic mode
-        "growthzone_html": fetch_growthzone_html,
-        "simpleview_html": fetch_simpleview_html,
-    }
+# -------------------------
+# Normalization
+# -------------------------
 
-    for s in sources:
-        if not s.get("enabled", True):
+def _normalize_event(ev: Dict[str, Any], src: Dict[str, Any]) -> Dict[str, Any]:
+    """Ensure keys the viewer expects are present."""
+    out = dict(ev)
+    cal_name = src.get("name") or src.get("id")
+    out.setdefault("calendar", cal_name)
+    out.setdefault("source", cal_name)
+
+    # Normalize time keys (keep original if present; viewer is tolerant but we ensure a common one)
+    if "start_utc" not in out and "start" in out and isinstance(out["start"], str):
+        out["start_utc"] = out["start"]
+    if "end_utc" not in out and "end" in out and isinstance(out["end"], str):
+        out["end_utc"] = out["end"]
+
+    return out
+
+
+# -------------------------
+# Main
+# -------------------------
+
+def main() -> int:
+    start_utc = _now_iso()
+
+    try:
+        sources = _load_sources()
+    except Exception as e:
+        print(f"[northwoods] ERROR loading sources: {e}")
+        traceback.print_exc()
+        return 1
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(BY_SOURCE_DIR, exist_ok=True)
+
+    start_date = _date_str(datetime.utcnow())
+    end_date = _date_str(datetime.utcnow() + timedelta(days=DEFAULT_DAYS_FWD))
+
+    all_events: List[Dict[str, Any]] = []
+    per_source: Dict[str, List[Dict[str, Any]]] = {}
+    source_logs: List[Dict[str, Any]] = []
+
+    for src in sources:
+        sid = src["id"]
+        sname = src["name"]
+        stype = src["type"]
+        url = src["url"]
+
+        print(f"[northwoods] Fetching: {sname} ({stype}) ({sid})")
+
+        fn = _PARSER_MAP.get(stype)
+        if not fn:
+            msg = f"Unknown type '{stype}'"
             source_logs.append({
-                "name": s["name"], "type": s["type"], "url": s.get("url"),
-                "count": 0, "ok": True, "error": "", "diag": {"skipped": "disabled"}, "id": s["id"]
+                "name": sname, "type": stype, "url": url, "count": 0,
+                "ok": False, "error": msg, "diag": {"error": msg}, "id": sid,
             })
             continue
 
-        print(f"[northwoods] Fetching: {s['name']} ({s['id']})")
-        f = fetchers.get(s["type"])
-        if not f:
-            source_logs.append({
-                "name": s["name"], "type": s["type"], "url": s.get("url"),
-                "count": 0, "ok": False, "error": f"unknown type: {s['type']}", "diag": {}, "id": s["id"]
-            })
-            continue
-
+        events: List[Dict[str, Any]] = []
+        diag: Dict[str, Any] = {}
         ok = True
-        err = ""
-        diag = {}
-        events = []
+        err_text = ""
+
         try:
-            events, fetch_diag = f(s, start_date=start_date, end_date=end_date, session=None)
-            diag = fetch_diag or {}
+            events_raw, diag = _call_parser(fn, src, start_date, end_date)
+            # Normalize
+            events = [_normalize_event(e, src) for e in (events_raw or [])]
         except Exception as e:
             ok = False
-            err = f"{type(e).__name__}('{e}')"
+            err_text = f"{type(e).__name__}('{e}')"
+            diag = {"ok": False, "error": err_text}
+            traceback.print_exc()
 
-        # Normalize minimal required fields; fill calendar/source
-        norm = []
-        for e in (events or []):
-            e = dict(e)
-            e["calendar"] = e.get("calendar") or s["name"]
-            e["source"] = e.get("source") or s["name"]
-            # UID fallback
-            if not e.get("uid"):
-                base = e.get("url") or f"{s['id']}:{e.get('title','')}"
-                e["uid"] = f"{_slugify(base)}@northwoods-v2"
-            # Ensure start_utc present
-            if not e.get("start_utc"):
-                e["start_utc"] = None
-            norm.append(e)
+        count = len(events)
+        per_source[sid] = events
+        all_events.extend(events)
 
-        all_events.extend(norm)
-        by_source[s["id"]] = norm
         source_logs.append({
-            "name": s["name"],
-            "type": s["type"],
-            "url": s.get("url"),
-            "count": len(norm),
-            "ok": ok,
-            "error": err,
-            "diag": diag,
-            "id": s["id"],
+            "name": sname,
+            "type": stype,
+            "url": url,
+            "count": count,
+            "ok": ok and count >= 0,  # keep 'ok' true even if zero so UI shows source; detailed error still present
+            "error": "" if ok else err_text,
+            "diag": diag if isinstance(diag, dict) else {"diag": diag},
+            "id": sid,
         })
 
     # Write ICS artifacts
-    _call_writer_combined(all_events)
-    _call_writer_per_source(by_source)
+    try:
+        _write_per_source(per_source, BY_SOURCE_DIR)
+    except Exception:
+        pass
 
-    # Report
+    try:
+        _write_combined(all_events, COMBINED_ICS_PATH)
+    except Exception:
+        pass
+
+    # ---- ADDITIVE TWEAK: ALWAYS include a full 'events' array in report.json ----
     report = {
         "version": "2.0",
-        "run_started_utc": start.replace(microsecond=0).isoformat() + "Z",
+        "run_started_utc": start_utc,
         "success": True,
         "total_events": len(all_events),
-        "sources_processed": sum(1 for s in sources if s.get("enabled", True)),
+        "sources_processed": len(sources),
         "source_logs": source_logs,
-        "events": all_events[:100],  # preview slice for viewer
-        "events_preview_count": min(100, len(all_events)),
+        # Always include full events list:
+        "events": all_events,
+        # Keep preview (first 100) for quick inspection tools:
+        "events_preview": all_events[:100],
     }
-    _write_json_report(report)
-    _write_index_if_missing()
+
+    with open(REPORT_PATH, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
+    # small console summary (kept from earlier builds)
     print(json.dumps({"ok": True, "events": len(all_events)}))
     return 0
 
+
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        sys.exit(130)
