@@ -1,84 +1,79 @@
-# Path: src/parsers/tec_html.py
 from __future__ import annotations
-from typing import Any, Dict, List
-from urllib.parse import urljoin
 
-import requests
+from typing import Any, Dict, List, Tuple
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from datetime import datetime, timedelta
+from src.fetch import get
+from .tec_rest import fetch_tec_rest  # delegate when REST exists
 
-from ._common import extract_jsonld_events, jsonld_to_norm, normalize_event
 
-def fetch_tec_html(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    HTML fallback for The Events Calendar sites.
-    Strategy:
-      1) Use JSON-LD if available (robust).
-      2) Fallback to tribe-events-data script or visible DOM.
-      3) Final fallback: try TEC REST endpoint (some sites permit it even if 'type' says html).
-    """
-    site = source["url"]
-    name = source.get("name") or source.get("id") or "TEC"
-    cal = name
-    uid_prefix = (source.get("id") or name).replace(" ", "-").lower()
-
-    session = requests.Session()
-    resp = session.get(site, timeout=30)
-    resp.raise_for_status()
-    html = resp.text
-
-    # 1) JSON-LD
-    items = extract_jsonld_events(html)
-    events = jsonld_to_norm(items, uid_prefix=uid_prefix, calendar=cal, source_name=name)
-    if events:
-        return events
-
-    # 2) Tribe data script (best-effort)
-    soup = BeautifulSoup(html, "html.parser")
-    script = soup.find("script", id="tribe-events-data", type="application/json")
-    if script and script.string:
-        try:
-            import json
-            data = json.loads(script.string)
-            # Newer TEC embed event data under "events" or "jsonld"—prefer jsonld path if present
-            if isinstance(data, dict):
-                if "jsonld" in data:
-                    events = jsonld_to_norm(
-                        data["jsonld"], uid_prefix=uid_prefix, calendar=cal, source_name=name
-                    )
-                    if events:
-                        return events
-                if "events" in data and isinstance(data["events"], list):
-                    tmp: List[Dict[str, Any]] = []
-                    for e in data["events"]:
-                        start = e.get("startDate") or e.get("start")
-                        end = e.get("endDate") or e.get("end")
-                        url = e.get("url")
-                        title = e.get("title") or e.get("name")
-                        location = None
-                        v = e.get("venue") or {}
-                        if isinstance(v, dict):
-                            location = v.get("address") or v.get("venue") or v.get("name")
-                        ev = normalize_event(
-                            uid_prefix=uid_prefix,
-                            raw_id=e.get("id") or url or title,
-                            title=title,
-                            url=url,
-                            start=start,
-                            end=end,
-                            location=location,
-                            calendar=cal,
-                            source_name=name,
-                        )
-                        if ev:
-                            tmp.append(ev)
-                    if tmp:
-                        return tmp
-        except Exception:
-            pass
-
-    # 3) As a final fallback, try TEC REST (some html-only configs still allow REST)
+def _rest_available(base_url: str) -> bool:
     try:
-        from .tec_rest import fetch_tec_rest
-        return fetch_tec_rest(source, start_date, end_date)
+        probe = urljoin(base_url.rstrip("/") + "/", "wp-json/tribe/events/v1/")
+        r = get(probe)
+        return r.ok
     except Exception:
-        return []
+        return False
+
+
+def fetch_tec_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None, **kwargs) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    HTML fallback for older TEC list pages, but **automatically delegates to TEC REST**
+    if the endpoint is available. This lets you keep `type: tec_html` in sources.yaml
+    without sacrificing reliability.
+    """
+    base = source["url"]
+    if _rest_available(base):
+        # Delegate — REST is far more stable and gives structured data (incl. venue).
+        return fetch_tec_rest(source, start_date, end_date, **kwargs)
+
+    # If truly no REST, try to scrape list view.
+    # We keep this minimal and tolerant; many TEC sites have pagination & different classes.
+    # Note: Without REST, locations are often missing in list tiles.
+    start = start_date or datetime.utcnow().strftime("%Y-%m-%d")
+    list_url = f"{base.rstrip('/')}/?eventDisplay=list&tribe-bar-date={start}"
+    resp = get(list_url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    # TEC v6 list items commonly have data-event-id or anchor with class containing 'event-title'
+    items = []
+    for a in soup.select("a[href*='/event/'], a.tribe-events-calendar-list__event-title-link"):
+        title = (a.get_text() or "").strip()
+        href = urljoin(base, a.get("href"))
+        if not title or not href:
+            continue
+        items.append({"title": title, "url": href})
+
+    # We can’t reliably get start/end from the list view; fetch details—best-effort.
+    events: List[Dict[str, Any]] = []
+    for it in items:
+        try:
+            dresp = get(it["url"])
+            dsoup = BeautifulSoup(dresp.text, "html.parser")
+            # Common TEC detail meta tags
+            start = dsoup.select_one("[data-tribe-start-date], time.dt-start, time.tribe-events-c-event-datetime__start-date")
+            end = dsoup.select_one("[data-tribe-end-date], time.dt-end, time.tribe-events-c-event-datetime__end-date")
+            start_s = start.get("datetime") if start and start.has_attr("datetime") else (start.get("data-tribe-start-date") if start and start.has_attr("data-tribe-start-date") else None)
+            end_s = end.get("datetime") if end and end.has_attr("datetime") else (end.get("data-tribe-end-date") if end and end.has_attr("data-tribe-end-date") else None)
+
+            # Venue text often appears in element with class containing 'venue' or 'location'
+            loc_node = dsoup.select_one(".tribe-events-meta-group-venue, .tribe-venue, .tribe-events-venue, .tribe-events-c-venue__address, .tribe-events-venue-details")
+            location = None
+            if loc_node:
+                location = " ".join(loc_node.get_text(" ").split())
+
+            events.append({
+                "uid": f"{hash(it['url']) & 0xffffffff}@northwoods-v2",
+                "title": it["title"],
+                "url": it["url"],
+                "start_utc": (start_s or "").replace("T", " ").replace("Z", ""),
+                "end_utc": (end_s or "").replace("T", " ").replace("Z", ""),
+                "location": location,
+                "source": source.get("name") or source.get("id") or "TEC",
+                "calendar": source.get("name") or source.get("id") or "TEC",
+            })
+        except Exception:
+            continue
+
+    return events, {"ok": True, "error": "", "diag": {"list_url": list_url, "count": len(events)}}
