@@ -21,6 +21,31 @@ from src.parsers import (
 # ICS writer: support both existing signatures (with/without explicit paths)
 from src import ics_writer as icsw
 
+# === BEGIN compatibility shim: normalize fetch return shape ===
+def _normalize_fetch(fn):
+    def _call(source, start_date, end_date):
+        res = fn(source, start_date, end_date)
+        if res is None:
+            return [], {}
+        if isinstance(res, tuple):
+            # (events, diag) or variations
+            if len(res) >= 2:
+                return (res[0] or []), (res[1] or {})
+            if len(res) == 1:
+                return (res[0] or []), {}
+            return [], {}
+        if isinstance(res, list):
+            return res, {}
+        # Any other unexpected shape
+        return [], {"note": f"unexpected return from {fn.__name__}: {type(res).__name__}"}
+    return _call
+
+# Wrap the fetchers so downstream code can always do: events, diag = fetch(...)
+fetch_tec_rest = _normalize_fetch(fetch_tec_rest)
+fetch_tec_html = _normalize_fetch(fetch_tec_html)
+fetch_growthzone_html = _normalize_fetch(fetch_growthzone_html)
+fetch_simpleview_html = _normalize_fetch(fetch_simpleview_html)
+# === END compatibility shim ===
 
 # -------------------------
 # Configuration & constants
