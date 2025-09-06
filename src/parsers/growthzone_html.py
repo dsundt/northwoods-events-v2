@@ -1,62 +1,124 @@
-# Path: src/parsers/growthzone_html.py
 from __future__ import annotations
-from typing import Any, Dict, List
 
-import requests
+from typing import Any, Dict, List, Tuple
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from dateutil import parser as dtparse
+from src.fetch import get
 
-from ._common import extract_jsonld_events, jsonld_to_norm, normalize_event
 
-def fetch_growthzone_html(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    GrowthZone calendars vary. Reliable approach:
-      1) Parse JSON-LD Events (most GZ pages embed them).
-      2) Fallback to visible DOM (cards), extracting date/time & location.
-    """
-    url = source["url"]
-    name = source.get("name") or source.get("id") or "GrowthZone"
-    cal = name
-    uid_prefix = (source.get("id") or name).replace(" ", "-").lower()
-
-    session = requests.Session()
-    resp = session.get(url, timeout=30)
-    resp.raise_for_status()
-    html = resp.text
-
-    # 1) JSON-LD
-    items = extract_jsonld_events(html)
-    events = jsonld_to_norm(items, uid_prefix=uid_prefix, calendar=cal, source_name=name)
-    if events:
-        return events
-
-    # 2) DOM fallback (best-effort generic selectors)
+def _jsonld_events(html: str) -> List[Dict[str, Any]]:
     soup = BeautifulSoup(html, "html.parser")
-    candidates = soup.select(".gz-event, .event, .chamberMaster_event, .cm-calendar__event")
-    out: List[Dict[str, Any]] = []
+    results: List[Dict[str, Any]] = []
+    for tag in soup.find_all("script", {"type": "application/ld+json"}):
+        try:
+            import json
+            data = json.loads(tag.string or "{}")
+            # Sometimes it’s a list, sometimes a dict
+            if isinstance(data, dict):
+                data = [data]
+            for item in data:
+                if isinstance(item, dict) and item.get("@type") in ("Event", ["Event"]):
+                    results.append(item)
+        except Exception:
+            continue
+    return results
 
-    for card in candidates:
-        title_tag = card.select_one("a, .gz-event__title, .event-title")
-        title = (title_tag.get_text(strip=True) if title_tag else None)
-        link = title_tag.get("href") if title_tag and title_tag.has_attr("href") else None
 
-        # Date/time often appears in a date element or meta text
-        dt_text = None
-        dt_el = card.select_one(".gz-event__date, .event-date, time, .cm-calendar__date, .date")
-        if dt_el:
-            dt_text = dt_el.get_text(" ", strip=True)
-        # Location
-        loc_el = card.select_one(".gz-event__location, .event-location, .location, address")
-        location = loc_el.get_text(" ", strip=True) if loc_el else None
+def _coerce_dt(s: str | None) -> str | None:
+    if not s:
+        return None
+    try:
+        dt = dtparse.parse(s)
+        return dt.strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return None
 
-        # Very generic: hope dateutil parses dt_text; growthzone often uses “Sep 5, 2025 5:00 PM”
-        start = dt_text
-        end = None
 
-        ev = normalize_event(
-            uid_prefix=uid_prefix, raw_id=link or title, title=title, url=link,
-            start=start, end=end, location=location, calendar=cal, source_name=name
-        )
-        if ev:
-            out.append(ev)
+def fetch_growthzone_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None, **_) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Parse GrowthZone list -> follow to detail -> read JSON-LD Event for reliable dates & location.
+    """
+    base = source["url"].rstrip("/") + "/"
+    source_name = source.get("name") or source.get("id") or "GrowthZone"
+    list_url = base  # e.g., https://business.rhinelanderchamber.com/events/
 
-    return out
+    list_resp = get(list_url)
+    lsoup = BeautifulSoup(list_resp.text, "html.parser")
+
+    # Find links to event detail pages (pattern commonly includes '/events/details/')
+    links = []
+    for a in lsoup.select("a[href]"):
+        href = a.get("href", "")
+        if "/events/details/" in href:
+            links.append(urljoin(base, href))
+
+    events: List[Dict[str, Any]] = []
+    diag_links: List[str] = []
+
+    for href in dict.fromkeys(links):  # de-dup while preserving order
+        try:
+            dresp = get(href)
+            dhtml = dresp.text
+            diag_links.append(href)
+            jd = _jsonld_events(dhtml)
+            if jd:
+                ev = jd[0]
+                title = (ev.get("name") or "").strip()
+                url = ev.get("url") or href
+                start_utc = _coerce_dt(ev.get("startDate"))
+                end_utc = _coerce_dt(ev.get("endDate"))
+                location = None
+                loc = ev.get("location")
+                if isinstance(loc, dict):
+                    # schema.org Place/PostalAddress
+                    parts = []
+                    n = loc.get("name")
+                    if n:
+                        parts.append(n)
+                    addr = loc.get("address")
+                    if isinstance(addr, dict):
+                        for k in ("streetAddress", "addressLocality", "addressRegion", "postalCode"):
+                            v = addr.get(k)
+                            if v:
+                                parts.append(v)
+                    location = ", ".join([p for p in parts if p])
+
+                events.append({
+                    "uid": f"{abs(hash(url)) & 0xffffffff}@northwoods-v2",
+                    "title": title,
+                    "url": url,
+                    "start_utc": start_utc,
+                    "end_utc": end_utc,
+                    "location": location,
+                    "source": source_name,
+                    "calendar": source_name,
+                })
+            else:
+                # Fallback: scrape common date/location containers
+                dsoup = BeautifulSoup(dhtml, "html.parser")
+                title = (dsoup.select_one("h1") or dsoup.title or "").get_text(strip=True)
+                date_text = dsoup.select_one(".event-date, .date, .dtstart, time")
+                start_utc = _coerce_dt(date_text.get("datetime")) if date_text and date_text.has_attr("datetime") else None
+                # try text parse if no datetime attribute
+                if not start_utc and date_text:
+                    start_utc = _coerce_dt(date_text.get_text(" ", strip=True))
+                location_node = dsoup.select_one(".event-location, .location, [itemprop='address'], .address")
+                location = None
+                if location_node:
+                    location = " ".join(location_node.get_text(" ", strip=True).split())
+
+                events.append({
+                    "uid": f"{abs(hash(href)) & 0xffffffff}@northwoods-v2",
+                    "title": title,
+                    "url": href,
+                    "start_utc": start_utc,
+                    "end_utc": None,
+                    "location": location,
+                    "source": source_name,
+                    "calendar": source_name,
+                })
+        except Exception:
+            continue
+
+    return events, {"ok": True, "error": "", "diag": {"list_url": list_url, "detail_pages": diag_links, "count": len(events)}}
