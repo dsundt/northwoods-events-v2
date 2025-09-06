@@ -1,159 +1,208 @@
+# src/parsers/tec_html.py
 from __future__ import annotations
 
-from typing import Any, Dict, List, Tuple
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+import json
+import re
 from datetime import datetime
-from dateutil import parser as dtparse
+from typing import Any, Dict, List, Tuple, Optional
+from urllib.parse import urljoin
+
+import requests
+from bs4 import BeautifulSoup
+from dateutil import parser as dtp
 from icalendar import Calendar
-from src.fetch import get
-from .tec_rest import fetch_tec_rest  # prefer REST when present
+
+DEFAULT_TIMEOUT = 20
 
 
-def _rest_available(base_url: str) -> bool:
-    try:
-        probe = urljoin(base_url.rstrip("/") + "/", "wp-json/tribe/events/v1/")
-        r = get(probe)
-        return r.ok
-    except Exception:
-        return False
+def _to_utc_string(dt: datetime) -> str:
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(tz=None)  # convert to local tz first
+        dt = dt.astimezone(tz=None).astimezone()  # normalize
+        dt = dt.astimezone(tz=None)
+    # Force naive UTC string (main.py normalizer is tolerant but we keep it stable)
+    return dt.replace(tzinfo=None).strftime("%Y-%m-%d %H:%M:%S")
 
 
-def _coerce_dt(s: str | None) -> str | None:
-    if not s:
-        return None
-    try:
-        dt = dtparse.parse(s)
-        return dt.strftime("%Y-%m-%d %H:%M:%S")
-    except Exception:
-        return None
+def _parse_ics_bytes(data: bytes, start_date: Optional[str], end_date: Optional[str]) -> List[Dict[str, Any]]:
+    events: List[Dict[str, Any]] = []
+    cal = Calendar.from_ical(data)
+    sdt = dtp.parse(start_date).date() if start_date else None
+    edt = dtp.parse(end_date).date() if end_date else None
 
+    for comp in cal.walk():
+        if comp.name != "VEVENT":
+            continue
+        title = str(comp.get("summary") or "").strip()
+        url = str(comp.get("url") or comp.get("UID") or "").strip() or None
+        loc = str(comp.get("location") or "").strip() or None
 
-def _try_ics(base: str, source_name: str) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-    """
-    Fallback to TEC calendar ICS feed commonly exposed at:
-      /events/?ical=1   or    /?ical=1
-    """
-    tried = []
-    for rel in ("events/?ical=1", "?ical=1"):
-        ics_url = urljoin(base.rstrip("/") + "/", rel)
-        tried.append(ics_url)
+        dtstart = comp.get("dtstart")
+        dtend = comp.get("dtend")
         try:
-            resp = get(ics_url)
-            if not resp.ok or "BEGIN:VCALENDAR" not in resp.text:
+            start = dtstart.dt if dtstart else None
+            end = dtend.dt if dtend else None
+        except Exception:
+            start = end = None
+
+        # Filter by window if provided
+        if start is not None and hasattr(start, "date"):
+            d = start.date()
+            if sdt and d < sdt:
                 continue
-            cal = Calendar.from_ical(resp.content)
-            events: List[Dict[str, Any]] = []
-            for comp in cal.walk("VEVENT"):
-                title = str(comp.get("summary") or "").strip()
-                url = str(comp.get("url") or comp.get("X-ALT-DESC") or "").strip() or None
-                loc = str(comp.get("location") or "").strip() or None
-                uid = str(comp.get("uid") or f"{abs(hash(title+str(url))) & 0xffffffff}@northwoods-v2")
+            if edt and d > edt:
+                continue
 
-                dtstart = comp.get("dtstart")
-                dtend = comp.get("dtend")
-                # dtstart/dtend may be date or datetime
-                if hasattr(dtstart, "dt"):
-                    sdt = dtstart.dt
-                    if isinstance(sdt, datetime):
-                        start_utc = sdt.strftime("%Y-%m-%d %H:%M:%S")
-                    else:
-                        # all-day
-                        start_utc = f"{sdt:%Y-%m-%d} 00:00:00"
-                else:
-                    start_utc = None
+        ev = {
+            "uid": f"{comp.get('uid') or comp.get('UID') or title}@tec-html",
+            "title": title or "(untitled)",
+            "url": url,
+            "location": loc,
+        }
+        if isinstance(start, datetime):
+            ev["start_utc"] = _to_utc_string(start)
+        if isinstance(end, datetime):
+            ev["end_utc"] = _to_utc_string(end)
 
-                if hasattr(dtend, "dt"):
-                    edt = dtend.dt
-                    if isinstance(edt, datetime):
-                        end_utc = edt.strftime("%Y-%m-%d %H:%M:%S")
-                    else:
-                        end_utc = f"{edt:%Y-%m-%d} 23:59:59"
-                else:
-                    end_utc = None
+        events.append(ev)
 
-                events.append({
-                    "uid": uid,
-                    "title": title,
-                    "url": url,
-                    "start_utc": start_utc,
-                    "end_utc": end_utc,
-                    "location": loc,
-                    "source": source_name,
-                    "calendar": source_name,
-                })
-            if events:
-                return events, {"ok": True, "error": "", "diag": {"ics_urls_tried": tried, "count": len(events)}}
+    return events
+
+
+def _http_get(url: str, timeout: int = DEFAULT_TIMEOUT) -> requests.Response:
+    headers = {
+        "User-Agent": "northwoods-events-v2 (+https://github.com/dsundt/northwoods-events-v2)"
+    }
+    r = requests.get(url, headers=headers, timeout=timeout)
+    r.raise_for_status()
+    return r
+
+
+def _try_tec_ical(base_url: str) -> Tuple[Optional[bytes], str]:
+    """
+    Try common TEC iCal endpoints in a safe order, returning (data, which_url).
+    """
+    candidates = [
+        # canonical TEC feed on sites with /events/ listing
+        urljoin(base_url, "events/?ical=1"),
+        # sometimes homepage ical exists
+        urljoin(base_url, "?ical=1"),
+        # some sites expose list display ical
+        urljoin(base_url, "events/?tribe_display=list&ical=1"),
+    ]
+
+    for u in candidates:
+        try:
+            resp = _http_get(u)
+            body = resp.content or b""
+            if body and b"BEGIN:VCALENDAR" in body:
+                return body, u
         except Exception:
             continue
-    return [], {"ok": False, "error": "No ICS available", "diag": {"ics_urls_tried": tried}}
+    return None, ""
 
 
-def fetch_tec_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None, **kwargs) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+def fetch_tec_html(source: Dict[str, Any], start_date: Optional[str] = None, end_date: Optional[str] = None
+                   ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """
-    HTML fallback for TEC sites, but:
-      1) If REST exists -> delegate to REST (more reliable).
-      2) If no REST -> try list/detail scrape.
-      3) If scrape yields nothing -> try site ICS feed.
+    Robust TEC HTML fetcher for sites without reliable REST (e.g., St. Germain).
+    Strategy:
+      1) Attempt TEC's built-in iCal feed (?ical=1). This is the most stable and version-proof.
+      2) If not found, fall back to minimal HTML crawl and JSON-LD extraction (best-effort).
+    Returns (events, diag).
     """
-    base = source["url"]
-    source_name = source.get("name") or source.get("id") or "TEC"
+    base_url = source.get("url", "").strip()
+    diag: Dict[str, Any] = {"strategy": "tec-html", "base_url": base_url, "steps": []}
+    events: List[Dict[str, Any]] = []
 
-    # Prefer REST if present
-    if _rest_available(base):
-        return fetch_tec_rest(source, start_date, end_date, **kwargs)
+    # 1) iCal feed
+    ics_bytes, ics_url = _try_tec_ical(base_url)
+    diag["steps"].append({"step": "try_ical", "url": ics_url, "ok": bool(ics_bytes)})
 
-    # Minimal list scrape (best-effort)
-    list_url = f"{base.rstrip('/')}/?eventDisplay=list"
+    if ics_bytes:
+        try:
+            events = _parse_ics_bytes(ics_bytes, start_date, end_date)
+            diag["ical_count"] = len(events)
+            return events, {"ok": True, "diag": diag}
+        except Exception as e:
+            diag["ical_error"] = repr(e)
+
+    # 2) Minimal HTML fallback – look for links to individual events and parse JSON-LD there
     try:
-        resp = get(list_url)
-        soup = BeautifulSoup(resp.text, "html.parser")
+        listing = _http_get(base_url).text
+        soup = BeautifulSoup(listing, "html.parser")
         links = []
-        for a in soup.select("a[href*='/event/'], a.tribe-events-calendar-list__event-title-link"):
-            href = a.get("href")
-            if href:
-                links.append(urljoin(base, href))
-        links = list(dict.fromkeys(links))  # de-dup
+        for a in soup.select("a[href]"):
+            href = a["href"]
+            if not href:
+                continue
+            # TEC event permalink often contains /event/ or /events/ with a slug
+            if re.search(r"/event(s)?/[^?#]+", href):
+                links.append(urljoin(base_url, href))
+        links = list(dict.fromkeys(links))  # dedupe
+        diag["fallback_links"] = len(links)
 
-        events: List[Dict[str, Any]] = []
         for href in links:
             try:
-                dresp = get(href)
-                dsoup = BeautifulSoup(dresp.text, "html.parser")
-                title_el = dsoup.select_one("h1, .tribe-events-single-event-title")
-                title = (title_el.get_text(strip=True) if title_el else "") or (dsoup.title.get_text(strip=True) if dsoup.title else href)
-                # Try common datetime attributes first
-                start_el = dsoup.select_one("[data-tribe-start-date], time.dt-start, time.tribe-events-c-event-datetime__start-date")
-                end_el = dsoup.select_one("[data-tribe-end-date], time.dt-end, time.tribe-events-c-event-datetime__end-date")
-                s = start_el.get("datetime") if start_el and start_el.has_attr("datetime") else (start_el.get("data-tribe-start-date") if start_el and start_el.has_attr("data-tribe-start-date") else None)
-                e = end_el.get("datetime") if end_el and end_el.has_attr("datetime") else (end_el.get("data-tribe-end-date") if end_el and end_el.has_attr("data-tribe-end-date") else None)
+                html = _http_get(href).text
+                s = BeautifulSoup(html, "html.parser")
+                # JSON-LD
+                for tag in s.select('script[type="application/ld+json"]'):
+                    try:
+                        data = json.loads(tag.string or "{}")
+                    except Exception:
+                        continue
+                    items = data if isinstance(data, list) else [data]
+                    for it in items:
+                        if not isinstance(it, dict):
+                            continue
+                        if it.get("@type") not in ("Event", "MusicEvent", "TheaterEvent"):
+                            continue
+                        title = (it.get("name") or "").strip() or "(untitled)"
+                        start = it.get("startDate")
+                        end = it.get("endDate")
+                        loc = it.get("location")
+                        loc_name = None
+                        if isinstance(loc, dict):
+                            loc_name = loc.get("name") or None
+                            # prefer a human-friendly line
+                            if not loc_name:
+                                adr = loc.get("address")
+                                if isinstance(adr, dict):
+                                    loc_name = ", ".join([adr.get(k, "") for k in ("streetAddress", "addressLocality")]).strip(", ") or None
 
-                start_utc = _coerce_dt(s)
-                end_utc = _coerce_dt(e)
+                        ev = {
+                            "uid": f"{href}@tec-html",
+                            "title": title,
+                            "url": href,
+                            "location": loc_name,
+                        }
+                        if start:
+                            try:
+                                ev["start_utc"] = _to_utc_string(dtp.parse(start))
+                            except Exception:
+                                pass
+                        if end:
+                            try:
+                                ev["end_utc"] = _to_utc_string(dtp.parse(end))
+                            except Exception:
+                                pass
 
-                # Venue / address
-                loc_node = dsoup.select_one(".tribe-events-meta-group-venue, .tribe-venue, .tribe-events-venue, .tribe-events-c-venue__address, .tribe-events-venue-details")
-                location = None
-                if loc_node:
-                    location = " ".join(loc_node.get_text(" ", strip=True).split())
+                        # Window filter (best-effort)
+                        if start_date and "start_utc" in ev:
+                            if dtp.parse(ev["start_utc"]).date() < dtp.parse(start_date).date():
+                                continue
+                        if end_date and "start_utc" in ev:
+                            if dtp.parse(ev["start_utc"]).date() > dtp.parse(end_date).date():
+                                continue
 
-                events.append({
-                    "uid": f"{abs(hash(href)) & 0xffffffff}@northwoods-v2",
-                    "title": title,
-                    "url": href,
-                    "start_utc": start_utc,
-                    "end_utc": end_utc,
-                    "location": location,
-                    "source": source_name,
-                    "calendar": source_name,
-                })
+                        events.append(ev)
             except Exception:
                 continue
 
-        if events:
-            return events, {"ok": True, "error": "", "diag": {"list_url": list_url, "count": len(events)}}
-    except Exception:
-        pass
+        diag["fallback_count"] = len(events)
+        return events, {"ok": True, "diag": diag}
+    except Exception as e:
+        diag["fallback_error"] = repr(e)
 
-    # Fallback to ICS if list/detail failed or empty
-    return _try_ics(base, source_name)
+    return [], {"ok": False, "error": "TEC HTML parse produced no events", "diag": diag}
