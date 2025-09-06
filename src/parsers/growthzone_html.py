@@ -1,59 +1,62 @@
-# src/parsers/growthzone_html.py
-# GrowthZone list parser with unified signature.
+# Path: src/parsers/growthzone_html.py
+from __future__ import annotations
+from typing import Any, Dict, List
 
+import requests
 from bs4 import BeautifulSoup
-from dateutil import parser as dtparse
-from urllib.parse import urljoin
-from src.fetch import get
 
-def _text(el):
-    return (el.get_text(" ", strip=True) if el else "").strip()
+from ._common import extract_jsonld_events, jsonld_to_norm, normalize_event
 
-def _guess_dt(txt):
-    try:
-        return dtparse.parse(txt, fuzzy=True)
-    except Exception:
-        return None
+def fetch_growthzone_html(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
+    """
+    GrowthZone calendars vary. Reliable approach:
+      1) Parse JSON-LD Events (most GZ pages embed them).
+      2) Fallback to visible DOM (cards), extracting date/time & location.
+    """
+    url = source["url"]
+    name = source.get("name") or source.get("id") or "GrowthZone"
+    cal = name
+    uid_prefix = (source.get("id") or name).replace(" ", "-").lower()
 
-def _fmt(dt):
-    return dt.strftime("%Y-%m-%d %H:%M:%S") if dt else None
+    session = requests.Session()
+    resp = session.get(url, timeout=30)
+    resp.raise_for_status()
+    html = resp.text
 
-def fetch_growthzone_html(source, start_date=None, end_date=None, session=None):
-    base_url = source.get("url")
-    name = source.get("name", source.get("id", "Calendar"))
-    resp = get(base_url)
-    soup = BeautifulSoup(resp.text, "html.parser")
+    # 1) JSON-LD
+    items = extract_jsonld_events(html)
+    events = jsonld_to_norm(items, uid_prefix=uid_prefix, calendar=cal, source_name=name)
+    if events:
+        return events
 
-    events = []
-    # Typical GrowthZone list structure – be permissive:
-    # Look for event cards linking to /events/details/
-    cards = soup.select('a[href*="/events/details/"], .event-list a[href*="/events/details/"]')
-    seen = set()
-    for a in cards:
-        href = a.get("href")
-        if not href:
-            continue
-        full = urljoin(base_url, href)
-        if full in seen:
-            continue
-        seen.add(full)
+    # 2) DOM fallback (best-effort generic selectors)
+    soup = BeautifulSoup(html, "html.parser")
+    candidates = soup.select(".gz-event, .event, .chamberMaster_event, .cm-calendar__event")
+    out: List[Dict[str, Any]] = []
 
-        title = _text(a)
-        # Try to find a date snippet near the link
-        container = a.find_parent(["div", "li", "article"]) or soup
-        date_txt = _text(
-            container.select_one(".date, .event-date, .cc-date, time, [class*='date']")
+    for card in candidates:
+        title_tag = card.select_one("a, .gz-event__title, .event-title")
+        title = (title_tag.get_text(strip=True) if title_tag else None)
+        link = title_tag.get("href") if title_tag and title_tag.has_attr("href") else None
+
+        # Date/time often appears in a date element or meta text
+        dt_text = None
+        dt_el = card.select_one(".gz-event__date, .event-date, time, .cm-calendar__date, .date")
+        if dt_el:
+            dt_text = dt_el.get_text(" ", strip=True)
+        # Location
+        loc_el = card.select_one(".gz-event__location, .event-location, .location, address")
+        location = loc_el.get_text(" ", strip=True) if loc_el else None
+
+        # Very generic: hope dateutil parses dt_text; growthzone often uses “Sep 5, 2025 5:00 PM”
+        start = dt_text
+        end = None
+
+        ev = normalize_event(
+            uid_prefix=uid_prefix, raw_id=link or title, title=title, url=link,
+            start=start, end=end, location=location, calendar=cal, source_name=name
         )
-        start = _guess_dt(date_txt)
-        events.append({
-            "uid": None,
-            "title": title or full,
-            "start_utc": _fmt(start),
-            "end_utc": None,
-            "url": full,
-            "location": None,
-            "source": name,
-            "calendar": name,
-        })
+        if ev:
+            out.append(ev)
 
-    return events, {"ok": True, "error": "", "diag": {"count": len(events)}}
+    return out
