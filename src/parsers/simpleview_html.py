@@ -1,60 +1,95 @@
-# src/parsers/simpleview_html.py
-# Simpleview events list parser with unified signature.
+# Path: src/parsers/simpleview_html.py
+from __future__ import annotations
+from typing import Any, Dict, List, Optional
+from urllib.parse import urljoin, urlparse, parse_qs
 
-from bs4 import BeautifulSoup
-from dateutil import parser as dtparse
-from urllib.parse import urljoin
-from src.fetch import get
+import requests
 
-def _text(el):
-    return (el.get_text(" ", strip=True) if el else "").strip()
+from ._common import extract_jsonld_events, jsonld_to_norm, normalize_event
 
-def _guess_dt(txt):
-    try:
-        return dtparse.parse(txt, fuzzy=True)
-    except Exception:
-        return None
+def _try_json_endpoints(base_url: str, session: requests.Session) -> List[Dict[str, Any]]:
+    """
+    Try common Simpleview JSON endpoints:
+      - ?format=json appended to the events listing URL
+      - /events/?format=json
+      - /events?format=json
+    """
+    urls = []
+    # Given URL may already be /events/ or /events
+    if "?" in base_url:
+        urls.append(base_url + "&format=json")
+    else:
+        urls.append(base_url + "?format=json")
 
-def _fmt(dt):
-    return dt.strftime("%Y-%m-%d %H:%M:%S") if dt else None
+    # Also attempt normalized variants
+    if base_url.rstrip("/").endswith("/events"):
+        urls.append(base_url.rstrip("/") + "/?format=json")
+    elif "/events/" in base_url:
+        urls.append(base_url.rstrip("/") + "/?format=json")
 
-def fetch_simpleview_html(source, start_date=None, end_date=None, session=None):
-    base_url = source.get("url")
-    name = source.get("name", source.get("id", "Calendar"))
-    resp = get(base_url)
-    soup = BeautifulSoup(resp.text, "html.parser")
-
-    events = []
-    # Broad selectors for Simpleview cards:
-    # anchor for each event (often /event/…)
-    for a in soup.select('a[href*="/event/"]'):
-        href = a.get("href")
-        if not href:
+    for u in urls:
+        try:
+            r = session.get(u, timeout=30)
+            if r.status_code != 200:
+                continue
+            data = r.json()
+            # Common shapes: {"Items": [...]} or {"items":[...]} or {"results":[...]}
+            items = data.get("Items") or data.get("items") or data.get("results")
+            if not isinstance(items, list):
+                continue
+            out = []
+            for idx, it in enumerate(items):
+                title = it.get("Title") or it.get("title") or it.get("Name") or it.get("name")
+                url = it.get("Url") or it.get("url") or it.get("DetailURL") or it.get("detailUrl")
+                start = it.get("StartDate") or it.get("startDate") or it.get("Start")
+                end = it.get("EndDate") or it.get("endDate") or it.get("End")
+                # location may be composed from Venue fields
+                venue_name = (it.get("VenueName") or it.get("venueName") or
+                              (it.get("Venue") or {}).get("Name"))
+                city = it.get("City") or it.get("city")
+                location = " | ".join([x for x in [venue_name, city] if x])
+                out.append((title, url, start, end, location))
+            if out:
+                return out
+        except Exception:
             continue
-        full = urljoin(base_url, href)
-        # Title commonly near/inside the anchor or in a heading sibling
-        title = _text(a) or _text(a.find(["h2", "h3"]))
-        block = a.find_parent(["div", "li", "article"]) or soup
-        date_txt = _text(block.select_one(".date, .event-date, time, [class*='date']"))
-        start = _guess_dt(date_txt)
-        loc = _text(block.select_one(".venue, .location, [class*='venue']"))
+    return []
 
-        evt = {
-            "uid": None,
-            "title": title or full,
-            "start_utc": _fmt(start),
-            "end_utc": None,
-            "url": full,
-            "location": loc or None,
-            "source": name,
-            "calendar": name,
-        }
-        if evt["title"]:
-            events.append(evt)
+def fetch_simpleview_html(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
+    """
+    Simpleview calendars:
+      1) Prefer JSON-LD on the HTML page (robust).
+      2) Try known JSON endpoints (?format=json variants).
+      3) Fallback returns [].
+    """
+    url = source["url"]
+    name = source.get("name") or source.get("id") or "Simpleview"
+    cal = name
+    uid_prefix = (source.get("id") or name).replace(" ", "-").lower()
 
-    # De-dup by URL
-    uniq = {}
-    for e in events:
-        uniq[e["url"]] = e
-    events = list(uniq.values())
-    return events, {"ok": True, "error": "", "diag": {"count": len(events)}}
+    session = requests.Session()
+    # First load the HTML (for JSON-LD)
+    try:
+        resp = session.get(url, timeout=30)
+        resp.raise_for_status()
+        html = resp.text
+        items = extract_jsonld_events(html)
+        events = jsonld_to_norm(items, uid_prefix=uid_prefix, calendar=cal, source_name=name)
+        if events:
+            return events
+    except Exception:
+        # keep going to JSON endpoints
+        pass
+
+    # Try JSON endpoints
+    json_items = _try_json_endpoints(url, session)
+    out: List[Dict[str, Any]] = []
+    for idx, (title, link, start, end, location) in enumerate(json_items):
+        ev = normalize_event(
+            uid_prefix=uid_prefix, raw_id=link or title or idx, title=title, url=link,
+            start=start, end=end, location=location, calendar=cal, source_name=name
+        )
+        if ev:
+            out.append(ev)
+
+    return out
