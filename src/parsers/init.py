@@ -1,20 +1,36 @@
-# src/parsers/__init__.py
+# Path: src/parsers/__init__.py
+"""
+Unified export surface for parsers. Every fetcher MUST accept:
+    fetch_X(source: dict, start_date: str, end_date: str) -> list[dict]
+
+This module exposes:
+    fetch_tec_rest
+    fetch_tec_html
+    fetch_growthzone_html
+    fetch_simpleview_html
+"""
+
 from importlib import import_module
 
-__all__ = []
+__all__ = [
+    "fetch_tec_rest",
+    "fetch_tec_html",
+    "fetch_growthzone_html",
+    "fetch_simpleview_html",
+]
 
-def _export(public_name: str, module_name: str, attr_name: str):
+def _load_attr(module_name: str, attr: str):
     mod = import_module(f"src.parsers.{module_name}")
-    fn = getattr(mod, attr_name, None)
-    if fn is None:
+    fn = getattr(mod, attr, None)
+    if fn is None or not callable(fn):
         raise ImportError(
-            f"Failed to expose '{attr_name}' from parsers.{module_name}"
+            f"Failed to expose '{attr}' from parsers.{module_name}: "
+            f"callable not found."
         )
-    globals()[public_name] = fn
-    __all__.append(public_name)
+    return fn
 
-# Keep these stable; main.py imports from src.parsers
-_export("fetch_tec_rest", "tec_rest", "fetch_tec_rest")
-_export("fetch_tec_html", "tec_html", "fetch_tec_html")
-_export("fetch_growthzone_html", "growthzone_html", "fetch_growthzone_html")
-_export("fetch_simpleview_html", "simpleview_html", "fetch_simpleview_html")
+# Explicit, stable bindings (no magic registry here).
+fetch_tec_rest = _load_attr("tec_rest", "fetch_tec_rest")
+fetch_tec_html = _load_attr("tec_html", "fetch_tec_html")
+fetch_growthzone_html = _load_attr("growthzone_html", "fetch_growthzone_html")
+fetch_simpleview_html = _load_attr("simpleview_html", "fetch_simpleview_html")
