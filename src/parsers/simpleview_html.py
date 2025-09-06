@@ -1,95 +1,132 @@
-# Path: src/parsers/simpleview_html.py
 from __future__ import annotations
-from typing import Any, Dict, List, Optional
-from urllib.parse import urljoin, urlparse, parse_qs
 
-import requests
+from typing import Any, Dict, List, Tuple
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from dateutil import parser as dtparse
+from src.fetch import get
 
-from ._common import extract_jsonld_events, jsonld_to_norm, normalize_event
 
-def _try_json_endpoints(base_url: str, session: requests.Session) -> List[Dict[str, Any]]:
-    """
-    Try common Simpleview JSON endpoints:
-      - ?format=json appended to the events listing URL
-      - /events/?format=json
-      - /events?format=json
-    """
-    urls = []
-    # Given URL may already be /events/ or /events
-    if "?" in base_url:
-        urls.append(base_url + "&format=json")
-    else:
-        urls.append(base_url + "?format=json")
+def _coerce_dt(s: str | None) -> str | None:
+    if not s:
+        return None
+    try:
+        dt = dtparse.parse(s)
+        return dt.strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return None
 
-    # Also attempt normalized variants
-    if base_url.rstrip("/").endswith("/events"):
-        urls.append(base_url.rstrip("/") + "/?format=json")
-    elif "/events/" in base_url:
-        urls.append(base_url.rstrip("/") + "/?format=json")
 
-    for u in urls:
+def _jsonld_events(html: str) -> List[Dict[str, Any]]:
+    soup = BeautifulSoup(html, "html.parser")
+    out: List[Dict[str, Any]] = []
+    for tag in soup.find_all("script", {"type": "application/ld+json"}):
         try:
-            r = session.get(u, timeout=30)
-            if r.status_code != 200:
-                continue
-            data = r.json()
-            # Common shapes: {"Items": [...]} or {"items":[...]} or {"results":[...]}
-            items = data.get("Items") or data.get("items") or data.get("results")
-            if not isinstance(items, list):
-                continue
-            out = []
-            for idx, it in enumerate(items):
-                title = it.get("Title") or it.get("title") or it.get("Name") or it.get("name")
-                url = it.get("Url") or it.get("url") or it.get("DetailURL") or it.get("detailUrl")
-                start = it.get("StartDate") or it.get("startDate") or it.get("Start")
-                end = it.get("EndDate") or it.get("endDate") or it.get("End")
-                # location may be composed from Venue fields
-                venue_name = (it.get("VenueName") or it.get("venueName") or
-                              (it.get("Venue") or {}).get("Name"))
-                city = it.get("City") or it.get("city")
-                location = " | ".join([x for x in [venue_name, city] if x])
-                out.append((title, url, start, end, location))
-            if out:
-                return out
+            import json
+            data = json.loads(tag.string or "{}")
+            if isinstance(data, dict):
+                data = [data]
+            for item in data:
+                if isinstance(item, dict) and item.get("@type") in ("Event", ["Event"]):
+                    out.append(item)
         except Exception:
             continue
-    return []
-
-def fetch_simpleview_html(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    """
-    Simpleview calendars:
-      1) Prefer JSON-LD on the HTML page (robust).
-      2) Try known JSON endpoints (?format=json variants).
-      3) Fallback returns [].
-    """
-    url = source["url"]
-    name = source.get("name") or source.get("id") or "Simpleview"
-    cal = name
-    uid_prefix = (source.get("id") or name).replace(" ", "-").lower()
-
-    session = requests.Session()
-    # First load the HTML (for JSON-LD)
-    try:
-        resp = session.get(url, timeout=30)
-        resp.raise_for_status()
-        html = resp.text
-        items = extract_jsonld_events(html)
-        events = jsonld_to_norm(items, uid_prefix=uid_prefix, calendar=cal, source_name=name)
-        if events:
-            return events
-    except Exception:
-        # keep going to JSON endpoints
-        pass
-
-    # Try JSON endpoints
-    json_items = _try_json_endpoints(url, session)
-    out: List[Dict[str, Any]] = []
-    for idx, (title, link, start, end, location) in enumerate(json_items):
-        ev = normalize_event(
-            uid_prefix=uid_prefix, raw_id=link or title or idx, title=title, url=link,
-            start=start, end=end, location=location, calendar=cal, source_name=name
-        )
-        if ev:
-            out.append(ev)
-
     return out
+
+
+def fetch_simpleview_html(source: Dict[str, Any], start_date: str | None = None, end_date: str | None = None, **_) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Simpleview sites (e.g., Minocqua) often render event cards in HTML list pages and
+    include JSON-LD on the detail page. We:
+      1) Collect event links from the list
+      2) Visit detail pages and extract JSON-LD Event (name, startDate, endDate, location)
+    """
+    base = source["url"].rstrip("/") + "/"
+    source_name = source.get("name") or source.get("id") or "Simpleview"
+
+    # Minocqua events root typically is the page itself
+    list_url = base
+    lresp = get(list_url)
+    lsoup = BeautifulSoup(lresp.text, "html.parser")
+
+    # Capture unique event links from cards/tiles
+    links: List[str] = []
+    for a in lsoup.select("a[href*='/event/'], a[href*='events/']"):
+        href = a.get("href", "")
+        # Skip non-event internal anchors
+        if href and ("/event/" in href or href.rstrip("/").endswith("/events")):
+            if "/events/" in href and "/event/" not in href:
+                continue  # likely category page, not an event
+            links.append(urljoin(base, href))
+    # de-dup
+    seen = set()
+    uniq_links = []
+    for h in links:
+        if h not in seen:
+            uniq_links.append(h)
+            seen.add(h)
+
+    events: List[Dict[str, Any]] = []
+    diag_pages: List[str] = []
+
+    for href in uniq_links:
+        try:
+            dresp = get(href)
+            dhtml = dresp.text
+            diag_pages.append(href)
+            jd = _jsonld_events(dhtml)
+            if not jd:
+                # Sometimes Simpleview nests JSON-LD in arrays; fallback to basic scrape
+                dsoup = BeautifulSoup(dhtml, "html.parser")
+                title = (dsoup.select_one("h1") or dsoup.title or "").get_text(strip=True)
+                time_node = dsoup.select_one("time[datetime]")
+                start_utc = _coerce_dt(time_node.get("datetime")) if time_node else None
+                loc_node = dsoup.select_one("[itemprop='address'], .address, .event-venue, .venue")
+                location = " ".join(loc_node.get_text(" ", strip=True).split()) if loc_node else None
+                events.append({
+                    "uid": f"{abs(hash(href)) & 0xffffffff}@northwoods-v2",
+                    "title": title,
+                    "url": href,
+                    "start_utc": start_utc,
+                    "end_utc": None,
+                    "location": location,
+                    "source": source_name,
+                    "calendar": source_name,
+                })
+                continue
+
+            ev = jd[0]
+            title = (ev.get("name") or "").strip()
+            url = ev.get("url") or href
+            start_utc = _coerce_dt(ev.get("startDate"))
+            end_utc = _coerce_dt(ev.get("endDate"))
+
+            location = None
+            loc = ev.get("location")
+            if isinstance(loc, dict):
+                parts = []
+                n = loc.get("name")
+                if n:
+                    parts.append(n)
+                addr = loc.get("address")
+                if isinstance(addr, dict):
+                    for k in ("streetAddress", "addressLocality", "addressRegion", "postalCode"):
+                        v = addr.get(k)
+                        if v:
+                            parts.append(v)
+                location = ", ".join([p for p in parts if p])
+
+            events.append({
+                "uid": f"{abs(hash(url)) & 0xffffffff}@northwoods-v2",
+                "title": title,
+                "url": url,
+                "start_utc": start_utc,
+                "end_utc": end_utc,
+                "location": location,
+                "source": source_name,
+                "calendar": source_name,
+            })
+        except Exception:
+            continue
+
+    return events, {"ok": True, "error": "", "diag": {"list_url": list_url, "details": diag_pages, "count": len(events)}}
