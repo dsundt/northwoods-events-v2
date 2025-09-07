@@ -1,25 +1,16 @@
 # src/parsers/simpleview_html.py
-# DROP-IN REPLACEMENT
-#
-# Purpose:
-# - Parse Simpleview event listings by discovering an ICS feed on the page
-#   (patterns like '?format=ical' or '.ics') and parsing that. This is more
-#   reliable than scraping headings and fixes "0 events" or "headings only".
-# - Function signature matches main.py expectations: (source, start_date, end_date)
-# - Returns: (events: list[dict], diag: dict)
-#
-# Notes:
-# - This file only changes Simpleview parsing. TEC sources (Boulder/Eagle/Vilas) are untouched.
-# - Fixes the previous SyntaxError by avoiding a complex f-string in UID generation.
+# DROP-IN REPLACEMENT — Simpleview with ICS discovery + JSON-LD fallback
 
 from __future__ import annotations
 
+import json
 import re
-from datetime import datetime, date, time, timezone
+from datetime import datetime, date, time
 from typing import Tuple, List, Dict, Optional
 from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
+from dateutil import parser as dtparser
 from dateutil import tz
 import requests
 from icalendar import Calendar
@@ -28,8 +19,6 @@ LOCAL_TZ = tz.gettz("America/Chicago")
 UTC = tz.UTC
 
 def _get(url: str, timeout: int = 20) -> requests.Response:
-    if not isinstance(url, str):
-        raise TypeError(f"_get expected a URL string, got {type(url)}")
     resp = requests.get(url, timeout=timeout, headers={"User-Agent": "northwoods-v2/1.0"})
     resp.raise_for_status()
     return resp
@@ -39,7 +28,7 @@ def _coerce_date(d) -> date:
         return d
     if isinstance(d, datetime):
         return d.date()
-    return datetime.fromisoformat(str(d)).date()
+    return dtparser.isoparse(str(d)).date()
 
 def _to_utc(dtobj) -> datetime:
     if isinstance(dtobj, date) and not isinstance(dtobj, datetime):
@@ -61,22 +50,17 @@ def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List
     for comp in cal.walk():
         if comp.name != "VEVENT":
             continue
-
         summary = str(comp.get("summary", "")).strip()
         if not summary:
             continue
-
         dtstart = comp.get("dtstart")
         if not dtstart:
             continue
         start_utc = _to_utc(dtstart.dt)
-
         dtend = comp.get("dtend")
         end_utc = _to_utc(dtend.dt) if dtend else None
-
         if not _in_window(start_utc, end_utc, start_date, end_date):
             continue
-
         url = str(comp.get("url", "")).strip() or None
         location = str(comp.get("location", "")).strip() or None
 
@@ -84,7 +68,6 @@ def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List
         if uid_val:
             uid = str(uid_val)
         else:
-            # Avoid complex f-strings to keep parser happy on all runners
             base = f"{summary}|{start_utc.isoformat()}|{url or ''}"
             uid = "sv-" + str(abs(hash(base)))
 
@@ -99,7 +82,7 @@ def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List
         })
     return out
 
-# Simpleview ICS patterns frequently seen
+# Simpleview ICS patterns
 _ICS_CANDIDATE_PATTERNS = [
     re.compile(r"[?&]format=ical", re.I),
     re.compile(r"\.ics(\b|$)", re.I),
@@ -117,13 +100,13 @@ def _discover_ics_href(html: str, page_url: str) -> Optional[str]:
         if "alternate" in rels and typ in ("text/calendar", "text/x-vcalendar") and href:
             return urljoin(page_url, href)
 
-    # Anchor candidates with common ICS patterns
+    # Anchors
     for a in soup.find_all("a", href=True):
         href = a["href"]
         if any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
             return urljoin(page_url, href)
 
-    # Buttons or elements with data-href to ICS
+    # data-href buttons
     for btn in soup.select("[data-href]"):
         href = btn.get("data-href")
         if href and any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
@@ -131,13 +114,60 @@ def _discover_ics_href(html: str, page_url: str) -> Optional[str]:
 
     return None
 
+def _jsonld_events(soup: BeautifulSoup) -> List[Dict]:
+    out: List[Dict] = []
+    for tag in soup.find_all("script", {"type": "application/ld+json"}):
+        try:
+            data = json.loads(tag.string.strip()) if tag.string else None
+        except Exception:
+            continue
+        if not data:
+            continue
+        items = data if isinstance(data, list) else [data]
+        for item in items:
+            if (item.get("@type") == "Event") or (isinstance(item.get("@type"), list) and "Event" in item.get("@type")):
+                out.append(item)
+            if item.get("@type") == "ItemList":
+                for el in item.get("itemListElement") or []:
+                    ev = el.get("item") if isinstance(el, dict) else None
+                    if isinstance(ev, dict) and ev.get("@type") == "Event":
+                        out.append(ev)
+    return out
+
+def _parse_jsonld_event(ev: Dict) -> Dict:
+    name = (ev.get("name") or "").strip()
+    url = (ev.get("url") or "").strip() or None
+    s_raw = ev.get("startDate")
+    e_raw = ev.get("endDate")
+    start_utc = _to_utc(dtparser.isoparse(s_raw)) if s_raw else None
+    end_utc = _to_utc(dtparser.isoparse(e_raw)) if e_raw else None
+
+    loc = None
+    loc_obj = ev.get("location")
+    if isinstance(loc_obj, dict):
+        loc = (loc_obj.get("name") or "").strip() or None
+        if not loc:
+            addr = loc_obj.get("address")
+            if isinstance(addr, dict):
+                parts = [addr.get(k) for k in ("streetAddress", "addressLocality", "addressRegion")]
+                loc = ", ".join([p for p in parts if p]) or None
+    elif isinstance(loc_obj, str):
+        loc = loc_obj.strip() or None
+
+    base = f"{name}|{(start_utc.isoformat() if start_utc else '')}|{url or ''}"
+    uid = "sv-" + str(abs(hash(base)))
+
+    return {
+        "id": uid,
+        "title": name or url or "Event",
+        "start": start_utc,
+        "end": end_utc,
+        "url": url,
+        "location": loc,
+        "tz": "UTC",
+    }
+
 def fetch_simpleview_html(source: Dict, start_date, end_date) -> Tuple[List[Dict], Dict]:
-    """
-    :param source: dict with keys: name, id, type, url
-    :param start_date: date or ISO string
-    :param end_date: date or ISO string
-    :return: (events, diag)
-    """
     page_url = str(source.get("url", "")).strip()
     if not page_url:
         return [], {"ok": False, "error": "Missing source.url", "diag": {}}
@@ -147,25 +177,37 @@ def fetch_simpleview_html(source: Dict, start_date, end_date) -> Tuple[List[Dict
 
     diag: Dict = {"ok": True, "error": "", "diag": {"page_url": page_url}}
 
-    # 1) page load
+    # 1) Listing page
     try:
         page = _get(page_url)
     except Exception as e:
         return [], {"ok": False, "error": f"GET listing failed: {e}", "diag": {"page_url": page_url}}
 
-    # 2) discover ICS
+    # 2) ICS discovery
     ics_href = _discover_ics_href(page.text, page_url)
     diag["diag"]["ics_url"] = ics_href
 
-    if not ics_href:
-        # Without ICS, Simpleview DOM scraping is not stable across templates.
-        return [], {"ok": False, "error": "No ICS link discovered on Simpleview page", "diag": diag["diag"]}
+    if ics_href:
+        try:
+            ics_resp = _get(ics_href)
+            events = _parse_ics_bytes(ics_resp.content, sd, ed)
+            diag["diag"]["ics_events"] = len(events)
+            if events:
+                return events, diag
+        except Exception as e:
+            diag["diag"]["ics_error"] = str(e)
 
-    # 3) fetch & parse ICS
-    try:
-        ics_resp = _get(ics_href)
-        events = _parse_ics_bytes(ics_resp.content, sd, ed)
-        diag["diag"]["ics_events"] = len(events)
+    # 3) JSON-LD fallback
+    soup = BeautifulSoup(page.text, "html.parser")
+    jl = _jsonld_events(soup)
+    events: List[Dict] = []
+    for item in jl:
+        ev = _parse_jsonld_event(item)
+        if ev.get("start") and _in_window(ev["start"], ev.get("end"), sd, ed):
+            events.append(ev)
+
+    diag["diag"]["jsonld_events"] = len(events)
+    if events:
         return events, diag
-    except Exception as e:
-        return [], {"ok": False, "error": f"ICS fetch/parse failed: {e}", "diag": diag["diag"]}
+
+    return [], {"ok": False, "error": "No ICS or JSON-LD events discovered on Simpleview page", "diag": diag["diag"]}
