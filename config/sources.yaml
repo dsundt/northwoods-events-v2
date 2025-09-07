@@ -10,13 +10,12 @@
   type: tec_rest
   url: https://eagleriver.org/
 
-# CHANGED: St. Germain is actually a GrowthZone/ChamberMaster calendar.
-# Point to the events hub on the ChamberMaster domain and use the GrowthZone parser.
-- name: St. Germain Chamber (GrowthZone)
-  id: st-germain-chamber-growthzone
-  type: growthzone_html
-  url: https://stgermainwi.chambermaster.com/events/
-
+# config/sources.yaml
+- name: St. Germain Chamber (ICS)
+  id: st-germain-chamber-ics
+  type: ics
+  url: https://st-germain.com/events-calendar/?ical=1&eventDisplay=list
+  
 # UNCHANGED TYPE: Rhinelander is GrowthZone; keep the list URL and let the parser hydrate from details.
 - name: Rhinelander Chamber (GrowthZone)
   id: rhinelander-chamber-growthzone
