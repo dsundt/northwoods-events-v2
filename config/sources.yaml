@@ -1,44 +1,37 @@
 # config/sources.yaml
-# Minimal, surgical adjustments based on live site inspection
 
-- id: boulder-junction-tec
-  name: Boulder Junction (TEC)
+- name: Boulder Junction (TEC)
+  id: boulder-junction-tec
   type: tec_rest
   url: https://boulderjct.org/
-  enabled: true
 
-- id: eagle-river-chamber-tec
-  name: Eagle River Chamber (TEC)
+- name: Eagle River Chamber (TEC)
+  id: eagle-river-chamber-tec
   type: tec_rest
   url: https://eagleriver.org/
-  enabled: true
 
+# CHANGED: St. Germain is actually a GrowthZone/ChamberMaster calendar.
+# Point to the events hub on the ChamberMaster domain and use the GrowthZone parser.
 - name: St. Germain Chamber (GrowthZone)
   id: st-germain-chamber-growthzone
   type: growthzone_html
   url: https://stgermainwi.chambermaster.com/events/
-  enabled: true
 
+# UNCHANGED TYPE: Rhinelander is GrowthZone; keep the list URL and let the parser hydrate from details.
 - name: Rhinelander Chamber (GrowthZone)
   id: rhinelander-chamber-growthzone
   type: growthzone_html
   url: https://business.rhinelanderchamber.com/events/
-  enabled: true
 
+# Simpleview listings are JS-rendered. The parser will auto-detect an ICS feed.
+# If you learn the exact ICS URL, uncomment manual_ics_url for a guaranteed path.
 - name: Let's Minocqua (Simpleview)
-  id: lets-minocqua-simpleview
+  id: let-s-minocqua-simpleview
   type: simpleview_html
   url: https://www.minocqua.org/events/
-  enabled: true
+  # manual_ics_url: https://www.minocqua.org/events/?format=ical
 
-- id: vilas-county-tourism-tec
-  name: Vilas County Tourism (TEC)
+- name: Vilas County Tourism (TEC)
+  id: vilas-county-tourism-tec
   type: tec_rest
   url: https://vilaswi.com/
-  enabled: true
-
-- id: oneida-county-tourism
-  name: Oneida County Tourism (Aggregate page; no calendar)
-  type: disabled
-  url: https://oneidacountywi.com/festivals-events/
-  enabled: false
