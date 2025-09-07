@@ -13,22 +13,20 @@
   url: https://eagleriver.org/
   enabled: true
 
-- id: st-germain-chamber-tec
-  name: St. Germain Chamber (Eventastic on WP)
-  # Keep parser label stable to avoid file/path changes;
-  # the tec_html fetcher must auto-detect and parse Eventastic markup too.
-  type: tec_html
-  url: https://st-germain.com/events/
+- name: St. Germain Chamber (GrowthZone)
+  id: st-germain-chamber-growthzone
+  type: growthzone_html
+  url: https://stgermainwi.chambermaster.com/events/
   enabled: true
 
-- id: rhinelander-chamber-growthzone
-  name: Rhinelander Chamber (GrowthZone)
+- name: Rhinelander Chamber (GrowthZone)
+  id: rhinelander-chamber-growthzone
   type: growthzone_html
   url: https://business.rhinelanderchamber.com/events/
   enabled: true
 
-- id: let-s-minocqua-simpleview
-  name: Let's Minocqua (Simpleview)
+- name: Let's Minocqua (Simpleview)
+  id: lets-minocqua-simpleview
   type: simpleview_html
   url: https://www.minocqua.org/events/
   enabled: true
