@@ -1,204 +1,167 @@
 # src/parsers/growthzone_html.py
-# DROP-IN REPLACEMENT — robust GrowthZone parser
-#
-# Public API (unchanged):
-#   fetch_growthzone_html(source: dict, start_date, end_date) -> (events: list[dict], diag: dict)
-#
-# Notes:
-# - Pulls the listing URL from source["url"] (prevents InvalidSchema).
-# - First tries JSON-LD (schema.org/Event), then falls back to common GrowthZone HTML.
-# - Returns events with "start"/"end" as datetime (UTC); location/title/url filled.
-# - main.py should be doing final normalization/serialization to strings for report.json and ICS.
-
-from __future__ import annotations
-
-import json
-import re
-from datetime import datetime, date, time
-from typing import List, Dict, Tuple, Optional
-
-import requests
+from typing import List, Dict, Any, Optional
 from bs4 import BeautifulSoup
-from dateutil import parser as dtparser
-from dateutil import tz
+from dateutil import parser as dtp
+from datetime import datetime
+import json
 
-UTC = tz.UTC
-LOCAL_TZ = tz.gettz("America/Chicago")
+from src.fetch import get
 
-def _coerce_date(d) -> date:
-    if isinstance(d, date) and not isinstance(d, datetime):
-        return d
-    if isinstance(d, datetime):
-        return d.date()
-    return dtparser.isoparse(str(d)).date()
+TZ_HINT = None  # keep naive "YYYY-MM-DD HH:MM:SS" strings unless input provides tz
 
-def _to_utc(dtobj: datetime) -> datetime:
-    if isinstance(dtobj, date) and not isinstance(dtobj, datetime):
-        dtobj = datetime.combine(dtobj, time(0, 0))
-    if dtobj.tzinfo is None:
-        dtobj = dtobj.replace(tzinfo=LOCAL_TZ)
-    return dtobj.astimezone(UTC)
+def _dt_to_str(dt: Optional[datetime]) -> Optional[str]:
+    if not dt:
+        return None
+    # Normalize to "YYYY-MM-DD HH:MM:SS"
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
 
-def _within_window(start_utc: datetime, end_utc: Optional[datetime], sd: date, ed: date) -> bool:
-    ws = datetime.combine(sd, time(0, 0, tzinfo=UTC))
-    we = datetime.combine(ed, time(23, 59, 59, tzinfo=UTC))
-    s = start_utc
-    e = end_utc or start_utc
-    return not (e < ws or s > we)
-
-def _get(url: str, timeout: int = 25) -> requests.Response:
-    resp = requests.get(url, headers={"User-Agent": "northwoods-v2/1.0"}, timeout=timeout)
-    resp.raise_for_status()
-    return resp
-
-def _jsonld_events(soup: BeautifulSoup) -> List[Dict]:
-    out: List[Dict] = []
-    for tag in soup.find_all("script", {"type": "application/ld+json"}):
-        try:
-            data = json.loads(tag.string.strip()) if tag.string else None
-        except Exception:
-            continue
-        if not data:
-            continue
-
-        items = data if isinstance(data, list) else [data]
-        for item in items:
-            typ = (item.get("@type") or "").lower()
-            if typ == "event" or (isinstance(item.get("@type"), list) and "Event" in item.get("@type")):
-                out.append(item)
-            # Some GrowthZone pages wrap events in an ItemList
-            if (item.get("@type") == "ItemList") and "itemListElement" in item:
-                for el in item.get("itemListElement") or []:
-                    ev = el.get("item") if isinstance(el, dict) else None
-                    if isinstance(ev, dict) and (ev.get("@type") == "Event"):
-                        out.append(ev)
-    return out
-
-def _parse_jsonld_event(ev: Dict) -> Dict:
-    name = (ev.get("name") or "").strip()
-    url = (ev.get("url") or "").strip() or None
-    # startDate / endDate may be ISO strings
-    s_raw = ev.get("startDate")
-    e_raw = ev.get("endDate")
-
-    start_utc = _to_utc(dtparser.isoparse(s_raw)) if s_raw else None
-    end_utc = _to_utc(dtparser.isoparse(e_raw)) if e_raw else None
-
-    loc = None
-    loc_obj = ev.get("location")
-    if isinstance(loc_obj, dict):
-        loc = (loc_obj.get("name") or "").strip() or None
-        if not loc:
-            addr = loc_obj.get("address")
-            if isinstance(addr, dict):
-                parts = [addr.get(k) for k in ("streetAddress", "addressLocality", "addressRegion")]
-                loc = ", ".join([p for p in parts if p]) or None
-    elif isinstance(loc_obj, str):
-        loc = loc_obj.strip() or None
-
-    return {
-        "id": ("gz-" + str(abs(hash(f"{name}|{s_raw}|{url or ''}")))) if name or s_raw else None,
-        "title": name or url or "Event",
-        "start": start_utc,
-        "end": end_utc,
-        "location": loc,
-        "url": url,
-        "tz": "UTC",
-    }
-
-# Fallback HTML selectors (common GrowthZone patterns)
-_CARD_SEL = ".gz-event, .event, .card, .events-list .item, .EventList .EventList-item"
-
-def _html_events(soup: BeautifulSoup) -> List[Dict]:
-    out: List[Dict] = []
-
-    # Try explicit time tags first
-    for el in soup.select(_CARD_SEL):
-        title_el = el.select_one("a, h3, .title, .event-title")
-        title = (title_el.get_text(strip=True) if title_el else "").strip()
-
-        url = None
-        if title_el and title_el.name == "a" and title_el.has_attr("href"):
-            url = title_el["href"]
-
-        # common date containers
-        when_text = ""
-        time_el = el.find(["time"])
-        if time_el and time_el.has_attr("datetime"):
-            when_text = time_el["datetime"]
-        elif time_el:
-            when_text = time_el.get_text(" ", strip=True)
-
-        if not when_text:
-            dt_el = el.select_one(".date, .event-date, .EventDate, .When")
-            when_text = dt_el.get_text(" ", strip=True) if dt_el else ""
-
-        start_utc = None
-        end_utc = None
-        if when_text:
-            try:
-                # Handles most “2025-09-05 19:00” / ISO strings
-                start_utc = _to_utc(dtparser.parse(when_text, fuzzy=True))
-            except Exception:
-                start_utc = None
-
-        # location
-        loc = None
-        loc_el = el.select_one(".location, .event-location, .Venue, .where")
-        if loc_el:
-            loc = loc_el.get_text(" ", strip=True) or None
-
-        if title or start_utc or url:
-            out.append({
-                "id": "gz-" + str(abs(hash(f"{title}|{(start_utc.isoformat() if start_utc else '')}|{url or ''}"))),
-                "title": title or url or "Event",
-                "start": start_utc,
-                "end": end_utc,
-                "location": loc,
-                "url": url,
-                "tz": "UTC",
-            })
-
-    return out
-
-def fetch_growthzone_html(source: Dict, start_date, end_date) -> Tuple[List[Dict], Dict]:
-    """
-    GrowthZone listing fetcher (St. Germain / Rhinelander).
-    Reads URL from source["url"]. Returns (events, diag).
-    """
-    sd = _coerce_date(start_date)
-    ed = _coerce_date(end_date)
-
-    url = (source.get("url") or "").strip()
-    if not url:
-        return [], {"ok": False, "error": "Missing source.url for GrowthZone", "diag": {}}
-
-    diag = {"ok": True, "error": "", "diag": {"url": url}}
+def _parse_event_ldjson(block: str) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
     try:
-        r = _get(url)
-    except Exception as e:
-        return [], {"ok": False, "error": f"GET failed: {e}", "diag": {"url": url}}
+        data = json.loads(block.strip())
+    except Exception:
+        return out
 
-    soup = BeautifulSoup(r.text, "html.parser")
+    items = data if isinstance(data, list) else [data]
+    for obj in items:
+        if not isinstance(obj, dict):
+            continue
+        # Accept Event or nested in @graph
+        candidates = []
+        if obj.get("@type") == "Event":
+            candidates = [obj]
+        elif "@graph" in obj and isinstance(obj["@graph"], list):
+            candidates = [x for x in obj["@graph"] if isinstance(x, dict) and x.get("@type") == "Event"]
 
-    # Prefer JSON-LD
-    items = _jsonld_events(soup)
-    events: List[Dict] = []
-    for it in items:
-        try:
-            ev = _parse_jsonld_event(it)
-            if not ev.get("start"):
+        for ev in candidates:
+            title = (ev.get("name") or "").strip()
+            if not title:
                 continue
-            if _within_window(ev["start"], ev.get("end"), sd, ed):
-                events.append(ev)
+            start_s = ev.get("startDate")
+            end_s = ev.get("endDate")
+            try:
+                start_dt = dtp.parse(start_s) if start_s else None
+                end_dt = dtp.parse(end_s) if end_s else None
+            except Exception:
+                start_dt = end_dt = None
+
+            loc = None
+            loc_obj = ev.get("location")
+            if isinstance(loc_obj, dict):
+                loc = loc_obj.get("name") or loc_obj.get("address") or None
+
+            url = ev.get("url") or None
+            uid = ev.get("@id") or url or f"gz-{hash((title, start_s or '', url or ''))}"
+
+            out.append({
+                "uid": str(uid),
+                "title": title,
+                "start_utc": _dt_to_str(start_dt),
+                "end_utc": _dt_to_str(end_dt),
+                "url": url,
+                "location": loc,
+            })
+    return out
+
+def _parse_cards(soup: BeautifulSoup) -> List[Dict[str, Any]]:
+    """
+    Generic GrowthZone/ChamberMaster list fallback.
+    Tries to read card title, link, date string near card, and location.
+    Works across a variety of site skins.
+    """
+    events: List[Dict[str, Any]] = []
+
+    # Common anchors that look like event cards
+    anchors = soup.select('a[href*="/events/details"], a[href*="/events/details/"], a[href*="/event/"], a[href*="Event?"]')
+    seen = set()
+
+    for a in anchors:
+        url = a.get("href")
+        title = (a.get_text(strip=True) or "")
+        if not url or not title:
+            continue
+        key = (title, url)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        # Try to find a date/time near the anchor
+        container = a
+        for _ in range(4):
+            container = container.parent if container and container.parent else container
+        date_text = None
+        location = None
+
+        # Common patterns
+        cands = []
+        if container:
+            cands.extend(container.select(".date, .event-date, .mn-date, time, .gz-date, .cm_event_date"))
+            cands.extend(container.select(".location, .event-location, .mn-location, .gz-location, .cm_event_location"))
+        # Extract
+        dt_str = None
+        loc_str = None
+
+        for el in cands:
+            txt = el.get_text(" ", strip=True)
+            if not txt:
+                continue
+            # Heuristic: first token with a month/day likely the date
+            if not dt_str and any(m in txt.lower() for m in ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]):
+                dt_str = txt
+            # Heuristic: anything that looks like an address or venue
+            if not loc_str and any(k in txt.lower() for k in ["st ", "street", "ave", "road", "rd", "center", "hall", "park", "library", "casino", "resort"]):
+                loc_str = txt
+
+        start_dt = end_dt = None
+        if dt_str:
+            # Extremely permissive parse; GrowthZone often uses "Mon, Sep 9, 2025 5:00 PM - 7:00 PM"
+            try:
+                # Try "start - end"
+                if " - " in dt_str:
+                    left, right = dt_str.split(" - ", 1)
+                    start_dt = dtp.parse(left, fuzzy=True)
+                    # end may be time-only
+                    try:
+                        end_dt = dtp.parse(right, fuzzy=True, default=start_dt)
+                    except Exception:
+                        end_dt = None
+                else:
+                    start_dt = dtp.parse(dt_str, fuzzy=True)
+            except Exception:
+                start_dt = end_dt = None
+
+        events.append({
+            "uid": f"gz-{hash((title, _dt_to_str(start_dt) or '', url))}",
+            "title": title,
+            "start_utc": _dt_to_str(start_dt),
+            "end_utc": _dt_to_str(end_dt),
+            "url": url,
+            "location": loc_str,
+        })
+
+    return events
+
+def fetch_growthzone_html(url: str, start_utc: str = None, end_utc: str = None) -> List[Dict[str, Any]]:
+    """
+    Rhinelander (GrowthZone / ChamberMaster)
+    Strategy:
+      1) Prefer any JSON-LD Event in the page.
+      2) Fall back to flexible card scraping.
+    """
+    resp = get(url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    # JSON-LD first (most reliable)
+    all_events: List[Dict[str, Any]] = []
+    for s in soup.select('script[type="application/ld+json"]'):
+        try:
+            all_events.extend(_parse_event_ldjson(s.string or ""))
         except Exception:
             continue
 
-    # Fallback: HTML cards if JSON-LD is empty
-    if not events:
-        for ev in _html_events(soup):
-            if ev.get("start") and _within_window(ev["start"], ev.get("end"), sd, ed):
-                events.append(ev)
+    if not all_events:
+        all_events = _parse_cards(soup)
 
-    diag["diag"]["found"] = len(events)
-    return events, diag
+    # Filter out entries without a title or date
+    clean = [e for e in all_events if e.get("title")]
+    return clean
