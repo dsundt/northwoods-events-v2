@@ -1,135 +1,138 @@
-from __future__ import annotations
-import json
-import re
-from datetime import datetime, timedelta
-from typing import List, Dict, Any, Optional
-from zoneinfo import ZoneInfo
+# src/parsers/simpleview_html.py
+"""
+Simpleview events parser
+- The listing page is often JS-rendered, so scrape is unreliable.
+- Strategy:
+  1) If sources.yaml provides manual_ics_url, fetch that.
+  2) Else, attempt to auto-detect ICS/iCal links on the listing page.
+  3) Parse ICS with icalendar to return normalized events.
 
+Signature is tolerant to current main.py calls:
+    fetch_simpleview_html(url, start_date=None, end_date=None, session=None, **kwargs)
+"""
+
+from __future__ import annotations
+from typing import List, Dict, Optional, Any
+import re
+from datetime import datetime
+from dateutil.tz import gettz
 import requests
 from bs4 import BeautifulSoup
-from dateutil import parser as dtparse
+from icalendar import Calendar
 
-DETAIL_ALLOW = re.compile(r"/(event|events)/[^/?#]+/?$", re.I)
-DETAIL_BLOCKLIST = (
-    "/events/",
-    "/events/this-weekend/",
-    "/events/annual-events/",
-    "/events/categories/",
-    "/events/search/",
-)
+TZ = gettz("America/Chicago")
+UA = {"User-Agent": "northwoods-events-v2/2.0 (+GitHub Actions)"}
 
-def fetch_simpleview_html(source: Dict[str, Any], start_date: str, end_date: str) -> List[Dict[str, Any]]:
-    base = source.get("url", "").rstrip("/")
-    tz = ZoneInfo(source.get("timezone", "America/Chicago"))
-    name = source.get("name") or source.get("id") or "Calendar"
-    out: List[Dict[str, Any]] = []
-
-    # 1) Gather candidate detail links from the listing page
-    try:
-        html = requests.get(base, timeout=25).text
-        soup = BeautifulSoup(html, "html.parser")
-        links = []
-        for a in soup.find_all("a", href=True):
-            href = a["href"]
-            url = href if href.startswith("http") else f"{base.rstrip('/')}/{href.lstrip('/')}"
-            path_l = url.lower()
-            if any(path_l.endswith(b) or b in path_l for b in DETAIL_BLOCKLIST):
-                continue
-            if DETAIL_ALLOW.search(url):
-                links.append(url)
-        # de-dupe + cap
-        uniq = []
-        seen = set()
-        for u in links:
-            if u not in seen:
-                seen.add(u)
-                uniq.append(u)
-        links = uniq[:120]
-    except Exception:
-        links = []
-
-    # 2) Visit detail pages and accept only real JSON-LD Events with startDate
-    for link in links:
-        ev = _extract_simpleview_event(link, name, tz)
-        if ev:
-            out.append(ev)
-
-    return out
-
-
-def _extract_simpleview_event(url: str, calendar_name: str, tz: ZoneInfo) -> Optional[Dict[str, Any]]:
-    try:
-        resp = requests.get(url, timeout=25)
-        if resp.status_code != 200:
-            return None
-        soup = BeautifulSoup(resp.text, "html.parser")
-
-        # Prefer JSON-LD (Event with startDate)
-        for tag in soup.find_all("script", type="application/ld+json"):
-            data = None
-            try:
-                data = json.loads(tag.string or "{}")
-            except Exception:
-                continue
-
-            candidates = []
-            if isinstance(data, dict):
-                if data.get("@type") == "Event":
-                    candidates = [data]
-                elif "@graph" in data and isinstance(data["@graph"], list):
-                    candidates = [x for x in data["@graph"] if isinstance(x, dict) and x.get("@type") == "Event"]
-            elif isinstance(data, list):
-                candidates = [x for x in data if isinstance(x, dict) and x.get("@type") == "Event"]
-
-            for ev in candidates:
-                st = _safe_dt(ev.get("startDate"), tz)
-                if not st:
-                    continue
-                en = _safe_dt(ev.get("endDate"), tz) or (st + timedelta(hours=1))
-                title = (ev.get("name") or "").strip()
-                if not title:
-                    # avoid heading pages
-                    continue
-                loc = _ld_loc(ev)
-                return {
-                    "uid": f"{url}@northwoods-v2",
-                    "title": title,
-                    "start_utc": st.strftime("%Y-%m-%d %H:%M:%S"),
-                    "end_utc": en.strftime("%Y-%m-%d %H:%M:%S") if en else None,
-                    "url": url,
-                    "location": loc,
-                    "source": calendar_name,
-                    "calendar": calendar_name,
-                }
-
-        # If no JSON-LD event, skip (prevents grabbing landing pages/headings)
+def _clean_text(s: Optional[str]) -> Optional[str]:
+    if not s:
         return None
-    except Exception:
-        return None
+    s = re.sub(r"\s+", " ", s).strip()
+    return s or None
 
+def _abs_url(base: str, href: str) -> str:
+    if href.startswith("http://") or href.startswith("https://"):
+        return href
+    return re.sub(r"/+$", "", base) + ("" if href.startswith("/") else "/") + href.lstrip("/")
 
-# ---------- local helpers ----------
-
-def _safe_dt(raw: Optional[str], tz: ZoneInfo) -> Optional[datetime]:
-    if not raw:
-        return None
-    try:
-        dt = dtparse.parse(raw)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=tz)
-        return dt.astimezone(ZoneInfo("UTC"))
-    except Exception:
-        return None
-
-def _ld_loc(ev: Dict[str, Any]) -> Optional[str]:
-    loc = ev.get("location")
-    if isinstance(loc, dict):
-        nm = (loc.get("name") or "").strip()
-        adr = loc.get("address")
-        adr_txt = ""
-        if isinstance(adr, dict):
-            adr_txt = ", ".join([adr.get("streetAddress") or "", adr.get("addressLocality") or "", adr.get("addressRegion") or "", adr.get("postalCode") or ""]).strip(", ")
-        return ", ".join([p for p in [nm, adr_txt] if p])
-    if isinstance(loc, str):
-        return loc.strip()
+def _try_load_ics(url: str, session: Optional[requests.Session] = None) -> Optional[bytes]:
+    sess = session or requests.Session()
+    r = sess.get(url, headers=UA, timeout=30)
+    r.raise_for_status()
+    ct = r.headers.get("Content-Type", "").lower()
+    if "text/calendar" in ct or url.lower().endswith(".ics"):
+        return r.content
+    # Some sites send text/plain
+    if "text/plain" in ct or "text/" in ct:
+        return r.content
+    # If it looks like ICS, still accept
+    if r.text.strip().startswith("BEGIN:VCALENDAR"):
+        return r.content
     return None
+
+def _find_ics_link_on_listing(listing_url: str, session: Optional[requests.Session]) -> Optional[str]:
+    sess = session or requests.Session()
+    r = sess.get(listing_url, headers=UA, timeout=30)
+    r.raise_for_status()
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    # Look for common ICS anchor patterns
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        txt = (a.get_text() or "").lower()
+        if any(k in href.lower() for k in (".ics", "ical", "i-cal", "calendar-export")):
+            return _abs_url(listing_url, href)
+        if "ical" in txt or "add to calendar" in txt:
+            return _abs_url(listing_url, href)
+
+    # Some Simpleview sites expose query params that produce ICS
+    # Try a few safe patterns if we didn't find explicit links
+    candidates = [
+        listing_url + ("&" if "?" in listing_url else "?") + "format=ical",
+        listing_url + ("&" if "?" in listing_url else "?") + "export=ical",
+        listing_url.rstrip("/") + "/?ical=1",
+        listing_url.rstrip("/") + "/ical/",
+    ]
+    for c in candidates:
+        try:
+            if _try_load_ics(c, session=sess):
+                return c
+        except Exception:
+            continue
+    return None
+
+def _events_from_ics(ics_bytes: bytes) -> List[Dict[str, Any]]:
+    cal = Calendar.from_ical(ics_bytes)
+    events: List[Dict[str, Any]] = []
+    for comp in cal.walk():
+        if comp.name != "VEVENT":
+            continue
+        title = _clean_text(str(comp.get("summary")))
+        url = _clean_text(str(comp.get("url") or comp.get("X-ALT-DESC") or ""))
+        loc = _clean_text(str(comp.get("location")))
+        dtstart = comp.get("dtstart")
+        dtend = comp.get("dtend")
+        start = None
+        end = None
+        if dtstart:
+            val = dtstart.dt
+            if isinstance(val, datetime):
+                start = val.isoformat()
+        if dtend:
+            val = dtend.dt
+            if isinstance(val, datetime):
+                end = val.isoformat()
+        events.append({
+            "title": title or "Untitled Event",
+            "url": url,
+            "location": loc,
+            "start": start,
+            "end": end,
+        })
+    return events
+
+def fetch_simpleview_html(url: str,
+                          start_date: Optional[str] = None,
+                          end_date: Optional[str] = None,
+                          session: Optional[requests.Session] = None,
+                          manual_ics_url: Optional[str] = None,
+                          **kwargs) -> List[Dict[str, Any]]:
+    """
+    Prefer ICS (manual or auto-detected). If no ICS is found, return [] with no error.
+    """
+    sess = session or requests.Session()
+
+    # 1) If the caller provided a manual ICS URL via sources.yaml (recommended), use it
+    if manual_ics_url:
+        ics_bytes = _try_load_ics(manual_ics_url, session=sess)
+        if ics_bytes:
+            return _events_from_ics(ics_bytes)
+
+    # 2) Attempt to auto-detect an ICS/iCal link on the listing page
+    ics_link = _find_ics_link_on_listing(url, session=sess)
+    if ics_link:
+        ics_bytes = _try_load_ics(ics_link, session=sess)
+        if ics_bytes:
+            return _events_from_ics(ics_bytes)
+
+    # 3) No ICS found (JS-only listing) — return empty; the report will show ok:false for this source
+    return []
