@@ -1,213 +1,158 @@
 # src/parsers/simpleview_html.py
-# DROP-IN REPLACEMENT — Simpleview with ICS discovery + JSON-LD fallback
-
-from __future__ import annotations
-
-import json
-import re
-from datetime import datetime, date, time
-from typing import Tuple, List, Dict, Optional
-from urllib.parse import urljoin
-
+from typing import List, Dict, Any, Optional
 from bs4 import BeautifulSoup
-from dateutil import parser as dtparser
-from dateutil import tz
-import requests
-from icalendar import Calendar
+from dateutil import parser as dtp
+from datetime import datetime
+import json
 
-LOCAL_TZ = tz.gettz("America/Chicago")
-UTC = tz.UTC
+from src.fetch import get
 
-def _get(url: str, timeout: int = 20) -> requests.Response:
-    resp = requests.get(url, timeout=timeout, headers={"User-Agent": "northwoods-v2/1.0"})
-    resp.raise_for_status()
-    return resp
+def _dt_to_str(dt: Optional[datetime]) -> Optional[str]:
+    if not dt:
+        return None
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
 
-def _coerce_date(d) -> date:
-    if isinstance(d, date) and not isinstance(d, datetime):
-        return d
-    if isinstance(d, datetime):
-        return d.date()
-    return dtparser.isoparse(str(d)).date()
+def _parse_ldjson(block: str) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    try:
+        data = json.loads(block.strip())
+    except Exception:
+        return out
 
-def _to_utc(dtobj) -> datetime:
-    if isinstance(dtobj, date) and not isinstance(dtobj, datetime):
-        dtobj = datetime.combine(dtobj, time(0, 0))
-    if dtobj.tzinfo is None:
-        dtobj = dtobj.replace(tzinfo=LOCAL_TZ)
-    return dtobj.astimezone(UTC)
-
-def _in_window(start_utc: datetime, end_utc: Optional[datetime], start_date: date, end_date: date) -> bool:
-    window_start = datetime.combine(start_date, time(0, 0, tzinfo=UTC))
-    window_end = datetime.combine(end_date, time(23, 59, 59, tzinfo=UTC))
-    s = start_utc
-    e = end_utc or start_utc
-    return not (e < window_start or s > window_end)
-
-def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List[Dict]:
-    cal = Calendar.from_ical(ics_bytes)
-    out: List[Dict] = []
-    for comp in cal.walk():
-        if comp.name != "VEVENT":
+    items = data if isinstance(data, list) else [data]
+    for obj in items:
+        if not isinstance(obj, dict):
             continue
-        summary = str(comp.get("summary", "")).strip()
-        if not summary:
-            continue
-        dtstart = comp.get("dtstart")
-        if not dtstart:
-            continue
-        start_utc = _to_utc(dtstart.dt)
-        dtend = comp.get("dtend")
-        end_utc = _to_utc(dtend.dt) if dtend else None
-        if not _in_window(start_utc, end_utc, start_date, end_date):
-            continue
-        url = str(comp.get("url", "")).strip() or None
-        location = str(comp.get("location", "")).strip() or None
+        # Handle flat Event or graph
+        candidates = []
+        if obj.get("@type") == "Event":
+            candidates = [obj]
+        elif "@graph" in obj and isinstance(obj["@graph"], list):
+            candidates = [x for x in obj["@graph"] if isinstance(x, dict) and x.get("@type") == "Event"]
 
-        uid_val = comp.get("uid")
-        if uid_val:
-            uid = str(uid_val)
-        else:
-            base = f"{summary}|{start_utc.isoformat()}|{url or ''}"
-            uid = "sv-" + str(abs(hash(base)))
+        for ev in candidates:
+            title = (ev.get("name") or "").strip()
+            if not title:
+                continue
 
-        out.append({
-            "id": uid,
-            "title": summary,
-            "start": start_utc,
-            "end": end_utc,
-            "url": url,
-            "location": location,
-            "tz": "UTC",
-        })
+            start_s = ev.get("startDate")
+            end_s = ev.get("endDate")
+            try:
+                start_dt = dtp.parse(start_s) if start_s else None
+                end_dt = dtp.parse(end_s) if end_s else None
+            except Exception:
+                start_dt = end_dt = None
+
+            loc = None
+            loc_obj = ev.get("location")
+            if isinstance(loc_obj, dict):
+                loc = loc_obj.get("name") or loc_obj.get("address") or None
+
+            url = ev.get("url") or None
+            uid = ev.get("@id") or url or f"sv-{hash((title, start_s or '', url or ''))}"
+
+            out.append({
+                "uid": str(uid),
+                "title": title,
+                "start_utc": _dt_to_str(start_dt),
+                "end_utc": _dt_to_str(end_dt),
+                "url": url,
+                "location": loc,
+            })
     return out
 
-# Simpleview ICS patterns
-_ICS_CANDIDATE_PATTERNS = [
-    re.compile(r"[?&]format=ical", re.I),
-    re.compile(r"\.ics(\b|$)", re.I),
-    re.compile(r"/icalendar", re.I),
-]
+def _parse_cards(soup: BeautifulSoup) -> List[Dict[str, Any]]:
+    """
+    Simpleview fallback for sites that render event lists server-side but
+    without ld+json. Avoids capturing section headings by requiring a link.
+    """
+    events: List[Dict[str, Any]] = []
+    seen = set()
 
-def _discover_ics_href(html: str, page_url: str) -> Optional[str]:
-    soup = BeautifulSoup(html, "html.parser")
+    # Event card anchors commonly look like /event/<slug>/ or /events/<slug>/
+    anchors = soup.select('a[href*="/event/"], a[href*="/events/"]')
 
-    # <link rel="alternate" type="text/calendar">
-    for link in soup.find_all("link", attrs={"rel": True, "type": True, "href": True}):
-        rels = [r.lower() for r in (link.get("rel") or [])]
-        typ = (link.get("type") or "").lower()
-        href = link.get("href")
-        if "alternate" in rels and typ in ("text/calendar", "text/x-vcalendar") and href:
-            return urljoin(page_url, href)
+    for a in anchors:
+        title = a.get_text(strip=True) or ""
+        href = a.get("href") or ""
+        if not title or not href:
+            continue
+        # Skip obvious nav or heading links without a surrounding card
+        if len(title.split()) < 2:
+            continue
 
-    # Anchors
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        if any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
-            return urljoin(page_url, href)
+        # Climb a bit to find context
+        container = a
+        for _ in range(4):
+            container = container.parent if container and container.parent else container
 
-    # data-href buttons
-    for btn in soup.select("[data-href]"):
-        href = btn.get("data-href")
-        if href and any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
-            return urljoin(page_url, href)
+        # Try to find a date/time and a location near the anchor
+        dt_text = None
+        loc_text = None
+        if container:
+            for el in container.select("time, .date, .event-date, .sv-date, .listing-date"):
+                txt = el.get_text(" ", strip=True)
+                if txt and any(m in txt.lower() for m in ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]):
+                    dt_text = txt
+                    break
+            for el in container.select(".location, .venue, .event-location, .sv-venue, address"):
+                txt = el.get_text(" ", strip=True)
+                if txt and len(txt) > 3:
+                    loc_text = txt
+                    break
 
-    return None
+        start_dt = end_dt = None
+        if dt_text:
+            try:
+                if " - " in dt_text:
+                    left, right = dt_text.split(" - ", 1)
+                    start_dt = dtp.parse(left, fuzzy=True)
+                    try:
+                        end_dt = dtp.parse(right, fuzzy=True, default=start_dt)
+                    except Exception:
+                        end_dt = None
+                else:
+                    start_dt = dtp.parse(dt_text, fuzzy=True)
+            except Exception:
+                start_dt = end_dt = None
 
-def _jsonld_events(soup: BeautifulSoup) -> List[Dict]:
-    out: List[Dict] = []
-    for tag in soup.find_all("script", {"type": "application/ld+json"}):
+        key = (title, href, _dt_to_str(start_dt))
+        if key in seen:
+            continue
+        seen.add(key)
+
+        events.append({
+            "uid": f"sv-{hash(key)}",
+            "title": title,
+            "start_utc": _dt_to_str(start_dt),
+            "end_utc": _dt_to_str(end_dt),
+            "url": href,
+            "location": loc_text,
+        })
+
+    return events
+
+def fetch_simpleview_html(url: str, start_utc: str = None, end_utc: str = None) -> List[Dict[str, Any]]:
+    """
+    Let's Minocqua (Simpleview)
+    Strategy:
+      1) Prefer JSON-LD Event data.
+      2) Fallback to card scraping while ignoring headings.
+    """
+    resp = get(url)
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    # JSON-LD first
+    all_events: List[Dict[str, Any]] = []
+    for s in soup.select('script[type="application/ld+json"]'):
         try:
-            data = json.loads(tag.string.strip()) if tag.string else None
+            all_events.extend(_parse_ldjson(s.string or ""))
         except Exception:
             continue
-        if not data:
-            continue
-        items = data if isinstance(data, list) else [data]
-        for item in items:
-            if (item.get("@type") == "Event") or (isinstance(item.get("@type"), list) and "Event" in item.get("@type")):
-                out.append(item)
-            if item.get("@type") == "ItemList":
-                for el in item.get("itemListElement") or []:
-                    ev = el.get("item") if isinstance(el, dict) else None
-                    if isinstance(ev, dict) and ev.get("@type") == "Event":
-                        out.append(ev)
-    return out
 
-def _parse_jsonld_event(ev: Dict) -> Dict:
-    name = (ev.get("name") or "").strip()
-    url = (ev.get("url") or "").strip() or None
-    s_raw = ev.get("startDate")
-    e_raw = ev.get("endDate")
-    start_utc = _to_utc(dtparser.isoparse(s_raw)) if s_raw else None
-    end_utc = _to_utc(dtparser.isoparse(e_raw)) if e_raw else None
+    if not all_events:
+        all_events = _parse_cards(soup)
 
-    loc = None
-    loc_obj = ev.get("location")
-    if isinstance(loc_obj, dict):
-        loc = (loc_obj.get("name") or "").strip() or None
-        if not loc:
-            addr = loc_obj.get("address")
-            if isinstance(addr, dict):
-                parts = [addr.get(k) for k in ("streetAddress", "addressLocality", "addressRegion")]
-                loc = ", ".join([p for p in parts if p]) or None
-    elif isinstance(loc_obj, str):
-        loc = loc_obj.strip() or None
-
-    base = f"{name}|{(start_utc.isoformat() if start_utc else '')}|{url or ''}"
-    uid = "sv-" + str(abs(hash(base)))
-
-    return {
-        "id": uid,
-        "title": name or url or "Event",
-        "start": start_utc,
-        "end": end_utc,
-        "url": url,
-        "location": loc,
-        "tz": "UTC",
-    }
-
-def fetch_simpleview_html(source: Dict, start_date, end_date) -> Tuple[List[Dict], Dict]:
-    page_url = str(source.get("url", "")).strip()
-    if not page_url:
-        return [], {"ok": False, "error": "Missing source.url", "diag": {}}
-
-    sd = _coerce_date(start_date)
-    ed = _coerce_date(end_date)
-
-    diag: Dict = {"ok": True, "error": "", "diag": {"page_url": page_url}}
-
-    # 1) Listing page
-    try:
-        page = _get(page_url)
-    except Exception as e:
-        return [], {"ok": False, "error": f"GET listing failed: {e}", "diag": {"page_url": page_url}}
-
-    # 2) ICS discovery
-    ics_href = _discover_ics_href(page.text, page_url)
-    diag["diag"]["ics_url"] = ics_href
-
-    if ics_href:
-        try:
-            ics_resp = _get(ics_href)
-            events = _parse_ics_bytes(ics_resp.content, sd, ed)
-            diag["diag"]["ics_events"] = len(events)
-            if events:
-                return events, diag
-        except Exception as e:
-            diag["diag"]["ics_error"] = str(e)
-
-    # 3) JSON-LD fallback
-    soup = BeautifulSoup(page.text, "html.parser")
-    jl = _jsonld_events(soup)
-    events: List[Dict] = []
-    for item in jl:
-        ev = _parse_jsonld_event(item)
-        if ev.get("start") and _in_window(ev["start"], ev.get("end"), sd, ed):
-            events.append(ev)
-
-    diag["diag"]["jsonld_events"] = len(events)
-    if events:
-        return events, diag
-
-    return [], {"ok": False, "error": "No ICS or JSON-LD events discovered on Simpleview page", "diag": diag["diag"]}
+    # Filter to entries that at least have a title and a plausible date if available
+    clean = [e for e in all_events if e.get("title")]
+    return clean
