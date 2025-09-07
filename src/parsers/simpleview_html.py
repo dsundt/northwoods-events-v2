@@ -3,17 +3,19 @@
 #
 # Purpose:
 # - Parse Simpleview event listings by discovering an ICS feed on the page
-#   (patterns like '?format=ical' or '.ics') and parsing that. This is much
-#   more reliable than scraping headings.
+#   (patterns like '?format=ical' or '.ics') and parsing that. This is more
+#   reliable than scraping headings and fixes "0 events" or "headings only".
 # - Function signature matches main.py expectations: (source, start_date, end_date)
 # - Returns: (events: list[dict], diag: dict)
 #
-# Keeps Boulder Junction/Eagle River/Vilas County untouched.
+# Notes:
+# - This file only changes Simpleview parsing. TEC sources (Boulder/Eagle/Vilas) are untouched.
+# - Fixes the previous SyntaxError by avoiding a complex f-string in UID generation.
 
 from __future__ import annotations
 
 import re
-from datetime import datetime, date, time
+from datetime import datetime, date, time, timezone
 from typing import Tuple, List, Dict, Optional
 from urllib.parse import urljoin
 
@@ -40,7 +42,6 @@ def _coerce_date(d) -> date:
     return datetime.fromisoformat(str(d)).date()
 
 def _to_utc(dtobj) -> datetime:
-    from datetime import timezone as _tz
     if isinstance(dtobj, date) and not isinstance(dtobj, datetime):
         dtobj = datetime.combine(dtobj, time(0, 0))
     if dtobj.tzinfo is None:
@@ -60,6 +61,7 @@ def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List
     for comp in cal.walk():
         if comp.name != "VEVENT":
             continue
+
         summary = str(comp.get("summary", "")).strip()
         if not summary:
             continue
@@ -77,7 +79,14 @@ def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List
 
         url = str(comp.get("url", "")).strip() or None
         location = str(comp.get("location", "")).strip() or None
-        uid = str(comp.get("uid") or f"sv-{hash((summary, start_utc.isoformat(), url or '')})")
+
+        uid_val = comp.get("uid")
+        if uid_val:
+            uid = str(uid_val)
+        else:
+            # Avoid complex f-strings to keep parser happy on all runners
+            base = f"{summary}|{start_utc.isoformat()}|{url or ''}"
+            uid = "sv-" + str(abs(hash(base)))
 
         out.append({
             "id": uid,
@@ -108,12 +117,13 @@ def _discover_ics_href(html: str, page_url: str) -> Optional[str]:
         if "alternate" in rels and typ in ("text/calendar", "text/x-vcalendar") and href:
             return urljoin(page_url, href)
 
+    # Anchor candidates with common ICS patterns
     for a in soup.find_all("a", href=True):
         href = a["href"]
         if any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
             return urljoin(page_url, href)
 
-    # Some Simpleview sites build ICS via a button with data-href
+    # Buttons or elements with data-href to ICS
     for btn in soup.select("[data-href]"):
         href = btn.get("data-href")
         if href and any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
@@ -122,6 +132,12 @@ def _discover_ics_href(html: str, page_url: str) -> Optional[str]:
     return None
 
 def fetch_simpleview_html(source: Dict, start_date, end_date) -> Tuple[List[Dict], Dict]:
+    """
+    :param source: dict with keys: name, id, type, url
+    :param start_date: date or ISO string
+    :param end_date: date or ISO string
+    :return: (events, diag)
+    """
     page_url = str(source.get("url", "")).strip()
     if not page_url:
         return [], {"ok": False, "error": "Missing source.url", "diag": {}}
