@@ -1,138 +1,155 @@
 # src/parsers/simpleview_html.py
-"""
-Simpleview events parser
-- The listing page is often JS-rendered, so scrape is unreliable.
-- Strategy:
-  1) If sources.yaml provides manual_ics_url, fetch that.
-  2) Else, attempt to auto-detect ICS/iCal links on the listing page.
-  3) Parse ICS with icalendar to return normalized events.
-
-Signature is tolerant to current main.py calls:
-    fetch_simpleview_html(url, start_date=None, end_date=None, session=None, **kwargs)
-"""
+# DROP-IN REPLACEMENT
+#
+# Purpose:
+# - Parse Simpleview event listings by discovering an ICS feed on the page
+#   (patterns like '?format=ical' or '.ics') and parsing that. This is much
+#   more reliable than scraping headings.
+# - Function signature matches main.py expectations: (source, start_date, end_date)
+# - Returns: (events: list[dict], diag: dict)
+#
+# Keeps Boulder Junction/Eagle River/Vilas County untouched.
 
 from __future__ import annotations
-from typing import List, Dict, Optional, Any
+
 import re
-from datetime import datetime
-from dateutil.tz import gettz
-import requests
+from datetime import datetime, date, time
+from typing import Tuple, List, Dict, Optional
+from urllib.parse import urljoin
+
 from bs4 import BeautifulSoup
+from dateutil import tz
+import requests
 from icalendar import Calendar
 
-TZ = gettz("America/Chicago")
-UA = {"User-Agent": "northwoods-events-v2/2.0 (+GitHub Actions)"}
+LOCAL_TZ = tz.gettz("America/Chicago")
+UTC = tz.UTC
 
-def _clean_text(s: Optional[str]) -> Optional[str]:
-    if not s:
-        return None
-    s = re.sub(r"\s+", " ", s).strip()
-    return s or None
+def _get(url: str, timeout: int = 20) -> requests.Response:
+    if not isinstance(url, str):
+        raise TypeError(f"_get expected a URL string, got {type(url)}")
+    resp = requests.get(url, timeout=timeout, headers={"User-Agent": "northwoods-v2/1.0"})
+    resp.raise_for_status()
+    return resp
 
-def _abs_url(base: str, href: str) -> str:
-    if href.startswith("http://") or href.startswith("https://"):
-        return href
-    return re.sub(r"/+$", "", base) + ("" if href.startswith("/") else "/") + href.lstrip("/")
+def _coerce_date(d) -> date:
+    if isinstance(d, date) and not isinstance(d, datetime):
+        return d
+    if isinstance(d, datetime):
+        return d.date()
+    return datetime.fromisoformat(str(d)).date()
 
-def _try_load_ics(url: str, session: Optional[requests.Session] = None) -> Optional[bytes]:
-    sess = session or requests.Session()
-    r = sess.get(url, headers=UA, timeout=30)
-    r.raise_for_status()
-    ct = r.headers.get("Content-Type", "").lower()
-    if "text/calendar" in ct or url.lower().endswith(".ics"):
-        return r.content
-    # Some sites send text/plain
-    if "text/plain" in ct or "text/" in ct:
-        return r.content
-    # If it looks like ICS, still accept
-    if r.text.strip().startswith("BEGIN:VCALENDAR"):
-        return r.content
-    return None
+def _to_utc(dtobj) -> datetime:
+    from datetime import timezone as _tz
+    if isinstance(dtobj, date) and not isinstance(dtobj, datetime):
+        dtobj = datetime.combine(dtobj, time(0, 0))
+    if dtobj.tzinfo is None:
+        dtobj = dtobj.replace(tzinfo=LOCAL_TZ)
+    return dtobj.astimezone(UTC)
 
-def _find_ics_link_on_listing(listing_url: str, session: Optional[requests.Session]) -> Optional[str]:
-    sess = session or requests.Session()
-    r = sess.get(listing_url, headers=UA, timeout=30)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
+def _in_window(start_utc: datetime, end_utc: Optional[datetime], start_date: date, end_date: date) -> bool:
+    window_start = datetime.combine(start_date, time(0, 0, tzinfo=UTC))
+    window_end = datetime.combine(end_date, time(23, 59, 59, tzinfo=UTC))
+    s = start_utc
+    e = end_utc or start_utc
+    return not (e < window_start or s > window_end)
 
-    # Look for common ICS anchor patterns
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        txt = (a.get_text() or "").lower()
-        if any(k in href.lower() for k in (".ics", "ical", "i-cal", "calendar-export")):
-            return _abs_url(listing_url, href)
-        if "ical" in txt or "add to calendar" in txt:
-            return _abs_url(listing_url, href)
-
-    # Some Simpleview sites expose query params that produce ICS
-    # Try a few safe patterns if we didn't find explicit links
-    candidates = [
-        listing_url + ("&" if "?" in listing_url else "?") + "format=ical",
-        listing_url + ("&" if "?" in listing_url else "?") + "export=ical",
-        listing_url.rstrip("/") + "/?ical=1",
-        listing_url.rstrip("/") + "/ical/",
-    ]
-    for c in candidates:
-        try:
-            if _try_load_ics(c, session=sess):
-                return c
-        except Exception:
-            continue
-    return None
-
-def _events_from_ics(ics_bytes: bytes) -> List[Dict[str, Any]]:
+def _parse_ics_bytes(ics_bytes: bytes, start_date: date, end_date: date) -> List[Dict]:
     cal = Calendar.from_ical(ics_bytes)
-    events: List[Dict[str, Any]] = []
+    out: List[Dict] = []
     for comp in cal.walk():
         if comp.name != "VEVENT":
             continue
-        title = _clean_text(str(comp.get("summary")))
-        url = _clean_text(str(comp.get("url") or comp.get("X-ALT-DESC") or ""))
-        loc = _clean_text(str(comp.get("location")))
+        summary = str(comp.get("summary", "")).strip()
+        if not summary:
+            continue
+
         dtstart = comp.get("dtstart")
+        if not dtstart:
+            continue
+        start_utc = _to_utc(dtstart.dt)
+
         dtend = comp.get("dtend")
-        start = None
-        end = None
-        if dtstart:
-            val = dtstart.dt
-            if isinstance(val, datetime):
-                start = val.isoformat()
-        if dtend:
-            val = dtend.dt
-            if isinstance(val, datetime):
-                end = val.isoformat()
-        events.append({
-            "title": title or "Untitled Event",
+        end_utc = _to_utc(dtend.dt) if dtend else None
+
+        if not _in_window(start_utc, end_utc, start_date, end_date):
+            continue
+
+        url = str(comp.get("url", "")).strip() or None
+        location = str(comp.get("location", "")).strip() or None
+        uid = str(comp.get("uid") or f"sv-{hash((summary, start_utc.isoformat(), url or '')})")
+
+        out.append({
+            "id": uid,
+            "title": summary,
+            "start": start_utc,
+            "end": end_utc,
             "url": url,
-            "location": loc,
-            "start": start,
-            "end": end,
+            "location": location,
+            "tz": "UTC",
         })
-    return events
+    return out
 
-def fetch_simpleview_html(url: str,
-                          start_date: Optional[str] = None,
-                          end_date: Optional[str] = None,
-                          session: Optional[requests.Session] = None,
-                          manual_ics_url: Optional[str] = None,
-                          **kwargs) -> List[Dict[str, Any]]:
-    """
-    Prefer ICS (manual or auto-detected). If no ICS is found, return [] with no error.
-    """
-    sess = session or requests.Session()
+# Simpleview ICS patterns frequently seen
+_ICS_CANDIDATE_PATTERNS = [
+    re.compile(r"[?&]format=ical", re.I),
+    re.compile(r"\.ics(\b|$)", re.I),
+    re.compile(r"/icalendar", re.I),
+]
 
-    # 1) If the caller provided a manual ICS URL via sources.yaml (recommended), use it
-    if manual_ics_url:
-        ics_bytes = _try_load_ics(manual_ics_url, session=sess)
-        if ics_bytes:
-            return _events_from_ics(ics_bytes)
+def _discover_ics_href(html: str, page_url: str) -> Optional[str]:
+    soup = BeautifulSoup(html, "html.parser")
 
-    # 2) Attempt to auto-detect an ICS/iCal link on the listing page
-    ics_link = _find_ics_link_on_listing(url, session=sess)
-    if ics_link:
-        ics_bytes = _try_load_ics(ics_link, session=sess)
-        if ics_bytes:
-            return _events_from_ics(ics_bytes)
+    # <link rel="alternate" type="text/calendar">
+    for link in soup.find_all("link", attrs={"rel": True, "type": True, "href": True}):
+        rels = [r.lower() for r in (link.get("rel") or [])]
+        typ = (link.get("type") or "").lower()
+        href = link.get("href")
+        if "alternate" in rels and typ in ("text/calendar", "text/x-vcalendar") and href:
+            return urljoin(page_url, href)
 
-    # 3) No ICS found (JS-only listing) — return empty; the report will show ok:false for this source
-    return []
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
+            return urljoin(page_url, href)
+
+    # Some Simpleview sites build ICS via a button with data-href
+    for btn in soup.select("[data-href]"):
+        href = btn.get("data-href")
+        if href and any(p.search(href) for p in _ICS_CANDIDATE_PATTERNS):
+            return urljoin(page_url, href)
+
+    return None
+
+def fetch_simpleview_html(source: Dict, start_date, end_date) -> Tuple[List[Dict], Dict]:
+    page_url = str(source.get("url", "")).strip()
+    if not page_url:
+        return [], {"ok": False, "error": "Missing source.url", "diag": {}}
+
+    sd = _coerce_date(start_date)
+    ed = _coerce_date(end_date)
+
+    diag: Dict = {"ok": True, "error": "", "diag": {"page_url": page_url}}
+
+    # 1) page load
+    try:
+        page = _get(page_url)
+    except Exception as e:
+        return [], {"ok": False, "error": f"GET listing failed: {e}", "diag": {"page_url": page_url}}
+
+    # 2) discover ICS
+    ics_href = _discover_ics_href(page.text, page_url)
+    diag["diag"]["ics_url"] = ics_href
+
+    if not ics_href:
+        # Without ICS, Simpleview DOM scraping is not stable across templates.
+        return [], {"ok": False, "error": "No ICS link discovered on Simpleview page", "diag": diag["diag"]}
+
+    # 3) fetch & parse ICS
+    try:
+        ics_resp = _get(ics_href)
+        events = _parse_ics_bytes(ics_resp.content, sd, ed)
+        diag["diag"]["ics_events"] = len(events)
+        return events, diag
+    except Exception as e:
+        return [], {"ok": False, "error": f"ICS fetch/parse failed: {e}", "diag": diag["diag"]}
