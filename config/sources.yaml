@@ -10,9 +10,10 @@
   type: tec_rest
   url: https://eagleriver.org/
 
-- name: "St. Germain Chamber (ICS)"
+# config/sources.yaml (excerpt)
+- name: "St. Germain Chamber (iCal)"
   id: "st-germain-chamber-ics"
-  type: "ics_fetch"
+  type: "ics_feed"     # or "ics_fetch" (both supported by your current parsers/__init__.py)
   url: "https://st-germain.com/events-calendar/?ical=1"
 
 # Rhinelander: use the CALENDAR view (clearer markup)
