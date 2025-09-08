@@ -4,39 +4,35 @@
   id: boulder-junction-tec
   type: tec_rest
   url: https://boulderjct.org/
+  timezone: America/Chicago
 
 - name: Eagle River Chamber (TEC)
   id: eagle-river-chamber-tec
   type: tec_rest
   url: https://eagleriver.org/
+  timezone: America/Chicago
 
-# config/sources.yaml
-- id: st-germain-chamber-growthzone
-  name: St. Germain Chamber (GrowthZone)
+# St. Germain Chamber (GrowthZone) – parser now supports outbound TEC links if needed
+- name: St. Germain Chamber (GrowthZone)
+  id: st-germain-chamber-growthzone
   type: growthzone_html
   url: https://stgermainwi.chambermaster.com/events/calendar?o=alpha
   timezone: America/Chicago
 
-# Rhinelander: use the CALENDAR view (clearer markup)
 - name: Rhinelander Chamber (GrowthZone)
-  id: rhinelander-chamber-growthzone
+  id: rhin elander-chamber-growthzone
   type: growthzone_html
   url: https://business.rhinelanderchamber.com/events/calendar
-  
-# Minocqua: Simpleview exposes a stable RSS feed
-- name: Let's Minocqua (Simpleview)
-  id: let-s-minocqua-simpleview
+  timezone: America/Chicago
+
+- name: Let’s Minocqua (Simpleview)
+  id: lets-minocqua-simpleview
   type: simpleview_html
   url: https://www.minocqua.org/event/rss/
+  timezone: America/Chicago
 
 - name: Vilas County Tourism (TEC)
   id: vilas-county-tourism-tec
   type: tec_rest
   url: https://vilaswi.com/
-
-# Leave Oneida as-is if it was already present and working for you.
-# If you want our hardened default, uncomment below:
-# - name: Oneida County Tourism (TEC)
-#   id: oneida-county-tourism-tec
-#   type: tec_html
-#   url: https://oneidacountywi.com/festivals-events/
+  timezone: America/Chicago
