@@ -10,27 +10,32 @@
   type: tec_rest
   url: https://eagleriver.org/
 
-# config/sources.yaml
-- name: St. Germain Chamber (ICS)
-  id: st-germain-chamber-ics
-  type: ics
-  url: https://st-germain.com/events-calendar/?ical=1&eventDisplay=list
-  
-# UNCHANGED TYPE: Rhinelander is GrowthZone; keep the list URL and let the parser hydrate from details.
+# St. Germain is on GrowthZone/ChamberMaster; use the CALENDAR view
+- name: St. Germain Chamber (GrowthZone)
+  id: st-germain-chamber-growthzone
+  type: growthzone_html
+  url: https://stgermainwi.chambermaster.com/events/calendar
+
+# Rhinelander: use the CALENDAR view (clearer markup)
 - name: Rhinelander Chamber (GrowthZone)
   id: rhinelander-chamber-growthzone
   type: growthzone_html
-  url: https://business.rhinelanderchamber.com/events/
+  url: https://business.rhinelanderchamber.com/events/calendar
 
-# Simpleview listings are JS-rendered. The parser will auto-detect an ICS feed.
-# If you learn the exact ICS URL, uncomment manual_ics_url for a guaranteed path.
+# Minocqua: Simpleview exposes a stable RSS feed
 - name: Let's Minocqua (Simpleview)
   id: let-s-minocqua-simpleview
   type: simpleview_html
-  url: https://www.minocqua.org/events/
-  # manual_ics_url: https://www.minocqua.org/events/?format=ical
+  url: https://www.minocqua.org/event/rss/
 
 - name: Vilas County Tourism (TEC)
   id: vilas-county-tourism-tec
   type: tec_rest
   url: https://vilaswi.com/
+
+# Leave Oneida as-is if it was already present and working for you.
+# If you want our hardened default, uncomment below:
+# - name: Oneida County Tourism (TEC)
+#   id: oneida-county-tourism-tec
+#   type: tec_html
+#   url: https://oneidacountywi.com/festivals-events/
