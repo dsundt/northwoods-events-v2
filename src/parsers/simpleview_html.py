@@ -1,158 +1,114 @@
 # src/parsers/simpleview_html.py
 from typing import List, Dict, Any, Optional
-from bs4 import BeautifulSoup
+from xml.etree import ElementTree as ET
 from dateutil import parser as dtp
 from datetime import datetime
+from bs4 import BeautifulSoup
+import html
+import re
 import json
 
 from src.fetch import get
 
-def _dt_to_str(dt: Optional[datetime]) -> Optional[str]:
-    if not dt:
+def _text(el: Optional[ET.Element], tag: str) -> Optional[str]:
+    if el is None:
         return None
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
+    t = el.findtext(tag)
+    return t.strip() if t else None
 
-def _parse_ldjson(block: str) -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
+def _dtstr(dt: Optional[datetime]) -> Optional[str]:
+    return dt.strftime("%Y-%m-%d %H:%M:%S") if dt else None
+
+def _enrich_from_detail(url: str) -> Dict[str, Optional[str]]:
+    """Fetch event detail and extract start/end/location from JSON-LD if present."""
     try:
-        data = json.loads(block.strip())
-    except Exception:
-        return out
-
-    items = data if isinstance(data, list) else [data]
-    for obj in items:
-        if not isinstance(obj, dict):
-            continue
-        # Handle flat Event or graph
-        candidates = []
-        if obj.get("@type") == "Event":
-            candidates = [obj]
-        elif "@graph" in obj and isinstance(obj["@graph"], list):
-            candidates = [x for x in obj["@graph"] if isinstance(x, dict) and x.get("@type") == "Event"]
-
-        for ev in candidates:
-            title = (ev.get("name") or "").strip()
-            if not title:
+        r = get(url)
+        soup = BeautifulSoup(r.text, "html.parser")
+        for s in soup.select('script[type="application/ld+json"]'):
+            try:
+                data = json.loads((s.string or "").strip())
+            except Exception:
                 continue
+            items = data if isinstance(data, list) else [data]
+            for obj in items:
+                if isinstance(obj, dict):
+                    evs = []
+                    if obj.get("@type") == "Event":
+                        evs = [obj]
+                    elif isinstance(obj.get("@graph"), list):
+                        evs = [x for x in obj["@graph"] if isinstance(x, dict) and x.get("@type") == "Event"]
+                    for ev in evs:
+                        start_s = ev.get("startDate")
+                        end_s   = ev.get("endDate")
+                        loc = None
+                        loc_obj = ev.get("location")
+                        if isinstance(loc_obj, dict):
+                            loc = loc_obj.get("name") or loc_obj.get("address") or None
+                        try:
+                            start_dt = dtp.parse(start_s) if start_s else None
+                        except Exception:
+                            start_dt = None
+                        try:
+                            end_dt = dtp.parse(end_s) if end_s else None
+                        except Exception:
+                            end_dt = None
+                        return {
+                            "start_utc": _dtstr(start_dt),
+                            "end_utc": _dtstr(end_dt),
+                            "location": loc,
+                        }
+    except Exception:
+        pass
+    return {"start_utc": None, "end_utc": None, "location": None}
 
-            start_s = ev.get("startDate")
-            end_s = ev.get("endDate")
-            try:
-                start_dt = dtp.parse(start_s) if start_s else None
-                end_dt = dtp.parse(end_s) if end_s else None
-            except Exception:
-                start_dt = end_dt = None
-
-            loc = None
-            loc_obj = ev.get("location")
-            if isinstance(loc_obj, dict):
-                loc = loc_obj.get("name") or loc_obj.get("address") or None
-
-            url = ev.get("url") or None
-            uid = ev.get("@id") or url or f"sv-{hash((title, start_s or '', url or ''))}"
-
-            out.append({
-                "uid": str(uid),
-                "title": title,
-                "start_utc": _dt_to_str(start_dt),
-                "end_utc": _dt_to_str(end_dt),
-                "url": url,
-                "location": loc,
-            })
-    return out
-
-def _parse_cards(soup: BeautifulSoup) -> List[Dict[str, Any]]:
-    """
-    Simpleview fallback for sites that render event lists server-side but
-    without ld+json. Avoids capturing section headings by requiring a link.
-    """
-    events: List[Dict[str, Any]] = []
-    seen = set()
-
-    # Event card anchors commonly look like /event/<slug>/ or /events/<slug>/
-    anchors = soup.select('a[href*="/event/"], a[href*="/events/"]')
-
-    for a in anchors:
-        title = a.get_text(strip=True) or ""
-        href = a.get("href") or ""
-        if not title or not href:
-            continue
-        # Skip obvious nav or heading links without a surrounding card
-        if len(title.split()) < 2:
-            continue
-
-        # Climb a bit to find context
-        container = a
-        for _ in range(4):
-            container = container.parent if container and container.parent else container
-
-        # Try to find a date/time and a location near the anchor
-        dt_text = None
-        loc_text = None
-        if container:
-            for el in container.select("time, .date, .event-date, .sv-date, .listing-date"):
-                txt = el.get_text(" ", strip=True)
-                if txt and any(m in txt.lower() for m in ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]):
-                    dt_text = txt
-                    break
-            for el in container.select(".location, .venue, .event-location, .sv-venue, address"):
-                txt = el.get_text(" ", strip=True)
-                if txt and len(txt) > 3:
-                    loc_text = txt
-                    break
-
-        start_dt = end_dt = None
-        if dt_text:
-            try:
-                if " - " in dt_text:
-                    left, right = dt_text.split(" - ", 1)
-                    start_dt = dtp.parse(left, fuzzy=True)
-                    try:
-                        end_dt = dtp.parse(right, fuzzy=True, default=start_dt)
-                    except Exception:
-                        end_dt = None
-                else:
-                    start_dt = dtp.parse(dt_text, fuzzy=True)
-            except Exception:
-                start_dt = end_dt = None
-
-        key = (title, href, _dt_to_str(start_dt))
-        if key in seen:
-            continue
-        seen.add(key)
-
-        events.append({
-            "uid": f"sv-{hash(key)}",
-            "title": title,
-            "start_utc": _dt_to_str(start_dt),
-            "end_utc": _dt_to_str(end_dt),
-            "url": href,
-            "location": loc_text,
-        })
-
-    return events
+def _guess_date_from_text(s: str) -> Optional[datetime]:
+    s = html.unescape(s or "")
+    s = BeautifulSoup(s, "html.parser").get_text(" ", strip=True)
+    try:
+        return dtp.parse(s, fuzzy=True)
+    except Exception:
+        return None
 
 def fetch_simpleview_html(url: str, start_utc: str = None, end_utc: str = None) -> List[Dict[str, Any]]:
-    """
-    Let's Minocqua (Simpleview)
-    Strategy:
-      1) Prefer JSON-LD Event data.
-      2) Fallback to card scraping while ignoring headings.
-    """
-    resp = get(url)
-    soup = BeautifulSoup(resp.text, "html.parser")
+    # RSS feed expected at url
+    r = get(url)
+    text = r.text or ""
+    if "<rss" not in text[:2000].lower():
+        # Not RSS? Try to enrich by scraping page-level JSON-LD (fallback)
+        # (kept for safety, but Minocqua's /event/rss/ is RSS.)
+        return []
 
-    # JSON-LD first
-    all_events: List[Dict[str, Any]] = []
-    for s in soup.select('script[type="application/ld+json"]'):
-        try:
-            all_events.extend(_parse_ldjson(s.string or ""))
-        except Exception:
-            continue
+    root = ET.fromstring(text)
+    channel = root.find("channel")
+    if channel is None:
+        return []
 
-    if not all_events:
-        all_events = _parse_cards(soup)
+    out: List[Dict[str, Any]] = []
+    for item in channel.findall("item"):
+        title = _text(item, "title") or "Event"
+        link  = _text(item, "link")
+        desc  = _text(item, "description") or ""
 
-    # Filter to entries that at least have a title and a plausible date if available
-    clean = [e for e in all_events if e.get("title")]
-    return clean
+        # Try to find a date in RSS fields first (pubDate often exists, but that’s publish time)
+        start_dt = None
+        # Some Simpleview feeds embed dates in description
+        start_dt = _guess_date_from_text(desc) or _guess_date_from_text(title)
+
+        # If we still don't have a date (or want better location), enrich from the detail page
+        enrich = _enrich_from_detail(link) if link else {"start_utc": None, "end_utc": None, "location": None}
+        start_utc_val = enrich["start_utc"] or _dtstr(start_dt)
+        end_utc_val   = enrich["end_utc"] or None
+        location_val  = enrich["location"] or None
+
+        uid = f"sv-{hash((title, start_utc_val or '', link or ''))}"
+
+        out.append({
+            "uid": uid,
+            "title": title,
+            "start_utc": start_utc_val,
+            "end_utc": end_utc_val,
+            "url": link,
+            "location": location_val,
+        })
+
+    return [e for e in out if e.get("title")]
