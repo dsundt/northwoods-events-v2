@@ -1,9 +1,10 @@
 # src/parsers/growthzone_html.py
-# GrowthZone/ChamberMaster HTML parser with guarded St. Germain fallback.
-# - Rhinelander and other GZ sources: unchanged path using /events/details/... anchors.
-# - St. Germain (host: stgermainwi.chambermaster.com): when zero GZ links,
-#   collect outbound st-germain.com/events/... and parse those pages, including
-#   dates (single/range, optional time) and location (x-text-content-text-primary).
+# GrowthZone/ChamberMaster HTML parser with protected St. Germain fallback.
+# - Rhinelander & other GZ: unchanged behavior; broader link discovery restores the
+#   previous working path (SSR anchors -> /event(s)/details/...).
+# - St. Germain only (host: stgermainwi.chambermaster.com): when zero GZ detail links,
+#   collect outbound st-germain.com event anchors (incl. LinkClick.aspx), walk a few
+#   SSR listing variants, and parse WP detail pages (dates + location).
 
 from __future__ import annotations
 
@@ -82,39 +83,55 @@ def _clean_text(s: Optional[str]) -> Optional[str]:
 
 # ---------- link discovery ----------
 
+# Broadened to restore Rhinelander:
+_GZ_DETAIL_RE = re.compile(
+    r'href=["\'](?:'
+    r'(?P<abs>https?://[^"\']*/(?:event|events)/details/[^"\']+)'
+    r'|'
+    r'(?P<rel>/?(?:event|events)/details/[^"\']+)'
+    r'|'
+    r'(?P<qry>/?(?:event|events)/details/[^"\']*\?[^"\']*)'
+    r')["\']',
+    re.I,
+)
+
 def _extract_gz_detail_links(page_html: str, page_base: str) -> Set[str]:
     out: Set[str] = set()
-    # absolute
-    for m in re.finditer(
-        r'href=["\'](https?://[^"\']*/events/details/[^"\']+)["\']', page_html, flags=re.I
-    ):
-        out.add(m.group(1))
-    # relative
-    for m in re.finditer(
-        r'href=["\'](/events/details/[^"\']+)["\']', page_html, flags=re.I
-    ):
-        out.add(urljoin(page_base, m.group(1)))
+    for m in _GZ_DETAIL_RE.finditer(page_html):
+        absu = m.group("abs")
+        relu = m.group("rel") or m.group("qry")
+        if absu:
+            out.add(absu)
+        elif relu:
+            # handle both "/events/details/..." and "events/details/..."
+            if not relu.startswith("/"):
+                relu = "/" + relu
+            out.add(urljoin(page_base, relu))
     return out
 
 
+_STG_OUTBOUND_DIRECT = re.compile(
+    r'href=["\'](https?://st-germain\.com/(?:event|events)/[^"\']+)["\']',
+    re.I,
+)
+
+_STG_LINKCLICK = re.compile(
+    r'href=["\'](/?linkclick\.aspx\?[^"\']+)["\']',
+    re.I,
+)
+
 def _extract_outbound_stgermain(page_html: str, page_base: str) -> Set[str]:
-    """St. Germain-specific: outbound anchors to st-germain.com/events/... including LinkClick.aspx."""
+    """St. Germain-specific: outbound anchors to st-germain.com event pages (incl. LinkClick.aspx)."""
     out: Set[str] = set()
-    # direct anchors
-    for m in re.finditer(
-        r'href=["\'](https?://st-germain\.com/events/[^"\']+)["\']', page_html, flags=re.I
-    ):
+    for m in _STG_OUTBOUND_DIRECT.finditer(page_html):
         out.add(m.group(1))
-    # LinkClick.aspx?link=<URL-ENCODED>
-    for m in re.finditer(
-        r'href=["\'](/?linkclick\.aspx\?[^"\']+)["\']', page_html, flags=re.I
-    ):
+    for m in _STG_LINKCLICK.finditer(page_html):
         u = urljoin(page_base, m.group(1))
         qs = parse_qs(urlparse(u).query)
         raw = (qs.get("link") or qs.get("Link") or [None])[0]
         if raw:
             tgt = unquote(raw)
-            if re.search(r"^https?://st-germain\.com/events/", tgt, flags=re.I):
+            if re.search(r"^https?://st-germain\.com/(?:event|events)/", tgt, re.I):
                 out.add(tgt)
     return out
 
@@ -198,7 +215,6 @@ def _parse_month(mtxt: str) -> Optional[int]:
     return _ABBR.get(a)
 
 def _parse_time(tstr: str) -> Tuple[int, int]:
-    # returns hour, minute in 24h
     m = re.match(r'(?i)^\s*(\d{1,2}):(\d{2})\s*(am|pm)\s*$', tstr.strip())
     if not m:
         return 9, 0  # default 09:00 local if not provided
@@ -210,20 +226,14 @@ def _parse_time(tstr: str) -> Tuple[int, int]:
     return hh, mm
 
 def _parse_stgermain_location(html: str) -> Optional[str]:
-    """
-    Target:
-      <span class="x-graphic" ...></span>
-      <div class="x-text-content-text">
-        <span class="x-text-content-text-primary">St Germain Community Park</span>
-      </div>
-    """
+    # Primary pattern you provided (granular and precise)
     m = re.search(
         r'(?is)x-text-content-text[^>]*>\s*<span[^>]*x-text-content-text-primary[^>]*>(.*?)</span',
         html,
     )
     if m:
         return _clean_text(m.group(1))
-    # fallback: any readable "St Germain ..." snippet
+    # Fallback: human-friendly snippet
     m2 = re.search(r'(?i)\b(St\.?\s*Germain[^<\n]{0,120})', html)
     return _clean_text(m2.group(1)) if m2 else None
 
@@ -232,15 +242,18 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
     Supports:
       - September 20, 2025
       - Sep 20, 2025
-      - October 4 – 6, 2025  (range within same month)
-      - October 4, 2025 – October 6, 2025  (explicit range)
-      - Optional times like '10:00 am' or '8:00 am – 2:00 pm'
+      - October 4 – 6, 2025
+      - Oct 4 & 5, 2025
+      - October 4, 2025 – October 6, 2025
+      - With optional times: '10:00 am' or '8:00 am – 2:00 pm'
     Returns ISO strings (no timezone): (start_iso, end_iso|None)
     """
     txt = _clean_text(blob) or ""
-    # Two-endpoints range first: Month D, YYYY – Month D, YYYY
+
+    # Full range with two endpoints
     m = re.search(
-        r'(?i)\b([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})\s*[–-]\s*([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})',
+        r'(?i)\b([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})\s*[–-]\s*'
+        r'([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})',
         txt
     )
     if m:
@@ -249,7 +262,6 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
         if M1 and M2:
             start = datetime(int(y1), M1, int(d1))
             end = datetime(int(y2), M2, int(d2))
-            # time window if present
             t = re.search(r'(?i)\b(\d{1,2}:\d{2}\s*(?:am|pm))\s*[–-]\s*(\d{1,2}:\d{2}\s*(?:am|pm))', txt)
             if t:
                 h1, m1_ = _parse_time(t.group(1))
@@ -258,9 +270,9 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
                 end = end.replace(hour=h2, minute=m2_)
             return start.isoformat(), end.isoformat()
 
-    # Single month with day–day: Month D – D, YYYY
+    # Month D – D, YYYY  (and Month D & D, YYYY)
     m = re.search(
-        r'(?i)\b([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*[–-]\s*(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})',
+        r'(?i)\b([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*(?:[–-]|&)\s*(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})',
         txt
     )
     if m:
@@ -269,7 +281,7 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
         if M:
             start = datetime(int(y), M, int(d1))
             end = datetime(int(y), M, int(d2))
-            t = re.search(r'(?i)\b(\d{1,2}:\d{2}\s*(?:am|pm))\s*[–-]\s*(\d{1,2}:\d{2}\s*(?:am|pm))', txt)
+            t = re.search(r'(?i)\b(\d{1,2}:\d{2}\s*(?:am|pm))\s*(?:[–-]|&)\s*(\d{1,2}:\d{2}\s*(?:am|pm))', txt)
             if t:
                 h1, m1_ = _parse_time(t.group(1))
                 h2, m2_ = _parse_time(t.group(2))
@@ -277,7 +289,7 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
                 end = end.replace(hour=h2, minute=m2_)
             return start.isoformat(), end.isoformat()
 
-    # Single date: Month D, YYYY [optional time or time range]
+    # Single date: Month D, YYYY (optional time or time range)
     m = re.search(
         r'(?i)\b([A-Z][a-z]{2,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?\s*,\s*(\d{4})',
         txt
@@ -287,8 +299,7 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
         M = _parse_month(mon)
         if M:
             start = datetime(int(y), M, int(d))
-            # Optional time or time range
-            t2 = re.search(r'(?i)\b(\d{1,2}:\d{2}\s*(?:am|pm))(?:\s*[–-]\s*(\d{1,2}:\d{2}\s*(?:am|pm)))?', txt)
+            t2 = re.search(r'(?i)\b(\d{1,2}:\d{2}\s*(?:am|pm))(?:\s*(?:[–-]|&)\s*(\d{1,2}:\d{2}\s*(?:am|pm)))?', txt)
             if t2:
                 h1, m1_ = _parse_time(t2.group(1))
                 start = start.replace(hour=h1, minute=m1_)
@@ -302,40 +313,34 @@ def _parse_stgermain_dates(blob: str) -> Tuple[Optional[str], Optional[str]]:
 
 
 def _parse_stgermain_detail(html: str, url: str, source: str) -> Optional[Dict[str, Any]]:
-    # Title
     title = _page_h1(html) or "(untitled)"
-    # Restrict to Event Info block if present (looser if not)
     sect = re.search(r'(?is)(<h2[^>]*>\s*Event\s*Info\s*</h2>.*?)(?:<h2|\Z)', html)
     blob = sect.group(1) if sect else html
-    # Dates
     start_iso, end_iso = _parse_stgermain_dates(blob)
-    # Location (target the requested span)
     location = _parse_stgermain_location(blob)
     ev = {
         "title": title,
         "start": start_iso,
         "end": end_iso,
-        "start_utc": start_iso,  # keep both keys to preserve downstream behavior
+        "start_utc": start_iso,
         "end_utc": end_iso,
         "location": location,
         "url": url,
         "source": source,
         "_source": "growthzone_html",
     }
-    # Require at least a start
     if not start_iso:
         return None
     return ev
 
 
 def _detail_to_event(detail_html: str, page_url: str, source_name: str) -> Optional[Dict[str, Any]]:
-    # 1) Prefer JSON-LD Event if present (works for many GrowthZone details)
+    # 1) JSON-LD first (works on most GZ detail pages)
     blocks = _jsonld_events(detail_html)
     if blocks:
         ev = blocks[0]
         title = ev.get("name") or ev.get("headline") or _page_h1(detail_html) or "(untitled)"
-        start = ev.get("startDate")
-        end = ev.get("endDate")
+        start = ev.get("startDate"); end = ev.get("endDate")
         loc = ev.get("location")
         if isinstance(loc, dict):
             loc_out = loc.get("name") or _clean_text(json.dumps(loc))
@@ -355,11 +360,11 @@ def _detail_to_event(detail_html: str, page_url: str, source_name: str) -> Optio
             "_source": "growthzone_html",
         }
 
-    # 2) St. Germain TEC fallback (no JSON-LD on those pages)
-    if re.search(r"^https?://st-germain\.com/events/", page_url, flags=re.I):
+    # 2) St. Germain TEC fallback
+    if re.search(r"^https?://st-germain\.com/(?:event|events)/", page_url, re.I):
         return _parse_stgermain_detail(detail_html, page_url, source_name)
 
-    # 3) If nothing structured, emit minimal record (will be filtered if no start)
+    # 3) Last resort
     return {"url": page_url, "source": source_name, "_source": "growthzone_html"}
 
 
@@ -401,26 +406,25 @@ def fetch_growthzone_html(*args, **kwargs) -> List[Dict[str, Any]]:
 
     try:
         _log(logger, f"[growthzone_html] GET {base}")
-        resp = session.get(base, timeout=30)
-        resp.raise_for_status()
+        resp = session.get(base, timeout=30); resp.raise_for_status()
         html = resp.text
 
         links: Set[str] = set()
 
-        # A) Normal path: internal GZ detail links (keeps Rhinelander behavior)
+        # (A) Normal GZ SSR anchors (restores Rhinelander)
         gz_links = _extract_gz_detail_links(html, base)
         links |= gz_links
         _log(logger, f"[growthzone_html] initial gz-detail links: {len(gz_links)}")
 
         host = urlparse(base).netloc.lower()
 
-        # B) St. Germain-only outbound anchors if no GZ links
+        # (B) St. Germain-only outbound anchors if no GZ links
         if not links and "stgermainwi.chambermaster.com" in host:
             out_links = _extract_outbound_stgermain(html, base)
             _log(logger, f"[growthzone_html] initial outbound TEC links: {len(out_links)}")
             links |= out_links
 
-        # C) If still none, probe several SSR variants on same host
+        # (C) Probe SSR variants if still empty
         if not links:
             root = _events_root_same_host(base)
             candidates = [
@@ -457,7 +461,7 @@ def fetch_growthzone_html(*args, **kwargs) -> List[Dict[str, Any]]:
             _log(logger, "[growthzone_html] no links discovered after fallbacks")
             return []
 
-        # D) Visit details and parse
+        # (D) Visit details and parse
         events: List[Dict[str, Any]] = []
         for href in sorted(links):
             try:
@@ -468,7 +472,7 @@ def fetch_growthzone_html(*args, **kwargs) -> List[Dict[str, Any]]:
                 ev = _detail_to_event(r.text, href, name)
                 if not ev:
                     continue
-                # Ensure both start/start_utc keys exist for downstream compatibility
+                # Ensure both start/start_utc exist for downstream compatibility
                 if ev.get("start") and "start_utc" not in ev:
                     ev["start_utc"] = ev["start"]
                 if ev.get("end") and "end_utc" not in ev:
@@ -479,7 +483,7 @@ def fetch_growthzone_html(*args, **kwargs) -> List[Dict[str, Any]]:
                 _warn(logger, f"[growthzone_html] error parsing {href}: {e}")
                 continue
 
-        # E) Date filter
+        # (E) Date filter
         events = _filter_range(events, start_date, end_date)
         _log(logger, f"[growthzone_html] parsed events: {len(events)}")
         return events
