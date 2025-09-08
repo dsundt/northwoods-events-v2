@@ -1,272 +1,258 @@
 # src/parsers/growthzone_html.py
 import re
 import json
+from datetime import datetime, date
 from html import unescape
-from datetime import datetime, date, time
 from urllib.parse import urljoin
 
-# ---- helpers ---------------------------------------------------------------
+# -------------------- call-shape normalization --------------------
+
+def _coerce_signature(args, kwargs):
+    """
+    Supports:
+      (source)
+      (source, session)
+      (source, start_date, end_date)
+      (source, session, start_date, end_date)
+      plus kwargs: start_date=..., end_date=..., session=...
+    Returns: source, session|None, start_date|None, end_date|None
+    """
+    source = args[0] if args else kwargs.get("source")
+    session = kwargs.get("session")
+    start_date = kwargs.get("start_date")
+    end_date = kwargs.get("end_date")
+
+    pos = list(args[1:])
+    if pos and hasattr(pos[0], "get"):  # looks like a requests.Session
+        session = pos.pop(0)
+    if pos:
+        start_date = pos.pop(0)
+    if pos:
+        end_date = pos.pop(0)
+    return source, session, start_date, end_date
 
 def _src_url(source):
-    # Accept dict or string for backwards/forwards compatibility
     return source if isinstance(source, str) else (source.get("url") if source else None)
 
 def _src_name(source, default="GrowthZone"):
     return default if isinstance(source, str) else (source.get("name") or default)
 
+# -------------------- utils --------------------
+
 def _clean_html(s):
     if not s:
         return None
-    # strip tags (lightweight, no bs4 dependency)
     s = re.sub(r"(?is)<script[^>]*>.*?</script>|<style[^>]*>.*?</style>", "", s)
     s = re.sub(r"(?is)<br\s*/?>", "\n", s)
     s = re.sub(r"(?is)<[^>]+>", "", s)
-    # collapse whitespace
     s = unescape(s).strip()
     s = re.sub(r"[ \t]+\n", "\n", s)
     s = re.sub(r"\n{3,}", "\n\n", s)
-    return s
+    return s or None
 
-def _first_group(pattern, text, flags=re.IGNORECASE|re.DOTALL):
-    m = re.search(pattern, text, flags)
-    return m.group(1).strip() if m else None
-
-def _parse_time_range(date_text, time_text):
-    """
-    date_text like 'September 14, 2025'
-    time_text like '2:00 PM - 4:30 PM CDT' OR 'All Day'
-    returns (start_dt_str, end_dt_str) or (date-only start with 00:00, end None)
-    """
-    if not date_text:
-        return (None, None)
-
-    # normalize date
-    date_text = date_text.strip()
-    dt_obj = None
-    for fmt in ("%B %d, %Y", "%b %d, %Y", "%m/%d/%Y"):
-        try:
-            dt_obj = datetime.strptime(date_text, fmt).date()
-            break
-        except Exception:
-            pass
-
-    if dt_obj is None:
-        return (None, None)
-
-    if not time_text or re.search(r"\ball\s*day\b", time_text, re.I):
-        start = datetime.combine(dt_obj, time(0, 0))
-        return (start.strftime("%Y-%m-%d %H:%M:%S"), None)
-
-    # extract "start - end" times; tolerate timezone suffix
-    # examples:
-    #  "10:00 AM - 10:30 AM CDT"
-    #  "5:00 PM - 7:00 PM"
-    #  "9:00 AM"
-    times = re.split(r"\s*-\s*", time_text.split("  ")[0].strip())
-    def _parse_clock(tstr):
-        tstr = re.sub(r"\s+[A-Z]{2,4}$", "", tstr.strip())  # drop trailing timezone token if present
-        for tf in ("%I:%M %p", "%I %p", "%H:%M", "%H"):
-            try:
-                return datetime.strptime(tstr, tf).time()
-            except Exception:
-                pass
+def _coerce_date(x):
+    if x is None:
         return None
-
-    start_t = _parse_clock(times[0]) if times else None
-    end_t   = _parse_clock(times[1]) if len(times) > 1 else None
-
-    if not start_t and not end_t:
-        # fallback: date only
-        start = datetime.combine(dt_obj, time(0, 0))
-        return (start.strftime("%Y-%m-%d %H:%M:%S"), None)
-
-    start_dt = datetime.combine(dt_obj, start_t or time(0,0))
-    end_dt   = datetime.combine(dt_obj, end_t) if end_t else None
-    return (start_dt.strftime("%Y-%m-%d %H:%M:%S"),
-            end_dt.strftime("%Y-%m-%d %H:%M:%S") if end_dt else None)
-
-def _extract_json_ld(html):
-    # Find Event JSON-LD if GrowthZone happens to inject it
-    out = {}
-    for m in re.finditer(r'(?is)<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', html):
+    if isinstance(x, datetime):
+        return x.date()
+    if isinstance(x, date):
+        return x
+    if isinstance(x, str):
         try:
-            data = json.loads(unescape(m.group(1)))
+            return datetime.strptime(x.strip(), "%Y-%m-%d").date()
         except Exception:
-            continue
-        # JSON-LD can be dict or list
-        blobs = data if isinstance(data, list) else [data]
-        for b in blobs:
-            if not isinstance(b, dict):
-                continue
-            if b.get("@type") in ("Event", ["Event"]):
-                if b.get("startDate"):
-                    out["start"] = b.get("startDate")
-                if b.get("endDate"):
-                    out["end"] = b.get("endDate")
-                if b.get("location"):
-                    loc = b["location"]
-                    if isinstance(loc, dict):
-                        out["location"] = loc.get("name") or loc.get("address") or None
-                    elif isinstance(loc, str):
-                        out["location"] = loc
-                if b.get("name"):
-                    out["title"] = b.get("name")
-                if out:
-                    return out
-    return {}
-
-def _extract_location_block(html):
-    """
-    Prefer ONLY the content inside the specific GrowthZone block:
-      <div class="mn-event-section mn-event-location"> ... <div class="mn-event-content"><div class="mn-raw ...">TEXT</div></div>
-    If not found, fallback to strict 'Location:' capture (until the next section head).
-    """
-    # strict block
-    m = re.search(
-        r'(?is)<div[^>]+class="[^"]*\bmn-event-section\b[^"]*\bmn-event-location\b[^"]*"[^>]*>.*?<div[^>]+class="[^"]*\bmn-event-content\b[^"]*"[^>]*>\s*(.*?)\s*</div>\s*</div>',
-        html
-    )
-    if m:
-        return _clean_html(m.group(1))
-
-    # strict label capture (stop before another labeled section head)
-    m = re.search(
-        r'(?is)>\s*Location:\s*</div>\s*<div[^>]+class="[^"]*\bmn-event-content\b[^"]*"[^>]*>\s*(.*?)\s*</div>',
-        html
-    )
-    if m:
-        return _clean_html(m.group(1))
-
-    # generic "Location:" line capture; stop at next heading-like token
-    m = re.search(
-        r'(?is)\bLocation:\s*</?(?:div|span|p)[^>]*>(.*?)</?(?:div|span|p)>',
-        html
-    )
-    if m:
-        return _clean_html(m.group(1))
-
-    # ultimate fallback: single-line after "Location:" until next known section key
-    m = re.search(
-        r'(?is)\bLocation:\s*(.*?)(?:\bDate/Time Information:|\bContact Information:|\bFees/Admission:|\bWebsite:|<h\d|\Z)',
-        html
-    )
-    if m:
-        return _clean_html(m.group(1))
-
+            return None
     return None
 
-def _parse_growthzone_detail(html, url, source_name):
-    # title
-    title = _first_group(r'(?is)<h1[^>]*id=["\']page-title["\'][^>]*>(.*?)</h1>', html) \
-         or _first_group(r'(?is)<meta[^>]+property=["\']og:title["\'][^>]+content=["\'](.*?)["\']', html)
+def _filter_range(events, start_date, end_date):
+    sd = _coerce_date(start_date)
+    ed = _coerce_date(end_date)
+    if not sd and not ed:
+        return events
 
-    # primary: explicit labeled fields
-    date_text = _first_group(r'(?is)>\s*Date:\s*</div>\s*<div[^>]*>\s*(.*?)\s*</div>', html) \
-             or _first_group(r'(?is)\bDate:\s*(.*?)<', html)
-    time_text = _first_group(r'(?is)>\s*Time:\s*</div>\s*<div[^>]*>\s*(.*?)\s*</div>', html) \
-             or _first_group(r'(?is)\bTime:\s*(.*?)<', html)
+    def in_range(ev):
+        ts = ev.get("start_utc")
+        if not ts:
+            return False
+        try:
+            dt = datetime.strptime(ts, "%Y-%m-%d %H:%M:%S").date()
+        except Exception:
+            return False
+        if sd and dt < sd:
+            return False
+        if ed and dt > ed:
+            return False
+        return True
 
-    start_str, end_str = _parse_time_range(date_text, time_text)
+    return [e for e in events if in_range(e)]
 
-    # secondary: JSON-LD if dates still missing
-    if not start_str:
-        j = _extract_json_ld(html)
-        if j.get("start"):
-            # normalize common date formats
-            try:
-                dt = j["start"]
-                # tolerate ISO or "YYYY-MM-DD" or "YYYY-MM-DDTHH:MM"
-                for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
-                    try:
-                        d = datetime.strptime(dt, fmt)
-                        start_str = d.strftime("%Y-%m-%d %H:%M:%S")
-                        break
-                    except Exception:
-                        pass
-            except Exception:
-                pass
-        if j.get("end") and not end_str:
-            for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
-                try:
-                    d = datetime.strptime(j["end"], fmt)
-                    end_str = d.strftime("%Y-%m-%d %H:%M:%S")
-                    break
-                except Exception:
-                    pass
-        if not title and j.get("title"):
-            title = j["title"]
+def _norm_dt(x):
+    if not x:
+        return None
+    v = x.strip()
+    # normalize 'Z' to +00:00 for fromisoformat
+    if v.endswith("Z"):
+        v = v[:-1] + "+00:00"
+    # Try a few common shapes
+    for fn in (
+        lambda s: datetime.fromisoformat(s),
+        lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%S%z"),
+        lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%S"),
+        lambda s: datetime.strptime(s, "%Y-%m-%d"),
+    ):
+        try:
+            return fn(v).strftime("%Y-%m-%d %H:%M:%S")
+        except Exception:
+            pass
+    return None
 
-    location = _extract_location_block(html)
+def _jsonld_events(html):
+    """Return list of dicts parsed from any application/ld+json blocks."""
+    out = []
+    for m in re.finditer(r'(?is)<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', html):
+        blob = unescape(m.group(1)).strip()
+        try:
+            data = json.loads(blob)
+        except Exception:
+            continue
+        if isinstance(data, list):
+            out.extend([d for d in data if isinstance(d, dict)])
+        elif isinstance(data, dict):
+            out.append(data)
+    return out
 
-    # uid: stable-ish from URL
-    uid = f"gz-{abs(hash((url, title or '', start_str or '')))}"
+def _extract_location_from_block(html):
+    """
+    Only take the inner content of:
+      <div class="mn-event-section mn-event-location">
+        <div class="mn-event-content"> ...desired location html... </div>
+      </div>
+    """
+    m = re.search(
+        r'(?is)<div[^>]+class="[^"]*\bmn-event-section\b[^"]*\bmn-event-location\b[^"]*"[^>]*>'
+        r'.*?<div[^>]+class="[^"]*\bmn-event-content\b[^"]*"[^>]*>(.*?)</div>',
+        html,
+    )
+    if not m:
+        return None
+    return _clean_html(m.group(1))
 
+def _extract_title(html):
+    # Prefer the page H1 if present; otherwise fall back to JSON-LD name/headline upstream
+    m = re.search(r'(?is)<h1[^>]*>(.*?)</h1>', html)
+    return _clean_html(m.group(1)) if m else None
+
+def _detail_to_event(detail_html, page_url, source_name):
+    # 1) JSON-LD first (usually includes start/end and location)
+    title = None
+    start_s = end_s = None
+    location = None
+    url = page_url
+
+    for obj in _jsonld_events(detail_html):
+        if not isinstance(obj, dict):
+            continue
+        # Look for Event-like objects
+        if obj.get("@type") in ("Event", ["Event"]) or ("startDate" in obj or "endDate" in obj or "name" in obj):
+            title = title or obj.get("name") or obj.get("headline")
+            start_s = start_s or _norm_dt(obj.get("startDate"))
+            end_s = end_s or _norm_dt(obj.get("endDate"))
+            loc = obj.get("location")
+            if isinstance(loc, dict):
+                # Prefer name; include address string if provided
+                location = location or _clean_html(
+                    (loc.get("name") or "") + ("\n" + loc.get("address") if isinstance(loc.get("address"), str) else "")
+                )
+            elif isinstance(loc, str):
+                location = location or _clean_html(loc)
+            url = obj.get("url") or url
+
+    # 2) If dates still missing, try meta itemprops
+    if not start_s:
+        m = re.search(r'itemprop=["\']startDate["\'][^>]*content=["\']([^"\']+)["\']', detail_html, flags=re.I)
+        if m:
+            start_s = _norm_dt(m.group(1))
+    if not end_s:
+        m = re.search(r'itemprop=["\']endDate["\'][^>]*content=["\']([^"\']+)["\']', detail_html, flags=re.I)
+        if m:
+            end_s = _norm_dt(m.group(1))
+
+    # 3) Title fallback
+    title = title or _extract_title(detail_html) or "(untitled)"
+
+    # 4) Location: STRICT block-only per your requirement
+    explicit_loc = _extract_location_from_block(detail_html)
+    if explicit_loc:
+        location = explicit_loc
+
+    uid = f"gz-{abs(hash((title or '', start_s or '', url or '')))}"
     return {
         "uid": uid,
-        "title": _clean_html(title) or "(untitled)",
-        "start_utc": start_str,
-        "end_utc": end_str,
+        "title": title,
+        "start_utc": start_s,
+        "end_utc": end_s,
         "url": url,
         "location": location,
         "source": source_name,
         "calendar": source_name,
     }
 
-# ---- main fetcher ----------------------------------------------------------
+# -------------------- main entry --------------------
 
-def fetch_growthzone_html(source, session, start_date=None, end_date=None):
+def fetch_growthzone_html(*args, **kwargs):
     """
-    HTML scraper for GrowthZone.
-    - Accepts source dict or URL string.
-    - If given a calendar/search page, finds detail links and parses each event page for Date/Time and Location.
-    - If given a direct detail URL, parses that single event.
-    - Returns a list of normalized event dicts.
+    GrowthZone (ChamberMaster) HTML fetcher.
+    - Accepts optional session / date bounds
+    - Finds detail links on the calendar page and parses each detail page
+    - Dates from JSON-LD/meta; location ONLY from the mn-event-location block
     """
-    base_url = _src_url(source)
+    source, session, start_date, end_date = _coerce_signature(args, kwargs)
+    base = _src_url(source)
     name = _src_name(source, "GrowthZone")
-    if not base_url:
+    if not base:
         return []
 
-    # If already a detail page, just parse one.
-    if re.search(r"/events/details/", base_url):
-        r = session.get(base_url, timeout=30)
-        r.raise_for_status()
-        return [_parse_growthzone_detail(r.text, base_url, name)]
+    # Make a session if not provided
+    own_session = False
+    if session is None:
+        import requests
+        session = requests.Session()
+        own_session = True
 
-    # Otherwise, treat as calendar index: gather detail links.
-    r = session.get(base_url, timeout=30)
-    r.raise_for_status()
-    html = r.text
+    try:
+        # 1) Fetch calendar listing
+        resp = session.get(base, timeout=30)
+        resp.raise_for_status()
+        html = resp.text
 
-    # Primary: collect all /events/details/ links present on the page
-    links = set(re.findall(r'href=["\'](\/events\/details\/[^"\']+)["\']', html, re.I))
-    # Secondary: also look for "events/search" result links if present in markup
-    links |= set(re.findall(r'href=["\'](\/events\/details\/[^"\']+?)["\']', html, re.I))
+        # 2) Find detail URLs (absolute or relative)
+        links = set()
+        for m in re.finditer(r'href=["\'](https?://[^"\']*/events/details/[^"\']+)["\']', html, flags=re.I):
+            links.add(m.group(1))
+        for m in re.finditer(r'href=["\'](/events/details/[^"\']+)["\']', html, flags=re.I):
+            links.add(urljoin(base, m.group(1)))
 
-    # If the calendar page is sparse (JS-driven), try a generic "search" fallback over a wide window.
-    if not links:
-        # build a plausible search URL window if the domain supports it
-        # e.g., /events/search?from=09/01/2025&to=01/31/2026
-        try:
-            today = datetime.utcnow().date()
-            from_s = today.strftime("%m/%d/%Y")
-            to_s = (date(today.year + (today.month + 4 > 12), ((today.month + 4 - 1) % 12) + 1, 1) - datetime.resolution).strftime("%m/%d/%Y")
-            search_rel = f"/events/search?from={from_s}&to={to_s}"
-            sr = session.get(urljoin(base_url, search_rel), timeout=30)
-            if sr.ok:
-                links |= set(re.findall(r'href=["\'](\/events\/details\/[^"\']+)["\']', sr.text, re.I))
-        except Exception:
-            pass
+        events = []
+        # 3) Visit each detail page and extract fields
+        for href in sorted(links):
+            try:
+                r = session.get(href, timeout=30)
+                if not r.ok:
+                    continue
+                ev = _detail_to_event(r.text, href, name)
+                # Skip if no start date (prevents null-date clutter)
+                if ev.get("start_utc"):
+                    events.append(ev)
+            except Exception:
+                continue
 
-    events = []
-    for rel in sorted(links):
-        try:
-            url = urljoin(base_url, rel)
-            ev = session.get(url, timeout=30)
-            ev.raise_for_status()
-            events.append(_parse_growthzone_detail(ev.text, url, name))
-        except Exception:
-            # continue on per-event failures
-            continue
+        # 4) Optional date filtering
+        events = _filter_range(events, start_date, end_date)
+        return events
 
-    return events
+    finally:
+        if own_session:
+            try:
+                session.close()
+            except Exception:
+                pass
