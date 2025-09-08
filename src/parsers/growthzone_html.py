@@ -3,208 +3,209 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
-from typing import List, Dict, Optional
+from datetime import datetime
+from html import unescape
+from typing import List, Optional
+from urllib.parse import urljoin, urlparse
+
 import requests
 from bs4 import BeautifulSoup
 
-HEADERS = {
-    "User-Agent": "northwoods-events-bot/1.0 (+https://dsundt.github.io/northwoods-events-v2/)"
+_UA = {
+    "User-Agent": "Mozilla/5.0 (compatible; northwoods-events/2.0; +https://github.com/dsundt/northwoods-events-v2)"
 }
 
-# mm-dd-yyyy in GrowthZone slugs, e.g. .../details/...-09-11-2025-13044
-URL_DATE_RE = re.compile(r"(\d{2})-(\d{2})-(\d{4})")
+# ------------ helpers
 
-def _iso(dt: Optional[datetime]) -> Optional[str]:
-    if not dt:
+def _clean_text(s: Optional[str]) -> Optional[str]:
+    if not s:
         return None
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
-    return dt.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-
-def _jsonld_events(soup: BeautifulSoup) -> List[dict]:
-    out = []
-    for tag in soup.find_all("script", attrs={"type": "application/ld+json"}):
-        txt = tag.string or tag.text or ""
-        if not txt.strip():
-            continue
-        try:
-            data = json.loads(txt)
-        except Exception:
-            continue
-        candidates = data if isinstance(data, list) else [data]
-        for d in candidates:
-            if isinstance(d, dict) and d.get("@type") in ("Event", "MusicEvent"):
-                out.append(d)
-    return out
-
-def _meta_datetime(soup: BeautifulSoup, itemprop: str) -> Optional[datetime]:
-    # GrowthZone often adds <meta itemprop="startDate" content="2025-09-13T18:00:00-05:00">
-    m = soup.find("meta", attrs={"itemprop": itemprop})
-    if m and m.get("content"):
-        try:
-            # Accept both date-only and ISO datetime
-            val = m["content"].strip()
-            if "T" in val:
-                dt = datetime.fromisoformat(val.replace("Z", "+00:00"))
-            else:
-                dt = datetime.strptime(val, "%Y-%m-%d")
-            return dt.astimezone(timezone.utc) if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
-        except Exception:
-            return None
-    return None
-
-def _extract_date_from_url(url: str) -> Optional[datetime]:
-    m = URL_DATE_RE.search(url)
-    if not m:
-        return None
-    mm, dd, yyyy = m.groups()
-    try:
-        dt = datetime(int(yyyy), int(mm), int(dd), tzinfo=timezone.utc)
-        return dt
-    except Exception:
-        return None
-
-def _clean_text(x: Optional[str]) -> Optional[str]:
-    if not x:
-        return None
-    s = re.sub(r"\s+", " ", x).strip()
+    s = unescape(s)
+    s = re.sub(r"\s+", " ", s).strip()
     return s or None
 
-def _event_uid(prefix: str, url: str, title: str) -> str:
-    # Stable-ish and readable; URL usually unique
-    return f"{prefix}-{abs(hash((url, title)))% (10**19)}"
+def _strip_location_label(s: Optional[str]) -> Optional[str]:
+    if not s:
+        return None
+    return re.sub(r"^\s*(Location|Where)\s*:?\s*", "", s, flags=re.I).strip() or None
 
-def _fetch(url: str) -> requests.Response:
-    resp = requests.get(url, headers=HEADERS, timeout=30)
-    resp.raise_for_status()
-    return resp
+_DATE_PATTERNS = [
+    # ISO-ish
+    "%Y-%m-%dT%H:%M:%S%z",
+    "%Y-%m-%dT%H:%M:%S",
+    "%Y-%m-%d",
+    # Common US formats GrowthZone uses
+    "%b %d, %Y %I:%M %p",
+    "%B %d, %Y %I:%M %p",
+    "%b %d, %Y",
+    "%B %d, %Y",
+    "%m/%d/%Y %I:%M %p",
+    "%m/%d/%Y",
+]
 
-def _parse_detail(url: str) -> (Optional[datetime], Optional[datetime], Optional[str]):
-    try:
-        r = _fetch(url)
-    except Exception:
-        # If the detail fetch fails, best effort date from URL and no location
-        return _extract_date_from_url(url), None, None
-
-    soup = BeautifulSoup(r.text, "html.parser")
-
-    # 1) JSON-LD
-    for ev in _jsonld_events(soup):
+def _try_parse_dt(s: str) -> Optional[str]:
+    s = s.strip()
+    # normalize timezone "Z" -> +0000 for strptime
+    s = re.sub(r"Z$", "+0000", s)
+    for fmt in _DATE_PATTERNS:
         try:
-            start_iso = ev.get("startDate")
-            end_iso = ev.get("endDate")
-            start = None
-            end = None
-            if start_iso:
-                start = datetime.fromisoformat(start_iso.replace("Z", "+00:00"))
-                if start.tzinfo is None:
-                    start = start.replace(tzinfo=timezone.utc)
-            if end_iso:
-                end = datetime.fromisoformat(end_iso.replace("Z", "+00:00"))
-                if end.tzinfo is None:
-                    end = end.replace(tzinfo=timezone.utc)
-
-            loc = None
-            loc_obj = ev.get("location")
-            if isinstance(loc_obj, dict):
-                loc = loc_obj.get("name") or loc_obj.get("address") or None
-                if isinstance(loc, dict):
-                    # address can be a PostalAddress object
-                    loc = loc.get("streetAddress") or loc.get("addressLocality") or None
-            elif isinstance(loc_obj, str):
-                loc = loc_obj
-
-            return start, end, _clean_text(loc)
+            dt = datetime.strptime(s, fmt)
+            # normalize to "YYYY-MM-DD HH:MM:SS"
+            if "%H" in fmt or "%I" in fmt:
+                return dt.strftime("%Y-%m-%d %H:%M:%S")
+            else:
+                return dt.strftime("%Y-%m-%d 00:00:00")
         except Exception:
-            # Try next JSON-LD block
-            pass
+            continue
+    return None
 
-    # 2) <meta itemprop="startDate"/"endDate">
-    start = _meta_datetime(soup, "startDate")
-    end = _meta_datetime(soup, "endDate")
+def _first_jsonld_event(soup: BeautifulSoup) -> Optional[dict]:
+    for tag in soup.find_all("script", attrs={"type": "application/ld+json"}):
+        try:
+            data = json.loads(tag.string or tag.text or "{}")
+        except Exception:
+            continue
+        items = data if isinstance(data, list) else [data]
+        for obj in items:
+            if not isinstance(obj, dict):
+                continue
+            t = obj.get("@type")
+            types = [t] if isinstance(t, str) else (t or [])
+            if any(str(x).lower() == "event" for x in types):
+                return obj
+    return None
 
-    # 3) Fall back to URL date if still missing
-    if not start:
-        start = _extract_date_from_url(url)
-
-    # 4) Location fallbacks (common GrowthZone/ChamberMaster patterns)
+def _event_from_jsonld(obj: dict) -> dict:
+    title = _clean_text(obj.get("name"))
+    start = obj.get("startDate")
+    end = obj.get("endDate")
     loc = None
-    # Typical “Location” labeled field
-    label = soup.find(lambda tag: tag.name in ("dt", "strong", "h4") and "location" in tag.get_text(" ").strip().lower())
-    if label:
-        nxt = label.find_next(["dd", "p", "div", "span"])
-        loc = _clean_text(nxt.get_text(" ")) if nxt else None
-    # Sometimes the venue name appears in a block with itemprop="name"
-    if not loc:
-        loc_tag = soup.find(attrs={"itemprop": "location"}) or soup.find(attrs={"itemprop": "name"})
-        if loc_tag:
-            loc = _clean_text(loc_tag.get_text(" "))
+    loc_obj = obj.get("location")
+    if isinstance(loc_obj, dict):
+        loc = _clean_text(loc_obj.get("name")) or _clean_text(loc_obj.get("address"))
+    elif isinstance(loc_obj, list) and loc_obj:
+        l0 = loc_obj[0]
+        if isinstance(l0, dict):
+            loc = _clean_text(l0.get("name")) or _clean_text(l0.get("address"))
+    return {
+        "title": title,
+        "start_utc": _try_parse_dt(start) if isinstance(start, str) else None,
+        "end_utc": _try_parse_dt(end) if isinstance(end, str) else None,
+        "location": _strip_location_label(loc),
+    }
 
-    return start, end, loc
+def _extract_fallback_date(text: str) -> Optional[str]:
+    """
+    Pull something like:
+      'Wednesday, September 17, 2025 5:30 PM - 7:30 PM'
+      'September 17, 2025'
+      '09/17/2025'
+    """
+    text = " ".join(text.split())
+    # Range with a start date at the front — we only need the first date/time
+    m = re.search(r"([A-Za-z]{3,9}\s+\d{1,2},\s*\d{4}(?:\s+\d{1,2}:\d{2}\s*(AM|PM))?)", text, flags=re.I)
+    if m:
+        return _try_parse_dt(m.group(1))
 
-def fetch_growthzone_html(url: str) -> List[Dict]:
+    m = re.search(r"(\d{1,2}/\d{1,2}/\d{4}(?:\s+\d{1,2}:\d{2}\s*(AM|PM))?)", text, flags=re.I)
+    if m:
+        return _try_parse_dt(m.group(1))
+
+    m = re.search(r"(\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}Z?)?)", text)
+    if m:
+        return _try_parse_dt(m.group(1))
+    return None
+
+def _extract_fallback_location(soup: BeautifulSoup, full_text: str) -> Optional[str]:
+    # Try common label/value pattern
+    # e.g. <div>Location</div><div>Some Venue</div>
+    labels = soup.find_all(text=re.compile(r"^\s*(Location|Where)\s*:?\s*$", re.I))
+    for lab in labels:
+        par = getattr(lab, "parent", None)
+        if par and par.next_sibling:
+            cand = _clean_text(getattr(par.next_sibling, "get_text", lambda: "")())
+            cand = _strip_location_label(cand)
+            if cand:
+                return cand
+    # Regex from page text
+    m = re.search(r"(?:Location|Where)\s*:?\s*(.+)", full_text, flags=re.I)
+    if m:
+        return _strip_location_label(_clean_text(m.group(1)))
+    return None
+
+# ------------ main fetcher
+
+def fetch_growthzone_html(url: str, max_events: int = 120, timeout: int = 20) -> List[dict]:
     """
-    Fetch GrowthZone calendar index, enumerate event detail pages, and return a LIST of event dicts.
-    No tuple, no diagnostics — the caller expects a plain list.
+    Rhinelander: ensure dates + clean location label
+    Works against GrowthZone/ChamberMaster sites by crawling the calendar, then the detail pages.
     """
-    # 1) Hit the calendar page and grab detail URLs
-    resp = _fetch(url)
+    sess = requests.Session()
+    sess.headers.update(_UA)
+
+    resp = sess.get(url, timeout=timeout)
+    resp.raise_for_status()
     soup = BeautifulSoup(resp.text, "html.parser")
 
-    detail_urls = []
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
+    # Find event detail links
+    links = set()
+    for a in soup.select("a[href]"):
+        href = a.get("href") or ""
         if "/events/details/" in href:
-            # Normalize absolute URL
-            if href.startswith("/"):
-                base = "{uri.scheme}://{uri.netloc}".format(uri=requests.utils.urlparse(url))
-                href = base + href
-            # Avoid anchors/dupes
-            href = href.split("#", 1)[0]
-            if href not in detail_urls:
-                detail_urls.append(href)
+            links.add(urljoin(resp.url, href))
+    # Some calendars list multiple months: follow next/prev? Keep it simple; first batch only.
+    detail_urls = list(links)[:max_events]
 
-    events: List[Dict] = []
-    # Cap to a reasonable number so one huge month doesn’t DoS the build
-    for href in detail_urls[:300]:
-        title = None
+    results: List[dict] = []
+
+    for durl in detail_urls:
         try:
-            # Get a title early from the link text if present
-            # (We’ll also overwrite later if JSON-LD has a better name.)
-            title = _clean_text(a.get_text(" ")) if (a := soup.find("a", href=lambda h: h and href in h)) else None
+            dresp = sess.get(durl, timeout=timeout)
+            dresp.raise_for_status()
+            dhtml = dresp.text
+            ddoc = BeautifulSoup(dhtml, "html.parser")
+
+            # Prefer JSON-LD
+            ev = _first_jsonld_event(ddoc)
+            title = None
+            start = None
+            end = None
+            loc = None
+            if ev:
+                data = _event_from_jsonld(ev)
+                title = data["title"]
+                start = data["start_utc"]
+                end = data["end_utc"]
+                loc = data["location"]
+
+            # Fallbacks
+            text = _clean_text(ddoc.get_text(" ")) or ""
+            if not title:
+                h1 = ddoc.find("h1")
+                title = _clean_text(h1.get_text()) if h1 else None
+
+            if not start:
+                start = _extract_fallback_date(text)
+
+            if not loc:
+                loc = _extract_fallback_location(ddoc, text)
+
+            # If we STILL have no start date, we skip (prevents null dates).
+            if not start:
+                continue
+
+            uid = f"gz-{abs(hash((durl, title or '')))}"
+
+            results.append({
+                "uid": uid,
+                "title": title or "(untitled event)",
+                "start_utc": start,
+                "end_utc": end,
+                "url": durl,
+                "location": _strip_location_label(loc),
+            })
         except Exception:
-            pass
+            # Skip single-bad pages; continue
+            continue
 
-        start_dt, end_dt, location = _parse_detail(href)
-
-        # If we still have no title, fetch <title> from the detail page
-        if not title:
-            try:
-                r = _fetch(href)
-                dsoup = BeautifulSoup(r.text, "html.parser")
-                # Prefer JSON-LD name
-                jlds = _jsonld_events(dsoup)
-                if jlds and isinstance(jlds[0], dict):
-                    title = _clean_text(jlds[0].get("name"))
-                if not title:
-                    if dsoup.title and dsoup.title.string:
-                        title = _clean_text(dsoup.title.string.replace(" - Event - ", " "))
-            except Exception:
-                pass
-
-        # As a last resort, derive a title from the slug
-        if not title:
-            title = _clean_text(href.rsplit("/", 1)[-1].replace("-", " ").split("?")[0]) or "Untitled"
-
-        ev = {
-            "uid": _event_uid("gz", href, title),
-            "title": title,
-            "start_utc": _iso(start_dt),
-            "end_utc": _iso(end_dt),
-            "url": href,
-            "location": location,
-        }
-        events.append(ev)
-
-    return events
+    return results
