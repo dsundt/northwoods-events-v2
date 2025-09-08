@@ -11,12 +11,11 @@
   url: https://eagleriver.org/
 
 # config/sources.yaml  (only the St. Germain entry)
-- name: St. Germain Chamber (TEC)
-  id: st-germain-chamber-tec
-  type: tec_rest
-  url: https://st-germain.com/
-  rest_api_base: https://st-germain.com/wp-json/tribe/events/v1/events
-  lookahead_days: 365
+- name: St. Germain Chamber (iCal)
+  id: st-germain-chamber-ics
+  type: ics_feed
+  url: https://st-germain.com/events-calendar/?ical=1
+
 
 
 # Rhinelander: use the CALENDAR view (clearer markup)
