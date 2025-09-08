@@ -3,167 +3,211 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime
-from typing import Iterable, List, Optional, Tuple
-from urllib.parse import urljoin, urlparse, unquote
+from datetime import date, datetime
+from typing import Any, Dict, List, Tuple
+from urllib.parse import urljoin
 
-from bs4 import BeautifulSoup
-from dateutil import parser as dp
-import feedparser
+import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup  # type: ignore
+from dateutil import parser as dtparse  # type: ignore
+from zoneinfo import ZoneInfo
 
-from src.http import get
+from src.fetch import get
 from src.models import Event
 
+_TZ = ZoneInfo("America/Chicago")
+_RE_SPC = re.compile(r"\s+")
 
-RANGE_SPLIT = re.compile(r"\s*[-–]\s*")
+def _clean(s: str | None) -> str | None:
+    return _RE_SPC.sub(" ", s).strip() if s else None
 
+def _parse_rss_links(xml_text: str) -> List[str]:
+    links: List[str] = []
+    try:
+        root = ET.fromstring(xml_text)
+    except Exception:
+        return links
 
-def _json_ld_event(soup: BeautifulSoup) -> Tuple[Optional[datetime], Optional[datetime], Optional[str], Optional[str]]:
-    for s in soup.select('script[type="application/ld+json"]'):
+    # RSS 2.0
+    for item in root.findall(".//item"):
+        link = item.findtext("link")
+        if link:
+            links.append(link)
+
+    # Atom
+    ATOM_NS = "{http://www.w3.org/2005/Atom}"
+    for entry in root.findall(f".//{ATOM_NS}entry"):
+        link_el = entry.find(f"{ATOM_NS}link")
+        if link_el is not None:
+            href = link_el.attrib.get("href")
+            if href:
+                links.append(href)
+
+    # De-dupe, keep order
+    seen: set[str] = set()
+    out: List[str] = []
+    for l in links:
+        if l in seen:
+            continue
+        seen.add(l)
+        out.append(l)
+    return out
+
+def _jsonld_events(soup: BeautifulSoup) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    for tag in soup.find_all("script", {"type": "application/ld+json"}):
         try:
-            data = json.loads(s.string or "")
+            data = json.loads(tag.string or "{}")
         except Exception:
             continue
+        nodes = data
+        if isinstance(data, dict) and "@graph" in data:
+            nodes = data["@graph"]
+        if isinstance(nodes, dict):
+            nodes = [nodes]
+        if isinstance(nodes, list):
+            for n in nodes:
+                if isinstance(n, dict):
+                    t = n.get("@type")
+                    if t == "Event" or (isinstance(t, list) and "Event" in t):
+                        out.append(n)
+    return out
 
-        candidates = []
-        if isinstance(data, dict):
-            if data.get("@type") == "Event":
-                candidates = [data]
-            elif "@graph" in data and isinstance(data["@graph"], list):
-                candidates = [x for x in data["@graph"] if isinstance(x, dict) and x.get("@type") == "Event"]
-        elif isinstance(data, list):
-            candidates = [x for x in data if isinstance(x, dict) and x.get("@type") == "Event"]
+def _event_from_jsonld(node: dict, url: str, title_fallback: str | None) -> Event:
+    title = _clean(node.get("name")) or title_fallback or "Event"
+    sd = node.get("startDate")
+    ed = node.get("endDate")
+    start_utc = dtparse.parse(sd).astimezone(ZoneInfo("UTC")) if sd else None
+    end_utc = dtparse.parse(ed).astimezone(ZoneInfo("UTC")) if ed else None
 
-        for ev in candidates:
-            start = ev.get("startDate")
-            end = ev.get("endDate")
-            loc = ev.get("location")
-            loc_name = None
-            if isinstance(loc, dict):
-                loc_name = loc.get("name") or (isinstance(loc.get("address"), dict) and loc["address"].get("name"))
-            elif isinstance(loc, str):
-                loc_name = loc
-            uid = ev.get("identifier") or ev.get("@id") or ev.get("url")
-            return (dp.parse(start) if start else None, dp.parse(end) if end else None, loc_name, uid)
-    return (None, None, None, None)
+    location_txt = None
+    loc = node.get("location")
+    if isinstance(loc, dict):
+        nm = _clean(loc.get("name"))
+        addr = loc.get("address")
+        addr_txt = None
+        if isinstance(addr, dict):
+            parts = [
+                _clean(addr.get("streetAddress")),
+                _clean(addr.get("addressLocality")),
+                _clean(addr.get("addressRegion")),
+                _clean(addr.get("postalCode")),
+            ]
+            addr_txt = ", ".join([p for p in parts if p])
+        location_txt = ", ".join([p for p in [nm, addr_txt] if p])
 
+    return Event(
+        title=title,
+        start_utc=start_utc,
+        end_utc=end_utc,
+        url=url,
+        location=location_txt,
+        description=None,
+        source_meta={"jsonld": True},
+    )
 
-def _meta_dates(soup: BeautifulSoup) -> Tuple[Optional[datetime], Optional[datetime]]:
-    # Some Simpleview themes publish itemprops
-    start = soup.select_one('meta[itemprop="startDate"]')
-    end = soup.select_one('meta[itemprop="endDate"]')
-    s = dp.parse(start["content"]) if start and start.get("content") else None
-    e = dp.parse(end["content"]) if end and end.get("content") else None
-    return s, e
+def _text_after_label(soup: BeautifulSoup, label: str) -> str | None:
+    # Typical “Date”, “Time”, “Location” blocks
+    lab = soup.find(string=re.compile(rf"^\s*{re.escape(label)}\s*:?\s*$", re.I))
+    if lab and lab.parent:
+        for sib in lab.parent.next_siblings:
+            t = _clean(getattr(sib, "get_text", lambda *_: str(sib))(" ", strip=True) if hasattr(sib, "get_text") else str(sib))
+            if t:
+                return t
+    full = soup.get_text("\n", strip=True)
+    m = re.search(rf"{label}\s*:?\s*(.+?)(?:\n[A-Z][a-zA-Z]+:|\Z)", full, re.I | re.S)
+    return _clean(m.group(1)) if m else None
 
+def _parse_visible_dt(date_txt: str | None, time_txt: str | None) -> tuple[datetime | None, datetime | None]:
+    if not date_txt:
+        return None, None
+    try:
+        d = dtparse.parse(date_txt).date()
+    except Exception:
+        m = re.search(r"[A-Za-z]+ \d{1,2}, \d{4}", date_txt)
+        if not m:
+            return None, None
+        d = dtparse.parse(m.group(0)).date()
 
-def _parse_text_dates(soup: BeautifulSoup) -> Tuple[Optional[datetime], Optional[datetime]]:
-    # Scrape conspicuous date/value lines
-    candidates = []
-    for sel in [
-        ".event-date", ".eventDates", ".event-details", ".details", ".event-info", ".event__meta",
-        ".event-content", ".event-summary", ".event-information"
-    ]:
-        for blk in soup.select(sel):
-            t = blk.get_text(" ", strip=True)
-            if t and any(k in t.lower() for k in ["date", "dates", "time", "when"]):
-                candidates.append(t)
+    start_local = None
+    end_local = None
+    times = re.findall(r"\d{1,2}:\d{2}\s*[AP]M", time_txt or "")
+    if times:
+        start_local = dtparse.parse(f"{d.isoformat()} {times[0]}").replace(tzinfo=_TZ)
+        if len(times) > 1:
+            end_local = dtparse.parse(f"{d.isoformat()} {times[1]}").replace(tzinfo=_TZ)
+    else:
+        start_local = datetime(d.year, d.month, d.day, 0, 0, tzinfo=_TZ)
 
-    for txt in candidates:
-        if RANGE_SPLIT.search(txt):
-            parts = RANGE_SPLIT.split(txt)
-            if len(parts) == 2:
-                try:
-                    return dp.parse(parts[0], fuzzy=True), dp.parse(parts[1], fuzzy=True)
-                except Exception:
-                    pass
-        try:
-            return dp.parse(txt, fuzzy=True), None
-        except Exception:
-            continue
-    return None, None
+    return start_local.astimezone(ZoneInfo("UTC")), end_local.astimezone(ZoneInfo("UTC")) if end_local else None
 
+def _hydrate_detail(url: str) -> Event | None:
+    r = get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
 
-def _venue_guess(soup: BeautifulSoup) -> Optional[str]:
-    # Try common venue/address wrappers
-    for sel in [
-        ".venue-name", ".event-venue", ".location", ".event-location", ".address", ".eventMeta__location"
-    ]:
-        el = soup.select_one(sel)
-        if el:
-            txt = el.get_text(" ", strip=True)
-            if txt:
-                return txt
-    # Fallback: first address-like block
-    for el in soup.find_all(["address", "p", "div"]):
-        txt = el.get_text(" ", strip=True)
-        if txt and re.search(r"\d{3,5}\s+\w+", txt):
-            return txt
-    return None
+    title = None
+    h1 = soup.find("h1")
+    if h1:
+        title = _clean(h1.get_text(" ", strip=True))
+    if not title and soup.title:
+        title = _clean(soup.title.get_text(strip=True))
 
+    # Prefer JSON-LD
+    nodes = _jsonld_events(soup)
+    if nodes:
+        return _event_from_jsonld(nodes[0], url, title)
 
-def fetch_simpleview_html(source) -> Iterable[Event]:
-    """
-    Use RSS for discovery, then hydrate by visiting each detail page to
-    collect canonical dates and venue.
-    """
-    feed_url = source.url
-    if not feed_url.lower().endswith(".rss") and "/rss" not in feed_url.lower():
-        # allow both .../event/rss and .../event/rss/
-        if not feed_url.endswith("/"):
-            feed_url += "/"
-        feed_url = urljoin(feed_url, "")  # normalize
+    # Fallback: visible fields
+    date_txt = _text_after_label(soup, "Date")
+    time_txt = _text_after_label(soup, "Time")
+    loc_txt  = _text_after_label(soup, "Location")
+    start_utc, end_utc = _parse_visible_dt(date_txt, time_txt)
 
-    fp = feedparser.parse(feed_url)
+    return Event(
+        title=title or "Event",
+        start_utc=start_utc,
+        end_utc=end_utc,
+        url=url,
+        location=_clean(loc_txt),
+        description=None,
+        source_meta={"jsonld": False},
+    )
+
+def fetch_simpleview_html(url: str, start_date: date, end_date: date) -> Tuple[List[Event], Dict[str, Any]]:
+    diag: Dict[str, Any] = {"feed_or_list_url": url, "links": 0, "hydrated": 0, "errors": 0}
     events: List[Event] = []
 
-    for entry in fp.entries:
-        raw_url = entry.get("link") or entry.get("id") or ""
-        url = unquote(raw_url)
+    links: List[str] = []
+    if "/event/rss" in url:
+        # Parse RSS/Atom without external deps
+        feed_text = get(url).text
+        links = _parse_rss_links(feed_text)
+    else:
+        # Fallback: collect anchors from listing page
+        soup = BeautifulSoup(get(url).text, "html.parser")
+        seen: set[str] = set()
+        for a in soup.select("a[href*='/event/']"):
+            href = a.get("href")
+            if not href:
+                continue
+            full = urljoin(url, href)
+            if full not in seen:
+                seen.add(full)
+                links.append(full)
 
-        title = (entry.get("title") or "").strip() or "Untitled"
-        # Fetch detail page
+    diag["links"] = len(links)
+
+    for link in links:
         try:
-            r = get(url)
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
+            ev = _hydrate_detail(link)
+            if not ev:
+                continue
+            if ev.start_utc and not (start_date <= ev.start_utc.date() <= end_date):
+                continue
+            events.append(ev)
+            diag["hydrated"] += 1
         except Exception:
-            # We still emit something, but without dates/location
-            events.append(Event(
-                uid=f"sv-{hash((title, url))}",
-                title=title,
-                start_utc=None,
-                end_utc=None,
-                url=url,
-                location=None,
-                source=source.name,
-                calendar=source.name,
-            ))
+            diag["errors"] += 1
             continue
 
-        s_dt, e_dt, venue, uid = _json_ld_event(soup)
-        if not s_dt and not e_dt:
-            s2, e2 = _meta_dates(soup)
-            s_dt = s_dt or s2
-            e_dt = e_dt or e2
-        if not s_dt and not e_dt:
-            s3, e3 = _parse_text_dates(soup)
-            s_dt = s_dt or s3
-            e_dt = e_dt or e3
-
-        if not venue:
-            venue = _venue_guess(soup)
-
-        ev = Event(
-            uid=str(uid or f"sv-{hash((title, s_dt.isoformat() if s_dt else 'na', url))}"),
-            title=title,
-            start_utc=s_dt,
-            end_utc=e_dt,
-            url=url,
-            location=venue,
-            source=source.name,
-            calendar=source.name,
-        )
-        events.append(ev)
-
-    return events
+    return events, {"ok": True, "error": "", "diag": diag}
