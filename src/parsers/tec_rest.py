@@ -1,9 +1,8 @@
 # src/parsers/tec_rest.py
 from typing import List, Dict, Any, Optional
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, urlencode
 from datetime import datetime, timedelta
 from dateutil import parser as dtp
-import math
 
 from src.fetch import get
 
@@ -11,7 +10,6 @@ def _dtstr(dt: Optional[datetime]) -> Optional[str]:
     return dt.strftime("%Y-%m-%d %H:%M:%S") if dt else None
 
 def _rest_base(site_url: str) -> str:
-    # Always hit domain root wp-json endpoint
     parsed = urlparse(site_url)
     root = f"{parsed.scheme}://{parsed.netloc}/"
     return urljoin(root, "wp-json/tribe/events/v1/events")
@@ -37,9 +35,9 @@ def fetch_tec_rest(url: str, start_utc: str = None, end_utc: str = None) -> List
             "per_page": per_page,
             "page": page,
         }
-        r = get(api, params=params)
+        # IMPORTANT: src.fetch.get() does not support params=...
+        r = get(f"{api}?{urlencode(params)}")
         data = r.json()
-
         objs = data.get("events") or []
         if not objs:
             break
@@ -47,8 +45,8 @@ def fetch_tec_rest(url: str, start_utc: str = None, end_utc: str = None) -> List
         for ev in objs:
             title = (ev.get("title") or "").strip()
             url_e = ev.get("url") or None
-            start_s = ev.get("start_date") or ev.get("start_date_details", {}).get("timezone")
-            end_s   = ev.get("end_date") or None
+            start_s = ev.get("start_date")
+            end_s   = ev.get("end_date")
 
             try:
                 start_dt = dtp.parse(start_s) if start_s else None
@@ -63,12 +61,7 @@ def fetch_tec_rest(url: str, start_utc: str = None, end_utc: str = None) -> List
             loc = None
             v = ev.get("venue") or {}
             if isinstance(v, dict):
-                parts = [
-                    v.get("venue"),
-                    v.get("address"),
-                    v.get("city"),
-                    v.get("state"),
-                ]
+                parts = [v.get("venue"), v.get("address"), v.get("city"), v.get("state")]
                 loc = ", ".join([p for p in parts if p]) or None
 
             uid = str(ev.get("id") or f"tec-{hash((title, start_s or '', url_e or ''))}")
