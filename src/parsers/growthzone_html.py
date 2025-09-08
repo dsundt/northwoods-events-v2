@@ -1,24 +1,14 @@
 # src/parsers/growthzone_html.py
-# Drop-in parser for GrowthZone/ChamberMaster event listings.
-# This version preserves existing behavior and adds a guarded fallback
-# that probes SSR list views (alpha/search/monthly calendar) ONLY if the
-# initial listing page yields zero /events/details/ links.
-#
-# Tested paths:
-# - Rhinelander (server-rendered calendar) -> unchanged behavior
-# - St. Germain (JS-heavy listings) -> fallback activates to find links
-
-from __future__ import annotations
+# GrowthZone/ChamberMaster HTML parser with a guarded fallback for JS-heavy listings.
+# Fallback only activates when the initial listing yields ZERO /events/details/ links.
 
 import re
 import json
 from datetime import datetime, date
-from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set
 from urllib.parse import urljoin, urlparse
 
-# NOTE: We intentionally keep the signature flexible to match various callers.
-# The function accepts extra keyword args and ignores what it doesn't use.
-# This ensures backward compatibility with your runner.
+
 def fetch_growthzone_html(
     session,
     base: str,
@@ -32,152 +22,211 @@ def fetch_growthzone_html(
     **kwargs: Any,
 ) -> List[Dict[str, Any]]:
     """
-    Fetch and normalize GrowthZone events by extracting /events/details/... links
-    from a server-rendered listing page and parsing JSON-LD from detail pages.
+    Steps
+    -----
+    1) GET `base` and extract /events/details/... links.
+    2) If zero links found, probe SSR variants on same host:
+       - '?o=alpha'
+       - '/events/calendar'
+       - '/events/search'
+       - a few month pages: '/events/calendar/YYYY-MM-01'
+    3) Visit detail pages; parse JSON-LD; normalize minimal fields.
 
-    Behavior:
-      1) Fetch `base` and extract detail links.
-      2) If ZERO links found, try safe SSR variants on the same host:
-         - add '?o=alpha'
-         - '/events/calendar'
-         - next few monthly calendar paths '/events/calendar/YYYY-MM-01'
-         - '/events/search'
-      3) Visit detail pages, parse JSON-LD, normalize fields.
-
-    This fallback only triggers when initial link extraction yields zero links,
-    so working sources (e.g., Rhinelander) behave exactly as before.
+    Safety
+    ------
+    The fallback in (2) ONLY runs when the first page yields zero links.
+    Working sources (e.g., Rhinelander) behave exactly as before.
     """
 
-    log = logger.debug if hasattr(logger, "debug") else (lambda *_args, **_kw: None)
-    warn = logger.warning if hasattr(logger, "warning") else (lambda *_args, **_kw: None)
+    # --- logger shims ---
+    def _log(msg: str) -> None:
+        if logger and hasattr(logger, "debug"):
+            try:
+                logger.debug(msg)
+            except Exception:
+                pass
 
-    # ------------- helpers -------------
+    def _warn(msg: str) -> None:
+        if logger and hasattr(logger, "warning"):
+            try:
+                logger.warning(msg)
+            except Exception:
+                pass
+
+    # --- helpers ---
     def _extract_links(page_html: str, base_url: str) -> Set[str]:
         links: Set[str] = set()
-        # absolute links
+        # absolute detail links
         for m in re.finditer(
-            r'href=["\'](https?://[^"\']*/events/details/[^"\']+)["\']', page_html, flags=re.I
+            r'href=["\'](https?://[^"\']*/events/details/[^"\']+)["\']',
+            page_html,
+            flags=re.I,
         ):
             links.add(m.group(1))
-        # relative links
-        for m in re.finditer(r'href=["\'](/events/details/[^"\']+)["\']', page_html, flags=re.I):
+        # relative detail links
+        for m in re.finditer(
+            r'href=["\'](/events/details/[^"\']+)["\']',
+            page_html,
+            flags=re.I,
+        ):
             links.add(urljoin(base_url, m.group(1)))
         return links
 
-    def _same_host_events_root(url: str) -> str:
-        # Return '<scheme>://<host>/events'
+    def _events_root_same_host(url: str) -> str:
         parts = urlparse(url)
         root = f"{parts.scheme}://{parts.netloc}"
-        if "/events" in parts.path:
-            root += parts.path.split("/events", 1)[0]
+        path = parts.path or ""
+        if "/events" in path:
+            root += path.split("/events", 1)[0]
         return f"{root}/events"
 
-    def _iso_months(start_ym: Tuple[int, int], count: int = 4) -> List[str]:
-        y, m = start_ym
+    def _month_starts(count: int = 4) -> List[str]:
+        first = datetime.utcnow().date().replace(day=1)
+        ys = first.year
+        ms = first.month
         out: List[str] = []
         for i in range(count):
-            yy = y + (m - 1 + i) // 12
-            mm = (m - 1 + i) % 12 + 1
+            yy = ys + (ms - 1 + i) // 12
+            mm = (ms - 1 + i) % 12 + 1
             out.append(f"{yy:04d}-{mm:02d}-01")
         return out
 
     def _jsonld_events(html: str) -> List[Dict[str, Any]]:
         events: List[Dict[str, Any]] = []
-        # Gather all JSON-LD blocks; pick those that look like Event(s)
-        for script_match in re.finditer(
+        for sm in re.finditer(
             r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
             html,
             flags=re.I | re.S,
         ):
-            block = script_match.group(1).strip()
+            block = sm.group(1).strip()
             try:
                 data = json.loads(block)
             except Exception:
                 continue
 
-            def _maybe_add(d: Dict[str, Any]) -> None:
-                # Accept if @type includes "Event"
-                atype = d.get("@type")
-                if isinstance(atype, list):
-                    ok = any(str(t).lower() == "event" for t in atype)
+            def _maybe_add(node: Dict[str, Any]) -> None:
+                t = node.get("@type")
+                if isinstance(t, list):
+                    ok = any(str(x).lower() == "event" for x in t)
                 else:
-                    ok = str(atype).lower() == "event"
+                    ok = str(t).lower() == "event"
                 if ok:
-                    events.append(d)
+                    events.append(node)
 
             if isinstance(data, dict):
                 if "@type" in data:
                     _maybe_add(data)
-                # JSON-LD graph container
-                if "@graph" in data and isinstance(data["@graph"], list):
-                    for node in data["@graph"]:
-                        if isinstance(node, dict):
-                            _maybe_add(node)
+                g = data.get("@graph")
+                if isinstance(g, list):
+                    for n in g:
+                        if isinstance(n, dict):
+                            _maybe_add(n)
             elif isinstance(data, list):
-                for node in data:
-                    if isinstance(node, dict):
-                        _maybe_add(node)
+                for n in data:
+                    if isinstance(n, dict):
+                        _maybe_add(n)
         return events
 
     def _norm_dt(s: Optional[str]) -> Optional[str]:
-        if not s:
-            return None
-        # Leave as-is (ISO-like); downstream usually interprets to timezone later
-        return s
+        return s or None
 
     def _norm_place(loc: Any) -> Optional[str]:
         if not loc:
             return None
         if isinstance(loc, dict):
-            # Try common properties
-            for key in ("name", "address", "streetAddress"):
-                v = loc.get(key)
-                if v:
-                    if isinstance(v, dict):
-                        # address object -> join simple fields
-                        parts = [str(loc.get(k, "")).strip() for k in ("streetAddress", "addressLocality", "addressRegion")]
-                        return ", ".join([p for p in parts if p])
-                    return str(v)
-            # fall back to stringified dict
-            return str(loc)
+            name = loc.get("name")
+            if name:
+                return str(name)
+            parts = [
+                str(loc.get("streetAddress", "")).strip(),
+                str(loc.get("addressLocality", "")).strip(),
+                str(loc.get("addressRegion", "")).strip(),
+            ]
+            joined = ", ".join([p for p in parts if p])
+            return joined or json.dumps(loc)
         return str(loc)
 
-    # ------------- 1) initial listing fetch -------------
-    log(f"[growthzone_html] GET {base}")
+    # --- 1) initial listing fetch ---
+    _log(f"[growthzone_html] GET {base}")
     resp = session.get(base, timeout=timeout)
     resp.raise_for_status()
     html = resp.text
 
     links = _extract_links(html, base)
-    log(f"[growthzone_html] initial links: {len(links)}")
+    _log(f"[growthzone_html] initial links: {len(links)}")
 
-    # ------------- 2) guarded fallbacks (ONLY if 0 links) -------------
+    # --- 2) guarded fallbacks (only if zero links) ---
     if not links:
-        root = _same_host_events_root(base)
+        root = _events_root_same_host(base)
         candidates: List[str] = []
 
-        # alpha list view
+        # alpha list view (same URL with param)
         candidates.append(base + ("&o=alpha" if "?" in base else "?o=alpha"))
-        # canonical calendar & search
+        # canonical calendar & search on same host
         candidates.append(f"{root}/calendar")
         candidates.append(f"{root}/search")
-
-        # try a few upcoming months to catch server-rendered month pages
-        today = datetime.utcnow().date().replace(day=1)
-        months = _iso_months((today.year, today.month), count=4)
-        for month_start in months:
-            candidates.append(f"{root}/calendar/{month_start}")
+        # a few upcoming month pages (SSR per-month calendars)
+        for iso_day in _month_starts(count=4):
+            candidates.append(f"{root}/calendar/{iso_day}")
 
         for alt in candidates:
             try:
-                log(f"[growthzone_html] fallback GET {alt}")
+                _log(f"[growthzone_html] fallback GET {alt}")
                 r2 = session.get(alt, timeout=timeout)
                 if not r2.ok:
                     continue
                 cand = _extract_links(r2.text, alt)
-                log(f"[growthzone_html] fallback links from {alt}: {len(cand)}")
+                _log(f"[growthzone_html] fallback links from {alt}: {len(cand)}")
                 if cand:
                     links |= cand
-                    # We don't need to probe further once we have links.
                     break
-            exc
+            except Exception as e:
+                _warn(f"[growthzone_html] fallback error on {alt}: {e}")
+
+    if not links:
+        _log("[growthzone_html] no detail links discovered after fallbacks")
+        return []
+
+    # --- 3) detail pages & JSON-LD ---
+    events: List[Dict[str, Any]] = []
+    for i, url in enumerate(sorted(links)):
+        if i >= max_events:
+            break
+        try:
+            _log(f"[growthzone_html] detail GET {url}")
+            r = session.get(url, timeout=timeout)
+            if not r.ok:
+                continue
+            dhtml = r.text
+
+            jsonld = _jsonld_events(dhtml)
+            if not jsonld:
+                # minimal placeholder if no JSON-LD present
+                events.append({"url": url, "_source": "growthzone_html"})
+                continue
+
+            for ev in jsonld:
+                title = ev.get("name") or ev.get("headline")
+                start = _norm_dt(ev.get("startDate"))
+                end = _norm_dt(ev.get("endDate"))
+                location = _norm_place(ev.get("location"))
+                desc = ev.get("description")
+
+                events.append(
+                    {
+                        "title": title,
+                        "start": start,
+                        "end": end,
+                        "location": location,
+                        "url": url,
+                        "description": desc,
+                        "jsonld": ev,
+                        "_source": "growthzone_html",
+                    }
+                )
+        except Exception as e:
+            _warn(f"[growthzone_html] error parsing {url}: {e}")
+            continue
+
+    _log(f"[growthzone_html] parsed events: {len(events)}")
+    return events
