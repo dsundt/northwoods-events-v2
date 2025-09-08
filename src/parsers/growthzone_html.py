@@ -1,160 +1,112 @@
 # src/parsers/growthzone_html.py
 from __future__ import annotations
-
-import re
-import json
 from typing import Any, Dict, List, Optional
 from datetime import datetime
-from urllib.parse import urljoin
-
+from zoneinfo import ZoneInfo
+import hashlib
 import requests
 from bs4 import BeautifulSoup
-from dateutil import parser as dtparse
-from zoneinfo import ZoneInfo
 
-UA = "northwoods-events-bot/1.0 (+https://github.com/dsundt/northwoods-events-v2)"
+UA = "Mozilla/5.0 (X11; Linux x86_64) NorthwoodsEventsBot/2.0 (+github actions)"
+TZ = ZoneInfo("America/Chicago")
 
-def _soup(url: str) -> BeautifulSoup:
-    r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
+def _get_html(url: str) -> str:
+    r = requests.get(url, headers={"User-Agent": UA}, timeout=20)
     r.raise_for_status()
-    return BeautifulSoup(r.text, "html.parser")
+    return r.text
 
-def _flatten_jsonld(obj: Any) -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
-    if isinstance(obj, dict):
-        if obj.get("@type"):
-            out.append(obj)
-        if "@graph" in obj and isinstance(obj["@graph"], list):
-            for n in obj["@graph"]:
-                if isinstance(n, dict):
-                    out.append(n)
-    elif isinstance(obj, list):
-        for n in obj:
-            if isinstance(n, dict):
-                out.extend(_flatten_jsonld(n))
-    return out
+def _text_keep_br(el) -> str:
+    if not el:
+        return ""
+    for br in el.select("br"):
+        br.replace_with(", ")
+    return " ".join(el.get_text(" ", strip=True).split())
 
-def _first_event_jsonld(soup: BeautifulSoup) -> Optional[Dict[str, Any]]:
-    for tag in soup.find_all("script", {"type": "application/ld+json"}):
-        raw = tag.string or ""
-        try:
-            data = json.loads(raw)
-        except Exception:
-            continue
-        nodes = _flatten_jsonld(data)
-        for node in nodes:
-            t = str(node.get("@type", "")).lower()
-            if t in ("event", "musicevent", "theaterevent", "sportsEvent".lower()):
-                return node
-            # GrowthZone sometimes labels ‘Event’ via additional types
-            if isinstance(node.get("@type"), list) and any(str(x).lower() == "event" for x in node["@type"]):
-                return node
-    return None
-
-def _parse_dt(val: Any, tz: ZoneInfo) -> Optional[str]:
-    # val may be str or list[str]
-    if isinstance(val, list) and val:
-        val = val[0]
-    if not val or not isinstance(val, str):
+def _to_utc_str(iso: Optional[str]) -> Optional[str]:
+    if not iso:
         return None
     try:
-        dt = dtparse.parse(val)
+        dt = datetime.fromisoformat(iso.replace("Z", "+00:00"))
         if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=tz)
+            dt = dt.replace(tzinfo=TZ)
         return dt.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%d %H:%M:%S")
     except Exception:
         return None
 
-def _extract_location_dom(soup: BeautifulSoup) -> Optional[str]:
-    sec = soup.select_one("div.mn-event-section.mn-event-location div.mn-event-content")
-    if not sec:
+def _extract_dates(soup: BeautifulSoup):
+    # GrowthZone detail pages typically expose schema.org time/itemprop
+    start = None
+    end = None
+    n = soup.select_one('meta[itemprop="startDate"], time[itemprop="startDate"]')
+    if n:
+        start = n.get("content") or n.get("datetime")
+    n2 = soup.select_one('meta[itemprop="endDate"], time[itemprop="endDate"]')
+    if n2:
+        end = n2.get("content") or n2.get("datetime")
+    return _to_utc_str(start), _to_utc_str(end)
+
+def _extract_location(soup: BeautifulSoup) -> Optional[str]:
+    # EXACTLY the requested scope: div.mn-event-section.mn-event-location .mn-event-content
+    block = soup.select_one("div.mn-event-section.mn-event-location div.mn-event-content")
+    if not block:
         return None
-    candidate = sec.select_one("div.mn-raw.mn-print-url") or sec.select_one("[itemprop='name']")
-    text = (candidate.get_text("\n", strip=True) if candidate else sec.get_text("\n", strip=True))
-    text = re.sub(r"^\s*Location\s*:\s*", "", text, flags=re.I)
-    parts = [p.strip() for p in re.split(r"[\r\n]+", text) if p.strip() and p.strip().lower() != "get directions"]
-    return ", ".join(parts) if parts else None
+    raw = block.select_one(".mn-raw")
+    if raw:
+        return _text_keep_br(raw)
+    return _text_keep_br(block)
 
-def _extract_dates_dom(soup: BeautifulSoup, tz: ZoneInfo) -> (Optional[str], Optional[str]):
-    # Prefer microdata <time itemprop="startDate" content="...">
-    start_t = soup.select_one('time[itemprop="startDate"]')
-    end_t   = soup.select_one('time[itemprop="endDate"]')
-    start = _parse_dt(start_t.get("content") if start_t else None, tz)
-    end   = _parse_dt(end_t.get("content") if end_t else None, tz)
-    if start or end:
-        return start, end
-    # Fallback: parse readable “When” block under date/time section
-    blk = soup.select_one("div.mn-event-section.mn-event-date-time") or soup.find(text=re.compile(r"\bWhen\b", re.I))
-    if blk:
-        text = blk.get_text(" ", strip=True) if hasattr(blk, "get_text") else str(blk)
-        # Try first two date-like tokens
-        dates = re.findall(r"\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)?\.?,?\s*\w+\s+\d{1,2},\s*\d{4}(?:\s+\d{1,2}:\d{2}\s*(?:AM|PM))?", text, flags=re.I)
-        if dates:
-            start = _parse_dt(dates[0], tz) or start
-            if len(dates) > 1:
-                end = _parse_dt(dates[1], tz) or end
-    return start, end
+def _uid(title: str, url: str, start_utc: Optional[str]) -> str:
+    key = f"{title}|{url}|{start_utc or ''}".encode("utf-8")
+    return "gz-" + hashlib.md5(key).hexdigest()
 
-def _discover_event_links(calendar_url: str, soup: BeautifulSoup) -> List[str]:
-    links = set()
-    for a in soup.select("a[href*='/events/details/']"):
-        href = a.get("href") or ""
-        links.add(urljoin(calendar_url, href))
-    # Handle “More…” pagination if present
-    for a in soup.select("a[href*='calendar?'][href*='p=']"):
-        href = a.get("href") or ""
-        links.add(urljoin(calendar_url, href))
-    return sorted(links)
-
-def fetch_growthzone_html(source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
+def fetch_growthzone_html(source: Dict[str, Any],
+                          start_date: Optional[datetime] = None,
+                          end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
     """
-    Rhinelander-specific hardening:
-    - JSON-LD (preferred) for start/end
-    - DOM fallback for dates when JSON-LD is missing
-    - Location strictly from mn-event-location content block
-    - Always returns a list
+    Rhinelander: crawl calendar page for detail links, then parse each detail page
+    for true dates and the specific location block requested.
     """
-    cal_url = source["url"].rstrip("/")
-    tz = ZoneInfo(source.get("timezone") or "America/Chicago")
+    cal_url = source.get("url") or ""
+    html = _get_html(cal_url)
+    soup = BeautifulSoup(html, "html.parser")
+
+    # Collect detail links
+    links = []
+    for a in soup.select('a[href*="/events/details/"]'):
+        href = (a.get("href") or "").strip()
+        if href and href not in links:
+            links.append(href)
 
     events: List[Dict[str, Any]] = []
-    try:
-        cal_soup = _soup(cal_url)
-    except Exception:
-        return events
-
-    detail_links = _discover_event_links(cal_url, cal_soup)
-    seen = set()
-
-    for url in detail_links:
-        if url in seen:
-            continue
-        seen.add(url)
+    for u in links:
         try:
-            s = _soup(url)
+            dhtml = _get_html(u)
+            dsoup = BeautifulSoup(dhtml, "html.parser")
+
+            # Title
+            title = None
+            h1 = dsoup.select_one("h1, .mn-event-title")
+            if h1:
+                title = " ".join(h1.get_text(" ", strip=True).split())
+            if not title:
+                og = dsoup.select_one('meta[property="og:title"]')
+                title = (og.get("content") if og else "") or "Untitled Event"
+
+            # Dates
+            start_utc, end_utc = _extract_dates(dsoup)
+
+            # Location (STRICT block only; no "Location:" label leakage)
+            location = _extract_location(dsoup)
+
+            events.append({
+                "uid": _uid(title, u, start_utc),
+                "title": title,
+                "start_utc": start_utc,
+                "end_utc": end_utc,
+                "url": u,
+                "location": location,
+            })
         except Exception:
             continue
-
-        node = _first_event_jsonld(s) or {}
-        title = (node.get("name") if isinstance(node, dict) else None) or None
-
-        start_utc = _parse_dt((node or {}).get("startDate"), tz)
-        end_utc   = _parse_dt((node or {}).get("endDate"), tz)
-        if not start_utc and not end_utc:
-            s2, e2 = _extract_dates_dom(s, tz)
-            start_utc, end_utc = s2, e2
-
-        # Location (only the requested block)
-        location = _extract_location_dom(s)
-
-        uid = f"gz-{abs(hash((url, title or '')))}"
-        events.append({
-            "uid": uid,
-            "title": title,
-            "start_utc": start_utc,
-            "end_utc": end_utc,
-            "url": url,
-            "location": location,
-        })
 
     return events
