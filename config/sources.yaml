@@ -10,11 +10,14 @@
   type: tec_rest
   url: https://eagleriver.org/
 
-# St. Germain is on GrowthZone/ChamberMaster; use the CALENDAR view
-- name: St. Germain Chamber (GrowthZone)
-  id: st-germain-chamber-growthzone
-  type: growthzone_html
-  url: https://stgermainwi.chambermaster.com/events/calendar
+# config/sources.yaml  (only the St. Germain entry)
+- name: St. Germain Chamber (TEC)
+  id: st-germain-chamber-tec
+  type: tec_rest
+  url: https://st-germain.com/
+  rest_api_base: https://st-germain.com/wp-json/tribe/events/v1/events
+  lookahead_days: 365
+
 
 # Rhinelander: use the CALENDAR view (clearer markup)
 - name: Rhinelander Chamber (GrowthZone)
