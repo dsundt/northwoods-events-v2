@@ -10,13 +10,10 @@
   type: tec_rest
   url: https://eagleriver.org/
 
-# config/sources.yaml  (only the St. Germain entry)
-- name: St. Germain Chamber (iCal)
-  id: st-germain-chamber-ics
-  type: ics_feed
-  url: https://st-germain.com/events-calendar/?ical=1
-
-
+- name: "St. Germain Chamber (ICS)"
+  id: "st-germain-chamber-ics"
+  type: "ics_fetch"
+  url: "https://st-germain.com/events-calendar/?ical=1"
 
 # Rhinelander: use the CALENDAR view (clearer markup)
 - name: Rhinelander Chamber (GrowthZone)
