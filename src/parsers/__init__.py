@@ -2,24 +2,25 @@
 from __future__ import annotations
 
 from typing import Callable, Dict, Any, List
-import traceback
+import importlib
 
 # -----------------------------
-# Helper: wrap fetchers to normalize return type to List[dict]
+# Helpers
 # -----------------------------
 def _stub_fetcher(name: str) -> Callable[..., List[dict]]:
     def _stub(url: str, *args: Any, **kwargs: Any) -> List[dict]:
         print(f"[parsers] STUB for {name} url={url}")
-        return []  # IMPORTANT: return a list (never a tuple)
+        return []  # always a list
     return _stub
 
 def _wrap_fetcher(name: str, fn: Callable[..., Any] | None) -> Callable[..., List[dict]]:
     """
-    Wrap a parser fetcher so callers always get List[dict].
-    - (events, diag) -> events
+    Wrap a parser so callers always get List[dict].
+    - Accepts (events, diag) -> returns events
     - None -> []
-    - Iterable -> list(iterable)
-    - Otherwise -> TypeError with clear message
+    - list -> list
+    - generator/iterable -> list(...)
+    - Anything else -> TypeError
     """
     if fn is None:
         return _stub_fetcher(name)
@@ -28,90 +29,90 @@ def _wrap_fetcher(name: str, fn: Callable[..., Any] | None) -> Callable[..., Lis
         res = fn(*args, **kwargs)
         if res is None:
             return []
-        # Old pattern: (events, diag)
         if isinstance(res, tuple):
-            # Prefer the first list-like element
+            # favor first list-like element
             for part in res:
                 if isinstance(part, list):
                     return part
             return []
         if isinstance(res, list):
             return res
-        # Last resort: try to list() it (for generators)
         try:
             return list(res)
         except Exception as e:
             raise TypeError(f"Fetcher {name} returned non-list: {type(res)}") from e
-
     return _wrapped
 
-# -----------------------------
-# Imports with resilient fallbacks & logging
-# -----------------------------
+def _try_import_module(*module_names: str):
+    errors: List[str] = []
+    for mod in module_names:
+        try:
+            return importlib.import_module(mod), None
+        except Exception as e:
+            errors.append(f"{mod}: {e}")
+    return None, " | ".join(errors)
 
-# growthzone_html
+def _resolve_attr(mod, *attr_names: str):
+    for nm in attr_names:
+        fn = getattr(mod, nm, None)
+        if callable(fn):
+            return fn
+    return None
+
+# -----------------------------
+# GrowthZone HTML
+# -----------------------------
 _fetch_growthzone = None
 try:
-    from .growthzone_html import fetch_growthzone_html as _fetch_growthzone
+    from .growthzone_html import fetch_growthzone_html as _fetch_growthzone  # local package layout
 except Exception as e:
     print(f"[parsers] import error growthzone_html.fetch_growthzone_html: {e}")
 
-# simpleview_html
+# -----------------------------
+# Simpleview HTML
+# -----------------------------
 _fetch_simpleview = None
 try:
     from .simpleview_html import fetch_simpleview_html as _fetch_simpleview
 except Exception as e:
     print(f"[parsers] import error simpleview_html.fetch_simpleview_html: {e}")
 
-# tec_rest (try common locations)
+# -----------------------------
+# TEC REST
+# -----------------------------
 _fetch_tec_rest = None
-_tec_errors: List[str] = []
-if _fetch_tec_rest is None:
-    try:
-        from .tec_rest import fetch_tec_rest as _fetch_tec_rest  # typical layout
-    except Exception as e:
-        _tec_errors.append(str(e))
-if _fetch_tec_rest is None:
-    try:
-        from src.tec_rest import fetch_tec_rest as _fetch_tec_rest  # alternate project layout
-    except Exception as e:
-        _tec_errors.append(str(e))
-if _fetch_tec_rest is None and _tec_errors:
-    print(f"[parsers] import error tec_rest.fetch_tec_rest: {' | '.join(_tec_errors)}")
+_tec_mod, _tec_errs = _try_import_module("src.tec_rest", "src.parsers.tec_rest", "tec_rest")
+if _tec_mod:
+    _fetch_tec_rest = _resolve_attr(_tec_mod, "fetch_tec_rest")
+else:
+    print(f"[parsers] import error tec_rest.fetch_tec_rest: {_tec_errs}")
 
-# ics_fetch (existing file in repo: src/ics_fetch.py)
+# -----------------------------
+# ICS fetcher (robust resolution)
+# -----------------------------
 _fetch_ics = None
-_ics_errors: List[str] = []
-if _fetch_ics is None:
-    try:
-        from src.ics_fetch import fetch_ics_feed as _fetch_ics
-    except Exception as e:
-        _ics_errors.append(str(e))
-if _fetch_ics is None:
-    # Relative import fallback if package structure differs
-    try:
-        from ..ics_fetch import fetch_ics_feed as _fetch_ics  # type: ignore
-    except Exception as e:
-        _ics_errors.append(str(e))
-if _fetch_ics is None and _ics_errors:
-    print(f"[parsers] import error ics_fetch.fetch_ics_feed: {' | '.join(_ics_errors)}")
+_ics_mod, _ics_errs = _try_import_module("src.ics_fetch", "ics_fetch", "src.icsbuild", "icsbuild")
+if _ics_mod:
+    # try a few common function names
+    _fetch_ics = _resolve_attr(
+        _ics_mod,
+        "fetch_ics_feed", "fetch_ics", "fetch_feed", "fetch"
+    )
+    if _fetch_ics is None:
+        print("[parsers] import error ics_fetch: module found but no fetch function (tried: fetch_ics_feed, fetch_ics, fetch_feed, fetch)")
+else:
+    print(f"[parsers] import error ics_fetch.fetch_ics_feed: {_ics_errs}")
 
 # -----------------------------
 # Public fetcher map
 # -----------------------------
 FETCHERS: Dict[str, Callable[..., List[dict]]] = {
-    # Keep existing, working TEC REST sources unchanged
     "tec_rest": _wrap_fetcher("tec_rest.fetch_tec_rest", _fetch_tec_rest),
-
-    # GrowthZone HTML (Rhinelander)
     "growthzone_html": _wrap_fetcher("growthzone_html.fetch_growthzone_html", _fetch_growthzone),
-
-    # Simpleview HTML (Minocqua)
     "simpleview_html": _wrap_fetcher("simpleview_html.fetch_simpleview_html", _fetch_simpleview),
-
-    # ICS calendar fetcher (St. Germain) — supports both keys to be forgiving
+    # Support both names in YAML
     "ics_fetch": _wrap_fetcher("ics_fetch.fetch_ics_feed", _fetch_ics),
-    "ics_feed": _wrap_fetcher("ics_fetch.fetch_ics_feed", _fetch_ics),  # alias, prevents "Unsupported source type"
+    "ics_feed": _wrap_fetcher("ics_fetch.fetch_ics_feed", _fetch_ics),
 }
 
 def get_fetcher(source_type: str) -> Callable[..., List[dict]]:
@@ -119,3 +120,30 @@ def get_fetcher(source_type: str) -> Callable[..., List[dict]]:
         return FETCHERS[source_type]
     except KeyError:
         raise ValueError(f"Unsupported source type: {source_type}")
+
+# -----------------------------
+# Back-compat named exports expected by main.py
+# (pass-throughs that still normalize to List[dict])
+# -----------------------------
+def fetch_tec_rest(url: str, *args: Any, **kwargs: Any) -> List[dict]:
+    return FETCHERS["tec_rest"](url, *args, **kwargs)
+
+def fetch_growthzone_html(url: str, *args: Any, **kwargs: Any) -> List[dict]:
+    return FETCHERS["growthzone_html"](url, *args, **kwargs)
+
+def fetch_simpleview_html(url: str, *args: Any, **kwargs: Any) -> List[dict]:
+    return FETCHERS["simpleview_html"](url, *args, **kwargs)
+
+def fetch_ics_feed(url: str, *args: Any, **kwargs: Any) -> List[dict]:
+    # prefer the canonical key if present
+    key = "ics_fetch" if "ics_fetch" in FETCHERS else "ics_feed"
+    return FETCHERS[key](url, *args, **kwargs)
+
+__all__ = [
+    "FETCHERS",
+    "get_fetcher",
+    "fetch_tec_rest",
+    "fetch_growthzone_html",
+    "fetch_simpleview_html",
+    "fetch_ics_feed",
+]
