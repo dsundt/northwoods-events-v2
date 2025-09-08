@@ -1,6 +1,6 @@
 # src/parsers/growthzone_html.py
 # GrowthZone/ChamberMaster HTML parser with a guarded fallback for JS-heavy listings.
-# Fallback only activates when the initial listing yields ZERO /events/details/ links.
+# Backward/forward compatible signature: supports callers passing url=... or positional base.
 
 import re
 import json
@@ -11,7 +11,8 @@ from urllib.parse import urljoin, urlparse
 
 def fetch_growthzone_html(
     session,
-    base: str,
+    url: Optional[str] = None,           # allow keyword-style callers
+    base: Optional[str] = None,          # allow legacy positional/keyword
     *,
     start_date: Optional[date] = None,
     end_date: Optional[date] = None,
@@ -24,19 +25,22 @@ def fetch_growthzone_html(
     """
     Steps
     -----
-    1) GET `base` and extract /events/details/... links.
+    1) GET listing and extract /events/details/... links.
     2) If zero links found, probe SSR variants on same host:
-       - '?o=alpha'
-       - '/events/calendar'
-       - '/events/search'
-       - a few month pages: '/events/calendar/YYYY-MM-01'
+       '?o=alpha', '/events/calendar', '/events/search',
+       and a few month pages: '/events/calendar/YYYY-MM-01'
     3) Visit detail pages; parse JSON-LD; normalize minimal fields.
 
     Safety
     ------
-    The fallback in (2) ONLY runs when the first page yields zero links.
+    The fallback ONLY runs when the first page yields zero links.
     Working sources (e.g., Rhinelander) behave exactly as before.
     """
+
+    # Resolve base URL from various caller styles
+    base_url = base or url or kwargs.get("source_url") or kwargs.get("start_url")
+    if not base_url:
+        raise ValueError("growthzone_html: no URL provided (expected url= or base=)")
 
     # --- logger shims ---
     def _log(msg: str) -> None:
@@ -54,7 +58,7 @@ def fetch_growthzone_html(
                 pass
 
     # --- helpers ---
-    def _extract_links(page_html: str, base_url: str) -> Set[str]:
+    def _extract_links(page_html: str, page_base: str) -> Set[str]:
         links: Set[str] = set()
         # absolute detail links
         for m in re.finditer(
@@ -69,11 +73,11 @@ def fetch_growthzone_html(
             page_html,
             flags=re.I,
         ):
-            links.add(urljoin(base_url, m.group(1)))
+            links.add(urljoin(page_base, m.group(1)))
         return links
 
-    def _events_root_same_host(url: str) -> str:
-        parts = urlparse(url)
+    def _events_root_same_host(u: str) -> str:
+        parts = urlparse(u)
         root = f"{parts.scheme}://{parts.netloc}"
         path = parts.path or ""
         if "/events" in path:
@@ -147,21 +151,21 @@ def fetch_growthzone_html(
         return str(loc)
 
     # --- 1) initial listing fetch ---
-    _log(f"[growthzone_html] GET {base}")
-    resp = session.get(base, timeout=timeout)
+    _log(f"[growthzone_html] GET {base_url}")
+    resp = session.get(base_url, timeout=timeout)
     resp.raise_for_status()
     html = resp.text
 
-    links = _extract_links(html, base)
+    links = _extract_links(html, base_url)
     _log(f"[growthzone_html] initial links: {len(links)}")
 
     # --- 2) guarded fallbacks (only if zero links) ---
     if not links:
-        root = _events_root_same_host(base)
+        root = _events_root_same_host(base_url)
         candidates: List[str] = []
 
         # alpha list view (same URL with param)
-        candidates.append(base + ("&o=alpha" if "?" in base else "?o=alpha"))
+        candidates.append(base_url + ("&o=alpha" if "?" in base_url else "?o=alpha"))
         # canonical calendar & search on same host
         candidates.append(f"{root}/calendar")
         candidates.append(f"{root}/search")
@@ -189,12 +193,12 @@ def fetch_growthzone_html(
 
     # --- 3) detail pages & JSON-LD ---
     events: List[Dict[str, Any]] = []
-    for i, url in enumerate(sorted(links)):
+    for i, detail_url in enumerate(sorted(links)):
         if i >= max_events:
             break
         try:
-            _log(f"[growthzone_html] detail GET {url}")
-            r = session.get(url, timeout=timeout)
+            _log(f"[growthzone_html] detail GET {detail_url}")
+            r = session.get(detail_url, timeout=timeout)
             if not r.ok:
                 continue
             dhtml = r.text
@@ -202,7 +206,7 @@ def fetch_growthzone_html(
             jsonld = _jsonld_events(dhtml)
             if not jsonld:
                 # minimal placeholder if no JSON-LD present
-                events.append({"url": url, "_source": "growthzone_html"})
+                events.append({"url": detail_url, "_source": "growthzone_html"})
                 continue
 
             for ev in jsonld:
@@ -218,14 +222,14 @@ def fetch_growthzone_html(
                         "start": start,
                         "end": end,
                         "location": location,
-                        "url": url,
+                        "url": detail_url,
                         "description": desc,
                         "jsonld": ev,
                         "_source": "growthzone_html",
                     }
                 )
         except Exception as e:
-            _warn(f"[growthzone_html] error parsing {url}: {e}")
+            _warn(f"[growthzone_html] error parsing {detail_url}: {e}")
             continue
 
     _log(f"[growthzone_html] parsed events: {len(events)}")
