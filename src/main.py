@@ -1,250 +1,172 @@
+# src/main.py
+from __future__ import annotations
+
 import json
 import sys
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, List, Optional
 
 import yaml
 
-# Parsers: do not rename – these must match existing modules in your repo
+# Required parsers (present in your repo)
 from src.parsers import (
     fetch_tec_rest,
     fetch_growthzone_html,
     fetch_simpleview_html,
-    # If you also support HTML TEC as a fallback:
-    fetch_tec_html,  # safe to import; only used if type == "tec_html"
+    fetch_tec_html,  # used only when type == "tec_html"
 )
 
-# ICS writer – different repos of v2 have slightly different call signatures.
-# We'll call them defensively so we don't break either variant.
-from src.ics_writer import write_combined_ics, write_per_source_ics
+# Optional parsers: guard imports so the build never breaks if they’re absent
+try:
+    from src.parsers import fetch_ics_feed  # available in your repo
+except Exception:
+    fetch_ics_feed = None  # safe fallback
+
+try:
+    # NEW: WordPress archive/detail crawler for St. Germain
+    from src.parsers import fetch_stgermain_wp
+except Exception:
+    fetch_stgermain_wp = None  # only used if you add a st-germain-wp source
 
 
-SOURCES_PATH = "config/sources.yaml"
-PUBLIC_DIR = "public"
-BY_SOURCE_DIR = os.path.join(PUBLIC_DIR, "by-source")
-COMBINED_ICS_PATH = os.path.join(PUBLIC_DIR, "combined.ics")
-REPORT_JSON_PATH = os.path.join(PUBLIC_DIR, "report.json")
+# ---------------------- config ----------------------
+
+DEFAULT_WINDOW_DAYS_FWD = int(os.getenv("NW_WINDOW_FWD_DAYS", "180"))
+REPORT_JSON_PATH = os.getenv("NW_REPORT_JSON", "report.json")
+SOURCES_YAML = os.getenv("NW_SOURCES_YAML", "config/sources.yaml")
 
 
-def _slugify(text: str) -> str:
-    """
-    Minimal, dependency-free slugify to keep IDs/filenames stable
-    without adding new packages.
-    """
-    text = (text or "").strip().lower()
-    out = []
-    prev_dash = False
-    for ch in text:
-        if ch.isalnum():
-            out.append(ch)
-            prev_dash = False
-        else:
-            if not prev_dash:
-                out.append("-")
-            prev_dash = True
-    slug = "".join(out).strip("-")
-    return slug or "source"
+def _window() -> (datetime, datetime):
+    now = datetime.now(timezone.utc)
+    return now - timedelta(days=1), now + timedelta(days=DEFAULT_WINDOW_DAYS_FWD)
 
 
-def _ensure_dirs():
-    os.makedirs(PUBLIC_DIR, exist_ok=True)
-    os.makedirs(BY_SOURCE_DIR, exist_ok=True)
-
-
-def _load_sources() -> list:
-    print(f"[northwoods] Loading sources from: {SOURCES_PATH}")
-    with open(SOURCES_PATH, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-
-    if not isinstance(data, list):
-        raise ValueError(f"Expected a list of sources in {SOURCES_PATH}, got {type(data)}")
-
-    cleaned = []
-    for idx, src in enumerate(data):
-        if not isinstance(src, dict):
-            raise ValueError(f"Source #{idx} must be a mapping, got {type(src)}")
-
-        name = src.get("name") or f"Source {idx+1}"
-        typ = src.get("type")
-        url = src.get("url")
-
-        if not typ:
-            raise ValueError(f"Source #{idx} ({name}) missing required key: type")
-        if not url:
-            raise ValueError(f"Source #{idx} ({name}) missing required key: url")
-
-        # Keep user-provided ids; else generate stable, predictable one
-        if "id" not in src or not src["id"]:
-            gen_id = f"{_slugify(name)}-{_slugify(typ)}"
-            print(f"[northwoods] Source #{idx} missing 'id' -> auto-generated '{gen_id}'")
-            src["id"] = gen_id
-
-        cleaned.append(
-            {
-                "name": name,
-                "id": src["id"],
-                "type": typ,
-                "url": url.strip(),
-                # Pass-through any optional fields without assuming schema changes
-                **{k: v for k, v in src.items() if k not in {"name", "id", "type", "url"}},
-            }
-        )
-    return cleaned
-
-
-def _dispatch_fetch(src_type: str, url: str):
-    """
-    IMPORTANT: Always pass the URL string to fetchers.
-    This prevents InvalidSchema when a dict accidentally reaches requests.get().
-    """
-    if src_type == "tec_rest":
-        return fetch_tec_rest(url)
-    if src_type == "growthzone_html":
-        return fetch_growthzone_html(url)
-    if src_type == "simpleview_html":
-        return fetch_simpleview_html(url)
-    if src_type == "tec_html":
-        # Only used if you have Oneida on TEC HTML fallback.
-        return fetch_tec_html(url)
-
-    raise ValueError(f"Unsupported source type: {src_type}")
-
-
-def _write_per_source_ics_safe(source_id: str, events: list):
-    """
-    Adapt to either signature:
-      - write_per_source_ics(source_id, events)
-      - write_per_source_ics(events, source_id)
-    """
-    try:
-        return write_per_source_ics(source_id, events)
-    except TypeError:
-        return write_per_source_ics(events, source_id)
-
-
-def _write_combined_ics_safe(all_events: list):
-    """
-    Adapt to either signature:
-      - write_combined_ics(all_events)
-      - write_combined_ics(all_events, COMBINED_ICS_PATH)
-    """
-    try:
-        return write_combined_ics(all_events)
-    except TypeError:
-        return write_combined_ics(all_events, COMBINED_ICS_PATH)
-
-
-def _normalize_for_report(ev: dict, source_name: str) -> dict:
-    """
-    Create a stable shape for the debug viewer. We do not change the parser’s output,
-    we only map known keys if present. Missing keys stay None.
-    """
-    return {
-        "uid": ev.get("uid"),
-        "title": ev.get("title"),
-        "start_utc": ev.get("start_utc"),
-        "end_utc": ev.get("end_utc"),
-        "url": ev.get("url"),
-        "location": ev.get("location"),
-        "source": source_name,
-        "calendar": source_name,
+def _normalize_event(raw: Dict[str, Any], src: Dict[str, Any]) -> Dict[str, Any]:
+    """Lenient normalization for preview/report.json."""
+    title = raw.get("title") or raw.get("name") or "(untitled)"
+    start = raw.get("start_utc") or raw.get("start")
+    end = raw.get("end_utc") or raw.get("end")
+    out = {
+        "calendar": src.get("name") or src.get("id") or "Unknown",
+        "title": title,
+        "start_utc": start,
+        "end_utc": end,
+        "location": raw.get("location"),
+        "url": raw.get("url") or raw.get("link"),
+        "source": raw.get("source") or src.get("name"),
     }
+    # keep a small meta peek to help debug
+    for k in ("jsonld", "meta", "_source"):
+        if k in raw:
+            out[k] = raw[k]
+    return out
+
+
+def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
+    """Route by type -> fetcher, with guarded calls and consistent kwargs."""
+    stype = (source.get("type") or "").strip()
+    url = source.get("url")
+    name = source.get("name") or source.get("id") or stype
+
+    # Parse router (safely include optional fetchers)
+    router = {
+        "tec_rest": fetch_tec_rest,
+        "growthzone_html": fetch_growthzone_html,
+        "tec_html": fetch_tec_html,
+        "simpleview_html": fetch_simpleview_html,
+    }
+    if fetch_ics_feed is not None:
+        router["ics_feed"] = fetch_ics_feed
+    if fetch_stgermain_wp is not None:
+        router["stgermain_wp"] = fetch_stgermain_wp  # NEW: WP archive/detail
+
+    fn = router.get(stype)
+    if fn is None:
+        raise RuntimeError(f"Unsupported source type: {stype}")
+
+    # Call with kwargs (all built-in fetchers accept these names)
+    return fn(
+        source=source,
+        start_date=start_date,
+        end_date=end_date,
+    )
 
 
 def main() -> int:
-    _ensure_dirs()
-    sources = _load_sources()
+    # 1) Load sources.yaml
+    print(f"[northwoods] Loading sources from: {SOURCES_YAML}")
+    try:
+        with open(SOURCES_YAML, "r", encoding="utf-8") as f:
+            sources = yaml.safe_load(f)
+    except Exception as e:
+        print(f"[northwoods] ERROR reading {SOURCES_YAML}: {e}")
+        return 2
 
-    run_started = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    if not isinstance(sources, list):
+        print("[northwoods] ERROR: sources.yaml must be a list.")
+        return 2
 
-    source_logs = []
-    all_events = []
-    events_by_source = {}
+    start_date, end_date = _window()
 
+    all_events: List[Dict[str, Any]] = []
+    source_logs: List[Dict[str, Any]] = []
+
+    # 2) Fetch each source
     for src in sources:
-        name = src["name"]
-        sid = src["id"]
-        typ = src["type"]
-        url = src["url"]
+        stype = src.get("type")
+        sid = src.get("id")
+        name = src.get("name") or sid or stype or "Unknown"
+        url = src.get("url") or ""
 
-        print(f"[northwoods] Fetching: {name} ({sid}) [{typ}] -> {url}")
+        print(f"[northwoods] Fetching: {name} ({sid}) [{stype}] -> {url}")
 
-        log = {
-            "name": name,
-            "type": typ,
-            "url": url,
-            "count": 0,
-            "ok": False,
-            "error": "",
-            "diag": {"ok": False, "error": "", "diag": {}},
-            "id": sid,
-        }
+        per_source_events: List[Dict[str, Any]] = []
+        err_msg: Optional[str] = None
 
         try:
-            # *** CORE FIX: always pass 'url' string, not the entire source dict. ***
-            events = _dispatch_fetch(typ, url) or []
-            if not isinstance(events, list):
-                raise TypeError(f"Fetcher for {name} returned non-list: {type(events)}")
-
-            # Track, then write per-source ICS using a signature-safe wrapper
-            log["count"] = len(events)
-            log["ok"] = True
-            log["diag"]["ok"] = True
-
-            # Keep events grouped by source for front-end filtering
-            events_by_source[sid] = events
-
-            try:
-                _write_per_source_ics_safe(sid, events)
-            except Exception as ics_err:
-                # Do not fail the run if single-source ICS write has issues
-                log["diag"]["error"] = f"per-source-ics: {repr(ics_err)}"
-                print(f"[northwoods] WARN per-source ICS ({sid}): {ics_err}")
-
-            # Attach source metadata to the event record for combined output/report
-            for ev in events:
-                ev["_source_id"] = sid
-                ev["_source_name"] = name
-
-            all_events.extend(events)
-
+            per_source_events = _fetch_one(src, start_date, end_date) or []
         except Exception as e:
-            log["error"] = repr(e)
-            log["diag"]["error"] = repr(e)
-            print(f"[northwoods] ERROR while fetching {name}: {e}")
+            err_msg = str(e)
+            print(f"[northwoods] ERROR while fetching {name}: {err_msg}")
 
-        source_logs.append(log)
+        # Record log
+        source_logs.append({
+            "id": sid,
+            "name": name,
+            "type": stype,
+            "url": url,
+            "ok": err_msg is None,
+            "count": len(per_source_events),
+            "error": err_msg,
+        })
 
-    # Combined ICS – signature-safe
-    try:
-        _write_combined_ics_safe(all_events)
-    except Exception as e:
-        print(f"[northwoods] ERROR writing combined ICS: {e}")
+        # Accumulate
+        all_events.extend([
+            {**ev, "source": ev.get("source") or name} for ev in per_source_events
+        ])
 
-    # Build report.json with both keys some index.html variants expect
-    normalized = [_normalize_for_report(ev, ev.get("_source_name") or "") for ev in all_events]
+    # 3) Normalize preview for report.json
+    normalized_preview = [_normalize_event(e, {"name": "unknown"}) for e in all_events]
 
+    # 4) Assemble report
     report = {
-        "version": "2.0",
-        "run_started_utc": run_started,
-        "success": True,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "sources_processed": len(source_logs),
         "total_events": len(all_events),
-        "sources_processed": len(sources),
         "source_logs": source_logs,
-        # Keep both for compatibility with different frontends you tried:
-        "events": normalized,
-        "normalized_events": normalized,
-        # Helpful previews used by a prior debug UI
-        "events_preview": normalized[:100],
-        "events_preview_count": min(100, len(normalized)),
+        "normalized_events": normalized_preview[:500],  # keep report small
+        "events_preview_count": min(500, len(normalized_preview)),
     }
 
+    # 5) Write report.json
     try:
         with open(REPORT_JSON_PATH, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
     except Exception as e:
         print(f"[northwoods] ERROR writing report.json: {e}")
 
+    # 6) Output summary for CI logs
     print(json.dumps({"ok": True, "events": len(all_events)}))
     return 0
 
