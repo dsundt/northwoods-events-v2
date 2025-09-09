@@ -9,23 +9,23 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 
-# ---- Required parsers present in this repo ----
+# ---- Parsers present in this repo ----
 from src.parsers import (
-    fetch_tec_rest,          # expects POSITIONAL: (url: str, start_utc: str | None, end_utc: str | None)
-    fetch_growthzone_html,   # expects: (source: dict, [session], [start_date], [end_date])
-    fetch_simpleview_html,   # expects: (url: str, timeout=20, max_items=200)
-    fetch_tec_html,          # expects: (source: dict, [session], [start_date], [end_date])
+    fetch_tec_rest,          # POSitional: (url: str, start_utc: str|None, end_utc: str|None)
+    fetch_growthzone_html,   # kwargs:     (source: dict, [session], [start_date], [end_date])
+    fetch_simpleview_html,   # POSitional: (url: str, timeout=20, max_items=200)
+    fetch_tec_html,          # kwargs:     (source: dict, [session], [start_date], [end_date])
 )
 
-# ---- Optional parsers (guard so builds never break if missing) ----
+# Optional: ICS
 try:
-    # In this repo, ICS fetcher is named fetch_ics(url, start_utc, end_utc) — POSITIONAL
+    # In this repo the function is named fetch_ics(url, start_utc, end_utc) — POSitional
     from src.parsers.ics_feed import fetch_ics as _fetch_ics_raw  # type: ignore
 except Exception:
     _fetch_ics_raw = None
 
+# Optional: St. Germain WP (only if you added st-germain-wp to sources.yaml)
 try:
-    # St. Germain WordPress crawler (only used if you add a st-germain-wp source)
     from src.parsers import fetch_stgermain_wp  # exported by src/parsers/__init__.py
 except Exception:
     fetch_stgermain_wp = None
@@ -35,6 +35,7 @@ except Exception:
 
 DEFAULT_WINDOW_FWD = int(os.getenv("NW_WINDOW_FWD_DAYS", "180"))
 REPORT_JSON_PATH = os.getenv("NW_REPORT_JSON", "report.json")
+BY_SOURCE_DIR = os.getenv("NW_BY_SOURCE_DIR", "by-source")
 SOURCES_YAML = os.getenv("NW_SOURCES_YAML", "config/sources.yaml")
 
 
@@ -44,12 +45,11 @@ def _window() -> tuple[datetime, datetime]:
 
 
 def _ymd(dt: datetime) -> str:
-    # For TEC/ICS REST endpoints that want YYYY-MM-DD (or will accept it)
     return dt.strftime("%Y-%m-%d")
 
 
 def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
-    """Lenient normalization for report.json preview only (does NOT affect icsbuild pipeline)."""
+    """Lenient preview; does not affect downstream build steps."""
     title = raw.get("title") or raw.get("name") or "(untitled)"
     start = raw.get("start_utc") or raw.get("start")
     end = raw.get("end_utc") or raw.get("end")
@@ -71,15 +71,13 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
     """
     stype = (source.get("type") or "").strip()
     url = source.get("url") or ""
-    # name = source.get("name") or source.get("id") or stype  # only used in logs; printing handled in main()
 
-    # TEC REST (The Events Calendar REST) — POSITIONAL call
     if stype == "tec_rest":
         if not url:
             raise RuntimeError("tec_rest: missing url")
+        # POSitional per repo implementation
         return fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
 
-    # GrowthZone HTML (expects full source dict)
     if stype == "growthzone_html":
         return fetch_growthzone_html(
             source=source,
@@ -87,7 +85,6 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
             end_date=end_date,
         ) or []
 
-    # TEC HTML (expects full source dict)
     if stype == "tec_html":
         return fetch_tec_html(
             source=source,
@@ -95,21 +92,20 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
             end_date=end_date,
         ) or []
 
-    # Simpleview HTML (RSS) expects a URL string
     if stype == "simpleview_html":
         if not url:
             raise RuntimeError("simpleview_html: missing url")
+        # POSitional per repo implementation
         return fetch_simpleview_html(url) or []
 
-    # ICS feed (optional) — POSITIONAL call if available
     if stype == "ics_feed":
         if _fetch_ics_raw is None:
             raise RuntimeError("ics_feed: parser not available")
         if not url:
             raise RuntimeError("ics_feed: missing url")
+        # POSitional per repo implementation
         return _fetch_ics_raw(url, _ymd(start_date), _ymd(end_date)) or []
 
-    # St. Germain WordPress crawler (optional, isolated)
     if stype == "stgermain_wp":
         if fetch_stgermain_wp is None:
             raise RuntimeError("stgermain_wp: parser not available")
@@ -120,6 +116,29 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
         ) or []
 
     raise RuntimeError(f"Unsupported source type: {stype}")
+
+
+def _ensure_dir(path: str) -> None:
+    try:
+        os.makedirs(path, exist_ok=True)
+    except Exception:
+        pass
+
+
+def _mirror_report(report: Dict[str, Any], primary_path: str) -> None:
+    # Always write the primary path
+    with open(primary_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2, ensure_ascii=False)
+
+    # Also mirror into github-pages/ or docs/ if present (keeps GH Pages working)
+    for alt_dir in ("github-pages", "docs"):
+        if os.path.isdir(alt_dir):
+            try:
+                with open(os.path.join(alt_dir, "report.json"), "w", encoding="utf-8") as f:
+                    json.dump(report, f, indent=2, ensure_ascii=False)
+            except Exception:
+                # Don't fail the run if mirror write has issues
+                pass
 
 
 def main() -> int:
@@ -141,7 +160,10 @@ def main() -> int:
     all_events: List[Dict[str, Any]] = []
     source_logs: List[Dict[str, Any]] = []
 
-    # 2) Fetch each source
+    # 2) Ensure debug directory
+    _ensure_dir(BY_SOURCE_DIR)
+
+    # 3) Fetch each source
     for src in sources:
         stype = src.get("type")
         sid = src.get("id")
@@ -159,6 +181,24 @@ def main() -> int:
             err_msg = str(e)
             print(f"[northwoods] ERROR while fetching {name}: {err_msg}")
 
+        # Per-source debug file
+        try:
+            debug_blob = {
+                "source": {
+                    "id": sid, "name": name, "type": stype, "url": url,
+                },
+                "ok": err_msg is None,
+                "error": err_msg,
+                "count": len(per_source_events),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "events": per_source_events[:500],  # cap for file size
+            }
+            with open(os.path.join(BY_SOURCE_DIR, f"{sid or name}.json"), "w", encoding="utf-8") as f:
+                json.dump(debug_blob, f, indent=2, ensure_ascii=False)
+        except Exception:
+            # Don't let debug writing break the run
+            pass
+
         source_logs.append({
             "id": sid,
             "name": name,
@@ -170,7 +210,7 @@ def main() -> int:
         })
         all_events.extend(per_source_events)
 
-    # 3) Build report.json preview
+    # 4) Build report.json preview
     normalized_preview = [_normalize_event(e) for e in all_events]
 
     report = {
@@ -182,9 +222,9 @@ def main() -> int:
         "events_preview_count": min(500, len(normalized_preview)),
     }
 
+    # 5) Write report.json (and mirrors)
     try:
-        with open(REPORT_JSON_PATH, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2, ensure_ascii=False)
+        _mirror_report(report, REPORT_JSON_PATH)
     except Exception as e:
         print(f"[northwoods] ERROR writing report.json: {e}")
 
