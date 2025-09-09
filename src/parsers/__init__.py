@@ -1,155 +1,90 @@
 # src/parsers/__init__.py
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, Iterable, List, Tuple, Optional
 import inspect
+from typing import Any, Dict, List, Optional
 
-# -------------------- time windows --------------------
+# Import concrete fetchers
+from .tec_rest import fetch_tec_rest as _tec_rest
+from .growthzone_html import fetch_growthzone_html as _growthzone_html
+from .tec_html import fetch_tec_html as _tec_html
+from .simpleview_html import fetch_simpleview_html as _simpleview_html
+from .ics_feed import fetch_ics_feed as _ics_feed
 
-def _default_window() -> Tuple[datetime, datetime]:
-    now = datetime.now(timezone.utc)
-    # match your typical window: yesterday .. +180d
-    return now - timedelta(days=1), now + timedelta(days=180)
+# Optional icsbuild (vendored or external)
+try:
+    from .icsbuild import fetch_icsbuild as _icsbuild  # type: ignore
+except Exception:  # pragma: no cover
+    _icsbuild = None
 
-def _window(start_date: Optional[datetime], end_date: Optional[datetime]) -> Tuple[datetime, datetime]:
-    return _default_window() if (start_date is None or end_date is None) else (start_date, end_date)
+# NEW: St. Germain WordPress crawler (host-scoped)
+from .stgermain_wp import fetch_stgermain_wp as _stgermain_wp
 
-# -------------------- normalization helpers --------------------
 
-def _normalize(ret: Any, func) -> List[Dict[str, Any]]:
+def _call(fetcher, source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
     """
-    Accepts:
-      - list[dict]
-      - dict (single event)
-      - None
-      - iterables
-    Returns list[dict] and filters out falsy/empty items.
+    Call a fetcher with whatever it supports, but ALWAYS pass a non-None `source`.
+    Order of attempts:
+      1) kwargs with all names (most robust)
+      2) (source, session, start_date, end_date)
+      3) (source, start_date, end_date)
+      4) (source,)
     """
-    if ret is None:
-        return []
-    if isinstance(ret, dict):
-        return [ret]
-    if isinstance(ret, list):
-        return [r for r in ret if r]
-    if isinstance(ret, Iterable):
-        try:
-            return [r for r in ret if r]
-        except Exception:
-            return []
-    # unknown shape
-    return []
-
-def _smart_call(func, source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-    """
-    Call `func` with whatever parameters it supports:
-    supported names: source, start_date, end_date, session, logger
-    """
-    sig = inspect.signature(func)
-    # Build kwargs only for parameters the function actually accepts.
-    kwargs: Dict[str, Any] = {}
-    for name in sig.parameters:
-        if name == "source":
-            kwargs[name] = source
-        elif name == "start_date":
-            kwargs[name] = start_date
-        elif name == "end_date":
-            kwargs[name] = end_date
-        elif name == "session":
-            kwargs[name] = None     # let fetchers create their own Session if needed
-        elif name == "logger":
-            kwargs[name] = None
-        # ignore unknowns; keep defaults
-
+    if source is None:
+        source = {}
     try:
-        ret = func(**kwargs)
+        return fetcher(
+            source=source,
+            session=session,
+            start_date=start_date,
+            end_date=end_date,
+            logger=logger,
+        )
     except TypeError:
-        # Fallback: try positional (source, start_date, end_date)
+        # Some fetchers may not accept logger/session kwargs
         try:
-            ret = func(source, start_date, end_date)
-        except Exception:
-            # Last resort: just (source,)
-            ret = func(source)
-    return _normalize(ret, func)
+            return fetcher(source, session, start_date, end_date)
+        except TypeError:
+            try:
+                return fetcher(source, start_date, end_date)
+            except TypeError:
+                return fetcher(source)
 
-# -------------------- public wrappers (lazy imports) --------------------
 
-def fetch_tec_rest(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    s, e = _window(start_date, end_date)
-    try:
-        from .tec_rest import fetch_tec_rest as _impl
-    except Exception:
+# Public adapter functions with the runner’s expected signature
+def tec_rest(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    return _call(_tec_rest, source, session, start_date, end_date, logger)
+
+def growthzone_html(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    return _call(_growthzone_html, source, session, start_date, end_date, logger)
+
+def tec_html(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    return _call(_tec_html, source, session, start_date, end_date, logger)
+
+def simpleview_html(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    return _call(_simpleview_html, source, session, start_date, end_date, logger)
+
+def ics_feed(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    return _call(_ics_feed, source, start_date=start_date, end_date=end_date, session=session, logger=logger)
+
+def icsbuild(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    if _icsbuild is None:
         return []
-    return _smart_call(_impl, source, s, e)
+    return _call(_icsbuild, source, session, start_date, end_date, logger)
 
-def fetch_growthzone_html(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    s, e = _window(start_date, end_date)
-    try:
-        from .growthzone_html import fetch_growthzone_html as _impl
-    except Exception:
-        return []
-    return _smart_call(_impl, source, s, e)
+def stgermain_wp(source: Dict[str, Any], session=None, start_date=None, end_date=None, logger=None):
+    return _call(_stgermain_wp, source, session, start_date, end_date, logger)
 
-def fetch_tec_html(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    s, e = _window(start_date, end_date)
-    try:
-        from .tec_html import fetch_tec_html as _impl
-    except Exception:
-        return []
-    return _smart_call(_impl, source, s, e)
 
-def fetch_simpleview_html(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    s, e = _window(start_date, end_date)
-    try:
-        from .simpleview_html import fetch_simpleview_html as _impl
-    except Exception:
-        return []
-    return _smart_call(_impl, source, s, e)
+# The runner uses this mapping to resolve `type:` in sources.yaml
+PARSERS = {
+    "tec_rest": tec_rest,
+    "growthzone_html": growthzone_html,
+    "tec_html": tec_html,
+    "simpleview_html": simpleview_html,
+    "ics_feed": ics_feed,
+    "icsbuild": icsbuild,         # optional; returns [] if not available
+    "stgermain_wp": stgermain_wp, # NEW: WP archive/detail crawler for St. Germain
+}
 
-def fetch_ics_feed(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    s, e = _window(start_date, end_date)
-    try:
-        from .ics_feed import fetch_ics_feed as _impl
-    except Exception:
-        return []
-    return _smart_call(_impl, source, s, e)
-
-def fetch_icsbuild(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    s, e = _window(start_date, end_date)
-    try:
-        # If it's provided as a top-level module in your env
-        from icsbuild import fetch_icsbuild as _impl  # type: ignore
-    except Exception:
-        # Or vendored locally
-        try:
-            from .icsbuild import fetch_icsbuild as _impl  # type: ignore
-        except Exception:
-            return []
-    return _smart_call(_impl, source, s, e)
-
-# -------------------- NEW: St. Germain WP crawler --------------------
-
-def fetch_stgermain_wp(source: Dict[str, Any], start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-    """
-    Host-scoped crawler for https://st-germain.com/events/ (WordPress).
-    This is isolated from GrowthZone so it cannot affect other sources.
-    """
-    s, e = _window(start_date, end_date)
-    try:
-        from .stgermain_wp import fetch_stgermain_wp as _impl
-    except Exception:
-        return []
-    return _smart_call(_impl, source, s, e)
-
-# -------------------- exports --------------------
-
-__all__ = [
-    "fetch_tec_rest",
-    "fetch_growthzone_html",
-    "fetch_tec_html",
-    "fetch_simpleview_html",
-    "fetch_ics_feed",
-    "fetch_icsbuild",
-    # new
-    "fetch_stgermain_wp",
-]
+__all__ = ["PARSERS"]
