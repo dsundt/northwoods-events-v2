@@ -9,9 +9,9 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 
-# ---- Required parsers available in this repo ----
+# ---- Required parsers present in this repo ----
 from src.parsers import (
-    fetch_tec_rest,          # expects: (url: str, start_utc: str | None, end_utc: str | None, ...)
+    fetch_tec_rest,          # expects POSITIONAL: (url: str, start_utc: str | None, end_utc: str | None)
     fetch_growthzone_html,   # expects: (source: dict, [session], [start_date], [end_date])
     fetch_simpleview_html,   # expects: (url: str, timeout=20, max_items=200)
     fetch_tec_html,          # expects: (source: dict, [session], [start_date], [end_date])
@@ -19,7 +19,7 @@ from src.parsers import (
 
 # ---- Optional parsers (guard so builds never break if missing) ----
 try:
-    # In this repo, ICS fetcher is named fetch_ics(url, start_utc, end_utc)
+    # In this repo, ICS fetcher is named fetch_ics(url, start_utc, end_utc) — POSITIONAL
     from src.parsers.ics_feed import fetch_ics as _fetch_ics_raw  # type: ignore
 except Exception:
     _fetch_ics_raw = None
@@ -43,13 +43,13 @@ def _window() -> tuple[datetime, datetime]:
     return now - timedelta(days=1), now + timedelta(days=DEFAULT_WINDOW_FWD)
 
 
-def _fmt_date_only(dt: datetime) -> str:
-    # For TEC/ICS REST endpoints that want YYYY-MM-DD
+def _ymd(dt: datetime) -> str:
+    # For TEC/ICS REST endpoints that want YYYY-MM-DD (or will accept it)
     return dt.strftime("%Y-%m-%d")
 
 
 def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
-    """Lenient normalization for report.json preview only (does NOT affect icsbuild)."""
+    """Lenient normalization for report.json preview only (does NOT affect icsbuild pipeline)."""
     title = raw.get("title") or raw.get("name") or "(untitled)"
     start = raw.get("start_utc") or raw.get("start")
     end = raw.get("end_utc") or raw.get("end")
@@ -67,23 +67,19 @@ def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
 def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
     """
     Route per source.type and call each parser with the signature it expects.
-    This is the key to avoid breaking working calendars.
+    This avoids breaking working calendars.
     """
     stype = (source.get("type") or "").strip()
     url = source.get("url") or ""
-    name = source.get("name") or source.get("id") or stype
+    # name = source.get("name") or source.get("id") or stype  # only used in logs; printing handled in main()
 
-    # TEC REST (The Events Calendar REST)
+    # TEC REST (The Events Calendar REST) — POSITIONAL call
     if stype == "tec_rest":
         if not url:
             raise RuntimeError("tec_rest: missing url")
-        return fetch_tec_rest(
-            url=url,
-            start_utc=_fmt_date_only(start_date),
-            end_utc=_fmt_date_only(end_date),
-        ) or []
+        return fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
 
-    # GrowthZone HTML (expects source dict + optional dates)
+    # GrowthZone HTML (expects full source dict)
     if stype == "growthzone_html":
         return fetch_growthzone_html(
             source=source,
@@ -91,7 +87,7 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
             end_date=end_date,
         ) or []
 
-    # TEC HTML (expects source dict + optional dates)
+    # TEC HTML (expects full source dict)
     if stype == "tec_html":
         return fetch_tec_html(
             source=source,
@@ -105,13 +101,13 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
             raise RuntimeError("simpleview_html: missing url")
         return fetch_simpleview_html(url) or []
 
-    # ICS feed (optional) – use raw function if present
+    # ICS feed (optional) — POSITIONAL call if available
     if stype == "ics_feed":
         if _fetch_ics_raw is None:
             raise RuntimeError("ics_feed: parser not available")
         if not url:
             raise RuntimeError("ics_feed: missing url")
-        return _fetch_ics_raw(url, _fmt_date_only(start_date), _fmt_date_only(end_date)) or []
+        return _fetch_ics_raw(url, _ymd(start_date), _ymd(end_date)) or []
 
     # St. Germain WordPress crawler (optional, isolated)
     if stype == "stgermain_wp":
