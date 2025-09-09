@@ -84,4 +84,244 @@ def _parse_rhinelander_detail_with_labels(html: str) -> Optional[Dict[str, Any]]
     time_s = _gz_label(t, "Time")
     if time_s:
         rng = re.search(r"(?i)(\d{1,2}(?::\d{2})?\s*(am|pm))\s*(?:–|-|to)\s*(\d{1,2}(?::\d{2})?\s*(am|pm))", time_s)
-        single = re.search(r"(?i)(\d{1,2})(?::(\d{
+        single = re.search(r"(?i)(\d{1,2})(?::(\d{2}))?\s*(am|pm)", time_s)
+        def hm(h:int,m:int,ap:str)->tuple[int,int]:
+            ap = ap.lower()
+            if ap=="pm" and h!=12: h+=12
+            if ap=="am" and h==12: h=0
+            return h,m
+        if rng:
+            def split_hm(s: str) -> tuple[int,int]:
+                if ":" in s:
+                    h, mm = s.split(":", 1)
+                    return int(h), int(mm[:2])
+                return int(s), 0
+            h1,m1 = split_hm(rng.group(1)); ap1 = rng.group(2)
+            h2,m2 = split_hm(rng.group(3)); ap2 = rng.group(4)
+            H1,M1 = hm(h1,m1,ap1); H2,M2 = hm(h2,m2,ap2)
+            from datetime import datetime as dt
+            start = start.replace(hour=H1, minute=M1)
+            end = dt(start.year, start.month, start.day, H2, M2)
+        elif single:
+            h = int(single.group(1)); m = int(single.group(2) or 0); ap = single.group(3)
+            H,M = hm(h,m,ap)
+            start = start.replace(hour=H, minute=M)
+
+    loc = _gz_label(t, "Location")
+
+    return {
+        "title": None,
+        "start": start.isoformat(),
+        "end": end.isoformat() if end else None,
+        "start_utc": start.isoformat(),
+        "end_utc": end.isoformat() if end else None,
+        "location": loc,
+    }
+
+def _rhinelander_growthzone_fallback(calendar_url: str,
+                                     start_date: datetime,
+                                     end_date: datetime) -> List[Dict[str, Any]]:
+    """
+    ONLY used for 'rhinelander-chamber-growthzone' if the normal parser yields no dated events.
+    Scrapes the calendar page for /events/details links and parses Date/Time/Location labels.
+    """
+    import re, requests
+    from urllib.parse import urljoin
+    detail_re = re.compile(r'href=["\']([^"\']*(?:/events?/details)[^"\']*)["\']', re.I)
+    try:
+        s = requests.Session()
+        r = s.get(calendar_url, timeout=30)
+        if not r.ok:
+            return []
+        html = r.text
+        links = set()
+        base = calendar_url
+        for m in detail_re.finditer(html):
+            href = m.group(1)
+            if not href.lower().startswith(("http://","https://")):
+                href = urljoin(base, href)
+            links.add(href)
+
+        out: List[Dict[str, Any]] = []
+        for href in sorted(links):
+            try:
+                d = s.get(href, timeout=30)
+                if not d.ok: 
+                    continue
+                ev = _parse_rhinelander_detail_with_labels(d.text)
+                if not ev:
+                    continue
+                # inject title and url
+                tm = re.search(r"(?is)<h1[^>]*>(.*?)</h1>", d.text)
+                from html import unescape
+                title = tm.group(1) if tm else "(untitled)"
+                title = unescape(re.sub(r"(?is)<[^>]+>", "", title)).strip()
+                ev["title"] = title
+                ev["url"] = href
+                ev["source"] = "Rhinelander Chamber (GrowthZone)"
+                ev["_source"] = "growthzone_html"
+                # window filter
+                try:
+                    siso = ev.get("start") or ev.get("start_utc")
+                    if siso:
+                        dt = datetime.fromisoformat(siso.split("+")[0])
+                        if not (start_date <= dt <= end_date):
+                            continue
+                except Exception:
+                    pass
+                out.append(ev)
+            except Exception:
+                continue
+        return out
+    except Exception:
+        return []
+
+# ---------- Fetch router ----------
+def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
+    stype = (source.get("type") or "").strip()
+    url = source.get("url") or ""
+    sid = (source.get("id") or "").strip()
+
+    if stype == "tec_rest":
+        if not url: raise RuntimeError("tec_rest: missing url")
+        return fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
+
+    if stype == "growthzone_html":
+        events = fetch_growthzone_html(source=source, start_date=start_date, end_date=end_date) or []
+        # Rhinelander-only fallback if parser produced nothing with a date
+        if sid == "rhinelander-chamber-growthzone":
+            has_dated = any(e.get("start") or e.get("start_utc") for e in events)
+            if not has_dated:
+                events = _rhinelander_growthzone_fallback(url or "https://business.rhinelanderchamber.com/events/calendar",
+                                                          start_date, end_date) or events
+        return events
+
+    if stype == "tec_html":
+        return fetch_tec_html(source=source, start_date=start_date, end_date=end_date) or []
+
+    if stype == "simpleview_html":
+        if not url: raise RuntimeError("simpleview_html: missing url")
+        return fetch_simpleview_html(url) or []
+
+    if stype == "ics_feed":
+        if _fetch_ics_raw is None:
+            raise RuntimeError("ics_feed: parser not available")
+        if not url:
+            raise RuntimeError("ics_feed: missing url")
+        return _fetch_ics_raw(url, _ymd(start_date), _ymd(end_date)) or []
+
+    if stype == "stgermain_wp":
+        # dynamic import so __init__.py need not be changed
+        try:
+            mod = import_module("src.parsers.stgermain_wp")
+            fetcher = getattr(mod, "fetch_stgermain_wp", None)
+        except Exception:
+            fetcher = None
+        if fetcher is None:
+            raise RuntimeError("stgermain_wp: parser not available")
+        return fetcher(source=source, start_date=start_date, end_date=end_date) or []
+
+    raise RuntimeError(f"Unsupported source type: {stype}")
+
+# ---------- IO helpers ----------
+def _ensure_dir(path: str) -> None:
+    try: os.makedirs(path, exist_ok=True)
+    except Exception: pass
+
+def _write_json(path: str, payload: dict) -> None:
+    d = os.path.dirname(path) or "."
+    _ensure_dir(d)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+
+def _mirror_report(report: Dict[str, Any]) -> None:
+    # Primary
+    _write_json(REPORT_JSON_PATH, report)
+    # Always mirror to Pages-friendly dirs (created if missing)
+    for root in ("github-pages", "docs"):
+        _write_json(os.path.join(root, "report.json"), report)
+
+def _write_debug_source(sid: str, name: str, stype: str, url: str,
+                        ok: bool, err_msg: Optional[str], events: List[Dict[str, Any]]) -> None:
+    blob = {
+        "source": {"id": sid, "name": name, "type": stype, "url": url},
+        "ok": ok,
+        "error": err_msg,
+        "count": len(events),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "events": events[:500],
+    }
+    # local
+    _write_json(os.path.join(BY_SOURCE_DIR, f"{sid or name}.json"), blob)
+    # pages mirrors
+    for root in ("github-pages", "docs"):
+        _write_json(os.path.join(root, "by-source", f"{sid or name}.json"), blob)
+
+def main() -> int:
+    print(f"[northwoods] Loading sources from: {SOURCES_YAML}")
+    try:
+        with open(SOURCES_YAML, "r", encoding="utf-8") as f:
+            sources = yaml.safe_load(f)
+    except Exception as e:
+        print(f"[northwoods] ERROR reading {SOURCES_YAML}: {e}")
+        return 2
+
+    if not isinstance(sources, list):
+        print("[northwoods] ERROR: sources.yaml must be a list.")
+        return 2
+
+    start_date, end_date = _window()
+    all_events: List[Dict[str, Any]] = []
+    source_logs: List[Dict[str, Any]] = []
+
+    _ensure_dir(BY_SOURCE_DIR)
+    _ensure_dir("github-pages/by-source")
+    _ensure_dir("docs/by-source")
+
+    for src in sources:
+        stype = src.get("type")
+        sid = src.get("id")
+        name = src.get("name") or sid or (stype or "Unknown")
+        url = src.get("url") or ""
+
+        print(f"[northwoods] Fetching: {name} ({sid}) [{stype}] -> {url}")
+
+        per_source_events: List[Dict[str, Any]] = []
+        err_msg: Optional[str] = None
+        try:
+            per_source_events = _fetch_one(src, start_date, end_date) or []
+        except Exception as e:
+            err_msg = str(e)
+            print(f"[northwoods] ERROR while fetching {name}: {err_msg}")
+
+        try:
+            _write_debug_source(sid, name, stype, url, err_msg is None, err_msg, per_source_events)
+        except Exception:
+            pass
+
+        source_logs.append({
+            "id": sid, "name": name, "type": stype, "url": url,
+            "ok": err_msg is None, "count": len(per_source_events), "error": err_msg,
+        })
+        all_events.extend(per_source_events)
+
+    normalized_preview = [_normalize_event(e) for e in all_events]
+    report = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "sources_processed": len(source_logs),
+        "total_events": len(all_events),
+        "source_logs": source_logs,
+        "normalized_events": normalized_preview[:500],
+        "events_preview_count": min(500, len(normalized_preview)),
+    }
+
+    try:
+        _mirror_report(report)
+    except Exception as e:
+        print(f"[northwoods] ERROR writing report.json: {e}")
+
+    print(json.dumps({"ok": True, "events": len(all_events)}))
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
