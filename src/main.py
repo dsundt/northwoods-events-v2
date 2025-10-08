@@ -3,12 +3,17 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import sys
-from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Optional
+from datetime import date, datetime, time, timedelta, timezone
 from importlib import import_module
+from typing import Any, Dict, List, Optional
 
 import yaml
+
+# shared helpers
+from src.ics_writer import write_combined_ics, write_per_source_ics
+from src.util import slugify, json_default
 
 # ---- Parsers in this repo (unchanged) ----
 from src.parsers import (
@@ -27,6 +32,7 @@ except Exception:
 DEFAULT_WINDOW_FWD = int(os.getenv("NW_WINDOW_FWD_DAYS", "180"))
 REPORT_JSON_PATH = os.getenv("NW_REPORT_JSON", "report.json")
 BY_SOURCE_DIR = os.getenv("NW_BY_SOURCE_DIR", "by-source")
+COMBINED_ICS_PATH = os.getenv("NW_COMBINED_ICS", os.path.join("public", "combined.ics"))
 SOURCES_YAML = os.getenv("NW_SOURCES_YAML", "config/sources.yaml")
 
 def _window() -> tuple[datetime, datetime]:
@@ -40,8 +46,10 @@ def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
     title = raw.get("title") or raw.get("name") or "(untitled)"
     start = raw.get("start_utc") or raw.get("start")
     end = raw.get("end_utc") or raw.get("end")
+    calendar = raw.get("source") or "Unknown"
     return {
-        "calendar": raw.get("source") or "Unknown",
+        "calendar": calendar,
+        "source": calendar,
         "title": title,
         "start_utc": start,
         "end_utc": end,
@@ -225,37 +233,76 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
 
 # ---------- IO helpers ----------
 def _ensure_dir(path: str) -> None:
-    try: os.makedirs(path, exist_ok=True)
-    except Exception: pass
+    try:
+        os.makedirs(path, exist_ok=True)
+    except Exception:
+        pass
+
+
+def _ensure_unique_slug(base: str, used: set[str]) -> str:
+    slug = base
+    suffix = 1
+    while slug in used:
+        suffix += 1
+        slug = f"{base}-{suffix}"
+    used.add(slug)
+    return slug
+
+
+def _mirror_to_roots(src_path: str, rel_path: str, roots: List[str]) -> None:
+    for root in roots:
+        target = os.path.join(root, rel_path)
+        _ensure_dir(os.path.dirname(target) or ".")
+        try:
+            shutil.copy2(src_path, target)
+        except Exception as exc:
+            print(f"[northwoods] WARN: failed to mirror {src_path} -> {target}: {exc}")
+
+
+def _rel_path_for_public(path: str) -> str:
+    norm = os.path.normpath(path)
+    public_root = os.path.normpath("public")
+    if os.path.commonpath([public_root, norm]) == public_root:
+        return os.path.relpath(norm, public_root)
+    return os.path.basename(norm)
 
 def _write_json(path: str, payload: dict) -> None:
     d = os.path.dirname(path) or "."
     _ensure_dir(d)
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2, ensure_ascii=False)
+        json.dump(payload, f, indent=2, ensure_ascii=False, default=json_default)
 
 def _mirror_report(report: Dict[str, Any]) -> None:
     # Primary
     _write_json(REPORT_JSON_PATH, report)
     # Always mirror to Pages-friendly dirs (created if missing)
-    for root in ("github-pages", "docs"):
+    for root in ("public", "github-pages", "docs"):
         _write_json(os.path.join(root, "report.json"), report)
 
 def _write_debug_source(sid: str, name: str, stype: str, url: str,
-                        ok: bool, err_msg: Optional[str], events: List[Dict[str, Any]]) -> None:
+                        ok: bool, err_msg: Optional[str], events: List[Dict[str, Any]],
+                        slug: str, ics_path: Optional[str]) -> None:
     blob = {
-        "source": {"id": sid, "name": name, "type": stype, "url": url},
+        "source": {
+            "id": sid,
+            "name": name,
+            "type": stype,
+            "url": url,
+            "slug": slug,
+            "ics_path": ics_path,
+        },
         "ok": ok,
         "error": err_msg,
         "count": len(events),
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "events": events[:500],
     }
+    filename = f"{slug}.json"
     # local
-    _write_json(os.path.join(BY_SOURCE_DIR, f"{sid or name}.json"), blob)
+    _write_json(os.path.join(BY_SOURCE_DIR, filename), blob)
     # pages mirrors
-    for root in ("github-pages", "docs"):
-        _write_json(os.path.join(root, "by-source", f"{sid or name}.json"), blob)
+    for root in ("public", "github-pages", "docs"):
+        _write_json(os.path.join(root, "by-source", filename), blob)
 
 def main() -> int:
     print(f"[northwoods] Loading sources from: {SOURCES_YAML}")
@@ -273,8 +320,11 @@ def main() -> int:
     start_date, end_date = _window()
     all_events: List[Dict[str, Any]] = []
     source_logs: List[Dict[str, Any]] = []
+    per_source_groups: Dict[str, Dict[str, Any]] = {}
+    used_slugs: set[str] = set()
 
     _ensure_dir(BY_SOURCE_DIR)
+    _ensure_dir("public/by-source")
     _ensure_dir("github-pages/by-source")
     _ensure_dir("docs/by-source")
 
@@ -294,24 +344,75 @@ def main() -> int:
             err_msg = str(e)
             print(f"[northwoods] ERROR while fetching {name}: {err_msg}")
 
+        base_slug = slugify(name or sid or stype or "source")
+        slug = _ensure_unique_slug(base_slug, used_slugs)
+        ics_rel_path: Optional[str] = None
+        if per_source_events:
+            for ev in per_source_events:
+                ev.setdefault("calendar", name)
+                ev.setdefault("source", name)
+                ev["calendar_slug"] = slug
+            per_source_groups[slug] = {
+                "name": name,
+                "slug": slug,
+                "events": per_source_events,
+            }
+            ics_rel_path = f"by-source/{slug}.ics"
         try:
-            _write_debug_source(sid, name, stype, url, err_msg is None, err_msg, per_source_events)
+            _write_debug_source(
+                sid,
+                name,
+                stype,
+                url,
+                err_msg is None,
+                err_msg,
+                per_source_events,
+                slug,
+                ics_rel_path,
+            )
         except Exception:
             pass
 
         source_logs.append({
             "id": sid, "name": name, "type": stype, "url": url,
             "ok": err_msg is None, "count": len(per_source_events), "error": err_msg,
+            "slug": slug,
+            "ics_path": ics_rel_path,
         })
         all_events.extend(per_source_events)
 
+    try:
+        count, combined_path = write_combined_ics(all_events, COMBINED_ICS_PATH)
+        rel_combined = _rel_path_for_public(combined_path)
+        _mirror_to_roots(combined_path, rel_combined, ["github-pages", "docs"])
+        print(f"[northwoods] Wrote combined ICS ({count} events): {combined_path}")
+    except Exception as e:
+        print(f"[northwoods] ERROR writing combined ICS: {e}")
+
+    per_source_written: Dict[str, str] = {}
+    try:
+        per_source_written = write_per_source_ics(
+            per_source_groups,
+            os.path.join("public", "by-source"),
+        )
+        for slug, path in per_source_written.items():
+            rel = _rel_path_for_public(path)
+            _mirror_to_roots(path, rel, ["github-pages", "docs"])
+            for log in source_logs:
+                if log["slug"] == slug:
+                    log["ics_path"] = rel
+    except Exception as e:
+        print(f"[northwoods] ERROR writing per-source ICS: {e}")
+
     normalized_preview = [_normalize_event(e) for e in all_events]
+    preview = normalized_preview[:500]
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "sources_processed": len(source_logs),
         "total_events": len(all_events),
         "source_logs": source_logs,
-        "normalized_events": normalized_preview[:500],
+        "events_preview": preview,
+        "normalized_events": preview,
         "events_preview_count": min(500, len(normalized_preview)),
     }
 
