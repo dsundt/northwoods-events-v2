@@ -278,7 +278,6 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
                 meta.setdefault("warnings", []).append(f"tec_rest request failed: {exc}")
 
         fallback_ics = source.get("fallback_ics") or source.get("ics_url")
-        allow_html_fallback = bool(source.get("allow_html_fallback") or prefer_fallback)
         if fallback_ics and _fetch_ics_raw is not None:
             try:
                 ics_events, _ = _fetch_ics_raw(fallback_ics, _ymd(start_date), _ymd(end_date))
@@ -293,23 +292,8 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
                     print(f"[northwoods] INFO: tec_rest fallback via ICS for {name}")
                     return converted
                 meta.setdefault("warnings", []).append("ics fallback returned no events")
-            except Exception as exc:
-                meta.setdefault("warnings", []).append(f"ics fallback failed for {name}: {exc}")
-
-        if allow_html_fallback and not events:
-            try:
-                html_events = fetch_tec_html(source=source, start_date=start_date, end_date=end_date) or []
-                if html_events:
-                    note_msg = f"Used TEC HTML fallback: {source.get('url') or name}"
-                    if prefer_fallback:
-                        meta.setdefault("notes", []).append(note_msg)
-                    else:
-                        meta.setdefault("warnings", []).append(note_msg)
-                    _set_meta(source, meta)
-                    print(f"[northwoods] INFO: tec_rest fallback via HTML for {name}")
-                    return html_events
-            except Exception as exc:
-                meta.setdefault("warnings", []).append(f"tec_html fallback failed for {name}: {exc}")
+            except Exception:
+                meta.setdefault("warnings", []).append(f"ics fallback failed for {name}")
 
         if prefer_fallback and fallback_ics and _fetch_ics_raw is None:
             meta.setdefault("warnings", []).append("ics fallback requested but parser unavailable")
