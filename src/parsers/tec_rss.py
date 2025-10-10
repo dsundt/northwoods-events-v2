@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from bs4 import BeautifulSoup
 from dateutil import parser as dtparse
@@ -63,94 +63,30 @@ def _coerce_dt(value: Optional[str], tz_name: Optional[str]) -> Optional[str]:
     return dt.astimezone(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
 
-def _harvest_fields(item: ET.Element) -> Dict[str, str]:
-    fields: Dict[str, str] = {}
+def _find_datetime(item: ET.Element, tz_name: Optional[str], *candidates: str) -> Optional[str]:
+    candidate_l = [c.lower() for c in candidates]
     for child in list(item):
         name = _local(child.tag).lower()
-        text = (child.text or "").strip()
-        if not text:
-            text = (child.attrib.get("value") or child.attrib.get("content") or "").strip()
-        if not text:
-            text = " ".join((child.text or "", "".join(grand.text or "" for grand in child)))
-        text = text.strip()
-        if text:
-            fields.setdefault(name, text)
-    return fields
-
-
-def _date_time_from_fields(fields: Dict[str, str], tz_name: Optional[str], *candidates: str) -> Tuple[Optional[str], Optional[str]]:
-    """Return combined datetime string + raw source used (for diagnostics)."""
-
-    def _try_keys(keys: Tuple[str, ...]) -> Optional[str]:
-        for key in keys:
-            if key in fields:
-                result = _coerce_dt(fields[key], tz_name)
+        if name in candidate_l:
+            text = (child.text or "").strip()
+            if not text:
+                text = (child.attrib.get("value") or child.attrib.get("content") or "").strip()
+            if not text:
+                text = " ".join((child.text or "", "".join(grand.text or "" for grand in child)))
+            result = _coerce_dt(text, tz_name)
+            if result:
+                return result
+    for child in list(item):
+        name = _local(child.tag).lower()
+        for key in candidate_l:
+            if key in name:
+                text = (child.text or "").strip()
+                if not text:
+                    text = (child.attrib.get("value") or child.attrib.get("content") or "").strip()
+                result = _coerce_dt(text, tz_name)
                 if result:
                     return result
-        return None
-
-    lowered = [c.lower() for c in candidates]
-
-    # Direct matches that already contain full datetimes (dtstart, start_utc, etc.).
-    direct_first = tuple(
-        key for key in lowered if not key.endswith("date") and not key.endswith("time")
-    )
-    direct = _try_keys(direct_first)
-    if direct:
-        return direct, None
-
-    # TEC feeds often split date/time into separate elements (startdate/starttime).
-    for candidate in lowered:
-        base = candidate
-        for suffix in ("date", "_date", "-date"):
-            if base.endswith(suffix):
-                base = base[: -len(suffix)]
-                break
-
-        date_keys = (
-            f"{base}date",
-            f"{base}_date",
-            f"{base}-date",
-            candidate if candidate.endswith("date") else "",
-        )
-        time_keys = (
-            f"{base}time",
-            f"{base}_time",
-            f"{base}-time",
-            candidate if candidate.endswith("time") else "",
-        )
-
-        date_text = None
-        for key in date_keys:
-            if key and key in fields:
-                date_text = fields[key]
-                break
-
-        time_text = None
-        for key in time_keys:
-            if key and key in fields:
-                time_text = fields[key]
-                break
-
-        if date_text:
-            combined = date_text
-            if time_text:
-                combined = f"{combined} {time_text}"
-            dt = _coerce_dt(combined, tz_name)
-            if dt:
-                return dt, combined
-
-    # Last-ditch fallback to publication timestamps and raw date-only fields.
-    remaining_direct = tuple(key for key in lowered if key.endswith("date"))
-    direct = _try_keys(remaining_direct)
-    if direct:
-        return direct, None
-
-    pub = _try_keys(("pubdate", "published", "updated", "dc:date"))
-    if pub:
-        return pub, None
-
-    return None, None
+    return None
 
 
 def _extract_location(item: ET.Element, description: Optional[str]) -> Optional[str]:
@@ -231,33 +167,13 @@ def fetch_tec_rss(source: Dict, start_date: Optional[datetime] = None, end_date:
         desc_raw = _find_text(item, "encoded") or item.findtext("description")
         description = _clean_text(desc_raw)
 
-        fields = _harvest_fields(item)
-
-        start, start_source = _date_time_from_fields(
-            fields,
-            tz_name,
-            "start_utc",
-            "dtstart",
-            "startdate",
-            "start_date",
-            "start",
-        )
-        end, _ = _date_time_from_fields(
-            fields,
-            tz_name,
-            "end_utc",
-            "dtend",
-            "enddate",
-            "end_date",
-            "end",
-        )
+        start = _find_datetime(item, tz_name, "startdate", "start_date", "dtstart", "start")
+        end = _find_datetime(item, tz_name, "enddate", "end_date", "dtend", "end")
 
         if not start and description:
-            # Attempt to discover an ISO-like timestamp in the body as a fallback
             match = re.search(r"(\d{4}-\d{2}-\d{2}(?:[T\s]\d{2}:\d{2}(?::\d{2})?)?)", description)
             if match:
                 start = _coerce_dt(match.group(1), tz_name)
-                start_source = match.group(1)
         if not start:
             continue
 
@@ -267,21 +183,18 @@ def fetch_tec_rss(source: Dict, start_date: Optional[datetime] = None, end_date:
         if end_date and start_dt and start_dt > end_date:
             continue
 
-        location = fields.get("location") or _extract_location(item, description)
+        location = _extract_location(item, description)
 
-        event = {
-            "title": title,
-            "start_utc": start,
-            "end_utc": end,
-            "url": link,
-            "description": description,
-            "location": location,
-            "calendar": calendar_name,
-        }
-
-        if start_source and start_source != start:
-            event.setdefault("_meta", {})["start_source"] = start_source
-
-        events.append(event)
+        events.append(
+            {
+                "title": title,
+                "start_utc": start,
+                "end_utc": end,
+                "url": link,
+                "description": description,
+                "location": location,
+                "calendar": calendar_name,
+            }
+        )
 
     return events
