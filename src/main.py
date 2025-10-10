@@ -223,6 +223,12 @@ def _ics_events_as_dicts(items: Any, calendar_name: str, source_url: str,
     return out
 
 
+def _set_meta(source: Dict[str, Any], meta: Dict[str, Any]) -> None:
+    if meta:
+        source_meta = source.setdefault("_fetch_meta", {})
+        source_meta.update({k: v for k, v in meta.items() if v})
+
+
 def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
     stype = (source.get("type") or "").strip()
     url = source.get("url") or ""
@@ -233,14 +239,20 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
         if not url:
             raise RuntimeError("tec_rest: missing url")
 
+        meta: Dict[str, Any] = {}
         tec_err: Optional[Exception] = None
         events: List[Dict[str, Any]] = []
-        try:
-            events = fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
-            if events:
-                return events
-        except Exception as exc:
-            tec_err = exc
+        prefer_fallback = bool(source.get("prefer_fallback") or source.get("fallback_only"))
+
+        if not prefer_fallback:
+            try:
+                events = fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
+                if events:
+                    _set_meta(source, meta)
+                    return events
+            except Exception as exc:
+                tec_err = exc
+                meta.setdefault("warnings", []).append(f"tec_rest request failed: {exc}")
 
         fallback_ics = source.get("fallback_ics") or source.get("ics_url")
         if fallback_ics and _fetch_ics_raw is not None:
@@ -248,14 +260,25 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
                 ics_events, _ = _fetch_ics_raw(fallback_ics, _ymd(start_date), _ymd(end_date))
                 converted = _ics_events_as_dicts(ics_events, name, fallback_ics, start_date, end_date)
                 if converted:
+                    note_msg = f"Used TEC ICS fallback: {fallback_ics}"
+                    if prefer_fallback:
+                        meta.setdefault("notes", []).append(note_msg)
+                    else:
+                        meta.setdefault("warnings", []).append(note_msg)
+                    _set_meta(source, meta)
                     print(f"[northwoods] INFO: tec_rest fallback via ICS for {name}")
                     return converted
             except Exception:
-                pass
+                meta.setdefault("warnings", []).append(f"ics fallback failed for {name}")
+
+        if prefer_fallback and fallback_ics and _fetch_ics_raw is None:
+            meta.setdefault("warnings", []).append("ics fallback requested but parser unavailable")
 
         if tec_err:
+            _set_meta(source, meta)
             raise tec_err
 
+        _set_meta(source, meta)
         return events
 
     if stype == "growthzone_html":
@@ -345,7 +368,9 @@ def _mirror_report(report: Dict[str, Any]) -> None:
 
 def _write_debug_source(sid: str, name: str, stype: str, url: str,
                         ok: bool, err_msg: Optional[str], events: List[Dict[str, Any]],
-                        slug: str, ics_path: Optional[str]) -> None:
+                        slug: str, ics_path: Optional[str],
+                        warnings: Optional[List[str]] = None,
+                        notes: Optional[List[str]] = None) -> None:
     blob = {
         "source": {
             "id": sid,
@@ -358,6 +383,8 @@ def _write_debug_source(sid: str, name: str, stype: str, url: str,
         "ok": ok,
         "error": err_msg,
         "count": len(events),
+        "warnings": warnings or [],
+        "notes": notes or [],
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "events": events[:500],
     }
@@ -402,11 +429,26 @@ def main() -> int:
 
         per_source_events: List[Dict[str, Any]] = []
         err_msg: Optional[str] = None
+        warnings: List[str] = []
+        notes: List[str] = []
         try:
             per_source_events = _fetch_one(src, start_date, end_date) or []
         except Exception as e:
             err_msg = str(e)
             print(f"[northwoods] ERROR while fetching {name}: {err_msg}")
+
+        meta = src.pop("_fetch_meta", {}) if isinstance(src, dict) else {}
+        if isinstance(meta, dict):
+            warn_items = meta.get("warnings")
+            note_items = meta.get("notes")
+            if isinstance(warn_items, list):
+                warnings.extend(str(w) for w in warn_items if w)
+            elif isinstance(warn_items, str):
+                warnings.append(warn_items)
+            if isinstance(note_items, list):
+                notes.extend(str(n) for n in note_items if n)
+            elif isinstance(note_items, str):
+                notes.append(note_items)
 
         base_slug = slugify(name or sid or stype or "source")
         slug = _ensure_unique_slug(base_slug, used_slugs)
@@ -433,6 +475,8 @@ def main() -> int:
                 per_source_events,
                 slug,
                 ics_rel_path,
+                warnings,
+                notes,
             )
         except Exception:
             pass
@@ -442,6 +486,8 @@ def main() -> int:
             "ok": err_msg is None, "count": len(per_source_events), "error": err_msg,
             "slug": slug,
             "ics_path": ics_rel_path,
+            "warnings": warnings,
+            "notes": notes,
         })
         all_events.extend(per_source_events)
 
