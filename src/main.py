@@ -185,14 +185,78 @@ def _rhinelander_growthzone_fallback(calendar_url: str,
         return []
 
 # ---------- Fetch router ----------
+def _to_utc(dt_val: Any) -> Optional[datetime]:
+    if isinstance(dt_val, datetime):
+        if dt_val.tzinfo is None:
+            return dt_val.replace(tzinfo=timezone.utc)
+        return dt_val.astimezone(timezone.utc)
+    return None
+
+
+def _ics_events_as_dicts(items: Any, calendar_name: str, source_url: str,
+                         start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    if not items:
+        return out
+
+    for ev in items:
+        title = getattr(ev, "title", None) or "Event"
+        start_dt = _to_utc(getattr(ev, "start_utc", None))
+        end_dt = _to_utc(getattr(ev, "end_utc", None))
+
+        if start_dt and (start_dt < start_date or start_dt > (end_date + timedelta(days=1))):
+            continue
+
+        out.append({
+            "title": title,
+            "start_utc": start_dt.isoformat() if start_dt else None,
+            "end_utc": end_dt.isoformat() if end_dt else None,
+            "url": getattr(ev, "url", None),
+            "location": getattr(ev, "location", None),
+            "description": getattr(ev, "description", None) or None,
+            "uid": getattr(ev, "uid", None),
+            "source": calendar_name,
+            "calendar": calendar_name,
+            "source_url": source_url,
+        })
+
+    return out
+
+
 def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
     stype = (source.get("type") or "").strip()
     url = source.get("url") or ""
     sid = (source.get("id") or "").strip()
+    name = source.get("name") or sid or (stype or "Source")
 
     if stype == "tec_rest":
-        if not url: raise RuntimeError("tec_rest: missing url")
-        return fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
+        if not url:
+            raise RuntimeError("tec_rest: missing url")
+
+        tec_err: Optional[Exception] = None
+        events: List[Dict[str, Any]] = []
+        try:
+            events = fetch_tec_rest(url, _ymd(start_date), _ymd(end_date)) or []
+            if events:
+                return events
+        except Exception as exc:
+            tec_err = exc
+
+        fallback_ics = source.get("fallback_ics") or source.get("ics_url")
+        if fallback_ics and _fetch_ics_raw is not None:
+            try:
+                ics_events, _ = _fetch_ics_raw(fallback_ics, _ymd(start_date), _ymd(end_date))
+                converted = _ics_events_as_dicts(ics_events, name, fallback_ics, start_date, end_date)
+                if converted:
+                    print(f"[northwoods] INFO: tec_rest fallback via ICS for {name}")
+                    return converted
+            except Exception:
+                pass
+
+        if tec_err:
+            raise tec_err
+
+        return events
 
     if stype == "growthzone_html":
         events = fetch_growthzone_html(source=source, start_date=start_date, end_date=end_date) or []
