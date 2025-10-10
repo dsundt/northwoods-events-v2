@@ -6,6 +6,7 @@ import os
 import shutil
 import sys
 from datetime import date, datetime, time, timedelta, timezone
+from dateutil import parser as dtparse
 from importlib import import_module
 from typing import Any, Dict, List, Optional
 
@@ -190,6 +191,28 @@ def _to_utc(dt_val: Any) -> Optional[datetime]:
         if dt_val.tzinfo is None:
             return dt_val.replace(tzinfo=timezone.utc)
         return dt_val.astimezone(timezone.utc)
+
+    if isinstance(dt_val, date) and not isinstance(dt_val, datetime):
+        return datetime(dt_val.year, dt_val.month, dt_val.day, tzinfo=timezone.utc)
+
+    if isinstance(dt_val, str):
+        text = dt_val.strip()
+        if not text:
+            return None
+        try:
+            normalized = text[:-1] + "+00:00" if text.endswith("Z") else text
+            parsed = datetime.fromisoformat(normalized)
+        except ValueError:
+            try:
+                parsed = dtparse.parse(text)
+            except (ValueError, TypeError):
+                return None
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        else:
+            parsed = parsed.astimezone(timezone.utc)
+        return parsed
+
     return None
 
 
@@ -268,6 +291,7 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
                     _set_meta(source, meta)
                     print(f"[northwoods] INFO: tec_rest fallback via ICS for {name}")
                     return converted
+                meta.setdefault("warnings", []).append("ics fallback returned no events")
             except Exception:
                 meta.setdefault("warnings", []).append(f"ics fallback failed for {name}")
 
