@@ -1,0 +1,61 @@
+{
+  "version": "2024.03-sample",
+  "run_started_utc": "2025-03-01T12:00:00Z",
+  "total_events": 3,
+  "sources_processed": 3,
+  "source_logs": [
+    {
+      "id": "sample-chamber",
+      "name": "Sample Chamber",
+      "type": "ics",
+      "url": "https://example.org/calendar.ics",
+      "count": 1,
+      "ok": true
+    },
+    {
+      "id": "demo-convention-center",
+      "name": "Demo Convention Center",
+      "type": "growthzone_html",
+      "url": "https://example.org/events",
+      "count": 1,
+      "ok": true
+    },
+    {
+      "id": "manitowish-waters-chamber-tec",
+      "name": "Manitowish Waters Chamber (TEC)",
+      "type": "tec_rest",
+      "url": "https://manitowishwaters.org/",
+      "count": 1,
+      "ok": true
+    }
+  ],
+  "events": [
+    {
+      "uid": "sample-1",
+      "calendar": "Sample Chamber",
+      "title": "Downtown Spring Market",
+      "location": "Riverwalk Plaza",
+      "start_utc": "2026-04-20T14:00:00Z",
+      "end_utc": "2026-04-20T20:00:00Z",
+      "url": "https://example.org/events/spring-market"
+    },
+    {
+      "uid": "sample-2",
+      "calendar": "Demo Convention Center",
+      "title": "Manufacturing Expo",
+      "location": "Expo Hall A",
+      "start_utc": "2026-05-04T15:00:00Z",
+      "end_utc": "2026-05-04T23:00:00Z",
+      "url": "https://example.org/events/manufacturing-expo"
+    },
+    {
+      "uid": "sample-3",
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "title": "Lakeside Summer Concert",
+      "location": "Koller Park, Manitowish Waters, WI",
+      "start_utc": "2026-06-15T23:00:00Z",
+      "end_utc": "2026-06-16T01:00:00Z",
+      "url": "https://manitowishwaters.org/event/lakeside-summer-concert"
+    }
+  ]
+}
