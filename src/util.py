@@ -1,11 +1,46 @@
 from __future__ import annotations
+
+import re
+import unicodedata
+from datetime import date, datetime, time, timezone
 from urllib.parse import urljoin
+from typing import Any, Dict, List, Optional
+
 from bs4 import BeautifulSoup
 from dateutil import parser as dtp
-from typing import Optional, List, Dict, Any
 
 def absurl(base: str, href: str) -> str:
     return urljoin(base, href)
+
+
+def _normalize_ascii(value: str) -> str:
+    """Best-effort ASCII normalization for slug components."""
+    normalized = unicodedata.normalize("NFKD", value)
+    return normalized.encode("ascii", "ignore").decode("ascii")
+
+
+def slugify(text: str, fallback: str = "item") -> str:
+    """Convert arbitrary text into a filesystem- and URL-friendly slug."""
+    text = _normalize_ascii((text or "").strip().lower())
+    # Replace non-word characters with a hyphen
+    text = re.sub(r"[^\w\s-]", "", text)
+    text = re.sub(r"[\s_-]+", "-", text)
+    text = text.strip("-")
+    fallback = _normalize_ascii((fallback or "item").strip().lower() or "item")
+    fallback = re.sub(r"[^\w-]", "", fallback)
+    fallback = fallback or "item"
+    return text or fallback
+
+
+def json_default(value: Any) -> str:
+    """Serialize datetime-like objects for JSON dumps."""
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=timezone.utc)
+        return value.isoformat()
+    if isinstance(value, (date, time)):
+        return value.isoformat()
+    return str(value)
 
 def parse_first_jsonld_event(soup: BeautifulSoup, base_url: str) -> Optional[Dict[str, Any]]:
     """Return a dict with normalized fields from the first JSON-LD Event in the page."""

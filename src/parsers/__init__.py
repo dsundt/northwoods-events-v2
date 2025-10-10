@@ -58,6 +58,13 @@ def fetch_tec_html(source,
     s, e = _window(start_date, end_date)
     return _smart_call(_m.fetch_tec_html, source, s, e)
 
+def fetch_tec_rss(source,
+                  start_date: Optional[datetime] = None,
+                  end_date: Optional[datetime] = None):
+    from . import tec_rss as _m
+    s, e = _window(start_date, end_date)
+    return _smart_call(_m.fetch_tec_rss, source, s, e)
+
 def fetch_simpleview_html(source,
                           start_date: Optional[datetime] = None,
                           end_date: Optional[datetime] = None):
@@ -105,6 +112,7 @@ __all__ = [
     "fetch_tec_rest",
     "fetch_growthzone_html",
     "fetch_tec_html",
+    "fetch_tec_rss",
     "fetch_simpleview_html",
     "fetch_ics_feed",
     "fetch_icsbuild",
