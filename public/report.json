@@ -1,0 +1,159 @@
+{
+  "version": "2024.03-sample",
+  "run_started_utc": "2025-03-01T12:00:00Z",
+  "total_events": 4,
+  "sources_processed": 4,
+  "source_logs": [
+    {
+      "id": "sample-chamber",
+      "name": "Sample Chamber",
+      "type": "ics",
+      "url": "https://example.org/calendar.ics",
+      "count": 1,
+      "ok": true,
+      "slug": "sample-chamber-ics",
+      "ics_path": "by-source/sample-chamber.ics",
+      "warnings": [],
+      "notes": []
+    },
+    {
+      "id": "demo-convention-center",
+      "name": "Demo Convention Center",
+      "type": "growthzone_html",
+      "url": "https://example.org/events",
+      "count": 1,
+      "ok": true,
+      "slug": "demo-convention-center-growthzone-html",
+      "ics_path": "by-source/demo-convention-center.ics",
+      "warnings": [],
+      "notes": []
+    },
+    {
+      "id": "manitowish-waters-chamber-tec",
+      "name": "Manitowish Waters Chamber (TEC)",
+      "type": "tec_rss",
+      "url": "https://manitowishwaters.org/event/rss/",
+      "count": 1,
+      "ok": true,
+      "slug": "manitowish-waters-chamber-tec",
+      "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
+      "warnings": [
+        "tec_rss skipped 'Holiday Artisan Market' due to missing start time"
+      ],
+      "notes": [
+        "Used TEC RSS feed: https://manitowishwaters.org/event/rss/"
+      ]
+    },
+    {
+      "id": "st-germain-wp",
+      "name": "St. Germain Chamber (WP)",
+      "type": "stgermain_wp",
+      "url": "https://st-germain.com/events/",
+      "count": 1,
+      "ok": true,
+      "slug": "st-germain-chamber-wp",
+      "ics_path": "by-source/st-germain-chamber-wp.ics",
+      "warnings": [],
+      "notes": [
+        "Used TEC HTML fallback"
+      ]
+    }
+  ],
+  "events_preview_count": 4,
+  "events_preview": [
+    {
+      "uid": "sample-1",
+      "calendar": "Sample Chamber",
+      "calendar_slug": "sample-chamber-ics",
+      "source": "Sample Chamber",
+      "title": "Downtown Spring Market",
+      "location": "Riverwalk Plaza",
+      "start_utc": "2026-04-20T14:00:00Z",
+      "end_utc": "2026-04-20T20:00:00Z",
+      "url": "https://example.org/events/spring-market"
+    },
+    {
+      "uid": "sample-2",
+      "calendar": "Demo Convention Center",
+      "calendar_slug": "demo-convention-center-growthzone-html",
+      "source": "Demo Convention Center",
+      "title": "Manufacturing Expo",
+      "location": "Expo Hall A",
+      "start_utc": "2026-05-04T15:00:00Z",
+      "end_utc": "2026-05-04T23:00:00Z",
+      "url": "https://example.org/events/manufacturing-expo"
+    },
+    {
+      "uid": "sample-3",
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "calendar_slug": "manitowish-waters-chamber-tec",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Lakeside Summer Concert",
+      "location": "Koller Park, Manitowish Waters, WI",
+      "start_utc": "2026-06-15T23:00:00Z",
+      "end_utc": "2026-06-16T01:00:00Z",
+      "url": "https://manitowishwaters.org/event/lakeside-summer-concert",
+      "source_url": "https://manitowishwaters.org/event/rss/"
+    },
+    {
+      "uid": "sample-4",
+      "calendar": "St. Germain Chamber (WP)",
+      "calendar_slug": "st-germain-chamber-wp",
+      "source": "St. Germain Chamber (WP)",
+      "title": "Pioneer Lake Ice Fishing Jamboree",
+      "location": "St. Germain Community Park",
+      "start_utc": "2026-02-07T15:00:00Z",
+      "end_utc": "2026-02-07T21:00:00Z",
+      "url": "https://st-germain.com/events/pioneer-lake-ice-fishing-jamboree",
+      "source_url": "https://st-germain.com/events/"
+    }
+  ],
+  "normalized_events": [
+    {
+      "uid": "sample-1",
+      "calendar": "Sample Chamber",
+      "calendar_slug": "sample-chamber-ics",
+      "source": "Sample Chamber",
+      "title": "Downtown Spring Market",
+      "location": "Riverwalk Plaza",
+      "start_utc": "2026-04-20T14:00:00Z",
+      "end_utc": "2026-04-20T20:00:00Z",
+      "url": "https://example.org/events/spring-market"
+    },
+    {
+      "uid": "sample-2",
+      "calendar": "Demo Convention Center",
+      "calendar_slug": "demo-convention-center-growthzone-html",
+      "source": "Demo Convention Center",
+      "title": "Manufacturing Expo",
+      "location": "Expo Hall A",
+      "start_utc": "2026-05-04T15:00:00Z",
+      "end_utc": "2026-05-04T23:00:00Z",
+      "url": "https://example.org/events/manufacturing-expo"
+    },
+    {
+      "uid": "sample-3",
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "calendar_slug": "manitowish-waters-chamber-tec",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Lakeside Summer Concert",
+      "location": "Koller Park, Manitowish Waters, WI",
+      "start_utc": "2026-06-15T23:00:00Z",
+      "end_utc": "2026-06-16T01:00:00Z",
+      "url": "https://manitowishwaters.org/event/lakeside-summer-concert",
+      "source_url": "https://manitowishwaters.org/event/rss/"
+    },
+    {
+      "uid": "sample-4",
+      "calendar": "St. Germain Chamber (WP)",
+      "calendar_slug": "st-germain-chamber-wp",
+      "source": "St. Germain Chamber (WP)",
+      "title": "Pioneer Lake Ice Fishing Jamboree",
+      "location": "St. Germain Community Park",
+      "start_utc": "2026-02-07T15:00:00Z",
+      "end_utc": "2026-02-07T21:00:00Z",
+      "url": "https://st-germain.com/events/pioneer-lake-ice-fishing-jamboree",
+      "source_url": "https://st-germain.com/events/"
+    }
+  ]
+}
