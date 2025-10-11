@@ -358,7 +358,24 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
             fetcher = None
         if fetcher is None:
             raise RuntimeError("stgermain_wp: parser not available")
-        return fetcher(source=source, start_date=start_date, end_date=end_date) or []
+        meta: Dict[str, Any] = {}
+        events: List[Dict[str, Any]] = []
+        try:
+            events = fetcher(source=source, start_date=start_date, end_date=end_date) or []
+        except Exception as exc:
+            meta.setdefault("warnings", []).append(f"stgermain_wp fetch failed: {exc}")
+
+        if not events:
+            try:
+                html_events = fetch_tec_html(source=source, start_date=start_date, end_date=end_date) or []
+                if html_events:
+                    meta.setdefault("notes", []).append("Used TEC HTML fallback")
+                    events = html_events
+            except Exception as exc:
+                meta.setdefault("warnings", []).append(f"TEC HTML fallback failed: {exc}")
+
+        _set_meta(source, meta)
+        return events
 
     raise RuntimeError(f"Unsupported source type: {stype}")
 
