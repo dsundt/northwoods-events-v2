@@ -336,14 +336,7 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
         return fetch_tec_html(source=source, start_date=start_date, end_date=end_date) or []
 
     if stype == "tec_rss":
-        meta: Dict[str, Any] = {}
-        try:
-            events = fetch_tec_rss(source=source, start_date=start_date, end_date=end_date) or []
-        except Exception as exc:
-            meta.setdefault("warnings", []).append(f"tec_rss failed: {exc}")
-            events = []
-        _set_meta(source, meta)
-        return events
+        return fetch_tec_rss(source=source, start_date=start_date, end_date=end_date) or []
 
     if stype == "simpleview_html":
         if not url: raise RuntimeError("simpleview_html: missing url")
