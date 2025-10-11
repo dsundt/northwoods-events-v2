@@ -18,12 +18,13 @@ No external dependencies beyond icalendar and python-dateutil (already in requir
 from __future__ import annotations
 
 import os
-import re
 from datetime import timedelta, timezone
 from typing import Dict, Iterable, List, Tuple
 
 from dateutil import parser as dtparse
 from icalendar import Calendar, Event
+
+from src.util import slugify
 
 
 # -------------------------
@@ -31,14 +32,6 @@ from icalendar import Calendar, Event
 # -------------------------
 
 UTC = timezone.utc
-
-
-def _slugify(text: str) -> str:
-    text = text.strip().lower()
-    text = re.sub(r"[^\w\s-]", "", text)
-    text = re.sub(r"[\s_-]+", "-", text)
-    text = re.sub(r"^-+|-+$", "", text)
-    return text or "calendar"
 
 
 def _parse_dt(s: str | None):
@@ -124,6 +117,16 @@ def write_combined_ics(events: Iterable[dict], out_path: str) -> Tuple[int, str]
     return count, out_path
 
 
+def _dedupe_slug(base: str, used: set[str]) -> str:
+    slug = base
+    suffix = 1
+    while slug in used:
+        suffix += 1
+        slug = f"{base}-{suffix}"
+    used.add(slug)
+    return slug
+
+
 def write_per_source_ics(events_or_map, out_dir: str) -> Dict[str, str]:
     """
     Write one ICS file per source/group.
@@ -136,29 +139,53 @@ def write_per_source_ics(events_or_map, out_dir: str) -> Dict[str, str]:
             target directory (e.g., 'public/by-source').
 
     Returns:
-        dict: {group_name: written_file_path}
+        dict: {slug: written_file_path}
     """
     _ensure_dir(out_dir)
 
     # Build groups
+    meta: Dict[str, Dict[str, str]] = {}
     if isinstance(events_or_map, dict):
-        groups = {k: list(v or []) for k, v in events_or_map.items()}
+        groups = {}
+        for key, value in events_or_map.items():
+            if isinstance(value, dict) and "events" in value:
+                groups[key] = list(value.get("events") or [])
+                meta[key] = {
+                    "display": value.get("name") or key,
+                    "slug": value.get("slug") or key,
+                }
+            else:
+                groups[key] = list(value or [])
+                meta[key] = {
+                    "display": key,
+                    "slug": "",
+                }
     else:
         groups = {}
         for ev in list(events_or_map or []):
             key = ev.get("calendar") or ev.get("source") or "Calendar"
             groups.setdefault(key, []).append(ev)
+        for key in groups:
+            meta[key] = {
+                "display": key,
+                "slug": "",
+            }
 
     written: Dict[str, str] = {}
+    used_slugs: set[str] = set()
     for name, evs in groups.items():
         if not evs:
             continue
-        cal = _events_to_calendar(evs, cal_name=name)
-        slug = _slugify(name)
+        info = meta.get(name, {})
+        display = info.get("display") or name
+        slug_hint = info.get("slug") or ""
+        base_slug = slug_hint or slugify(display, fallback="calendar")
+        slug = _dedupe_slug(base_slug, used_slugs)
+        cal = _events_to_calendar(evs, cal_name=display)
         path = os.path.join(out_dir, f"{slug}.ics")
         _ensure_dir(os.path.dirname(path))
         with open(path, "wb") as f:
             f.write(cal.to_ical())
-        written[name] = path
+        written[slug] = path
 
     return written
