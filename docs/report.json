@@ -1,8 +1,8 @@
 {
   "version": "2024.03-sample",
   "run_started_utc": "2025-03-01T12:00:00Z",
-  "total_events": 3,
-  "sources_processed": 3,
+  "total_events": 4,
+  "sources_processed": 4,
   "source_logs": [
     {
       "id": "sample-chamber",
@@ -39,11 +39,25 @@
       "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
       "warnings": [],
       "notes": [
-        "Used TEC RSS feed: https://manitowishwaters.org/event/rss/"
+        "Used TEC ICS fallback: https://manitowishwaters.org/events/?ical=1"
+      ]
+    },
+    {
+      "id": "st-germain-wp",
+      "name": "St. Germain Chamber (WP)",
+      "type": "stgermain_wp",
+      "url": "https://st-germain.com/events/",
+      "count": 1,
+      "ok": true,
+      "slug": "st-germain-chamber-wp",
+      "ics_path": "by-source/st-germain-chamber-wp.ics",
+      "warnings": [],
+      "notes": [
+        "Used TEC HTML fallback"
       ]
     }
   ],
-  "events_preview_count": 3,
+  "events_preview_count": 4,
   "events_preview": [
     {
       "uid": "sample-1",
@@ -77,7 +91,19 @@
       "start_utc": "2026-06-15T23:00:00Z",
       "end_utc": "2026-06-16T01:00:00Z",
       "url": "https://manitowishwaters.org/event/lakeside-summer-concert",
-      "source_url": "https://manitowishwaters.org/event/rss/"
+      "source_url": "https://manitowishwaters.org/events/?ical=1"
+    },
+    {
+      "uid": "sample-4",
+      "calendar": "St. Germain Chamber (WP)",
+      "calendar_slug": "st-germain-chamber-wp",
+      "source": "St. Germain Chamber (WP)",
+      "title": "Pioneer Lake Ice Fishing Jamboree",
+      "location": "St. Germain Community Park",
+      "start_utc": "2026-02-07T15:00:00Z",
+      "end_utc": "2026-02-07T21:00:00Z",
+      "url": "https://st-germain.com/events/pioneer-lake-ice-fishing-jamboree",
+      "source_url": "https://st-germain.com/events/"
     }
   ],
   "normalized_events": [
@@ -113,7 +139,19 @@
       "start_utc": "2026-06-15T23:00:00Z",
       "end_utc": "2026-06-16T01:00:00Z",
       "url": "https://manitowishwaters.org/event/lakeside-summer-concert",
-      "source_url": "https://manitowishwaters.org/event/rss/"
+      "source_url": "https://manitowishwaters.org/events/?ical=1"
+    },
+    {
+      "uid": "sample-4",
+      "calendar": "St. Germain Chamber (WP)",
+      "calendar_slug": "st-germain-chamber-wp",
+      "source": "St. Germain Chamber (WP)",
+      "title": "Pioneer Lake Ice Fishing Jamboree",
+      "location": "St. Germain Community Park",
+      "start_utc": "2026-02-07T15:00:00Z",
+      "end_utc": "2026-02-07T21:00:00Z",
+      "url": "https://st-germain.com/events/pioneer-lake-ice-fishing-jamboree",
+      "source_url": "https://st-germain.com/events/"
     }
   ]
 }
