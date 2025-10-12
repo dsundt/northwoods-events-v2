@@ -26,12 +26,6 @@
   url: https://st-germain.com/events/
   timezone: America/Chicago
 
-- name: Rhinelander Chamber (GrowthZone)
-  id: rhin elander-chamber-growthzone
-  type: growthzone_html
-  url: https://business.rhinelanderchamber.com/events/calendar
-  timezone: America/Chicago
-
 - name: Let’s Minocqua (Simpleview)
   id: lets-minocqua-simpleview
   type: simpleview_html
@@ -42,4 +36,14 @@
   id: vilas-county-tourism-tec
   type: tec_rest
   url: https://vilaswi.com/
+  timezone: America/Chicago
+
+- name: Manitowish Waters Chamber (TEC)
+  id: manitowish-waters-chamber-tec
+  type: tec_rss
+  url: https://manitowishwaters.org/event/rss/
+  calendar: https://manitowishwaters.org/events/
+  fallback_ics: https://manitowishwaters.org/events/?ical=1
+  prefer_fallback: true
+  allow_html_fallback: true
   timezone: America/Chicago

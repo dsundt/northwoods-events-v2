@@ -37,7 +37,29 @@ def _coerce_signature(args, kwargs):
     return source, session, start_date, end_date
 
 def _src_url(source):
-    return source if isinstance(source, str) else (source.get("url") if source else None)
+    if isinstance(source, str):
+        return source
+    if not source:
+        return None
+
+    url = source.get("url") if isinstance(source, dict) else None
+    calendar = None
+    if isinstance(source, dict):
+        calendar = source.get("calendar") or source.get("calendar_url")
+
+    if url:
+        lowered = url.lower()
+        looks_like_feed = (
+            lowered.endswith(".rss")
+            or "/rss" in lowered
+            or lowered.endswith("/feed")
+            or lowered.endswith("/feed/")
+        )
+        if looks_like_feed and calendar:
+            return calendar
+        return url
+
+    return calendar
 
 def _src_name(source, default="TEC HTML"):
     return default if isinstance(source, str) else (source.get("name") or default)
