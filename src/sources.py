@@ -6,6 +6,7 @@ from src.util import slugify
 SUPPORTED_TYPES = {
     "tec_rest",
     "tec_html",
+    "tec_rss",
     "growthzone_html",
     "simpleview_html",
     "ics",
