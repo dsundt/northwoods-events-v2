@@ -40,10 +40,7 @@
 
 - name: Manitowish Waters Chamber (TEC)
   id: manitowish-waters-chamber-tec
-  type: tec_rss
-  url: https://manitowishwaters.org/event/rss/
-  calendar: https://manitowishwaters.org/events/
+  type: tec_html
+  url: https://manitowishwaters.org/events/
   fallback_ics: https://manitowishwaters.org/events/?ical=1
-  prefer_fallback: true
-  allow_html_fallback: true
   timezone: America/Chicago

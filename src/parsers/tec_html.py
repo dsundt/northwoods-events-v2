@@ -7,6 +7,10 @@ from urllib.parse import urljoin
 
 from src.util import expand_tec_ics_urls
 
+_UA = {
+    "User-Agent": "Mozilla/5.0 (compatible; northwoods-events/2.0; +https://github.com/dsundt/northwoods-events-v2)"
+}
+
 # -------------------- call-shape normalization --------------------
 
 def _coerce_signature(args, kwargs):
@@ -341,10 +345,38 @@ def fetch_tec_html(*args, **kwargs):
         import requests
         session = requests.Session()
         own_session = True
+        try:
+            session.headers.update(_UA)
+        except Exception:
+            pass
+    else:
+        # Ensure custom sessions carry a UA so hosts do not reject the scrape.
+        try:
+            for k, v in _UA.items():
+                session.headers.setdefault(k, v)
+        except Exception:
+            pass
 
     try:
         # --- ICS first ---
-        candidates = expand_tec_ics_urls(base, start_date, end_date)
+        candidates = []
+        seen: set[str] = set()
+
+        def _extend(url: str | None) -> None:
+            if not url:
+                return
+            for candidate in expand_tec_ics_urls(url, start_date, end_date):
+                if candidate in seen:
+                    continue
+                seen.add(candidate)
+                candidates.append(candidate)
+
+        _extend(base)
+        fallback_ics = None
+        if isinstance(source, dict):
+            fallback_ics = source.get("fallback_ics") or source.get("ics_url")
+        if fallback_ics:
+            _extend(str(fallback_ics))
 
         ics_text = None
         for u in candidates:
