@@ -2,8 +2,10 @@
 from __future__ import annotations
 import json
 from datetime import datetime
-from typing import Dict, List
 from pathlib import Path
+from typing import Dict, List
+
+from src.util import json_default
 
 def write_report(path: str, source_logs: List[Dict], events_preview: List[Dict]) -> None:
     data = {
@@ -18,4 +20,4 @@ def write_report(path: str, source_logs: List[Dict], events_preview: List[Dict])
     }
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=2, default=json_default)
