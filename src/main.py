@@ -9,6 +9,7 @@ from datetime import date, datetime, time, timedelta, timezone
 from dateutil import parser as dtparse
 from importlib import import_module
 from typing import Any, Dict, List, Optional
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 import yaml
 
@@ -60,131 +61,55 @@ def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
         "_source": raw.get("_source"),
     }
 
-# ---------- Rhinelander-only GrowthZone label fallback (surgical, opt-in by id) ----------
-def _gz_label(text: str, label: str) -> Optional[str]:
-    import re
-    m = re.search(rf"(?im)^{label}\s*:\s*(.+)$", text)
-    return m.group(1).strip() if m else None
+def _expand_ics_urls(base_url: str, start_date: datetime, end_date: datetime) -> List[str]:
+    """Return candidate ICS URLs including optional TEC range hints."""
 
-def _parse_rhinelander_detail_with_labels(html: str) -> Optional[Dict[str, Any]]:
-    import re
-    from html import unescape
-    from datetime import datetime
-    # strip to text
-    t = re.sub(r"(?is)<script[^>]*>.*?</script>|<style[^>]*>.*?</style>", "", html)
-    t = re.sub(r"(?is)<br\s*/?>|</p>", "\n", t)
-    t = re.sub(r"(?is)<[^>]+>", "", t)
-    t = unescape(t)
+    if not base_url:
+        return []
 
-    date_s = _gz_label(t, "Date")
-    if not date_s:
-        return None
-    m = re.search(r"(?i)\b([A-Z][a-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?,\s*(\d{4})", date_s)
-    if not m:
-        return None
-    mon, d, y = m.groups()
-    months = {m: i for i, m in enumerate(
-        ["January","February","March","April","May","June","July","August","September","October","November","December"], 1)}
-    M = months.get(mon)
-    if not M:
-        return None
-    start = datetime(int(y), M, int(d))
-    end = None
-
-    time_s = _gz_label(t, "Time")
-    if time_s:
-        rng = re.search(r"(?i)(\d{1,2}(?::\d{2})?\s*(am|pm))\s*(?:–|-|to)\s*(\d{1,2}(?::\d{2})?\s*(am|pm))", time_s)
-        single = re.search(r"(?i)(\d{1,2})(?::(\d{2}))?\s*(am|pm)", time_s)
-        def hm(h:int,m:int,ap:str)->tuple[int,int]:
-            ap = ap.lower()
-            if ap=="pm" and h!=12: h+=12
-            if ap=="am" and h==12: h=0
-            return h,m
-        if rng:
-            def split_hm(s: str) -> tuple[int,int]:
-                if ":" in s:
-                    h, mm = s.split(":", 1)
-                    return int(h), int(mm[:2])
-                return int(s), 0
-            h1,m1 = split_hm(rng.group(1)); ap1 = rng.group(2)
-            h2,m2 = split_hm(rng.group(3)); ap2 = rng.group(4)
-            H1,M1 = hm(h1,m1,ap1); H2,M2 = hm(h2,m2,ap2)
-            from datetime import datetime as dt
-            start = start.replace(hour=H1, minute=M1)
-            end = dt(start.year, start.month, start.day, H2, M2)
-        elif single:
-            h = int(single.group(1)); m = int(single.group(2) or 0); ap = single.group(3)
-            H,M = hm(h,m,ap)
-            start = start.replace(hour=H, minute=M)
-
-    loc = _gz_label(t, "Location")
-
-    return {
-        "title": None,
-        "start": start.isoformat(),
-        "end": end.isoformat() if end else None,
-        "start_utc": start.isoformat(),
-        "end_utc": end.isoformat() if end else None,
-        "location": loc,
+    placeholders = {
+        "start_date": _ymd(start_date),
+        "end_date": _ymd(end_date),
+        "start_iso": start_date.isoformat(),
+        "end_iso": end_date.isoformat(),
     }
 
-def _rhinelander_growthzone_fallback(calendar_url: str,
-                                     start_date: datetime,
-                                     end_date: datetime) -> List[Dict[str, Any]]:
-    """
-    ONLY used for 'rhinelander-chamber-growthzone' if the normal parser yields no dated events.
-    Scrapes the calendar page for /events/details links and parses Date/Time/Location labels.
-    """
-    import re, requests
-    from urllib.parse import urljoin
-    detail_re = re.compile(r'href=["\']([^"\']*(?:/events?/details)[^"\']*)["\']', re.I)
-    try:
-        s = requests.Session()
-        r = s.get(calendar_url, timeout=30)
-        if not r.ok:
-            return []
-        html = r.text
-        links = set()
-        base = calendar_url
-        for m in detail_re.finditer(html):
-            href = m.group(1)
-            if not href.lower().startswith(("http://","https://")):
-                href = urljoin(base, href)
-            links.add(href)
-
-        out: List[Dict[str, Any]] = []
-        for href in sorted(links):
+    def _format(url: str) -> str:
+        if "{" in url and "}" in url:
             try:
-                d = s.get(href, timeout=30)
-                if not d.ok: 
-                    continue
-                ev = _parse_rhinelander_detail_with_labels(d.text)
-                if not ev:
-                    continue
-                # inject title and url
-                tm = re.search(r"(?is)<h1[^>]*>(.*?)</h1>", d.text)
-                from html import unescape
-                title = tm.group(1) if tm else "(untitled)"
-                title = unescape(re.sub(r"(?is)<[^>]+>", "", title)).strip()
-                ev["title"] = title
-                ev["url"] = href
-                ev["source"] = "Rhinelander Chamber (GrowthZone)"
-                ev["_source"] = "growthzone_html"
-                # window filter
-                try:
-                    siso = ev.get("start") or ev.get("start_utc")
-                    if siso:
-                        dt = datetime.fromisoformat(siso.split("+")[0])
-                        if not (start_date <= dt <= end_date):
-                            continue
-                except Exception:
-                    pass
-                out.append(ev)
+                return url.format(**placeholders)
             except Exception:
+                return url
+        return url
+
+    def _dedupe(items: List[str]) -> List[str]:
+        seen: set[str] = set()
+        out: List[str] = []
+        for item in items:
+            if not item or item in seen:
                 continue
+            seen.add(item)
+            out.append(item)
         return out
-    except Exception:
-        return []
+
+    initial = _format(base_url)
+    candidates = [initial]
+
+    lowered = initial.lower()
+    if "tribe-bar-date" not in lowered:
+        parsed = urlparse(initial)
+        query_items = parse_qsl(parsed.query, keep_blank_values=True)
+        have_bar = any(k.lower() == "tribe-bar-date" for k, _ in query_items)
+        have_display = any(k.lower() == "tribe_display" for k, _ in query_items)
+        if not have_bar:
+            query_items.append(("tribe-bar-date", _ymd(start_date)))
+        if not have_display:
+            query_items.append(("tribe_display", "list"))
+        if not have_bar or not have_display:
+            new_query = urlencode(query_items, doseq=True)
+            candidates.append(urlunparse(parsed._replace(query=new_query)))
+
+    return _dedupe(candidates)
 
 # ---------- Fetch router ----------
 def _to_utc(dt_val: Any) -> Optional[datetime]:
@@ -281,21 +206,31 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
         fallback_ics = source.get("fallback_ics") or source.get("ics_url")
         allow_html_fallback = bool(source.get("allow_html_fallback") or prefer_fallback)
         if fallback_ics and _fetch_ics_raw is not None:
-            try:
-                ics_events, _ = _fetch_ics_raw(fallback_ics, _ymd(start_date), _ymd(end_date))
-                converted = _ics_events_as_dicts(ics_events, name, fallback_ics, start_date, end_date)
+            ics_attempt_warnings: List[str] = []
+            for candidate in _expand_ics_urls(str(fallback_ics), start_date, end_date):
+                try:
+                    ics_events, _ = _fetch_ics_raw(candidate, _ymd(start_date), _ymd(end_date))
+                except Exception as exc:
+                    ics_attempt_warnings.append(f"ics fallback failed for {name}: {exc} ({candidate})")
+                    continue
+
+                converted = _ics_events_as_dicts(ics_events, name, candidate, start_date, end_date)
                 if converted:
-                    note_msg = f"Used TEC ICS fallback: {fallback_ics}"
+                    note_msg = f"Used TEC ICS fallback: {candidate}"
                     if prefer_fallback:
                         meta.setdefault("notes", []).append(note_msg)
                     else:
                         meta.setdefault("warnings", []).append(note_msg)
+                    if ics_attempt_warnings:
+                        meta.setdefault("warnings", []).extend(ics_attempt_warnings)
                     _set_meta(source, meta)
                     print(f"[northwoods] INFO: tec_rest fallback via ICS for {name}")
                     return converted
-                meta.setdefault("warnings", []).append("ics fallback returned no events")
-            except Exception as exc:
-                meta.setdefault("warnings", []).append(f"ics fallback failed for {name}: {exc}")
+
+                ics_attempt_warnings.append(f"ics fallback returned no events ({candidate})")
+
+            if ics_attempt_warnings:
+                meta.setdefault("warnings", []).extend(ics_attempt_warnings)
 
         if allow_html_fallback and not events:
             try:
@@ -323,14 +258,7 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
         return events
 
     if stype == "growthzone_html":
-        events = fetch_growthzone_html(source=source, start_date=start_date, end_date=end_date) or []
-        # Rhinelander-only fallback if parser produced nothing with a date
-        if sid == "rhinelander-chamber-growthzone":
-            has_dated = any(e.get("start") or e.get("start_utc") for e in events)
-            if not has_dated:
-                events = _rhinelander_growthzone_fallback(url or "https://business.rhinelanderchamber.com/events/calendar",
-                                                          start_date, end_date) or events
-        return events
+        return fetch_growthzone_html(source=source, start_date=start_date, end_date=end_date) or []
 
     if stype == "tec_html":
         return fetch_tec_html(source=source, start_date=start_date, end_date=end_date) or []
@@ -355,21 +283,31 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
                 meta.setdefault("warnings", []).append(f"tec_rss failed: {exc}")
 
         if fallback_ics and _fetch_ics_raw is not None:
-            try:
-                ics_events, _ = _fetch_ics_raw(fallback_ics, _ymd(start_date), _ymd(end_date))
-                converted = _ics_events_as_dicts(ics_events, name, fallback_ics, start_date, end_date)
+            ics_attempt_warnings: List[str] = []
+            for candidate in _expand_ics_urls(str(fallback_ics), start_date, end_date):
+                try:
+                    ics_events, _ = _fetch_ics_raw(candidate, _ymd(start_date), _ymd(end_date))
+                except Exception as exc:
+                    ics_attempt_warnings.append(f"ics fallback failed for {name}: {exc} ({candidate})")
+                    continue
+
+                converted = _ics_events_as_dicts(ics_events, name, candidate, start_date, end_date)
                 if converted:
-                    note_msg = f"Used TEC ICS fallback: {fallback_ics}"
+                    note_msg = f"Used TEC ICS fallback: {candidate}"
                     if prefer_fallback:
                         meta.setdefault("notes", []).append(note_msg)
                     else:
                         meta.setdefault("warnings", []).append(note_msg)
+                    if ics_attempt_warnings:
+                        meta.setdefault("warnings", []).extend(ics_attempt_warnings)
                     _set_meta(source, meta)
                     print(f"[northwoods] INFO: tec_rss fallback via ICS for {name}")
                     return converted
-                meta.setdefault("warnings", []).append("ics fallback returned no events")
-            except Exception as exc:
-                meta.setdefault("warnings", []).append(f"ics fallback failed for {name}: {exc}")
+
+                ics_attempt_warnings.append(f"ics fallback returned no events ({candidate})")
+
+            if ics_attempt_warnings:
+                meta.setdefault("warnings", []).extend(ics_attempt_warnings)
 
         if allow_html_fallback:
             try:
