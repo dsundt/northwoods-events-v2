@@ -3,7 +3,9 @@ import re
 import json
 from html import unescape
 from datetime import datetime, date
-from urllib.parse import urljoin, urlparse, urlunparse
+from urllib.parse import urljoin
+
+from src.util import expand_tec_ics_urls
 
 # -------------------- call-shape normalization --------------------
 
@@ -37,7 +39,29 @@ def _coerce_signature(args, kwargs):
     return source, session, start_date, end_date
 
 def _src_url(source):
-    return source if isinstance(source, str) else (source.get("url") if source else None)
+    if isinstance(source, str):
+        return source
+    if not source:
+        return None
+
+    url = source.get("url") if isinstance(source, dict) else None
+    calendar = None
+    if isinstance(source, dict):
+        calendar = source.get("calendar") or source.get("calendar_url")
+
+    if url:
+        lowered = url.lower()
+        looks_like_feed = (
+            lowered.endswith(".rss")
+            or "/rss" in lowered
+            or lowered.endswith("/feed")
+            or lowered.endswith("/feed/")
+        )
+        if looks_like_feed and calendar:
+            return calendar
+        return url
+
+    return calendar
 
 def _src_name(source, default="TEC HTML"):
     return default if isinstance(source, str) else (source.get("name") or default)
@@ -320,16 +344,7 @@ def fetch_tec_html(*args, **kwargs):
 
     try:
         # --- ICS first ---
-        candidates = []
-        if base.endswith("/"):
-            candidates.append(base + "?ical=1")
-        else:
-            candidates.append(base + "/?ical=1")
-
-        parts = list(urlparse(base))
-        parts[2] = parts[2].rstrip("/")
-        for tail in ("/events/?ical=1", "/event/?ical=1", "/?ical=1"):
-            candidates.append(urlunparse(parts[:2] + [parts[2] + tail] + parts[3:]))
+        candidates = expand_tec_ics_urls(base, start_date, end_date)
 
         ics_text = None
         for u in candidates:

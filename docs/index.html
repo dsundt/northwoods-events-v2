@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Northwoods Events – Debug Viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:16px;line-height:1.35}
+  h1{margin:0 0 8px}
+  .row{display:flex;gap:16px;flex-wrap:wrap}
+  .card{border:1px solid #ddd;border-radius:10px;padding:12px}
+  .pill{display:inline-block;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:999px;padding:2px 8px;margin:2px;font-size:12px}
+  table{border-collapse:collapse;width:100%;margin-top:10px}
+  th,td{border:1px solid #e5e7eb;padding:6px 8px;font-size:14px;vertical-align:top}
+  th{background:#f8fafc;text-align:left;position:sticky;top:0}
+  details summary{cursor:pointer;font-weight:600}
+  .muted{color:#6b7280}
+  .ok{color:#059669}
+  .err{color:#b91c1c}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+  .src-toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:4px 8px;background:#fff;cursor:pointer}
+  .src-toggle input{margin:0}
+</style>
+</head>
+<body>
+  <h1>Northwoods Events — Build Report</h1>
+  <div id="meta" class="muted"></div>
+
+  <details open>
+    <summary>Sources</summary>
+    <div id="sources" class="row"></div>
+  </details>
+
+  <div class="controls">
+    <strong>Show calendars:</strong>
+    <span id="toggles"></span>
+    <label class="src-toggle"><input type="checkbox" id="futureOnly" checked /> Future only</label>
+    <input id="search" placeholder="Filter by title/location…" style="flex:1;min-width:220px;padding:6px 10px;border:1px solid #ddd;border-radius:8px" />
+  </div>
+
+  <div class="card">
+    <div id="counts" class="muted"></div>
+    <table id="tbl">
+      <thead>
+        <tr><th>Date</th><th>Title</th><th>Location</th><th>Calendar</th><th>URL</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+<script>
+(async function(){
+  const res = await fetch('report.json', {cache:'no-store'});
+  if(!res.ok){ document.getElementById('meta').textContent='Failed to load report.json'; return; }
+  const data = await res.json();
+
+  // Tolerant event extraction
+  let events = Array.isArray(data.events) ? data.events :
+               (Array.isArray(data.events_preview) ? data.events_preview : []);
+  const sources = Array.isArray(data.source_logs) ? data.source_logs : [];
+
+  const $meta = document.getElementById('meta');
+  $meta.textContent = `Report v${data.version || 'n/a'} • started ${data.run_started_utc || 'n/a'} • total_events=${data.total_events ?? events.length} • sources=${data.sources_processed ?? sources.length}`;
+
+  // Build source cards & toggles
+  const $sources = document.getElementById('sources');
+  const $toggles = document.getElementById('toggles');
+  const active = new Map();
+
+  function pill(txt, cls){ const s = document.createElement('span'); s.className='pill '+(cls||''); s.textContent=txt; return s; }
+
+  sources.forEach(s=>{
+    const card = document.createElement('div'); card.className='card';
+    const title = document.createElement('div'); title.innerHTML = `<strong>${s.name}</strong><br><span class="muted">${s.url}</span>`;
+    const row = document.createElement('div');
+    row.appendChild(pill(s.type));
+    row.appendChild(pill(`parsed: ${s.count}`));
+    row.appendChild(pill(s.ok ? 'ok' : 'error', s.ok ? 'ok' : 'err'));
+    if(!s.ok && s.error){ const e = document.createElement('div'); e.className='err'; e.textContent = s.error; card.appendChild(e); }
+    card.appendChild(title); card.appendChild(row);
+    $sources.appendChild(card);
+
+    // Toggle
+    const id = s.id || s.name || s.url;
+    const label = document.createElement('label'); label.className='src-toggle';
+    const chk = document.createElement('input'); chk.type='checkbox'; chk.checked = true; chk.dataset.id = id;
+    label.appendChild(chk);
+    label.appendChild(document.createTextNode(s.name));
+    $toggles.appendChild(label);
+    active.set(id, true);
+  });
+
+  // Some builds only include preview events; enrich each with calendar id if missing
+  const mapByName = new Map(sources.map(s=>[s.name, s.id || s.name]));
+  events = events.map(ev=>{
+    const cal = ev.calendar || ev.source || '';
+    const id = mapByName.get(cal) || ev.source || cal || 'unknown';
+    return {...ev, calendar: cal, _sid: id};
+  });
+
+  // Tolerant date parser (ISO or "YYYY-MM-DD HH:mm:ss")
+  function parseDate(s){
+    if(!s) return null;
+    // normalize space-separated to ISO
+    const isoish = s.includes('T') ? s : s.replace(' ', 'T');
+    const t = Date.parse(isoish);
+    return isNaN(t) ? null : new Date(t);
+  }
+
+  const $tbody = document.querySelector('#tbl tbody');
+  const $counts = document.getElementById('counts');
+  const $futureOnly = document.getElementById('futureOnly');
+  const $search = document.getElementById('search');
+
+  function render(){
+    const now = new Date();
+    const q = ($search.value || '').toLowerCase();
+    const act = new Set([...active.entries()].filter(([,v])=>v).map(([k])=>k));
+
+    const filtered = events.filter(ev=>{
+      if(!act.has(ev._sid)) return false;
+      const d = parseDate(ev.start_utc || ev.start || ev.startISO || ev.startIso);
+      if($futureOnly.checked && d && d < now) return false;
+      if(q){
+        const hay = `${ev.title||''} ${ev.location||''} ${ev.calendar||''}`.toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
+    // Sort by start date
+    filtered.sort((a,b)=>{
+      const da = parseDate(a.start_utc || a.start || '');
+      const db = parseDate(b.start_utc || b.start || '');
+      return (da?.getTime()||0) - (db?.getTime()||0);
+    });
+
+    $tbody.innerHTML='';
+    for(const ev of filtered){
+      const tr = document.createElement('tr');
+      const d = parseDate(ev.start_utc || ev.start || '');
+      const dateText = d ? d.toLocaleString() : (ev.start_utc || ev.start || '');
+      tr.innerHTML = `
+        <td>${dateText || ''}</td>
+        <td>${(ev.title||'').replace(/&amp;/g,'&')}</td>
+        <td>${ev.location||''}</td>
+        <td>${ev.calendar||''}</td>
+        <td>${ev.url ? `<a href="${ev.url}" target="_blank" rel="noopener">link</a>` : ''}</td>
+      `;
+      $tbody.appendChild(tr);
+    }
+
+    // counts
+    const per = {};
+    for(const s of sources){ per[s.name]=0; }
+    for(const ev of filtered){ per[ev.calendar] = (per[ev.calendar]||0)+1; }
+    $counts.textContent = `Showing ${filtered.length} events • ` + Object.entries(per).map(([k,v])=>`${k}: ${v}`).join('  |  ');
+  }
+
+  // Toggle handlers
+  $toggles.addEventListener('change', (e)=>{
+    if(e.target && e.target.matches('input[type=checkbox][data-id]')){
+      active.set(e.target.dataset.id, e.target.checked);
+      render();
+    }
+  });
+  $futureOnly.addEventListener('change', render);
+  $search.addEventListener('input', render);
+
+  render();
+})();
+</script>
+</body>
+</html>
