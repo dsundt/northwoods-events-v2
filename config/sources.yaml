@@ -43,3 +43,13 @@
   type: simpleview_html
   url: https://manitowishwaters.org/event/rss/
   timezone: America/Chicago
+
+# Sayner–Star Lake–Cloverland (TEC)
+- name: Sayner Star Lake Cloverland (TEC)
+  id: sayner-star-lake-cloverland-tec
+  type: tec_rest
+  url: https://sayner-starlake-cloverland.org/
+  timezone: America/Chicago
+  # Use ICS and HTML as resilient fallbacks
+  fallback_ics: https://sayner-starlake-cloverland.org/events/?ical=1
+  allow_html_fallback: true
