@@ -3,7 +3,9 @@ import re
 import json
 from html import unescape
 from datetime import datetime, date
-from urllib.parse import urljoin, urlparse, urlunparse
+from urllib.parse import urljoin
+
+from src.util import expand_tec_ics_urls
 
 # -------------------- call-shape normalization --------------------
 
@@ -342,16 +344,7 @@ def fetch_tec_html(*args, **kwargs):
 
     try:
         # --- ICS first ---
-        candidates = []
-        if base.endswith("/"):
-            candidates.append(base + "?ical=1")
-        else:
-            candidates.append(base + "/?ical=1")
-
-        parts = list(urlparse(base))
-        parts[2] = parts[2].rstrip("/")
-        for tail in ("/events/?ical=1", "/event/?ical=1", "/?ical=1"):
-            candidates.append(urlunparse(parts[:2] + [parts[2] + tail] + parts[3:]))
+        candidates = expand_tec_ics_urls(base, start_date, end_date)
 
         ics_text = None
         for u in candidates:

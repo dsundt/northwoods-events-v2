@@ -9,13 +9,12 @@ from datetime import date, datetime, time, timedelta, timezone
 from dateutil import parser as dtparse
 from importlib import import_module
 from typing import Any, Dict, List, Optional
-from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 import yaml
 
 # shared helpers
 from src.ics_writer import write_combined_ics, write_per_source_ics
-from src.util import slugify, json_default
+from src.util import slugify, json_default, expand_tec_ics_urls
 
 # ---- Parsers in this repo (unchanged) ----
 from src.parsers import (
@@ -60,56 +59,6 @@ def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
         "url": raw.get("url") or raw.get("link"),
         "_source": raw.get("_source"),
     }
-
-def _expand_ics_urls(base_url: str, start_date: datetime, end_date: datetime) -> List[str]:
-    """Return candidate ICS URLs including optional TEC range hints."""
-
-    if not base_url:
-        return []
-
-    placeholders = {
-        "start_date": _ymd(start_date),
-        "end_date": _ymd(end_date),
-        "start_iso": start_date.isoformat(),
-        "end_iso": end_date.isoformat(),
-    }
-
-    def _format(url: str) -> str:
-        if "{" in url and "}" in url:
-            try:
-                return url.format(**placeholders)
-            except Exception:
-                return url
-        return url
-
-    def _dedupe(items: List[str]) -> List[str]:
-        seen: set[str] = set()
-        out: List[str] = []
-        for item in items:
-            if not item or item in seen:
-                continue
-            seen.add(item)
-            out.append(item)
-        return out
-
-    initial = _format(base_url)
-    candidates = [initial]
-
-    lowered = initial.lower()
-    if "tribe-bar-date" not in lowered:
-        parsed = urlparse(initial)
-        query_items = parse_qsl(parsed.query, keep_blank_values=True)
-        have_bar = any(k.lower() == "tribe-bar-date" for k, _ in query_items)
-        have_display = any(k.lower() == "tribe_display" for k, _ in query_items)
-        if not have_bar:
-            query_items.append(("tribe-bar-date", _ymd(start_date)))
-        if not have_display:
-            query_items.append(("tribe_display", "list"))
-        if not have_bar or not have_display:
-            new_query = urlencode(query_items, doseq=True)
-            candidates.append(urlunparse(parsed._replace(query=new_query)))
-
-    return _dedupe(candidates)
 
 # ---------- Fetch router ----------
 def _to_utc(dt_val: Any) -> Optional[datetime]:
@@ -207,7 +156,7 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
         allow_html_fallback = bool(source.get("allow_html_fallback") or prefer_fallback)
         if fallback_ics and _fetch_ics_raw is not None:
             ics_attempt_warnings: List[str] = []
-            for candidate in _expand_ics_urls(str(fallback_ics), start_date, end_date):
+            for candidate in expand_tec_ics_urls(str(fallback_ics), start_date, end_date):
                 try:
                     ics_events, _ = _fetch_ics_raw(candidate, _ymd(start_date), _ymd(end_date))
                 except Exception as exc:
@@ -284,7 +233,7 @@ def _fetch_one(source: Dict[str, Any], start_date: datetime, end_date: datetime)
 
         if fallback_ics and _fetch_ics_raw is not None:
             ics_attempt_warnings: List[str] = []
-            for candidate in _expand_ics_urls(str(fallback_ics), start_date, end_date):
+            for candidate in expand_tec_ics_urls(str(fallback_ics), start_date, end_date):
                 try:
                     ics_events, _ = _fetch_ics_raw(candidate, _ymd(start_date), _ymd(end_date))
                 except Exception as exc:
