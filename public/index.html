@@ -20,6 +20,8 @@
   .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
   .src-toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid #ddd;border-radius:999px;padding:4px 8px;background:#fff;cursor:pointer}
   .src-toggle input{margin:0}
+  .btn{border:1px solid #ddd;border-radius:8px;padding:6px 10px;background:#fff;cursor:pointer}
+  .actions a{margin-right:8px;text-decoration:none}
 </style>
 </head>
 <body>
@@ -36,6 +38,7 @@
     <span id="toggles"></span>
     <label class="src-toggle"><input type="checkbox" id="futureOnly" checked /> Future only</label>
     <input id="search" placeholder="Filter by title/location…" style="flex:1;min-width:220px;padding:6px 10px;border:1px solid #ddd;border-radius:8px" />
+    <button id="resetFilters" class="btn" title="Reset filters">Reset</button>
   </div>
 
   <div class="card">
@@ -69,6 +72,24 @@
 
   function pill(txt, cls){ const s = document.createElement('span'); s.className='pill '+(cls||''); s.textContent=txt; return s; }
 
+  // Helper controls for filtering by a single source
+  function setAll(val){
+    for(const [k] of active){ active.set(k, !!val); }
+    document.querySelectorAll('input[type=checkbox][data-id]').forEach(chk=>{ chk.checked = !!val; });
+  }
+  function setOnly(id){
+    setAll(false);
+    if(active.has(id)){
+      active.set(id, true);
+      const chk = document.querySelector(`input[type=checkbox][data-id="${CSS.escape(id)}"]`);
+      if(chk) chk.checked = true;
+      const url = new URL(location.href);
+      url.searchParams.set('source', id);
+      history.replaceState(null, '', url);
+      render();
+    }
+  }
+
   sources.forEach(s=>{
     const card = document.createElement('div'); card.className='card';
     const title = document.createElement('div'); title.innerHTML = `<strong>${s.name}</strong><br><span class="muted">${s.url}</span>`;
@@ -88,7 +109,47 @@
     label.appendChild(document.createTextNode(s.name));
     $toggles.appendChild(label);
     active.set(id, true);
+
+    // Per-source actions: Only, ICS, JSON
+    if (id && typeof id === 'string'){
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+
+      const only = document.createElement('a');
+      only.href = `?source=${encodeURIComponent(id)}`;
+      only.textContent = 'Only';
+      only.addEventListener('click', (e)=>{ e.preventDefault(); setOnly(id); });
+      actions.appendChild(only);
+
+      const ics = document.createElement('a');
+      ics.href = `by-source/${id}.ics`;
+      ics.target = '_blank'; ics.rel = 'noopener'; ics.textContent = 'ICS';
+      actions.appendChild(ics);
+
+      const json = document.createElement('a');
+      json.href = `by-source/${id}.json`;
+      json.target = '_blank'; json.rel = 'noopener'; json.textContent = 'JSON';
+      actions.appendChild(json);
+
+      card.appendChild(actions);
+    }
   });
+
+  // Apply deep-link filter (?source=<id>[,id2])
+  (function applySourceParams(){
+    const params = new URLSearchParams(location.search);
+    const list = params.getAll('source').flatMap(v => (v||'').split(',')).map(v=>v.trim()).filter(Boolean);
+    if(list.length){
+      setAll(false);
+      for(const id of list){
+        if(active.has(id)){
+          active.set(id, true);
+          const chk = document.querySelector(`input[type=checkbox][data-id="${CSS.escape(id)}"]`);
+          if(chk) chk.checked = true;
+        }
+      }
+    }
+  })();
 
   // Some builds only include preview events; enrich each with calendar id if missing
   const mapByName = new Map(sources.map(s=>[s.name, s.id || s.name]));
@@ -166,6 +227,15 @@
   });
   $futureOnly.addEventListener('change', render);
   $search.addEventListener('input', render);
+
+  // Reset filters button
+  document.getElementById('resetFilters').addEventListener('click', ()=>{
+    setAll(true);
+    $search.value='';
+    $futureOnly.checked = true;
+    history.replaceState(null, '', location.pathname);
+    render();
+  });
 
   render();
 })();
