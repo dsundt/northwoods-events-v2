@@ -178,16 +178,20 @@
     const q = ($search.value || '').toLowerCase();
     const act = new Set([...active.entries()].filter(([,v])=>v).map(([k])=>k));
 
-    const filtered = events.filter(ev=>{
-      if(!act.has(ev._sid)) return false;
-      const d = parseDate(ev.start_utc || ev.start || ev.startISO || ev.startIso);
-      if($futureOnly.checked && d && d < now) return false;
-      if(q){
-        const hay = `${ev.title||''} ${ev.location||''} ${ev.calendar||''}`.toLowerCase();
-        if(!hay.includes(q)) return false;
-      }
-      return true;
-    });
+      const filtered = events.filter(ev=>{
+        if(!act.has(ev._sid)) return false;
+        const startDate = parseDate(ev.start_utc || ev.start || ev.startISO || ev.startIso);
+        const endDate = parseDate(ev.end_utc || ev.end || ev.endISO || ev.endIso);
+        if($futureOnly.checked){
+          const upcoming = (startDate && startDate >= now) || (endDate && endDate >= now);
+          if(!upcoming) return false;
+        }
+        if(q){
+          const hay = `${ev.title||''} ${ev.location||''} ${ev.calendar||''}`.toLowerCase();
+          if(!hay.includes(q)) return false;
+        }
+        return true;
+      });
 
     // Sort by start date
     filtered.sort((a,b)=>{
