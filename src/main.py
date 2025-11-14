@@ -36,6 +36,7 @@ REPORT_JSON_PATH = os.getenv("NW_REPORT_JSON", "report.json")
 BY_SOURCE_DIR = os.getenv("NW_BY_SOURCE_DIR", "by-source")
 COMBINED_ICS_PATH = os.getenv("NW_COMBINED_ICS", os.path.join("public", "combined.ics"))
 SOURCES_YAML = os.getenv("NW_SOURCES_YAML", "config/sources.yaml")
+EVENTS_PREVIEW_LIMIT = int(os.getenv("NW_EVENTS_PREVIEW_LIMIT", "0"))
 
 def _window() -> tuple[datetime, datetime]:
     now = datetime.now(timezone.utc)
@@ -521,7 +522,11 @@ def main() -> int:
         print(f"[northwoods] ERROR writing per-source ICS: {e}")
 
     normalized_preview = [_normalize_event(e) for e in all_events]
-    preview = normalized_preview[:500]
+    preview = (
+        normalized_preview[:EVENTS_PREVIEW_LIMIT]
+        if EVENTS_PREVIEW_LIMIT > 0
+        else normalized_preview
+    )
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "sources_processed": len(source_logs),
@@ -529,7 +534,7 @@ def main() -> int:
         "source_logs": source_logs,
         "events_preview": preview,
         "normalized_events": preview,
-        "events_preview_count": min(500, len(normalized_preview)),
+        "events_preview_count": len(preview),
     }
 
     try:
