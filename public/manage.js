@@ -924,10 +924,24 @@ async function checkICSFileExists(feedId) {
     }
 }
 
+// Slugify function matching Python backend
+function slugify(text) {
+    if (!text) return 'item';
+    return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')  // Keep only letters, numbers, spaces, hyphens
+        .replace(/[\s_]+/g, '-')        // Replace spaces and underscores with hyphens
+        .replace(/-+/g, '-')            // Replace multiple hyphens with single hyphen
+        .replace(/^-+|-+$/g, '');       // Remove leading/trailing hyphens
+}
+
 // Generate ICS URL for a feed
 function getICSUrl(feedId) {
     const baseUrl = window.location.origin + window.location.pathname.replace('/manage.html', '');
-    return `${baseUrl}/curated/${feedId}.ics`;
+    const slug = slugify(feedId);
+    return `${baseUrl}/curated/${slug}.ics`;
 }
 
 // Copy URL to clipboard
