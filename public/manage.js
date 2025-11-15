@@ -1110,13 +1110,16 @@ function previewFeed(feedId) {
                         ${escapeHtml(displayDesc)}
                     </p>
                 ` : ''}
-                ${url ? `
-                    <div style="margin-top: 0.5rem;">
+                <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    ${url ? `
                         <a href="${escapeHtml(url)}" target="_blank" class="btn btn-sm btn-primary" style="text-decoration: none; display: inline-block;">
                             🔗 View Details
                         </a>
-                    </div>
-                ` : ''}
+                    ` : ''}
+                    <button onclick='generateInstagramImage(${JSON.stringify(event).replace(/'/g, "\\'")})'  class="btn btn-sm btn-success">
+                        🎨 Generate Instagram Image
+                    </button>
+                </div>
             </div>
         `;
     }).join('');
@@ -1144,3 +1147,406 @@ function previewFeed(feedId) {
         previewDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
 }
+
+// ==================== INSTAGRAM IMAGE GENERATION ====================
+
+// OpenAI API configuration
+let OPENAI_API_KEY = localStorage.getItem('openai_api_key') || '';
+
+function configureOpenAIKey() {
+    const currentKey = OPENAI_API_KEY ? '••••••' + OPENAI_API_KEY.slice(-4) : 'Not configured';
+    
+    const dialog = document.createElement('div');
+    dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;';
+    
+    dialog.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+            <h2 style="margin-top: 0;">Configure OpenAI API Key</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Required for AI image generation. Get your key from: 
+                <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI Platform</a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Current key: <code>${currentKey}</code>
+            </p>
+            <input type="password" id="openai-key-input" placeholder="sk-..." 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 1rem; font-family: monospace;">
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <button onclick="this.closest('[style*=fixed]').remove()" class="btn btn-secondary">Cancel</button>
+                <button onclick="saveOpenAIKey()" class="btn btn-primary">Save Key</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+    document.getElementById('openai-key-input').focus();
+}
+
+function saveOpenAIKey() {
+    const input = document.getElementById('openai-key-input');
+    const key = input.value.trim();
+    
+    if (!key) {
+        showToast('Please enter an API key', 'danger');
+        return;
+    }
+    
+    if (!key.startsWith('sk-')) {
+        showToast('Invalid API key format. Should start with "sk-"', 'warning');
+        return;
+    }
+    
+    OPENAI_API_KEY = key;
+    localStorage.setItem('openai_api_key', key);
+    
+    document.querySelector('[style*="fixed"]').remove();
+    showToast('OpenAI API key saved!', 'success');
+}
+
+async function generateInstagramImage(event) {
+    if (!OPENAI_API_KEY) {
+        showToast('Please configure OpenAI API key first', 'warning');
+        configureOpenAIKey();
+        return;
+    }
+    
+    // Show generation dialog
+    showImageGenerationDialog(event);
+}
+
+function showImageGenerationDialog(event) {
+    const eventDate = new Date(event.start_utc);
+    const dateStr = eventDate.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        month: 'long', 
+        day: 'numeric',
+        year: 'numeric'
+    });
+    
+    const defaultPrompt = `Create a beautiful, vibrant Instagram post image for "${event.title}". 
+Style: Professional, eye-catching, suitable for tourism/events in the Northwoods region of Wisconsin. 
+Include elements that reflect the event's theme and the natural beauty of the area (lakes, forests, outdoor activities).
+Do not include any text in the image.`;
+    
+    const dialog = document.createElement('div');
+    dialog.id = 'instagram-dialog';
+    dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000; overflow-y: auto;';
+    
+    dialog.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; margin: 2rem;">
+            <h2 style="margin-top: 0;">🎨 Generate Instagram Image</h2>
+            
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0 0 0.5rem 0; font-size: 1rem;">${escapeHtml(event.title)}</h3>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">
+                    📅 ${dateStr}
+                    ${event.location ? `<br>📍 ${escapeHtml(event.location)}` : ''}
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">AI Image Prompt:</label>
+                <textarea id="image-prompt" rows="6" 
+                          style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; resize: vertical;">${defaultPrompt}</textarea>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    💡 Tip: Be specific about style, colors, and mood. Avoid requesting text in the image.
+                </div>
+            </div>
+            
+            <div id="generation-status" style="margin-bottom: 1rem;"></div>
+            <div id="image-preview" style="margin-bottom: 1rem;"></div>
+            
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap;">
+                <button onclick="document.getElementById('instagram-dialog').remove()" class="btn btn-secondary">Close</button>
+                <button onclick="configureOpenAIKey()" class="btn btn-secondary">⚙️ API Key</button>
+                <button onclick="startImageGeneration(${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-primary" id="generate-btn">
+                    ✨ Generate Image ($0.04)
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+}
+
+async function startImageGeneration(event) {
+    const promptInput = document.getElementById('image-prompt');
+    const statusDiv = document.getElementById('generation-status');
+    const generateBtn = document.getElementById('generate-btn');
+    const prompt = promptInput.value.trim();
+    
+    if (!prompt) {
+        showToast('Please enter a prompt', 'warning');
+        return;
+    }
+    
+    generateBtn.disabled = true;
+    generateBtn.textContent = '⏳ Generating...';
+    
+    statusDiv.innerHTML = `
+        <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 1rem; border-radius: 4px;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <div style="width: 20px; height: 20px; border: 3px solid #0066cc; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <span>Generating image with DALL-E 3... This may take 10-30 seconds.</span>
+            </div>
+        </div>
+        <style>
+            @keyframes spin { to { transform: rotate(360deg); } }
+        </style>
+    `;
+    
+    try {
+        // Call OpenAI DALL-E API
+        const response = await fetch('https://api.openai.com/v1/images/generations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${OPENAI_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: 'dall-e-3',
+                prompt: prompt,
+                n: 1,
+                size: '1024x1024',
+                quality: 'standard',
+                response_format: 'url'
+            })
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error?.message || 'Failed to generate image');
+        }
+        
+        const data = await response.json();
+        const imageUrl = data.data[0].url;
+        
+        // Download and process the image
+        await processGeneratedImage(imageUrl, event);
+        
+    } catch (error) {
+        console.error('Image generation error:', error);
+        statusDiv.innerHTML = `
+            <div style="background: #ffe7e7; border: 1px solid #ffb3b3; padding: 1rem; border-radius: 4px; color: #cc0000;">
+                <strong>Error:</strong> ${escapeHtml(error.message)}
+            </div>
+        `;
+        generateBtn.disabled = false;
+        generateBtn.textContent = '✨ Generate Image ($0.04)';
+    }
+}
+
+async function processGeneratedImage(imageUrl, event) {
+    const statusDiv = document.getElementById('generation-status');
+    const previewDiv = document.getElementById('image-preview');
+    const generateBtn = document.getElementById('generate-btn');
+    
+    statusDiv.innerHTML = `
+        <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
+            ⚙️ Processing image (adding text overlay and logo)...
+        </div>
+    `;
+    
+    try {
+        // Create canvas for Instagram size (1080x1080)
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 1080;
+        canvas.height = 1080;
+        
+        // Load and draw the AI-generated image
+        const aiImage = await loadImage(imageUrl);
+        ctx.drawImage(aiImage, 0, 0, 1080, 1080);
+        
+        // Add semi-transparent overlay at bottom for text readability
+        const gradient = ctx.createLinearGradient(0, 880, 0, 1080);
+        gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 880, 1080, 200);
+        
+        // Add event title
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 48px Arial, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 10;
+        
+        // Wrap text if needed
+        const titleLines = wrapText(ctx, event.title, 1020, 48);
+        let titleY = 950;
+        if (titleLines.length > 1) titleY = 920;
+        
+        titleLines.forEach((line, i) => {
+            ctx.fillText(line, 30, titleY + (i * 52));
+        });
+        
+        // Add date and location
+        ctx.font = '32px Arial, sans-serif';
+        ctx.shadowBlur = 8;
+        const eventDate = new Date(event.start_utc);
+        const dateStr = eventDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric',
+            year: 'numeric'
+        });
+        const locationStr = event.location || '';
+        const detailsText = locationStr ? `${dateStr} • ${locationStr}` : dateStr;
+        ctx.fillText(detailsText, 30, 1040);
+        
+        // Add Red Canoe logo with 30% opacity
+        try {
+            const logo = await loadImage('/northwoods-events-v2/assets/red-canoe-logo.png');
+            ctx.globalAlpha = 0.3;
+            const logoSize = 120;
+            ctx.drawImage(logo, 1080 - logoSize - 20, 1080 - logoSize - 20, logoSize, logoSize);
+            ctx.globalAlpha = 1.0;
+        } catch (err) {
+            console.warn('Logo not found, skipping overlay');
+        }
+        
+        // Convert to blob
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
+        const finalImageUrl = URL.createObjectURL(blob);
+        
+        // Show preview
+        statusDiv.innerHTML = `
+            <div style="background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; border-radius: 4px; color: #155724;">
+                ✅ Image generated successfully!
+            </div>
+        `;
+        
+        previewDiv.innerHTML = `
+            <div style="border: 1px solid var(--border-color); border-radius: 4px; padding: 1rem;">
+                <h3 style="margin-top: 0; font-size: 1rem;">Preview:</h3>
+                <img src="${finalImageUrl}" style="width: 100%; max-width: 400px; border-radius: 4px; display: block; margin: 0 auto;">
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="${finalImageUrl}" download="instagram-${slugify(event.title)}.jpg" class="btn btn-primary">
+                        💾 Download Image
+                    </a>
+                    <button onclick="saveImageToGitHub('${finalImageUrl}', ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-success">
+                        ☁️ Save to Repository
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        generateBtn.disabled = false;
+        generateBtn.textContent = '🔄 Regenerate Image';
+        
+    } catch (error) {
+        console.error('Image processing error:', error);
+        statusDiv.innerHTML = `
+            <div style="background: #ffe7e7; border: 1px solid #ffb3b3; padding: 1rem; border-radius: 4px; color: #cc0000;">
+                <strong>Error processing image:</strong> ${escapeHtml(error.message)}
+            </div>
+        `;
+        generateBtn.disabled = false;
+        generateBtn.textContent = '✨ Generate Image ($0.04)';
+    }
+}
+
+function loadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = url;
+    });
+}
+
+function wrapText(ctx, text, maxWidth, fontSize) {
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = words[0];
+    
+    for (let i = 1; i < words.length; i++) {
+        const testLine = currentLine + ' ' + words[i];
+        const metrics = ctx.measureText(testLine);
+        
+        if (metrics.width > maxWidth) {
+            lines.push(currentLine);
+            currentLine = words[i];
+        } else {
+            currentLine = testLine;
+        }
+    }
+    lines.push(currentLine);
+    
+    return lines.slice(0, 2); // Max 2 lines
+}
+
+async function saveImageToGitHub(imageUrl, event) {
+    if (!isGitHubConfigured()) {
+        showToast('Please configure GitHub token first', 'warning');
+        showGitHubTokenDialog();
+        return;
+    }
+    
+    try {
+        showToast('Uploading image to repository...', 'info');
+        
+        // Convert blob URL to base64
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        
+        const base64 = await new Promise((resolve, reject) => {
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+        
+        // Generate filename
+        const eventDate = new Date(event.start_utc);
+        const dateStr = eventDate.toISOString().split('T')[0]; // YYYY-MM-DD
+        const eventSlug = slugify(event.title);
+        const filename = `${dateStr}-${eventSlug}.jpg`;
+        const path = `public/instagram/${filename}`;
+        
+        // Commit to GitHub
+        const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
+        
+        const commitResponse = await fetch(`${apiBase}/contents/${path}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: `Add Instagram image for: ${event.title}`,
+                content: base64,
+                branch: GITHUB_BRANCH
+            })
+        });
+        
+        if (!commitResponse.ok) {
+            const error = await commitResponse.json();
+            throw new Error(error.message || 'Failed to upload image');
+        }
+        
+        const commitData = await commitResponse.json();
+        const imageGitHubUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${path}`;
+        
+        showToast('Image saved to repository!', 'success');
+        
+        // Update preview with GitHub link
+        const previewDiv = document.getElementById('image-preview');
+        const downloadSection = previewDiv.querySelector('[style*="margin-top"]');
+        if (downloadSection) {
+            downloadSection.innerHTML += `
+                <div style="margin-top: 1rem; padding: 1rem; background: #d4edda; border-radius: 4px;">
+                    ✅ Saved to repository!<br>
+                    <a href="${imageGitHubUrl}" target="_blank" style="font-size: 0.9rem;">View on GitHub →</a>
+                </div>
+            `;
+        }
+        
+    } catch (error) {
+        console.error('Upload error:', error);
+        showToast('Failed to save image: ' + error.message, 'danger');
+    }
+}
+
