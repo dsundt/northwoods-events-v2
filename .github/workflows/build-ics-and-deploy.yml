@@ -2,7 +2,12 @@ name: Build ICS & Deploy Pages
 
 on:
   schedule:
-    - cron: "15 9 * * *"
+    # Run at 1 AM CST (7 AM UTC)
+    - cron: "0 7 * * *"
+    # Run at 12 PM CST (6 PM UTC)
+    - cron: "0 18 * * *"
+    # Run at 10 PM CST (4 AM UTC next day)
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 permissions:
