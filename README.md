@@ -15,25 +15,44 @@ Outputs:
 
 ## 🌐 Web Interface ✨ NEW
 
-Manage your curated feeds through an intuitive web interface - no config files needed!
+### GitHub Pages Interface (Recommended)
 
-```bash
-# Install dependencies
-pip install -r requirements.txt
+**Manage curated feeds directly from your browser!**
 
-# Start web server
-python src/web_app.py
+Visit your GitHub Pages site:
+```
+https://your-username.github.io/your-repo/manage.html
 ```
 
-Visit `http://localhost:5000` to:
-- 📅 **Browse all events** from all sources
+Features:
+- 📅 **Browse 600+ events** from all sources
 - ✨ **Create curated feeds** with visual editor
-- 🎯 **Select specific events** by clicking
+- 🎯 **Select events by clicking** - multi-select support
 - ⚙️ **Configure preferences** (keywords, sources, locations)
-- ⚡ **Generate feeds on-demand**
-- 📊 **View statistics** (event counts, manual vs auto)
+- 💾 **Download config** to commit to repository
+- 📊 **Real-time preview** (event counts, manual vs auto)
 
-See [docs/WEB_INTERFACE_GUIDE.md](docs/WEB_INTERFACE_GUIDE.md) for complete documentation.
+**No local setup required!** The interface runs entirely in your browser using JavaScript.
+
+Workflow:
+1. Visit `manage.html` → Configure feeds
+2. Download `curated.yaml` → Commit to repo
+3. GitHub Actions runs → Generates ICS files
+4. Subscribe to curated feeds in your calendar app
+
+See [docs/GITHUB_PAGES_SETUP.md](docs/GITHUB_PAGES_SETUP.md) for complete guide.
+
+### Local Flask Server (Advanced)
+
+For local development with on-demand generation:
+
+```bash
+pip install -r requirements.txt
+python src/web_app.py
+# Visit http://localhost:5000
+```
+
+See [docs/WEB_INTERFACE_GUIDE.md](docs/WEB_INTERFACE_GUIDE.md) for details.
 
 ## How it works
 
@@ -68,7 +87,10 @@ See [WEB_QUICKSTART.md](WEB_QUICKSTART.md) for detailed tutorial.
 2. Edit `config/sources.yaml` and add real sources (`enabled: true` to activate).
 3. Enable Actions and Pages (Settings → Pages → Source: GitHub Actions).
 4. Run the workflow manually from **Actions** to test the pipeline.
-5. Visit the Pages URL to access `index.html`, `combined.ics`, and `report.json`.
+5. Visit your Pages URL:
+   - **Curated Feeds Manager**: `https://your-site.github.io/manage.html` ✨
+   - Main page: `https://your-site.github.io/`
+   - Combined ICS: `https://your-site.github.io/combined.ics`
 
 ## Notes
 

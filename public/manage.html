@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northwoods Events - Curated Feeds Manager</title>
+    <style>
+        :root {
+            --primary-color: #2c5f2d;
+            --primary-hover: #1e4620;
+            --secondary-color: #6b8e23;
+            --accent-color: #ff6b35;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav {
+            margin-top: 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: opacity 0.2s;
+        }
+
+        nav button:hover {
+            opacity: 0.8;
+        }
+
+        nav button.active {
+            border-bottom: 2px solid white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .event-card, .feed-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .event-card:hover, .feed-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .event-card.selected {
+            border-color: var(--primary-color);
+            border-width: 2px;
+            background-color: rgba(44, 95, 45, 0.05);
+        }
+
+        .event-title, .feed-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .event-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .badge-secondary {
+            background-color: var(--text-muted);
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .feed-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .feed-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        #view-feeds, #view-browse, #view-editor {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>🌲 Northwoods Events - Curated Feeds</h1>
+            </div>
+            <nav>
+                <button id="nav-feeds" class="active" onclick="showView('feeds')">My Feeds</button>
+                <button id="nav-browse" onclick="showView('browse')">Browse Events</button>
+                <button id="nav-create" onclick="showView('editor', 'new')">Create Feed</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="alert alert-info">
+            <strong>ℹ️ GitHub Pages Mode:</strong> This interface runs entirely in your browser. 
+            Changes are saved locally. To persist changes to your repository, download the updated 
+            <code>curated.yaml</code> and commit it manually, then trigger the GitHub Actions workflow 
+            to regenerate feeds.
+        </div>
+
+        <!-- My Feeds View -->
+        <div id="view-feeds">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">My Curated Feeds</h2>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button onclick="exportConfig()" class="btn btn-secondary">
+                            💾 Download Config
+                        </button>
+                        <button onclick="showView('editor', 'new')" class="btn btn-success">
+                            ➕ Create New Feed
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="feeds-list"></div>
+            </div>
+        </div>
+
+        <!-- Browse Events View -->
+        <div id="view-browse">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Browse Events</h2>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-input">
+                        <input type="text" id="keyword-filter" class="form-control" 
+                               placeholder="Search by keyword..." onkeyup="filterEvents()">
+                    </div>
+                    <div class="filter-input">
+                        <select id="source-filter" class="form-control" onchange="filterEvents()">
+                            <option value="">All Sources</option>
+                        </select>
+                    </div>
+                    <div class="filter-input">
+                        <input type="text" id="location-filter" class="form-control" 
+                               placeholder="Filter by location..." onkeyup="filterEvents()">
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1rem; color: var(--text-muted);">
+                    <span id="event-count"></span>
+                    <span id="selected-count" style="margin-left: 1rem;"></span>
+                </div>
+                
+                <div id="events-grid" class="grid grid-3"></div>
+                
+                <div id="selection-panel" style="display: none; margin-top: 1rem;">
+                    <button onclick="showAddToFeedDialog()" class="btn btn-primary">
+                        Add Selected to Feed
+                    </button>
+                    <button onclick="clearSelection()" class="btn btn-secondary">
+                        Clear Selection
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feed Editor View -->
+        <div id="view-editor">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title" id="editor-title">Create New Feed</h2>
+                    <button onclick="showView('feeds')" class="btn btn-secondary">← Back</button>
+                </div>
+                
+                <form id="feed-form" onsubmit="saveFeed(event)">
+                    <div class="form-group">
+                        <label class="form-label">Feed ID *</label>
+                        <input type="text" id="feed-id" class="form-control" 
+                               placeholder="e.g., my-events" pattern="[a-z0-9-]+" required>
+                        <small style="color: var(--text-muted);">Lowercase letters, numbers, and hyphens only</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Feed Name *</label>
+                        <input type="text" id="feed-name" class="form-control" 
+                               placeholder="e.g., My Personal Events" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="feed-enabled" checked>
+                            Enabled
+                        </label>
+                    </div>
+                    
+                    <hr style="margin: 2rem 0;">
+                    
+                    <h3>Manually Selected Events</h3>
+                    <div class="form-group">
+                        <div id="selected-uids-display"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" id="uid-input" class="form-control" 
+                                   placeholder="Enter event UID">
+                            <button type="button" onclick="addUID()" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    
+                    <hr style="margin: 2rem 0;">
+                    
+                    <h3>Auto-Selection Preferences</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Keywords (include)</label>
+                        <div id="keywords-display"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" id="keyword-input" class="form-control" 
+                                   placeholder="e.g., music, festival">
+                            <button type="button" onclick="addKeyword()" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Exclude Keywords</label>
+                        <div id="exclude-keywords-display"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" id="exclude-keyword-input" class="form-control" 
+                                   placeholder="e.g., 21+">
+                            <button type="button" onclick="addExcludeKeyword()" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Locations</label>
+                        <div id="locations-display"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" id="location-input" class="form-control" 
+                                   placeholder="e.g., Eagle River">
+                            <button type="button" onclick="addLocation()" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Maximum Auto Events (0 = unlimited)</label>
+                        <input type="number" id="max-auto-events" class="form-control" value="0" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Days Ahead</label>
+                        <input type="number" id="days-ahead" class="form-control" value="180" min="1">
+                    </div>
+                    
+                    <hr style="margin: 2rem 0;">
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">
+                            💾 Save Feed
+                        </button>
+                        <button type="button" onclick="showView('feeds')" class="btn btn-secondary">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="manage.js"></script>
+</body>
+</html>
