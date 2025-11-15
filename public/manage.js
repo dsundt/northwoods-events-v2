@@ -1296,7 +1296,7 @@ async function startImageGeneration(event) {
     `;
     
     try {
-        // Call OpenAI DALL-E API
+        // Call OpenAI DALL-E API - request base64 to avoid CORS issues
         const response = await fetch('https://api.openai.com/v1/images/generations', {
             method: 'POST',
             headers: {
@@ -1309,7 +1309,7 @@ async function startImageGeneration(event) {
                 n: 1,
                 size: '1024x1024',
                 quality: 'standard',
-                response_format: 'url'
+                response_format: 'b64_json'  // Request base64 instead of URL to avoid CORS
             })
         });
         
@@ -1319,10 +1319,13 @@ async function startImageGeneration(event) {
         }
         
         const data = await response.json();
-        const imageUrl = data.data[0].url;
+        const imageBase64 = data.data[0].b64_json;
+        
+        // Convert base64 to data URL
+        const imageDataUrl = `data:image/png;base64,${imageBase64}`;
         
         // Download and process the image
-        await processGeneratedImage(imageUrl, event);
+        await processGeneratedImage(imageDataUrl, event);
         
     } catch (error) {
         console.error('Image generation error:', error);
@@ -1349,7 +1352,7 @@ async function processGeneratedImage(imageUrl, event) {
     
     try {
         console.log('Starting image processing...');
-        console.log('OpenAI Image URL:', imageUrl);
+        console.log('Image data received (base64 length):', imageUrl.length);
         
         // Create canvas for Instagram size (1080x1080)
         const canvas = document.createElement('canvas');
@@ -1357,30 +1360,22 @@ async function processGeneratedImage(imageUrl, event) {
         canvas.width = 1080;
         canvas.height = 1080;
         
-        // Fetch the image as blob to avoid CORS issues
-        console.log('Fetching AI-generated image...');
+        console.log('Loading AI-generated image...');
         statusDiv.innerHTML = `
             <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
-                ⚙️ Step 1/3: Downloading AI image...
+                ⚙️ Step 1/3: Loading AI image...
             </div>
         `;
         
-        const imageResponse = await fetch(imageUrl);
-        if (!imageResponse.ok) {
-            throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
-        }
-        const imageBlob = await imageResponse.blob();
-        const imageBlobUrl = URL.createObjectURL(imageBlob);
+        // Load the base64 image directly (no CORS issues!)
+        const aiImage = await loadImageFromBlob(imageUrl);
         
-        console.log('Loading image into canvas...');
         statusDiv.innerHTML = `
             <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
-                ⚙️ Step 2/3: Processing image...
+                ⚙️ Step 2/3: Adding branding...
             </div>
         `;
         
-        // Load and draw the AI-generated image
-        const aiImage = await loadImageFromBlob(imageBlobUrl);
         ctx.drawImage(aiImage, 0, 0, 1080, 1080);
         console.log('AI image drawn to canvas');
         
