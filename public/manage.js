@@ -491,7 +491,12 @@ function simulateFeedGeneration(feed) {
     
     // Combine and remove duplicates
     const combined = [...matched, ...limitedAuto];
-    return removeDuplicateEvents(combined);
+    const unique = removeDuplicateEvents(combined);
+    
+    // Sort by start date (chronological order)
+    unique.sort((a, b) => new Date(a.start_utc) - new Date(b.start_utc));
+    
+    return unique;
 }
 
 function editFeed(feedId) {
