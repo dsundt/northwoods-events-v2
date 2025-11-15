@@ -1348,15 +1348,41 @@ async function processGeneratedImage(imageUrl, event) {
     `;
     
     try {
+        console.log('Starting image processing...');
+        console.log('OpenAI Image URL:', imageUrl);
+        
         // Create canvas for Instagram size (1080x1080)
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = 1080;
         canvas.height = 1080;
         
+        // Fetch the image as blob to avoid CORS issues
+        console.log('Fetching AI-generated image...');
+        statusDiv.innerHTML = `
+            <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
+                ⚙️ Step 1/3: Downloading AI image...
+            </div>
+        `;
+        
+        const imageResponse = await fetch(imageUrl);
+        if (!imageResponse.ok) {
+            throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
+        }
+        const imageBlob = await imageResponse.blob();
+        const imageBlobUrl = URL.createObjectURL(imageBlob);
+        
+        console.log('Loading image into canvas...');
+        statusDiv.innerHTML = `
+            <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
+                ⚙️ Step 2/3: Processing image...
+            </div>
+        `;
+        
         // Load and draw the AI-generated image
-        const aiImage = await loadImage(imageUrl);
+        const aiImage = await loadImageFromBlob(imageBlobUrl);
         ctx.drawImage(aiImage, 0, 0, 1080, 1080);
+        console.log('AI image drawn to canvas');
         
         // Add semi-transparent overlay at bottom for text readability
         const gradient = ctx.createLinearGradient(0, 880, 0, 1080);
@@ -1395,14 +1421,26 @@ async function processGeneratedImage(imageUrl, event) {
         ctx.fillText(detailsText, 30, 1040);
         
         // Add Red Canoe logo with 30% opacity
+        console.log('Adding logo overlay...');
+        statusDiv.innerHTML = `
+            <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
+                ⚙️ Step 3/3: Adding logo and finalizing...
+            </div>
+        `;
+        
         try {
-            const logo = await loadImage('/northwoods-events-v2/assets/red-canoe-logo.png');
+            const logoPath = window.location.pathname.includes('/manage.html') 
+                ? window.location.pathname.replace('/manage.html', '/assets/red-canoe-logo.png')
+                : '/northwoods-events-v2/assets/red-canoe-logo.png';
+            console.log('Loading logo from:', logoPath);
+            const logo = await loadImageFromBlob(logoPath);
             ctx.globalAlpha = 0.3;
             const logoSize = 120;
             ctx.drawImage(logo, 1080 - logoSize - 20, 1080 - logoSize - 20, logoSize, logoSize);
             ctx.globalAlpha = 1.0;
+            console.log('Logo added successfully');
         } catch (err) {
-            console.warn('Logo not found, skipping overlay');
+            console.warn('Logo not found, skipping overlay:', err);
         }
         
         // Convert to blob
@@ -1436,9 +1474,23 @@ async function processGeneratedImage(imageUrl, event) {
         
     } catch (error) {
         console.error('Image processing error:', error);
+        console.error('Error stack:', error.stack);
         statusDiv.innerHTML = `
             <div style="background: #ffe7e7; border: 1px solid #ffb3b3; padding: 1rem; border-radius: 4px; color: #cc0000;">
                 <strong>Error processing image:</strong> ${escapeHtml(error.message)}
+                <br><br>
+                <details style="margin-top: 0.5rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">Technical Details (click to expand)</summary>
+                    <pre style="margin-top: 0.5rem; padding: 0.5rem; background: #fff; border: 1px solid #ddd; overflow-x: auto; font-size: 0.85rem;">${escapeHtml(error.stack || error.toString())}</pre>
+                </details>
+                <br>
+                <strong>💡 Troubleshooting:</strong>
+                <ul style="margin: 0.5rem 0; padding-left: 1.5rem; font-size: 0.9rem;">
+                    <li>Check browser console (F12) for detailed errors</li>
+                    <li>Verify OpenAI API key is correct</li>
+                    <li>Try regenerating the image</li>
+                    <li>If logo error: Upload logo to /public/assets/red-canoe-logo.png</li>
+                </ul>
             </div>
         `;
         generateBtn.disabled = false;
@@ -1446,12 +1498,14 @@ async function processGeneratedImage(imageUrl, event) {
     }
 }
 
-function loadImage(url) {
+function loadImageFromBlob(url) {
     return new Promise((resolve, reject) => {
         const img = new Image();
-        img.crossOrigin = 'anonymous';
         img.onload = () => resolve(img);
-        img.onerror = reject;
+        img.onerror = (err) => {
+            console.error('Image load error:', err);
+            reject(new Error(`Failed to load image from ${url}`));
+        };
         img.src = url;
     });
 }
