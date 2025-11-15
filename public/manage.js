@@ -339,6 +339,29 @@ function renderFeeds() {
                         <div class="stat-label">Auto</div>
                     </div>
                 </div>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">📥 ICS Feed URL:</div>
+                    <div id="ics-section-${feed.id}">
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="text" readonly value="${getICSUrl(feed.id)}" 
+                                   style="flex: 1; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.85rem; font-family: monospace;">
+                            <button onclick="copyToClipboard('${getICSUrl(feed.id)}', '${feed.id}')" class="btn btn-sm btn-secondary" title="Copy URL">
+                                📋 Copy
+                            </button>
+                            <button onclick="window.open('${getICSUrl(feed.id)}', '_blank')" class="btn btn-sm btn-secondary" title="Test URL">
+                                🔗 Test
+                            </button>
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <button onclick="generateAndSaveFeed('${feed.id}')" class="btn btn-sm btn-primary">
+                                ⚡ Regenerate Feed
+                            </button>
+                            <small style="color: var(--text-muted); margin-left: 0.5rem;">
+                                Commits config & triggers workflow
+                            </small>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
     }).join('') + '</div>';
@@ -886,5 +909,57 @@ function updateGitHubStatus() {
         statusEl.innerHTML = `
             <span style="color: var(--danger-color);">⚠ GitHub Token Required</span>
         `;
+    }
+}
+
+// Check if ICS file exists for a feed
+async function checkICSFileExists(feedId) {
+    try {
+        const baseUrl = window.location.origin + window.location.pathname.replace('/manage.html', '');
+        const icsUrl = `${baseUrl}/curated/${feedId}.ics`;
+        const response = await fetch(icsUrl, { method: 'HEAD' });
+        return response.ok;
+    } catch (error) {
+        return false;
+    }
+}
+
+// Generate ICS URL for a feed
+function getICSUrl(feedId) {
+    const baseUrl = window.location.origin + window.location.pathname.replace('/manage.html', '');
+    return `${baseUrl}/curated/${feedId}.ics`;
+}
+
+// Copy URL to clipboard
+function copyToClipboard(text, feedId) {
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('URL copied to clipboard!');
+    }).catch(err => {
+        showToast('Failed to copy URL', 'danger');
+    });
+}
+
+// Generate a specific feed and save to GitHub
+async function generateAndSaveFeed(feedId) {
+    if (!isGitHubConfigured()) {
+        showToast('Please configure GitHub token first', 'warning');
+        showGitHubTokenDialog();
+        return;
+    }
+    
+    try {
+        // Save current config to GitHub
+        await saveToGitHub(true); // true = trigger workflow
+        
+        showToast(`Feed generation started! Check back in 2-3 minutes.`, 'info');
+        
+        // Wait a bit then refresh the page
+        setTimeout(() => {
+            showToast('Refreshing feed status...', 'info');
+            renderFeeds();
+        }, 5000);
+        
+    } catch (error) {
+        showToast('Failed to generate feed: ' + error.message, 'danger');
     }
 }
