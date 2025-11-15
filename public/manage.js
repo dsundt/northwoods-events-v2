@@ -1,3 +1,172 @@
+// GitHub API Integration
+// Add this to the beginning of manage.js
+
+// GitHub Configuration
+let GITHUB_OWNER = '';
+let GITHUB_REPO = '';
+let GITHUB_TOKEN = '';
+let GITHUB_BRANCH = 'main';
+
+// Auto-detect repo from URL
+function detectGitHubRepo() {
+    const hostname = window.location.hostname;
+    const pathname = window.location.pathname;
+    
+    if (hostname.endsWith('.github.io')) {
+        const parts = hostname.split('.');
+        if (parts.length >= 3) {
+            GITHUB_OWNER = parts[0];
+        }
+        
+        const pathParts = pathname.split('/').filter(p => p);
+        if (pathParts.length > 0) {
+            GITHUB_REPO = pathParts[0];
+        }
+    }
+    
+    // Load token from localStorage
+    GITHUB_TOKEN = localStorage.getItem('github_token') || '';
+    
+    console.log('Detected:', GITHUB_OWNER, '/', GITHUB_REPO);
+}
+
+// Save token to localStorage
+function saveGitHubToken(token) {
+    GITHUB_TOKEN = token;
+    localStorage.setItem('github_token', token);
+    showToast('GitHub token saved');
+}
+
+// Clear token
+function clearGitHubToken() {
+    GITHUB_TOKEN = '';
+    localStorage.removeItem('github_token');
+    showToast('GitHub token cleared');
+}
+
+// Commit file to GitHub
+async function commitFileToGitHub(path, content, message) {
+    if (!GITHUB_TOKEN) {
+        throw new Error('GitHub token not configured');
+    }
+    
+    if (!GITHUB_OWNER || !GITHUB_REPO) {
+        throw new Error('Could not detect GitHub repository');
+    }
+    
+    const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
+    
+    // Get current file SHA (if it exists)
+    let sha = null;
+    try {
+        const getResponse = await fetch(`${apiBase}/contents/${path}`, {
+            headers: {
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (getResponse.ok) {
+            const data = await getResponse.json();
+            sha = data.sha;
+        }
+    } catch (error) {
+        // File doesn't exist yet, that's okay
+        console.log('File does not exist yet, will create new');
+    }
+    
+    // Create or update file
+    const body = {
+        message: message,
+        content: btoa(unescape(encodeURIComponent(content))), // Base64 encode with UTF-8
+        branch: GITHUB_BRANCH
+    };
+    
+    if (sha) {
+        body.sha = sha;
+    }
+    
+    const response = await fetch(`${apiBase}/contents/${path}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to commit file');
+    }
+    
+    return await response.json();
+}
+
+// Trigger GitHub Actions workflow
+async function triggerWorkflow() {
+    if (!GITHUB_TOKEN) {
+        throw new Error('GitHub token not configured');
+    }
+    
+    if (!GITHUB_OWNER || !GITHUB_REPO) {
+        throw new Error('Could not detect GitHub repository');
+    }
+    
+    const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
+    
+    const response = await fetch(`${apiBase}/actions/workflows/build-ics-and-deploy.yml/dispatches`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ref: GITHUB_BRANCH
+        })
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to trigger workflow');
+    }
+    
+    return true;
+}
+
+// Save feeds to GitHub
+async function saveToGitHub(autoTrigger = false) {
+    try {
+        const yaml = generateYAML(curatedFeeds);
+        
+        await commitFileToGitHub(
+            'config/curated.yaml',
+            yaml,
+            'Update curated feeds configuration via web interface'
+        );
+        
+        showToast('Configuration saved to GitHub!', 'success');
+        
+        if (autoTrigger) {
+            showToast('Triggering workflow...', 'info');
+            await triggerWorkflow();
+            showToast('Workflow triggered! Check Actions tab for progress.', 'success');
+        }
+        
+        return true;
+    } catch (error) {
+        console.error('Error saving to GitHub:', error);
+        showToast('Error: ' + error.message, 'danger');
+        return false;
+    }
+}
+
+// Check if GitHub token is configured
+function isGitHubConfigured() {
+    return GITHUB_TOKEN && GITHUB_OWNER && GITHUB_REPO;
+}
 // Northwoods Events - Curated Feeds Manager (GitHub Pages Edition)
 // This runs entirely client-side using localStorage
 
@@ -17,6 +186,7 @@ let editorLocations = [];
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    detectGitHubRepo();
     loadData();
     loadFeedsFromStorage();
     showView('feeds');
@@ -697,4 +867,21 @@ function showToast(message, type = 'success') {
     toast.style.minWidth = '300px';
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
+}
+
+// Update GitHub status indicator
+function updateGitHubStatus() {
+    const statusEl = document.getElementById('github-status');
+    if (!statusEl) return;
+    
+    if (isGitHubConfigured()) {
+        statusEl.innerHTML = `
+            <span style="color: var(--success-color);">✓ GitHub Connected</span>
+            <span style="color: var(--text-muted); margin-left: 1rem;">${GITHUB_OWNER}/${GITHUB_REPO}</span>
+        `;
+    } else {
+        statusEl.innerHTML = `
+            <span style="color: var(--danger-color);">⚠ GitHub Token Required</span>
+        `;
+    }
 }

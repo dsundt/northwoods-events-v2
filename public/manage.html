@@ -536,3 +536,80 @@
     <script src="manage.js"></script>
 </body>
 </html>
+
+<!-- GitHub Token Configuration Dialog -->
+<div id="github-token-dialog" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+    <div class="card" style="max-width: 500px; width: 90%;">
+        <h3 style="margin-bottom: 1rem;">Configure GitHub Token</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+            To enable auto-save to repository, provide a GitHub Personal Access Token with <code>repo</code> and <code>workflow</code> scopes.
+        </p>
+        <div class="alert alert-warning" style="font-size: 0.9rem;">
+            <strong>⚠️ Security:</strong> Token is stored in browser localStorage. Treat it like a password!
+        </div>
+        <div class="form-group">
+            <label class="form-label">GitHub Personal Access Token</label>
+            <input type="password" id="github-token-input" class="form-control" placeholder="ghp_...">
+            <small style="color: var(--text-muted);">
+                Create at: <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a>
+            </small>
+        </div>
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+            <button onclick="saveTokenFromDialog()" class="btn btn-primary" style="flex: 1;">
+                💾 Save Token
+            </button>
+            <button onclick="clearTokenFromDialog()" class="btn btn-danger">
+                🗑️ Clear Token
+            </button>
+            <button onclick="closeGitHubTokenDialog()" class="btn btn-secondary">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// GitHub Token Dialog Functions
+function showGitHubTokenDialog() {
+    document.getElementById('github-token-dialog').style.display = 'flex';
+    if (GITHUB_TOKEN) {
+        document.getElementById('github-token-input').value = GITHUB_TOKEN;
+    }
+}
+
+function closeGitHubTokenDialog() {
+    document.getElementById('github-token-dialog').style.display = 'none';
+}
+
+function saveTokenFromDialog() {
+    const token = document.getElementById('github-token-input').value.trim();
+    if (token) {
+        saveGitHubToken(token);
+        updateGitHubStatus();
+        closeGitHubTokenDialog();
+    } else {
+        showToast('Please enter a token', 'warning');
+    }
+}
+
+function clearTokenFromDialog() {
+    if (confirm('Are you sure you want to clear the GitHub token?')) {
+        clearGitHubToken();
+        document.getElementById('github-token-input').value = '';
+        updateGitHubStatus();
+        closeGitHubTokenDialog();
+    }
+}
+
+// Override export function to add GitHub save option
+const originalExportConfig = exportConfig;
+exportConfig = function() {
+    if (isGitHubConfigured()) {
+        if (confirm('Save to GitHub repository?\n\nClick OK to commit directly to GitHub.\nClick Cancel to download file manually.')) {
+            saveToGitHub(confirm('Also trigger GitHub Actions workflow to regenerate feeds?'));
+            return;
+        }
+    }
+    originalExportConfig();
+};
+</script>
