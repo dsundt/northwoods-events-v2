@@ -189,6 +189,75 @@ def _event_matches_preferences(
     return True
 
 
+def _normalize_for_duplicate_check(title: str, start_utc: str) -> str:
+    """
+    Create a normalized key for duplicate detection based on title and date.
+    
+    Args:
+        title: Event title
+        start_utc: Event start time (ISO format)
+        
+    Returns:
+        Normalized key for comparison
+    """
+    import re
+    from dateutil import parser as dtparse
+    
+    # Normalize title: lowercase, remove special chars, collapse whitespace
+    normalized_title = re.sub(r'[^\w\s]', '', title.lower())
+    normalized_title = re.sub(r'\s+', ' ', normalized_title).strip()
+    
+    # Normalize date to just the date part (ignore time)
+    try:
+        if isinstance(start_utc, str):
+            dt = dtparse.parse(start_utc)
+        else:
+            dt = start_utc
+        date_key = dt.strftime("%Y-%m-%d") if dt else ""
+    except Exception:
+        date_key = str(start_utc)[:10] if start_utc else ""
+    
+    return f"{normalized_title}|{date_key}"
+
+
+def _remove_duplicates(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Remove duplicate events based on title and date.
+    When duplicates are found, keep the first occurrence.
+    
+    Args:
+        events: List of events
+        
+    Returns:
+        List of unique events
+    """
+    seen_keys: Set[str] = set()
+    unique_events: List[Dict[str, Any]] = []
+    duplicates_removed = 0
+    
+    for event in events:
+        title = event.get("title") or ""
+        start_utc = event.get("start_utc")
+        
+        if not title or not start_utc:
+            # Keep events without title or date
+            unique_events.append(event)
+            continue
+        
+        key = _normalize_for_duplicate_check(title, start_utc)
+        
+        if key not in seen_keys:
+            seen_keys.add(key)
+            unique_events.append(event)
+        else:
+            duplicates_removed += 1
+    
+    if duplicates_removed > 0:
+        print(f"[curated] Removed {duplicates_removed} duplicate event(s)")
+    
+    return unique_events
+
+
 def _select_curated_events(
     all_events: List[Dict[str, Any]],
     config: Dict[str, Any],
@@ -242,6 +311,9 @@ def _select_curated_events(
                 # Check max limit
                 if max_auto > 0 and auto_count >= max_auto:
                     break
+    
+    # Remove duplicates based on title and date
+    selected_events = _remove_duplicates(selected_events)
     
     # Sort by start date
     selected_events.sort(key=lambda e: e.get("start_utc") or "")

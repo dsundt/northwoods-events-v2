@@ -356,15 +356,65 @@ function renderFeeds() {
                             <button onclick="generateAndSaveFeed('${feed.id}')" class="btn btn-sm btn-primary">
                                 ⚡ Regenerate Feed
                             </button>
+                            <button onclick="previewFeed('${feed.id}')" class="btn btn-sm btn-secondary" style="margin-left: 0.5rem;">
+                                👁️ Preview Events
+                            </button>
                             <small style="color: var(--text-muted); margin-left: 0.5rem;">
                                 Commits config & triggers workflow
                             </small>
                         </div>
                     </div>
                 </div>
+                <div id="preview-${feed.id}" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <!-- Preview content will be inserted here -->
+                </div>
             </div>
         `;
     }).join('') + '</div>';
+}
+
+function normalizeTitleForDuplicateCheck(title, startUtc) {
+    // Normalize title: lowercase, remove special chars, collapse whitespace
+    const normalizedTitle = title
+        .toLowerCase()
+        .replace(/[^\w\s]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    
+    // Normalize date to just the date part (ignore time)
+    let dateKey = '';
+    try {
+        const dt = new Date(startUtc);
+        dateKey = dt.toISOString().split('T')[0]; // YYYY-MM-DD
+    } catch (e) {
+        dateKey = String(startUtc).substring(0, 10);
+    }
+    
+    return `${normalizedTitle}|${dateKey}`;
+}
+
+function removeDuplicateEvents(events) {
+    const seenKeys = new Set();
+    const unique = [];
+    
+    for (const event of events) {
+        const title = event.title || '';
+        const startUtc = event.start_utc;
+        
+        if (!title || !startUtc) {
+            unique.push(event);
+            continue;
+        }
+        
+        const key = normalizeTitleForDuplicateCheck(title, startUtc);
+        
+        if (!seenKeys.has(key)) {
+            seenKeys.add(key);
+            unique.push(event);
+        }
+    }
+    
+    return unique;
 }
 
 function simulateFeedGeneration(feed) {
@@ -439,7 +489,9 @@ function simulateFeedGeneration(feed) {
     const maxAuto = prefs.max_auto_events || 0;
     const limitedAuto = maxAuto > 0 ? autoEvents.slice(0, maxAuto) : autoEvents;
     
-    return [...matched, ...limitedAuto];
+    // Combine and remove duplicates
+    const combined = [...matched, ...limitedAuto];
+    return removeDuplicateEvents(combined);
 }
 
 function editFeed(feedId) {
@@ -976,4 +1028,114 @@ async function generateAndSaveFeed(feedId) {
     } catch (error) {
         showToast('Failed to generate feed: ' + error.message, 'danger');
     }
+}
+
+// Preview feed events
+function previewFeed(feedId) {
+    const previewDiv = document.getElementById(`preview-${feedId}`);
+    
+    if (previewDiv.style.display === 'block') {
+        // Hide if already showing
+        previewDiv.style.display = 'none';
+        return;
+    }
+    
+    // Get the feed
+    const feed = curatedFeeds.find(f => f.id === feedId);
+    if (!feed) {
+        showToast('Feed not found', 'danger');
+        return;
+    }
+    
+    // Get events that would be in this feed
+    const matchedEvents = simulateFeedGeneration(feed);
+    
+    if (matchedEvents.length === 0) {
+        previewDiv.innerHTML = `
+            <div style="padding: 1rem; text-align: center; color: var(--text-muted);">
+                <p>No events match this feed's criteria.</p>
+            </div>
+        `;
+        previewDiv.style.display = 'block';
+        return;
+    }
+    
+    // Generate preview HTML
+    const eventsHTML = matchedEvents.map((event, index) => {
+        const startDate = new Date(event.start_utc);
+        const dateStr = startDate.toLocaleDateString('en-US', { 
+            weekday: 'short', 
+            month: 'short', 
+            day: 'numeric',
+            year: 'numeric'
+        });
+        const timeStr = startDate.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit'
+        });
+        
+        const location = event.location || 'Location TBA';
+        const description = event.description || '';
+        const url = event.url || '';
+        const source = event.calendar_slug || event.source || 'Unknown';
+        
+        // Truncate description
+        const maxDescLength = 200;
+        let displayDesc = description;
+        if (description.length > maxDescLength) {
+            displayDesc = description.substring(0, maxDescLength) + '...';
+        }
+        
+        return `
+            <div style="padding: 1rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 0.75rem; background: white;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                    <div style="flex: 1;">
+                        <h4 style="margin: 0 0 0.25rem 0; color: var(--primary-color);">
+                            ${url ? `<a href="${escapeHtml(url)}" target="_blank" style="color: var(--primary-color); text-decoration: none;">${escapeHtml(event.title)}</a>` : escapeHtml(event.title)}
+                        </h4>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">
+                            <span style="margin-right: 1rem;">📅 ${dateStr} at ${timeStr}</span>
+                            <span style="margin-right: 1rem;">📍 ${escapeHtml(location)}</span>
+                            <span class="badge badge-secondary" style="font-size: 0.75rem;">${escapeHtml(source)}</span>
+                        </div>
+                    </div>
+                </div>
+                ${displayDesc ? `
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: var(--text-color); line-height: 1.4;">
+                        ${escapeHtml(displayDesc)}
+                    </p>
+                ` : ''}
+                ${url ? `
+                    <div style="margin-top: 0.5rem;">
+                        <a href="${escapeHtml(url)}" target="_blank" class="btn btn-sm btn-primary" style="text-decoration: none; display: inline-block;">
+                            🔗 View Details
+                        </a>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }).join('');
+    
+    previewDiv.innerHTML = `
+        <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="margin: 0; font-size: 1.1rem;">
+                    📋 Preview: ${matchedEvents.length} Event${matchedEvents.length !== 1 ? 's' : ''}
+                </h3>
+                <button onclick="previewFeed('${feedId}')" class="btn btn-sm btn-secondary">
+                    ✖ Close Preview
+                </button>
+            </div>
+            <div style="max-height: 600px; overflow-y: auto;">
+                ${eventsHTML}
+            </div>
+        </div>
+    `;
+    
+    previewDiv.style.display = 'block';
+    
+    // Scroll to preview
+    setTimeout(() => {
+        previewDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 }
