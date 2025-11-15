@@ -13,6 +13,28 @@ Outputs:
 - `public/report.json` - Processing report
 - `public/index.html` - Web interface
 
+## 🌐 Web Interface ✨ NEW
+
+Manage your curated feeds through an intuitive web interface - no config files needed!
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Start web server
+python src/web_app.py
+```
+
+Visit `http://localhost:5000` to:
+- 📅 **Browse all events** from all sources
+- ✨ **Create curated feeds** with visual editor
+- 🎯 **Select specific events** by clicking
+- ⚙️ **Configure preferences** (keywords, sources, locations)
+- ⚡ **Generate feeds on-demand**
+- 📊 **View statistics** (event counts, manual vs auto)
+
+See [docs/WEB_INTERFACE_GUIDE.md](docs/WEB_INTERFACE_GUIDE.md) for complete documentation.
+
 ## How it works
 
 1. GitHub Actions workflow runs daily (09:15 UTC) and on demand.
@@ -20,7 +42,27 @@ Outputs:
 3. Each enabled source is fetched (with retries/timeouts), parsed, normalized to UTC.
 4. Outputs written to `public/` and deployed to GitHub Pages.
 
-## Setup (Web UI only)
+## Quick Start
+
+### Option 1: Web Interface (Recommended)
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Run pipeline to fetch events
+python -m src.main
+
+# 3. Start web server
+python src/web_app.py
+
+# 4. Open browser
+# Visit http://localhost:5000
+```
+
+See [WEB_QUICKSTART.md](WEB_QUICKSTART.md) for detailed tutorial.
+
+### Option 2: GitHub Pages Deployment
 
 1. Upload the provided files to your repository.
 2. Edit `config/sources.yaml` and add real sources (`enabled: true` to activate).

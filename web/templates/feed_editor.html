@@ -1,0 +1,453 @@
+{% extends "base.html" %}
+
+{% block title %}{% if feed_id == 'new' %}Create New Feed{% else %}Edit Feed{% endif %} - Northwoods Events{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">{% if feed_id == 'new' %}Create New Feed{% else %}Edit Feed{% endif %}</h2>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back to Feeds</a>
+    </div>
+    
+    <form id="feed-form" onsubmit="saveFeed(event)">
+        <div class="form-group">
+            <label class="form-label">Feed ID *</label>
+            <input type="text" 
+                   id="feed-id" 
+                   class="form-control" 
+                   placeholder="e.g., my-events"
+                   pattern="[a-z0-9-]+"
+                   title="Only lowercase letters, numbers, and hyphens"
+                   required
+                   {% if feed_id != 'new' %}readonly{% endif %}>
+            <small style="color: var(--text-muted);">Used in URL and filename. Only lowercase letters, numbers, and hyphens.</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Feed Name *</label>
+            <input type="text" 
+                   id="feed-name" 
+                   class="form-control" 
+                   placeholder="e.g., My Personal Events"
+                   required>
+        </div>
+        
+        <div class="form-group">
+            <div class="form-check">
+                <input type="checkbox" id="feed-enabled" checked>
+                <label class="form-label" for="feed-enabled">Enabled</label>
+            </div>
+            <small style="color: var(--text-muted);">Disabled feeds won't be generated</small>
+        </div>
+        
+        <hr style="margin: 2rem 0;">
+        
+        <h3 style="margin-bottom: 1rem;">Manually Selected Events</h3>
+        <div class="form-group">
+            <label class="form-label">Event UIDs</label>
+            <div id="selected-uids-container" style="margin-bottom: 0.5rem;"></div>
+            <div style="display: flex; gap: 0.5rem;">
+                <input type="text" 
+                       id="uid-input" 
+                       class="form-control" 
+                       placeholder="Enter event UID"
+                       style="flex: 1;">
+                <button type="button" onclick="addUID()" class="btn btn-primary">Add</button>
+                <a href="{{ url_for('browse') }}" class="btn btn-secondary">Browse Events</a>
+            </div>
+            <small style="color: var(--text-muted);">These events will always be included (if they're in the future)</small>
+        </div>
+        
+        <hr style="margin: 2rem 0;">
+        
+        <h3 style="margin-bottom: 1rem;">Auto-Selection Preferences</h3>
+        
+        <div class="form-group">
+            <label class="form-label">Include Sources</label>
+            <div id="include-sources-container" style="margin-bottom: 0.5rem;"></div>
+            <select id="include-source-select" class="form-control" onchange="addIncludeSource()">
+                <option value="">-- Select source to include --</option>
+            </select>
+            <small style="color: var(--text-muted);">Leave empty to include all sources</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Exclude Sources</label>
+            <div id="exclude-sources-container" style="margin-bottom: 0.5rem;"></div>
+            <select id="exclude-source-select" class="form-control" onchange="addExcludeSource()">
+                <option value="">-- Select source to exclude --</option>
+            </select>
+            <small style="color: var(--text-muted);">These sources will be filtered out</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Location Keywords</label>
+            <div id="locations-container" style="margin-bottom: 0.5rem;"></div>
+            <div style="display: flex; gap: 0.5rem;">
+                <input type="text" 
+                       id="location-input" 
+                       class="form-control" 
+                       placeholder="e.g., Eagle River"
+                       style="flex: 1;">
+                <button type="button" onclick="addLocation()" class="btn btn-primary">Add</button>
+            </div>
+            <small style="color: var(--text-muted);">Only events matching these locations (leave empty for all)</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Include Keywords</label>
+            <div id="keywords-container" style="margin-bottom: 0.5rem;"></div>
+            <div style="display: flex; gap: 0.5rem;">
+                <input type="text" 
+                       id="keyword-input" 
+                       class="form-control" 
+                       placeholder="e.g., music, festival, family"
+                       style="flex: 1;">
+                <button type="button" onclick="addKeyword()" class="btn btn-primary">Add</button>
+            </div>
+            <small style="color: var(--text-muted);">Events must match at least one keyword (leave empty for all)</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Exclude Keywords</label>
+            <div id="exclude-keywords-container" style="margin-bottom: 0.5rem;"></div>
+            <div style="display: flex; gap: 0.5rem;">
+                <input type="text" 
+                       id="exclude-keyword-input" 
+                       class="form-control" 
+                       placeholder="e.g., 21+, adults only"
+                       style="flex: 1;">
+                <button type="button" onclick="addExcludeKeyword()" class="btn btn-primary">Add</button>
+            </div>
+            <small style="color: var(--text-muted);">Events matching these will be filtered out</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Maximum Auto Events</label>
+            <input type="number" 
+                   id="max-auto-events" 
+                   class="form-control" 
+                   value="0"
+                   min="0"
+                   placeholder="0 = unlimited">
+            <small style="color: var(--text-muted);">Limit the number of auto-selected events (0 = unlimited)</small>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Days Ahead</label>
+            <input type="number" 
+                   id="days-ahead" 
+                   class="form-control" 
+                   value="180"
+                   min="1"
+                   placeholder="180">
+            <small style="color: var(--text-muted);">How many days into the future to include events</small>
+        </div>
+        
+        <hr style="margin: 2rem 0;">
+        
+        <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">
+                💾 Save Feed
+            </button>
+            <button type="button" onclick="saveAndGenerate()" class="btn btn-success" style="flex: 1;">
+                💾⚡ Save & Generate
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const isNewFeed = '{{ feed_id }}' === 'new';
+const feedId = isNewFeed ? null : '{{ feed_id }}';
+
+let selectedUIDs = [];
+let includeSources = [];
+let excludeSources = [];
+let locations = [];
+let keywords = [];
+let excludeKeywords = [];
+let sources = [];
+
+async function loadData() {
+    try {
+        // Load sources
+        const sourcesResult = await API.get('/api/sources');
+        sources = sourcesResult.sources || [];
+        populateSourceSelects();
+        
+        // Load feed data if editing
+        if (!isNewFeed && feedId) {
+            const result = await API.get(`/api/feeds/${feedId}`);
+            if (result.success) {
+                populateForm(result.feed);
+            }
+        }
+    } catch (error) {
+        console.error('Error loading data:', error);
+        showToast('Failed to load feed data', 'danger');
+    }
+}
+
+function populateSourceSelects() {
+    const uniqueSources = [...new Set(sources.map(s => s.id).filter(Boolean))];
+    const options = uniqueSources.map(id => `<option value="${id}">${escapeHtml(sources.find(s => s.id === id)?.name || id)}</option>`).join('');
+    
+    document.getElementById('include-source-select').innerHTML += options;
+    document.getElementById('exclude-source-select').innerHTML += options;
+}
+
+function populateForm(feed) {
+    document.getElementById('feed-id').value = feed.id || '';
+    document.getElementById('feed-name').value = feed.name || '';
+    document.getElementById('feed-enabled').checked = feed.enabled !== false;
+    
+    selectedUIDs = feed.selected_events || [];
+    renderSelectedUIDs();
+    
+    const prefs = feed.preferences || {};
+    
+    includeSources = prefs.include_sources || [];
+    renderIncludeSources();
+    
+    excludeSources = prefs.exclude_sources || [];
+    renderExcludeSources();
+    
+    locations = prefs.locations || [];
+    renderLocations();
+    
+    keywords = prefs.keywords || [];
+    renderKeywords();
+    
+    excludeKeywords = prefs.exclude_keywords || [];
+    renderExcludeKeywords();
+    
+    document.getElementById('max-auto-events').value = prefs.max_auto_events || 0;
+    document.getElementById('days-ahead').value = prefs.days_ahead || 180;
+}
+
+function addUID() {
+    const input = document.getElementById('uid-input');
+    const uid = input.value.trim();
+    if (uid && !selectedUIDs.includes(uid)) {
+        selectedUIDs.push(uid);
+        renderSelectedUIDs();
+        input.value = '';
+    }
+}
+
+function removeUID(uid) {
+    selectedUIDs = selectedUIDs.filter(u => u !== uid);
+    renderSelectedUIDs();
+}
+
+function renderSelectedUIDs() {
+    const container = document.getElementById('selected-uids-container');
+    if (selectedUIDs.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-style: italic;">No events selected</div>';
+        return;
+    }
+    container.innerHTML = '<div class="tags">' + selectedUIDs.map(uid => 
+        `<span class="tag">${escapeHtml(uid)} <span class="tag-remove" onclick="removeUID('${uid}')">×</span></span>`
+    ).join('') + '</div>';
+}
+
+function addIncludeSource() {
+    const select = document.getElementById('include-source-select');
+    const source = select.value;
+    if (source && !includeSources.includes(source)) {
+        includeSources.push(source);
+        renderIncludeSources();
+        select.value = '';
+    }
+}
+
+function removeIncludeSource(source) {
+    includeSources = includeSources.filter(s => s !== source);
+    renderIncludeSources();
+}
+
+function renderIncludeSources() {
+    const container = document.getElementById('include-sources-container');
+    if (includeSources.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-style: italic;">All sources included</div>';
+        return;
+    }
+    container.innerHTML = '<div class="tags">' + includeSources.map(source => 
+        `<span class="tag">${escapeHtml(source)} <span class="tag-remove" onclick="removeIncludeSource('${source}')">×</span></span>`
+    ).join('') + '</div>';
+}
+
+function addExcludeSource() {
+    const select = document.getElementById('exclude-source-select');
+    const source = select.value;
+    if (source && !excludeSources.includes(source)) {
+        excludeSources.push(source);
+        renderExcludeSources();
+        select.value = '';
+    }
+}
+
+function removeExcludeSource(source) {
+    excludeSources = excludeSources.filter(s => s !== source);
+    renderExcludeSources();
+}
+
+function renderExcludeSources() {
+    const container = document.getElementById('exclude-sources-container');
+    if (excludeSources.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-style: italic;">No sources excluded</div>';
+        return;
+    }
+    container.innerHTML = '<div class="tags">' + excludeSources.map(source => 
+        `<span class="tag">${escapeHtml(source)} <span class="tag-remove" onclick="removeExcludeSource('${source}')">×</span></span>`
+    ).join('') + '</div>';
+}
+
+function addLocation() {
+    const input = document.getElementById('location-input');
+    const location = input.value.trim();
+    if (location && !locations.includes(location)) {
+        locations.push(location);
+        renderLocations();
+        input.value = '';
+    }
+}
+
+function removeLocation(location) {
+    locations = locations.filter(l => l !== location);
+    renderLocations();
+}
+
+function renderLocations() {
+    const container = document.getElementById('locations-container');
+    if (locations.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-style: italic;">All locations included</div>';
+        return;
+    }
+    container.innerHTML = '<div class="tags">' + locations.map(loc => 
+        `<span class="tag">${escapeHtml(loc)} <span class="tag-remove" onclick="removeLocation('${loc}')">×</span></span>`
+    ).join('') + '</div>';
+}
+
+function addKeyword() {
+    const input = document.getElementById('keyword-input');
+    const keyword = input.value.trim();
+    if (keyword && !keywords.includes(keyword)) {
+        keywords.push(keyword);
+        renderKeywords();
+        input.value = '';
+    }
+}
+
+function removeKeyword(keyword) {
+    keywords = keywords.filter(k => k !== keyword);
+    renderKeywords();
+}
+
+function renderKeywords() {
+    const container = document.getElementById('keywords-container');
+    if (keywords.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-style: italic;">No keyword filters</div>';
+        return;
+    }
+    container.innerHTML = '<div class="tags">' + keywords.map(kw => 
+        `<span class="tag">${escapeHtml(kw)} <span class="tag-remove" onclick="removeKeyword('${kw}')">×</span></span>`
+    ).join('') + '</div>';
+}
+
+function addExcludeKeyword() {
+    const input = document.getElementById('exclude-keyword-input');
+    const keyword = input.value.trim();
+    if (keyword && !excludeKeywords.includes(keyword)) {
+        excludeKeywords.push(keyword);
+        renderExcludeKeywords();
+        input.value = '';
+    }
+}
+
+function removeExcludeKeyword(keyword) {
+    excludeKeywords = excludeKeywords.filter(k => k !== keyword);
+    renderExcludeKeywords();
+}
+
+function renderExcludeKeywords() {
+    const container = document.getElementById('exclude-keywords-container');
+    if (excludeKeywords.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-style: italic;">No excluded keywords</div>';
+        return;
+    }
+    container.innerHTML = '<div class="tags">' + excludeKeywords.map(kw => 
+        `<span class="tag">${escapeHtml(kw)} <span class="tag-remove" onclick="removeExcludeKeyword('${kw}')">×</span></span>`
+    ).join('') + '</div>';
+}
+
+async function saveFeed(event) {
+    if (event) event.preventDefault();
+    
+    const feed = {
+        id: document.getElementById('feed-id').value.trim(),
+        name: document.getElementById('feed-name').value.trim(),
+        enabled: document.getElementById('feed-enabled').checked,
+        selected_events: selectedUIDs,
+        preferences: {
+            include_sources: includeSources,
+            exclude_sources: excludeSources,
+            locations: locations,
+            keywords: keywords,
+            exclude_keywords: excludeKeywords,
+            max_auto_events: parseInt(document.getElementById('max-auto-events').value) || 0,
+            days_ahead: parseInt(document.getElementById('days-ahead').value) || 180
+        }
+    };
+    
+    try {
+        if (isNewFeed) {
+            await API.post('/api/feeds', feed);
+            showToast('Feed created successfully');
+        } else {
+            await API.put(`/api/feeds/${feedId}`, feed);
+            showToast('Feed updated successfully');
+        }
+        
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1000);
+    } catch (error) {
+        console.error('Error saving feed:', error);
+        showToast('Failed to save feed: ' + error.message, 'danger');
+    }
+}
+
+async function saveAndGenerate() {
+    try {
+        await saveFeed();
+        
+        // Wait a moment for save to complete
+        setTimeout(async () => {
+            const currentFeedId = isNewFeed ? document.getElementById('feed-id').value.trim() : feedId;
+            await API.post('/api/generate', {feed_id: currentFeedId});
+            showToast('Feed saved and generated successfully');
+            setTimeout(() => window.location.href = '/', 1500);
+        }, 1000);
+    } catch (error) {
+        console.error('Error saving and generating:', error);
+        showToast('Failed to generate feed', 'danger');
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Load data on page load
+loadData();
+</script>
+{% endblock %}
