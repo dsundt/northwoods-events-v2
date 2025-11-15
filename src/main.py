@@ -15,6 +15,7 @@ import yaml
 # shared helpers
 from src.ics_writer import write_combined_ics, write_per_source_ics
 from src.util import slugify, json_default, expand_tec_ics_urls
+from src.curated import process_curated_feeds
 
 # ---- Parsers in this repo (unchanged) ----
 from src.parsers import (
@@ -58,6 +59,7 @@ def _normalize_event(raw: Dict[str, Any]) -> Dict[str, Any]:
         "end_utc": end,
         "location": raw.get("location"),
         "url": raw.get("url") or raw.get("link"),
+        "uid": raw.get("uid"),  # Include UID for curated feed selection
         "_source": raw.get("_source"),
     }
 
@@ -541,6 +543,24 @@ def main() -> int:
         _mirror_report(report)
     except Exception as e:
         print(f"[northwoods] ERROR writing report.json: {e}")
+
+    # Process curated feeds
+    try:
+        curated_results = process_curated_feeds(
+            all_events,
+            config_path="config/curated.yaml",
+            output_dir="public/curated",
+            mirror_dirs=["github-pages/curated", "docs/curated"]
+        )
+        # Add curated feeds info to report
+        report["curated_feeds"] = curated_results
+        # Re-write report with curated feeds info
+        _mirror_report(report)
+        print(f"[northwoods] Processed {curated_results['enabled_feeds']} curated feeds")
+    except Exception as e:
+        print(f"[northwoods] ERROR processing curated feeds: {e}")
+        import traceback
+        traceback.print_exc()
 
     print(json.dumps({"ok": True, "events": len(all_events)}))
     return 0
