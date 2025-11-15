@@ -190,6 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadData();
     loadFeedsFromStorage();
     showView('feeds');
+    updateGitHubStatus();
 });
 
 // Load data from report.json
@@ -581,6 +582,7 @@ function initEditorEdit(feedId) {
     if (!feed) {
         showToast('Feed not found', 'warning');
         showView('feeds');
+    updateGitHubStatus();
         return;
     }
     
@@ -747,6 +749,7 @@ function saveFeed(event) {
     
     saveFeedsToStorage();
     showView('feeds');
+    updateGitHubStatus();
 }
 
 // Export configuration

@@ -367,13 +367,13 @@
 
     <main class="container">
         <div class="alert alert-info">
-            <strong>ℹ️ GitHub Pages Mode:</strong> This interface runs entirely in your browser. 
-            Changes are saved locally. To persist changes to your repository, download the updated 
-            <code>curated.yaml</code> and commit it manually, then trigger the GitHub Actions workflow 
-            to regenerate feeds.
+            <strong>ℹ️ GitHub Integration:</strong>
+            <span id="github-status">Detecting repository...</span>
+            <button onclick="showGitHubTokenDialog()" class="btn btn-sm btn-secondary" style="margin-left: 1rem;">
+                🔑 Configure GitHub Token
+            </button>
         </div>
 
-        <!-- My Feeds View -->
         <div id="view-feeds">
             <div class="card">
                 <div class="card-header">
