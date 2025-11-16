@@ -149,7 +149,7 @@ async function generateRunwayVideo(apiKey, prompt) {
     },
     body: JSON.stringify({
       promptText: prompt,
-      duration: 5, // Runway generates in 5-second increments (5, 10, 15, 20, etc.)
+      duration: 8, // Valid durations: 4, 6, or 8 seconds
       ratio: '1080:1920', // 9:16 vertical format for Instagram Reels
       model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
     }),
