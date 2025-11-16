@@ -209,11 +209,20 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
   
   if (!genResponse.ok) {
     const errorText = await genResponse.text();
+    console.error('Runway ML API error response:', errorText);
     throw new Error(`Runway API error (${genResponse.status}): ${errorText}`);
   }
   
   const genData = await genResponse.json();
+  console.log('Runway ML response:', genData);
+  
+  if (!genData.id) {
+    console.error('Invalid response from Runway ML:', genData);
+    throw new Error('Runway ML did not return a task ID');
+  }
+  
   const taskId = genData.id;
+  console.log(`Video generation task created: ${taskId}`);
   
   console.log(`Video generation started: ${taskId}`);
   
