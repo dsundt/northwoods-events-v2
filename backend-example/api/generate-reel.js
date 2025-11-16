@@ -140,7 +140,7 @@ async function generateRunwayVideo(apiKey, prompt) {
   console.log('Submitting to Runway ML API...');
   
   // Step 1: Submit generation request
-  const genResponse = await fetch('https://api.runwayml.com/v1/gen2', {
+  const genResponse = await fetch('https://api.dev.runwayml.com/v1/gen2', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
@@ -181,7 +181,7 @@ async function generateRunwayVideo(apiKey, prompt) {
     console.log(`Polling attempt ${attempts}/${maxAttempts}...`);
     
     const statusResponse = await fetch(
-      `https://api.runwayml.com/v1/tasks/${taskId}`,
+      `https://api.dev.runwayml.com/v1/tasks/${taskId}`,
       {
         headers: {
           'Authorization': `Bearer ${apiKey}`,
