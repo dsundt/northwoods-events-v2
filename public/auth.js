@@ -20,13 +20,13 @@
         // Example: username: password hash
         // 'admin': 'hash_of_admin_password_here',
         // Default: user1 / northwoods2025
-        'user1': 'e7d4a9a6c8f4b5c6e7d8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0',
+        'dsundt': '9ec1b9e51432dcc9d6bcfe3eaf6017f7d3f6285c3f070b25733f6e3bb723f940',
         // Add more users as needed
     };
     
     // Custom password (you can change this)
-    // SHA-256 hash of "northwoods2025"
-    const VALID_PASSWORD_HASH = 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2';
+    // SHA-256 hash of "RCL2025"
+    const VALID_PASSWORD_HASH = 'ec2ec78b0b75a5a6c3d2da9f09141adb164361e8f1c15d8a852179efe1e3897d';
     
     /**
      * Hash a password using SHA-256
