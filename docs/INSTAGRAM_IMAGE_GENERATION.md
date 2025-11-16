@@ -213,11 +213,27 @@ warm accent lights. Professional, inviting style.
 
 ### Prompt Writing Tips
 
-1. **Be Specific**: Describe style, mood, colors, setting
-2. **Avoid Text**: Text is added automatically
-3. **Use Descriptive Words**: "vibrant", "cozy", "professional"
-4. **Mention Northwoods**: Regional context helps
-5. **Keep It Simple**: Overly complex prompts may confuse AI
+1. **Be Geographically Accurate**: 
+   - Specify "Northern Wisconsin" or "Northwoods"
+   - Mention "NO mountains" - Wisconsin has rolling hills
+   - Focus on lakes, forests, and gentle terrain
+
+2. **Include Regional Elements**:
+   - Pine and birch trees (not palm trees!)
+   - Lakes and rivers (Wisconsin is lake country)
+   - Log cabins and rustic lodges
+   - Small-town Main Streets
+   - Outdoor recreation (canoeing, fishing, hiking)
+
+3. **Seasonal Accuracy**:
+   - Winter: Snow, ice fishing, cozy cabins
+   - Spring: Budding trees, melting lakes
+   - Summer: Lake activities, green forests
+   - Fall: Colorful foliage, harvest themes
+
+4. **Avoid Text**: Text is added automatically
+5. **Use Descriptive Words**: "vibrant", "cozy", "rustic", "pristine"
+6. **Mention Wisconsin**: Regional context helps AI
 
 ### Image Usage
 

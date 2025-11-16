@@ -1224,9 +1224,32 @@ function showImageGenerationDialog(event) {
     });
     
     const defaultPrompt = `Create a beautiful, vibrant Instagram post image for "${event.title}". 
-Style: Professional, eye-catching, suitable for tourism/events in the Northwoods region of Wisconsin. 
-Include elements that reflect the event's theme and the natural beauty of the area (lakes, forests, outdoor activities).
-Do not include any text in the image.`;
+
+SETTING: Northern Wisconsin / Northwoods region
+- Dense pine and deciduous forests
+- Crystal-clear lakes with gentle shorelines
+- Rolling hills (NO mountains - this is Wisconsin!)
+- Rustic log cabins and lakeside lodges
+- Charming small-town Main Streets
+- Natural Wisconsin landscapes
+
+STYLE: Professional tourism photography, warm and inviting, captures the natural beauty and recreational spirit of the Northwoods.
+
+ELEMENTS TO INCLUDE:
+- Towering pine trees and mixed forests
+- Pristine blue lakes or rivers
+- Rustic wooden structures (cabins, docks, lodges)
+- Outdoor recreation vibes (canoeing, hiking, fishing)
+- Seasonal appropriate (consider the event date)
+- Wisconsin charm and natural beauty
+
+IMPORTANT: 
+- NO mountains or mountain ranges
+- NO desert landscapes
+- Focus on forests, lakes, and gentle Wisconsin terrain
+- Do not include any text in the image (text will be added separately)
+
+Create an image that makes people want to visit Northern Wisconsin!`;
     
     const dialog = document.createElement('div');
     dialog.id = 'instagram-dialog';
