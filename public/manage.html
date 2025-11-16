@@ -386,6 +386,9 @@
             <button onclick="configureBackendUrl()" class="btn btn-sm btn-secondary" style="margin-left: 0.5rem;">
                 ⚙️ Backend URL
             </button>
+            <button onclick="window.configSync.showDialog()" class="btn btn-sm btn-primary" style="margin-left: 0.5rem;" title="Sync API keys across machines">
+                🔄 Sync Keys
+            </button>
         </div>
 
         <div id="view-feeds">
@@ -548,6 +551,7 @@
     </main>
 
     <script src="auth.js"></script>
+    <script src="config-sync.js"></script>
     <script src="manage.js"></script>
 </body>
 </html>
