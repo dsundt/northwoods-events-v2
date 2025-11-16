@@ -1,0 +1,305 @@
+```
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  🎥 INSTAGRAM REEL GENERATION - QUICK START                               ║
+║                                                                            ║
+║  Generate stunning AI-powered Instagram Reels for your events!            ║
+║  Duration: 15-30 seconds | Format: 9:16 vertical | Cost: ~$2-4 per reel  ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ STEP 1: Get API Keys                                                       │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  🎬 Runway ML (Required):
+     1. Go to: https://app.runwayml.com/
+     2. Sign up and verify email
+     3. Go to: Settings → API Keys → Create New Key
+     4. Purchase credits: Minimum $10
+        - Gen-2: $0.05/second (~$1-1.50 per reel)
+        - Gen-3: $0.10/second (~$2-3 per reel)
+     
+  🎵 Mubert AI (Optional - for music):
+     1. Go to: https://mubert.com/
+     2. Sign up
+     3. Get API key from API section
+     4. Free tier: 25 tracks/month (sufficient for testing)
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ STEP 2: Deploy Backend to Vercel (5 minutes)                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Prerequisites:
+  ✓ Node.js 14+ installed
+  ✓ Vercel account (free): https://vercel.com/signup
+  ✓ Runway ML API key (from Step 1)
+
+  Commands:
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  # Install Vercel CLI                                                   │
+  │  $ npm install -g vercel                                                │
+  │                                                                          │
+  │  # Navigate to backend directory                                        │
+  │  $ cd backend-example                                                   │
+  │                                                                          │
+  │  # Install dependencies                                                 │
+  │  $ npm install                                                          │
+  │                                                                          │
+  │  # Login to Vercel (opens browser)                                      │
+  │  $ vercel login                                                         │
+  │                                                                          │
+  │  # Deploy (follow prompts)                                              │
+  │  $ vercel                                                               │
+  │                                                                          │
+  │  # Set Runway ML API key                                                │
+  │  $ vercel env add RUNWAY_API_KEY                                        │
+  │  # When prompted, paste your Runway ML API key                          │
+  │                                                                          │
+  │  # (Optional) Set Mubert API key for music                              │
+  │  $ vercel env add MUBERT_API_KEY                                        │
+  │                                                                          │
+  │  # Deploy to production                                                 │
+  │  $ vercel --prod                                                        │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ✅ After deployment, you'll get:
+     https://your-project-name.vercel.app
+
+  📝 Your API endpoint:
+     https://your-project-name.vercel.app/api/generate-reel
+
+     👉 SAVE THIS URL! You'll need it in Step 3.
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ STEP 3: Configure Web Interface                                           │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. Go to: https://dsundt.github.io/northwoods-events-v2/manage.html
+
+  2. Click: "🎥 Runway ML Key" in the header
+     → Paste your Runway ML API key
+
+  3. Click: "⚙️ Backend URL" in the header
+     → Paste: https://your-project-name.vercel.app/api/generate-reel
+
+  ✅ Setup complete! You're ready to generate reels.
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ STEP 4: Generate Your First Reel                                          │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. Go to: "My Feeds" → Preview any feed
+  
+  2. Find an event you like
+  
+  3. Click: "🎥 Generate Reel"
+  
+  4. Customize the prompt or use the default
+     (Northern Wisconsin-themed prompts included!)
+  
+  5. Optional: Check "Add Background Music"
+  
+  6. Click: "✨ Generate Reel ($2-4, 2-5 min)"
+  
+  7. Wait: 2-5 minutes (keep window open)
+  
+  8. Preview: Video appears with controls
+  
+  9. Download: Save locally or commit to GitHub
+  
+  10. View Gallery: Click "🎥 Reels" in navigation
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 📊 COST CALCULATOR                                                         │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Per 20-second reel:
+  ├─ Runway Gen-2: $1.00 (good quality, stable)
+  ├─ Runway Gen-3: $2.00 (best quality)
+  └─ Mubert Music: Free (25/month) or included in pro ($14/month)
+
+  Monthly estimates:
+  ├─  5 reels/month:  $5-10  (Gen-2) or  $10-20  (Gen-3)
+  ├─ 20 reels/month:  $20-40 (Gen-2) or  $40-80  (Gen-3)
+  └─ 50 reels/month:  $50-100 (Gen-2) or $100-200 (Gen-3)
+
+  Hosting (Vercel):
+  ├─ Hobby (free): 100 GB bandwidth, 100 hours compute
+  └─ Pro ($20/month): 1 TB bandwidth, 1000 hours compute
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 🎨 PROMPT WRITING TIPS                                                     │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Good prompt structure:
+  
+  Create a [duration]-second vertical video (9:16) for [event name].
+  
+  SETTING: Northern Wisconsin / Northwoods
+  - [Describe landscape: forests, lakes, cabins, towns]
+  - [Describe season and weather]
+  - [Describe time of day]
+  
+  VIDEO STYLE:
+  - Camera movements: [pans, zooms, tracking shots, aerial]
+  - Lighting: [golden hour, bright daylight, overcast]
+  - Mood: [energetic, peaceful, exciting, inviting]
+  
+  SCENES:
+  - Opening: [description] (X seconds)
+  - Middle: [description] (Y seconds)
+  - Closing: [description] (Z seconds)
+  
+  Duration: [15-30] seconds
+  NO text, NO mountains - Wisconsin landscapes only!
+
+  Key tips:
+  ✓ Be specific about camera movements
+  ✓ Mention Northern Wisconsin/Northwoods explicitly
+  ✓ NO mountains (Wisconsin has rolling hills, not mountains!)
+  ✓ Include: forests, lakes, cabins, small towns
+  ✓ Describe transitions between scenes
+  ✓ Specify lighting and mood
+  ✓ Optimal duration: 20-25 seconds
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 🐛 TROUBLESHOOTING                                                         │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Problem: "Backend URL not configured"
+  Solution: Click "⚙️ Backend URL" and enter your Vercel deployment URL
+
+  Problem: "Runway API error (401)"
+  Solution: 
+    1. Check API key is correct in Vercel: vercel env ls
+    2. Verify you have credits: https://app.runwayml.com/
+    3. Redeploy: vercel --prod
+
+  Problem: "Video generation timeout"
+  Solution:
+    1. Wait longer (can take up to 5 minutes)
+    2. Simplify your prompt (shorter, less complex)
+    3. Check Runway ML status: https://status.runwayml.com/
+
+  Problem: "Failed to save to repository"
+  Solution:
+    1. Ensure GitHub token is configured
+    2. Check file size < 100 MB
+    3. Verify write permissions
+
+  Problem: "Music generation failed"
+  Solution:
+    1. Try without music first
+    2. Check Mubert API key
+    3. Verify free tier limits (25 tracks/month)
+
+  Check logs:
+  $ vercel logs
+  
+  Test API directly:
+  $ curl -X POST https://your-project.vercel.app/api/generate-reel \
+      -H "Content-Type: application/json" \
+      -d '{"prompt":"Test","event":{"title":"Test"},"addMusic":false}'
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 🚀 ALTERNATIVE DEPLOYMENT OPTIONS                                         │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Netlify Functions:
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  $ npm install -g netlify-cli                                           │
+  │  $ netlify deploy --prod                                                │
+  │  $ netlify env:set RUNWAY_API_KEY your-key                              │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  AWS Lambda (via Serverless Framework):
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  $ npm install -g serverless                                            │
+  │  $ serverless deploy                                                    │
+  │  $ serverless deploy --stage production                                 │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  Railway:
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  $ npm install -g @railway/cli                                          │
+  │  $ railway login                                                        │
+  │  $ railway up                                                           │
+  │  $ railway variables set RUNWAY_API_KEY=your-key                        │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 📖 DOCUMENTATION                                                           │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Full Documentation:
+  ├─ User Guide:        /docs/INSTAGRAM_REEL_GENERATION.md
+  ├─ Implementation:    /docs/REEL_IMPLEMENTATION_SUMMARY.md
+  ├─ Deployment Guide:  /backend-example/README.md
+  └─ API Reference:     /backend-example/api/generate-reel.js
+
+  External Resources:
+  ├─ Runway ML Docs:    https://docs.runwayml.com/
+  ├─ Mubert API Docs:   https://mubert.com/api
+  ├─ Instagram Specs:   https://help.instagram.com/270447560766967
+  └─ Vercel Functions:  https://vercel.com/docs/functions
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ ✨ WHAT YOU GET                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  ✓ Professional-quality AI-generated videos (Runway ML - used in Hollywood)
+  ✓ Instagram-optimized format (9:16 vertical, 1080x1920 pixels)
+  ✓ Duration: 15-30 seconds (perfect for Instagram Reels)
+  ✓ Optional AI-generated background music
+  ✓ Northern Wisconsin-themed prompts and aesthetics
+  ✓ Web interface for generation and management
+  ✓ Gallery page to view all generated reels
+  ✓ Automatic saving to GitHub repository
+  ✓ Download for local use
+  ✓ Complete documentation and support
+
+  Perfect for:
+  ├─ Promoting local events
+  ├─ Tourism marketing
+  ├─ Social media content
+  ├─ Event announcements
+  └─ Engaging visual storytelling
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ 💡 PRO TIPS                                                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. Test prompts in Runway's web interface first
+  2. Generate in batches to save time
+  3. Keep prompts detailed but focused
+  4. Monitor API usage to control costs
+  5. Use Gen-2 for testing, Gen-3 for final production
+  6. Add text overlays in Instagram app (more flexible)
+  7. Preview all videos before publishing
+  8. Cache/save successful prompts for reuse
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║  Questions? Issues? Need Help?                                             ║
+║                                                                            ║
+║  📖 Read the docs:  /docs/INSTAGRAM_REEL_GENERATION.md                    ║
+║  🐛 Check logs:     vercel logs                                           ║
+║  🔍 Test API:       curl -X POST https://your-url/api/generate-reel ...   ║
+║  💬 GitHub Issues:  https://github.com/dsundt/northwoods-events-v2        ║
+║                                                                            ║
+║  Ready to create amazing Instagram Reels? Let's go! 🎥✨                  ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+```
