@@ -140,7 +140,7 @@ async function generateRunwayVideo(apiKey, prompt) {
   console.log('Submitting to Runway ML API...');
   
   // Step 1: Submit generation request
-  const genResponse = await fetch('https://api.dev.runwayml.com/v1/gen2', {
+  const genResponse = await fetch('https://api.dev.runwayml.com/v1/text-to-video', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
@@ -148,11 +148,10 @@ async function generateRunwayVideo(apiKey, prompt) {
       'X-Runway-Version': '2024-11-06',
     },
     body: JSON.stringify({
-      text_prompt: prompt,
+      prompt: prompt,
       duration: 5, // Runway generates in 5-second increments (5, 10, 15, 20, etc.)
-      ratio: '16:9', // Note: Runway doesn't support 9:16 directly, we'll need to crop
-      model: 'gen2',
-      watermark: false,
+      aspect_ratio: '16:9', // Note: Runway doesn't support 9:16 directly
+      model: 'gen3a_turbo', // Using Gen-3 Turbo for faster generation
     }),
   });
   
