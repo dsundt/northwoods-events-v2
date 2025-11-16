@@ -1867,22 +1867,55 @@ async function startReelGeneration(event) {
     `;
     
     try {
-        // TODO: Update this URL to your deployed backend
-        // Example: https://your-project.vercel.app/api/generate-reel
         const BACKEND_URL = localStorage.getItem('reel_backend_url') || '';
         
         if (!BACKEND_URL) {
             throw new Error('Backend URL not configured. Please set up your backend service first.');
         }
         
+        // First, test the backend connection
         statusDiv.innerHTML = `
             <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 1rem; border-radius: 4px;">
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
                     <div style="width: 20px; height: 20px; border: 3px solid #0066cc; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                    <span><strong>Generating Video...</strong> This takes 2-5 minutes</span>
+                    <span><strong>Step 1/3:</strong> Testing backend connection...</span>
                 </div>
                 <div style="font-size: 0.85rem; color: var(--text-muted);">
-                    Step 1/3: Submitting to Runway ML...<br>
+                    Connecting to: ${BACKEND_URL.substring(0, 50)}...
+                </div>
+            </div>
+        `;
+        
+        // Test connection with health check
+        try {
+            const healthCheck = await fetch(BACKEND_URL, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (!healthCheck.ok) {
+                throw new Error(`Backend returned status ${healthCheck.status}. Please verify the URL and deployment.`);
+            }
+            
+            const healthData = await healthCheck.json();
+            console.log('Backend health check:', healthData);
+            
+            if (!healthData.runwayConfigured) {
+                throw new Error('Runway ML API key not configured on backend. Please set RUNWAY_API_KEY environment variable in Vercel.');
+            }
+        } catch (healthError) {
+            console.error('Health check error:', healthError);
+            throw new Error(`Cannot connect to backend: ${healthError.message}. Verify URL: ${BACKEND_URL}`);
+        }
+        
+        statusDiv.innerHTML = `
+            <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 1rem; border-radius: 4px;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <div style="width: 20px; height: 20px; border: 3px solid #0066cc; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <span><strong>Step 2/3:</strong> Generating Video... This takes 2-5 minutes</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    Submitting to Runway ML...<br>
                     Please keep this window open.
                 </div>
             </div>
@@ -2007,7 +2040,7 @@ function configureBackendUrl() {
     document.getElementById('backend-url-input').focus();
 }
 
-function saveBackendUrl() {
+async function saveBackendUrl() {
     const input = document.getElementById('backend-url-input');
     const url = input.value.trim();
     
@@ -2021,10 +2054,42 @@ function saveBackendUrl() {
         return;
     }
     
-    localStorage.setItem('reel_backend_url', url);
+    // Test the URL before saving
+    showToast('Testing backend connection...', 'info');
     
-    document.querySelector('[style*="fixed"]').remove();
-    showToast('Backend URL saved!', 'success');
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Backend returned status ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.status === 'ok') {
+            localStorage.setItem('reel_backend_url', url);
+            document.querySelector('[style*="fixed"]').remove();
+            
+            let message = '✅ Backend connected!';
+            if (!data.runwayConfigured) {
+                message += '\n⚠️ Warning: Runway ML API key not configured on backend';
+            }
+            if (!data.beatovenConfigured) {
+                message += '\n⚠️ Music generation unavailable (Beatoven.ai not configured)';
+            }
+            
+            showToast(message, 'success');
+            console.log('Backend health:', data);
+        } else {
+            throw new Error('Invalid backend response');
+        }
+    } catch (error) {
+        console.error('Backend test failed:', error);
+        showToast(`❌ Cannot connect to backend: ${error.message}`, 'danger');
+    }
 }
 
 async function saveReelToGitHub(videoUrl, event) {

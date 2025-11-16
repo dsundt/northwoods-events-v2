@@ -39,11 +39,23 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
   
-  // Only accept POST requests
+  // Health check for GET requests
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      status: 'ok',
+      service: 'Instagram Reel Generation API',
+      version: '1.0.0',
+      timestamp: new Date().toISOString(),
+      runwayConfigured: !!process.env.RUNWAY_API_KEY,
+      beatovenConfigured: !!process.env.BEATOVEN_API_KEY
+    });
+  }
+  
+  // Only accept POST requests for generation
   if (req.method !== 'POST') {
     return res.status(405).json({ 
       error: 'Method not allowed',
-      message: 'This endpoint only accepts POST requests'
+      message: 'This endpoint accepts GET (health check) and POST (generation) requests'
     });
   }
   
