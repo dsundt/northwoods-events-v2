@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "Triggering GitHub Pages deployment..."
+echo ""
+echo "🔗 Go to this URL to manually trigger the workflow:"
+echo "https://github.com/dsundt/northwoods-events-v2/actions/workflows/build-ics-and-deploy.yml"
+echo ""
+echo "Then click:"
+echo "1. 'Run workflow' button (right side)"
+echo "2. Select branch: main"
+echo "3. Click green 'Run workflow' button"
+echo ""
+echo "Or use GitHub CLI if you have it installed:"
+echo "gh workflow run build-ics-and-deploy.yml"
