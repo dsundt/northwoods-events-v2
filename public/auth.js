@@ -20,8 +20,9 @@
         // Example: username: password hash
         // 'admin': 'hash_of_admin_password_here',
         // Default: user1 / northwoods2025
-        'dsundt': '9ec1b9e51432dcc9d6bcfe3eaf6017f7d3f6285c3f070b25733f6e3bb723f940',
+        'dsundt': 'ec2ec78b0b75a5a6c3d2da9f09141adb164361e8f1c15d8a852179efe1e3897d',
         // Add more users as needed
+        'asundt': 'ec2ec78b0b75a5a6c3d2da9f09141adb164361e8f1c15d8a852179efe1e3897d',
     };
     
     // Custom password (you can change this)
