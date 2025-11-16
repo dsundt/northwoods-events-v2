@@ -145,7 +145,6 @@ async function generateRunwayVideo(apiKey, prompt) {
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'X-Runway-Version': '2024-11-01',
     },
     body: JSON.stringify({
       text_prompt: prompt,
@@ -185,7 +184,6 @@ async function generateRunwayVideo(apiKey, prompt) {
       {
         headers: {
           'Authorization': `Bearer ${apiKey}`,
-          'X-Runway-Version': '2024-11-01',
         },
       }
     );
