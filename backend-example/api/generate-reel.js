@@ -262,7 +262,17 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
       videoUrl = statusData.output[0]; // Runway returns array of outputs
       break;
     } else if (statusData.status === 'FAILED') {
-      throw new Error(`Video generation failed: ${statusData.failure_reason || 'Unknown error'}`);
+      // Log full response to see what Runway ML is returning
+      console.error('FAILED status received. Full response:', JSON.stringify(statusData, null, 2));
+      
+      // Check for different possible error fields
+      const errorMsg = statusData.failure_reason 
+        || statusData.failureReason 
+        || statusData.error 
+        || statusData.message 
+        || 'No error details provided by Runway ML';
+      
+      throw new Error(`Video generation failed: ${errorMsg}. Full status: ${JSON.stringify(statusData)}`);
     } else if (statusData.status === 'CANCELLED') {
       throw new Error('Video generation was cancelled');
     }
