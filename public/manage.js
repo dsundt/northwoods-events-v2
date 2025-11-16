@@ -1117,7 +1117,10 @@ function previewFeed(feedId) {
                         </a>
                     ` : ''}
                     <button onclick='generateInstagramImage(${JSON.stringify(event).replace(/'/g, "\\'")})'  class="btn btn-sm btn-success">
-                        🎨 Generate Instagram Image
+                        🎨 Generate Image
+                    </button>
+                    <button onclick='generateInstagramReel(${JSON.stringify(event).replace(/'/g, "\\'")})'  class="btn btn-sm" style="background: #E1306C; color: white;">
+                        🎥 Generate Reel
                     </button>
                 </div>
             </div>
@@ -1622,6 +1625,430 @@ async function saveImageToGitHub(imageUrl, event) {
     } catch (error) {
         console.error('Upload error:', error);
         showToast('Failed to save image: ' + error.message, 'danger');
+    }
+}
+
+
+// ==================== INSTAGRAM REEL GENERATION ====================
+
+// Runway ML API configuration
+let RUNWAY_API_KEY = localStorage.getItem('runway_api_key') || '';
+
+// Mubert API for music (alternative: use stock music)
+let MUBERT_API_KEY = localStorage.getItem('mubert_api_key') || '';
+
+function configureRunwayKey() {
+    const currentKey = RUNWAY_API_KEY ? '••••••' + RUNWAY_API_KEY.slice(-4) : 'Not configured';
+    
+    const dialog = document.createElement('div');
+    dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;';
+    
+    dialog.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+            <h2 style="margin-top: 0;">Configure Runway ML API Key</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Required for AI video generation. Get your key from: 
+                <a href="https://app.runwayml.com/" target="_blank">Runway ML</a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                <strong>Cost:</strong> ~$0.05-0.15 per second (~$2-4 per reel)<br>
+                <strong>Generation time:</strong> 2-5 minutes per reel<br>
+                Current key: <code>${currentKey}</code>
+            </p>
+            <input type="password" id="runway-key-input" placeholder="Enter Runway ML API key..." 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 1rem; font-family: monospace;">
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <button onclick="this.closest('[style*=fixed]').remove()" class="btn btn-secondary">Cancel</button>
+                <button onclick="saveRunwayKey()" class="btn btn-primary">Save Key</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+    document.getElementById('runway-key-input').focus();
+}
+
+function saveRunwayKey() {
+    const input = document.getElementById('runway-key-input');
+    const key = input.value.trim();
+    
+    if (!key) {
+        showToast('Please enter an API key', 'danger');
+        return;
+    }
+    
+    RUNWAY_API_KEY = key;
+    localStorage.setItem('runway_api_key', key);
+    
+    document.querySelector('[style*="fixed"]').remove();
+    showToast('Runway ML API key saved!', 'success');
+}
+
+async function generateInstagramReel(event) {
+    if (!RUNWAY_API_KEY) {
+        showToast('Please configure Runway ML API key first', 'warning');
+        configureRunwayKey();
+        return;
+    }
+    
+    // Show generation dialog
+    showReelGenerationDialog(event);
+}
+
+function showReelGenerationDialog(event) {
+    const eventDate = new Date(event.start_utc);
+    const dateStr = eventDate.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        month: 'long', 
+        day: 'numeric',
+        year: 'numeric'
+    });
+    
+    const defaultPrompt = `Create a vibrant 20-second vertical video (9:16 aspect ratio) for "${event.title}" in Northern Wisconsin.
+
+SETTING: Northwoods of Wisconsin
+- Dense pine forests and pristine lakes
+- Rustic cabins and charming small towns
+- Rolling hills (NO mountains)
+- Natural Wisconsin beauty
+
+VIDEO STYLE: 
+- Cinematic, professional tourism videography
+- Smooth camera movements (pans, slow zooms)
+- Golden hour or vibrant daylight
+- Inviting and energetic
+
+SCENES TO INCLUDE:
+- Sweeping forest views with tall pines
+- Beautiful lake with gentle waves
+- Rustic wooden structures or town scenes
+- Outdoor recreation atmosphere
+- Seasonal appropriate (${dateStr.split(',')[0]})
+
+MOOD: Exciting, inviting, captures the spirit of the event and Northern Wisconsin's natural beauty.
+
+Duration: 15-25 seconds
+Format: Vertical (Instagram Reel - 9:16)
+NO mountains, NO deserts - Wisconsin landscape only!`;
+    
+    const dialog = document.createElement('div');
+    dialog.id = 'reel-dialog';
+    dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000; overflow-y: auto;';
+    
+    dialog.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; margin: 2rem;">
+            <h2 style="margin-top: 0;">🎥 Generate Instagram Reel</h2>
+            
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                <h3 style="margin: 0 0 0.5rem 0; font-size: 1rem;">${escapeHtml(event.title)}</h3>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">
+                    📅 ${dateStr}
+                    ${event.location ? `<br>📍 ${escapeHtml(event.location)}` : ''}
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">
+                <strong>⚠️ Video Generation:</strong> Takes 2-5 minutes and costs ~$2-4 per reel. 
+                Please be patient during generation.
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">AI Video Prompt:</label>
+                <textarea id="reel-prompt" rows="12" 
+                          style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; resize: vertical; font-size: 0.9rem;">${defaultPrompt}</textarea>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    💡 Tip: Describe camera movements, scenery, and mood. Video will be 15-25 seconds.
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
+                    <input type="checkbox" id="add-music" checked style="margin-right: 0.5rem;">
+                    Add Background Music (AI-selected)
+                </label>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-left: 1.5rem;">
+                    AI will select appropriate music based on event type and video content
+                </div>
+            </div>
+            
+            <div id="reel-generation-status" style="margin-bottom: 1rem;"></div>
+            <div id="reel-preview" style="margin-bottom: 1rem;"></div>
+            
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap;">
+                <button onclick="document.getElementById('reel-dialog').remove()" class="btn btn-secondary">Close</button>
+                <button onclick="configureRunwayKey()" class="btn btn-secondary">⚙️ API Key</button>
+                <button onclick="startReelGeneration(${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-primary" id="generate-reel-btn">
+                    ✨ Generate Reel ($2-4, 2-5 min)
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+}
+
+async function startReelGeneration(event) {
+    const promptInput = document.getElementById('reel-prompt');
+    const statusDiv = document.getElementById('reel-generation-status');
+    const generateBtn = document.getElementById('generate-reel-btn');
+    const addMusic = document.getElementById('add-music').checked;
+    const prompt = promptInput.value.trim();
+    
+    if (!prompt) {
+        showToast('Please enter a prompt', 'warning');
+        return;
+    }
+    
+    generateBtn.disabled = true;
+    generateBtn.textContent = '⏳ Generating...';
+    
+    statusDiv.innerHTML = `
+        <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 1rem; border-radius: 4px;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <div style="width: 20px; height: 20px; border: 3px solid #0066cc; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <span><strong>Step 1/3:</strong> Checking backend configuration...</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+                Video generation requires a backend service. Checking setup...
+            </div>
+        </div>
+        <style>
+            @keyframes spin { to { transform: rotate(360deg); } }
+        </style>
+    `;
+    
+    try {
+        // TODO: Update this URL to your deployed backend
+        // Example: https://your-project.vercel.app/api/generate-reel
+        const BACKEND_URL = localStorage.getItem('reel_backend_url') || '';
+        
+        if (!BACKEND_URL) {
+            throw new Error('Backend URL not configured. Please set up your backend service first.');
+        }
+        
+        statusDiv.innerHTML = `
+            <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 1rem; border-radius: 4px;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <div style="width: 20px; height: 20px; border: 3px solid #0066cc; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <span><strong>Generating Video...</strong> This takes 2-5 minutes</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    Step 1/3: Submitting to Runway ML...<br>
+                    Please keep this window open.
+                </div>
+            </div>
+        `;
+        
+        const response = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                prompt: prompt,
+                event: {
+                    title: event.title,
+                    start_utc: event.start_utc,
+                    location: event.location,
+                },
+                addMusic: addMusic,
+            }),
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `Backend error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.error || 'Unknown error');
+        }
+        
+        // Show preview and save options
+        const previewDiv = document.getElementById('reel-preview');
+        previewDiv.innerHTML = `
+            <div style="background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                ✅ Video generated successfully!
+            </div>
+            <video controls style="width: 100%; max-width: 400px; border-radius: 8px; margin-bottom: 1rem;">
+                <source src="${data.videoUrl || data.video}" type="video/mp4">
+                Your browser does not support video playback.
+            </video>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <a href="${data.videoUrl || data.video}" download="reel-${Date.now()}.mp4" class="btn btn-success">
+                    💾 Download Reel
+                </a>
+                <button onclick="saveReelToGitHub('${(data.videoUrl || data.video).replace(/'/g, "\\'")}', ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-primary">
+                    ☁️ Save to Repository
+                </button>
+            </div>
+        `;
+        
+        statusDiv.innerHTML = '';
+        showToast('Reel generated successfully!', 'success');
+        
+    } catch (error) {
+        console.error('Reel generation error:', error);
+        
+        if (error.message.includes('Backend URL not configured')) {
+            statusDiv.innerHTML = `
+                <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1.5rem; border-radius: 4px;">
+                    <h3 style="margin-top: 0; font-size: 1rem;">🚧 Backend Service Required</h3>
+                    <p style="margin-bottom: 1rem;">
+                        Instagram Reel generation requires a backend service. Follow these steps:
+                    </p>
+                    <ol style="margin: 0 0 1rem 1.5rem; padding: 0; line-height: 1.8;">
+                        <li>Deploy the backend to Vercel, Netlify, or AWS Lambda</li>
+                        <li>Get your API endpoint URL</li>
+                        <li>Click "⚙️ Configure Backend" below to save it</li>
+                    </ol>
+                    <button onclick="configureBackendUrl()" class="btn btn-primary">
+                        ⚙️ Configure Backend URL
+                    </button>
+                    <a href="https://github.com/${GITHUB_REPO}/tree/main/backend-example" target="_blank" class="btn btn-secondary" style="margin-left: 0.5rem;">
+                        📖 Deployment Guide
+                    </a>
+                </div>
+            `;
+        } else {
+            statusDiv.innerHTML = `
+                <div style="background: #ffe7e7; border: 1px solid #ffb3b3; padding: 1rem; border-radius: 4px; color: #cc0000;">
+                    <strong>Error:</strong> ${escapeHtml(error.message)}<br>
+                    <small>Check console for details (F12)</small>
+                </div>
+            `;
+        }
+    } finally {
+        generateBtn.disabled = false;
+        generateBtn.textContent = '✨ Generate Reel ($2-4, 2-5 min)';
+    }
+}
+
+function configureBackendUrl() {
+    const currentUrl = localStorage.getItem('reel_backend_url') || '';
+    
+    const dialog = document.createElement('div');
+    dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;';
+    
+    dialog.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+            <h2 style="margin-top: 0;">Configure Backend URL</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Enter the URL of your deployed backend service.
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                <strong>Example:</strong><br>
+                <code style="display: block; background: #f5f5f5; padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem;">
+                https://your-project.vercel.app/api/generate-reel
+                </code>
+            </p>
+            <input type="url" id="backend-url-input" placeholder="https://..." 
+                   value="${currentUrl}"
+                   style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 1rem; font-family: monospace;">
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <button onclick="this.closest('[style*=fixed]').remove()" class="btn btn-secondary">Cancel</button>
+                <button onclick="saveBackendUrl()" class="btn btn-primary">Save URL</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+    document.getElementById('backend-url-input').focus();
+}
+
+function saveBackendUrl() {
+    const input = document.getElementById('backend-url-input');
+    const url = input.value.trim();
+    
+    if (!url) {
+        showToast('Please enter a URL', 'danger');
+        return;
+    }
+    
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        showToast('URL must start with http:// or https://', 'danger');
+        return;
+    }
+    
+    localStorage.setItem('reel_backend_url', url);
+    
+    document.querySelector('[style*="fixed"]').remove();
+    showToast('Backend URL saved!', 'success');
+}
+
+async function saveReelToGitHub(videoUrl, event) {
+    if (!GITHUB_TOKEN) {
+        showToast('Please configure GitHub token first', 'warning');
+        showGitHubTokenDialog();
+        return;
+    }
+    
+    try {
+        showToast('Downloading video...', 'info');
+        
+        // Fetch video as blob
+        const response = await fetch(videoUrl);
+        if (!response.ok) {
+            throw new Error('Failed to download video');
+        }
+        
+        const blob = await response.blob();
+        
+        // Convert to base64
+        const base64 = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.readAsDataURL(blob);
+        });
+        
+        // Generate filename
+        const eventDate = new Date(event.start_utc);
+        const dateStr = eventDate.toISOString().split('T')[0];
+        const slug = slugify(event.title);
+        const filename = `${dateStr}-${slug}.mp4`;
+        const path = `public/instagram-reels/${filename}`;
+        
+        showToast('Committing to repository...', 'info');
+        
+        // Commit to GitHub
+        const commitResponse = await fetch(
+            `https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: `Add Instagram Reel: ${event.title}`,
+                    content: base64,
+                    branch: 'main',
+                }),
+            }
+        );
+        
+        if (!commitResponse.ok) {
+            const errorData = await commitResponse.json();
+            throw new Error(errorData.message || 'Failed to commit to GitHub');
+        }
+        
+        showToast('✅ Reel saved to repository!', 'success');
+        
+        // Show success message with link
+        const successDiv = document.createElement('div');
+        successDiv.style.cssText = 'background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; border-radius: 4px; margin-top: 1rem;';
+        successDiv.innerHTML = `
+            <strong>✅ Saved!</strong> View in 
+            <a href="reel-gallery.html" target="_blank">Reel Gallery</a> or on 
+            <a href="https://github.com/${GITHUB_REPO}/blob/main/${path}" target="_blank">GitHub</a>
+        `;
+        document.getElementById('reel-preview').appendChild(successDiv);
+        
+    } catch (error) {
+        console.error('Error saving reel:', error);
+        showToast(`Failed to save: ${error.message}`, 'danger');
     }
 }
 

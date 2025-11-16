@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Reels Gallery - Northwoods Events</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #E1306C;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --text-color: #2c3e50;
+            --text-muted: #6c757d;
+            --bg-color: #f8f9fa;
+            --border-color: #dee2e6;
+            --card-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0052a3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,102,204,0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #c21f5b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(225,48,108,0.3);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #ffe7e7;
+            border: 1px solid #ffb3b3;
+            color: #cc0000;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .empty-state {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .empty-state h2 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .reel-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .reel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+        
+        .reel-video {
+            width: 100%;
+            aspect-ratio: 9/16;
+            object-fit: cover;
+            background: #000;
+        }
+        
+        .reel-info {
+            padding: 1rem;
+        }
+        
+        .reel-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        
+        .reel-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .reel-size {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        
+        .reel-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            flex: 1;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .modal-video {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎥 Instagram Reels Gallery</h1>
+            <p class="subtitle">AI-Generated Event Videos for Northern Wisconsin</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-reels">0</span>
+                    <span class="stat-label">Total Reels</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="total-size">0 MB</span>
+                    <span class="stat-label">Total Size</span>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <a href="manage.html" class="btn btn-primary">← Back to Dashboard</a>
+                <a href="instagram-gallery.html" class="btn btn-secondary">📸 View Images</a>
+            </div>
+        </header>
+        
+        <div id="content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading reels...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal" class="modal">
+        <button class="close-modal" onclick="closeModal()">×</button>
+        <div class="modal-content" id="modal-content"></div>
+    </div>
+    
+    <script>
+        const GITHUB_REPO = 'dsundt/northwoods-events-v2';
+        const REELS_PATH = 'public/instagram-reels';
+        
+        async function loadReels() {
+            const contentDiv = document.getElementById('content');
+            
+            try {
+                const response = await fetch(
+                    `https://api.github.com/repos/${GITHUB_REPO}/contents/${REELS_PATH}`,
+                    {
+                        headers: {
+                            'Accept': 'application/vnd.github.v3+json',
+                        },
+                    }
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load reels: ${response.status}`);
+                }
+                
+                const files = await response.json();
+                
+                // Filter video files
+                const reels = files.filter(file => 
+                    file.name.endsWith('.mp4') || 
+                    file.name.endsWith('.mov') || 
+                    file.name.endsWith('.webm')
+                );
+                
+                if (reels.length === 0) {
+                    contentDiv.innerHTML = `
+                        <div class="empty-state">
+                            <h2>No reels yet</h2>
+                            <p>Generate your first Instagram Reel from the event preview page!</p>
+                            <a href="manage.html" class="btn btn-primary">Go to Dashboard</a>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Sort by date (newest first)
+                reels.sort((a, b) => {
+                    const dateA = extractDate(a.name);
+                    const dateB = extractDate(b.name);
+                    return dateB - dateA;
+                });
+                
+                // Update stats
+                const totalSize = reels.reduce((sum, reel) => sum + reel.size, 0);
+                document.getElementById('total-reels').textContent = reels.length;
+                document.getElementById('total-size').textContent = formatSize(totalSize);
+                
+                // Render gallery
+                contentDiv.innerHTML = `
+                    <div class="gallery">
+                        ${reels.map(reel => renderReelCard(reel)).join('')}
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Error loading reels:', error);
+                contentDiv.innerHTML = `
+                    <div class="error">
+                        <h2>Error Loading Reels</h2>
+                        <p>${error.message}</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            Make sure reels have been generated and committed to the repository.
+                        </p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderReelCard(reel) {
+            const fileName = reel.name;
+            const rawUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${REELS_PATH}/${fileName}`;
+            const githubUrl = reel.html_url;
+            
+            // Parse event name from filename (YYYY-MM-DD-event-slug.mp4)
+            const parts = fileName.replace(/\.(mp4|mov|webm)$/, '').split('-');
+            const date = parts.slice(0, 3).join('-');
+            const eventName = parts.slice(3).join(' ').replace(/\b\w/g, l => l.toUpperCase());
+            
+            return `
+                <div class="reel-card" onclick="openModal('${rawUrl}', '${escapeHtml(eventName)}', '${date}', '${fileName}', '${githubUrl}')">
+                    <video class="reel-video" preload="metadata" muted>
+                        <source src="${rawUrl}" type="video/mp4">
+                    </video>
+                    <div class="reel-info">
+                        <div class="reel-title">${escapeHtml(eventName)}</div>
+                        <div class="reel-date">📅 ${formatDate(date)}</div>
+                        <div class="reel-size">💾 ${formatSize(reel.size)}</div>
+                        <div class="reel-actions">
+                            <a href="${rawUrl}" download="${fileName}" class="btn btn-primary btn-sm" onclick="event.stopPropagation()">
+                                ⬇️ Download
+                            </a>
+                            <a href="${githubUrl}" target="_blank" class="btn btn-secondary btn-sm" onclick="event.stopPropagation()">
+                                🔗 GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function openModal(videoUrl, eventName, date, fileName, githubUrl) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.innerHTML = `
+                <h2 style="margin-bottom: 1rem;">${escapeHtml(eventName)}</h2>
+                <video class="modal-video" controls autoplay>
+                    <source src="${videoUrl}" type="video/mp4">
+                </video>
+                <div style="margin-bottom: 1rem;">
+                    <div style="color: var(--text-muted); margin-bottom: 0.5rem;">
+                        📅 ${formatDate(date)}
+                    </div>
+                    <div style="font-family: monospace; font-size: 0.85rem; color: var(--text-muted); word-break: break-all;">
+                        ${fileName}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="${videoUrl}" download="${fileName}" class="btn btn-primary">
+                        ⬇️ Download Reel
+                    </a>
+                    <a href="${githubUrl}" target="_blank" class="btn btn-secondary">
+                        📁 View on GitHub
+                    </a>
+                    <button onclick="copyToClipboard('${videoUrl}')" class="btn btn-secondary">
+                        📋 Copy URL
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            
+            // Stop video playback
+            const video = modal.querySelector('video');
+            if (video) {
+                video.pause();
+            }
+        }
+        
+        function extractDate(filename) {
+            const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (match) {
+                return new Date(match[0]);
+            }
+            return new Date(0);
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+            });
+        }
+        
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('URL copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy URL');
+            });
+        }
+        
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Load reels on page load
+        loadReels();
+    </script>
+</body>
+</html>

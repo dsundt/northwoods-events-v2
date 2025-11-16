@@ -361,7 +361,8 @@
                 <button id="nav-feeds" class="active" onclick="showView('feeds')">My Feeds</button>
                 <button id="nav-browse" onclick="showView('browse')">Browse Events</button>
                 <button id="nav-create" onclick="showView('editor', 'new')">Create Feed</button>
-                <button onclick="window.open('instagram-gallery.html', '_blank')">📸 Gallery</button>
+                <button onclick="window.open('instagram-gallery.html', '_blank')">📸 Images</button>
+                <button onclick="window.open('reel-gallery.html', '_blank')">🎥 Reels</button>
             </nav>
         </div>
     </header>
@@ -375,6 +376,12 @@
             </button>
             <button onclick="configureOpenAIKey()" class="btn btn-sm btn-secondary" style="margin-left: 0.5rem;">
                 🤖 OpenAI API Key
+            </button>
+            <button onclick="configureRunwayKey()" class="btn btn-sm btn-secondary" style="margin-left: 0.5rem;">
+                🎥 Runway ML Key
+            </button>
+            <button onclick="configureBackendUrl()" class="btn btn-sm btn-secondary" style="margin-left: 0.5rem;">
+                ⚙️ Backend URL
             </button>
         </div>
 
