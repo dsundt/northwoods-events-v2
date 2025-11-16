@@ -1562,6 +1562,11 @@ function wrapText(ctx, text, maxWidth, fontSize) {
 }
 
 async function saveImageToGitHub(imageUrl, event) {
+    // Ensure GitHub config is loaded
+    if (!GITHUB_OWNER || !GITHUB_REPO) {
+        detectGitHubRepo();
+    }
+    
     if (!isGitHubConfigured()) {
         showToast('Please configure GitHub token first', 'warning');
         showGitHubTokenDialog();
@@ -1570,6 +1575,8 @@ async function saveImageToGitHub(imageUrl, event) {
     
     try {
         showToast('Uploading image to repository...', 'info');
+        
+        console.log('GitHub config:', { owner: GITHUB_OWNER, repo: GITHUB_REPO, hasToken: !!GITHUB_TOKEN });
         
         // Convert blob URL to base64
         const response = await fetch(imageUrl);
@@ -1589,10 +1596,12 @@ async function saveImageToGitHub(imageUrl, event) {
         const filename = `${dateStr}-${eventSlug}.jpg`;
         const path = `public/instagram/${filename}`;
         
-        // Commit to GitHub
-        const apiBase = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
+        console.log('Uploading to:', path);
         
-        const commitResponse = await fetch(`${apiBase}/contents/${path}`, {
+        // Commit to GitHub
+        const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
+        
+        const commitResponse = await fetch(apiUrl, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${GITHUB_TOKEN}`,
@@ -1608,7 +1617,8 @@ async function saveImageToGitHub(imageUrl, event) {
         
         if (!commitResponse.ok) {
             const error = await commitResponse.json();
-            throw new Error(error.message || 'Failed to upload image');
+            console.error('GitHub API error:', error);
+            throw new Error(error.message || `Failed to upload image (${commitResponse.status})`);
         }
         
         const commitData = await commitResponse.json();
