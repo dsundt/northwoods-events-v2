@@ -1752,7 +1752,7 @@ function showReelGenerationDialog(event) {
         year: 'numeric'
     });
     
-    const defaultPrompt = `Create a vibrant 20-second vertical video (9:16 aspect ratio) for "${event.title}" in Northern Wisconsin.
+    const defaultPrompt = `Create a vibrant vertical video (9:16 VERTICAL aspect ratio - 1080x1920px) for "${event.title}" in Northern Wisconsin.
 
 SETTING: Northwoods of Wisconsin
 - Dense pine forests and pristine lakes
@@ -1775,8 +1775,8 @@ SCENES TO INCLUDE:
 
 MOOD: Exciting, inviting, captures the spirit of the event and Northern Wisconsin's natural beauty.
 
-Duration: 15-25 seconds
-Format: Vertical (Instagram Reel - 9:16)
+Duration: 8 seconds (automatically set)
+Format: VERTICAL 9:16 (1080x1920px - Instagram Reel format)
 NO mountains, NO deserts - Wisconsin landscape only!`;
     
     const dialog = document.createElement('div');
@@ -1793,6 +1793,10 @@ NO mountains, NO deserts - Wisconsin landscape only!`;
                     📅 ${dateStr}
                     ${event.location ? `<br>📍 ${escapeHtml(event.location)}` : ''}
                 </div>
+            </div>
+            
+            <div style="background: #e7f3ff; border: 1px solid #2196F3; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                <strong>📱 Video Format:</strong> 9:16 Vertical (1080x1920px) - Perfect for Instagram Reels!
             </div>
             
             <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem;">

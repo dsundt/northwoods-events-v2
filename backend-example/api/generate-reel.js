@@ -119,13 +119,16 @@ module.exports = async (req, res) => {
     return res.status(200).json({
       success: true,
       videoUrl: finalVideoUrl,
-      duration: 20, // seconds
-      message: 'Reel generated successfully!',
+      duration: 8, // seconds
+      aspectRatio: '9:16',
+      resolution: '1080x1920',
+      format: 'vertical',
+      message: 'Reel generated successfully in 9:16 vertical format!',
       tips: [
+        'Video is 9:16 vertical - perfect for Instagram Reels!',
         'Download the video to your device',
         'Use "Save to Repository" to commit to GitHub',
-        'Add text overlays in Instagram app',
-        'Adjust music volume if needed',
+        'Add text overlays and music in Instagram app',
       ],
     });
     
@@ -162,10 +165,12 @@ async function generateRunwayVideo(apiKey, prompt) {
     body: JSON.stringify({
       promptText: prompt,
       duration: 8, // Valid durations: 4, 6, or 8 seconds
-      ratio: '1080:1920', // 9:16 vertical format for Instagram Reels
+      ratio: '1080:1920', // 9:16 VERTICAL format for Instagram Reels (1080 width x 1920 height)
       model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
     }),
   });
+  
+  console.log('Request sent with 9:16 vertical aspect ratio (1080x1920)');
   
   if (!genResponse.ok) {
     const errorText = await genResponse.text();
