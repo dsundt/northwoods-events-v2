@@ -1460,6 +1460,9 @@ async function processGeneratedImage(imageUrl, event) {
                     <button onclick="saveImageToGitHub('${finalImageUrl}', ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-success">
                         ☁️ Save to Repository
                     </button>
+                    <a href="instagram-gallery.html" target="_blank" class="btn btn-secondary">
+                        📸 View All Images
+                    </a>
                 </div>
             </div>
         `;
