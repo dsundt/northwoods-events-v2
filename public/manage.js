@@ -1965,10 +1965,20 @@ async function startReelGeneration(event) {
         
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error || `Backend error: ${response.status}`);
+            console.error('Backend error response:', errorData);
+            
+            // Show more detailed error
+            let errorMsg = errorData.error || `Backend error: ${response.status}`;
+            if (errorData.fullError) errorMsg += `\nDetails: ${errorData.fullError}`;
+            if (errorData.troubleshooting) {
+                console.log('Troubleshooting tips:', errorData.troubleshooting);
+            }
+            
+            throw new Error(errorMsg);
         }
         
         const data = await response.json();
+        console.log('Backend response:', data);
         
         if (!data.success) {
             throw new Error(data.error || 'Unknown error');

@@ -136,15 +136,23 @@ module.exports = async (req, res) => {
     
   } catch (error) {
     console.error('Error generating reel:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
     
     return res.status(500).json({
       error: error.message,
+      errorType: error.name,
+      fullError: error.toString(),
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
       troubleshooting: [
         'Check that your Runway ML API key is valid',
         'Verify you have sufficient credits in your Runway account',
         'Try a simpler prompt',
         'Check Runway ML status: status.runwayml.com',
+        'Check Vercel logs for detailed error information'
       ],
     });
   }
