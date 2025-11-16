@@ -59,7 +59,7 @@ module.exports = async (req, res) => {
     });
   }
   
-  const { prompt, event, addMusic = false } = req.body;
+  const { prompt, event, addMusic = false, audioMode = 'no_audio' } = req.body;
   
   // Validate input
   if (!prompt || !event) {
@@ -85,7 +85,7 @@ module.exports = async (req, res) => {
     // Step 1: Generate video with Runway ML
     console.log('Step 1/3: Submitting to Runway ML...');
     
-    const videoUrl = await generateRunwayVideo(RUNWAY_API_KEY, prompt);
+    const videoUrl = await generateRunwayVideo(RUNWAY_API_KEY, prompt, audioMode);
     
     console.log('Video generated:', videoUrl);
     
@@ -151,8 +151,31 @@ module.exports = async (req, res) => {
 /**
  * Generate video using Runway ML Gen-2 API
  */
-async function generateRunwayVideo(apiKey, prompt) {
+async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
   console.log('Submitting to Runway ML API...');
+  console.log('Audio mode requested:', audioMode);
+  
+  // Prepare request body with audio settings
+  const requestBody = {
+    promptText: prompt,
+    duration: 8, // Valid durations: 4, 6, or 8 seconds
+    ratio: '720:1280', // VERTICAL 9:16 format (720 width x 1280 height = portrait for Instagram Reels)
+    model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
+  };
+  
+  // Add audio configuration based on mode
+  // Note: Runway ML's audio capabilities may vary by model
+  // For now, we'll add it to the prompt for best results
+  let enhancedPrompt = prompt;
+  if (audioMode === 'no_audio') {
+    enhancedPrompt += '\n\nIMPORTANT: Generate this video WITHOUT any audio, music, or sound effects. Silent video only.';
+  } else if (audioMode === 'music_only') {
+    enhancedPrompt += '\n\nIMPORTANT: Include background music only. No spoken words or dialogue.';
+  } else if (audioMode === 'music_and_speech') {
+    enhancedPrompt += '\n\nIMPORTANT: Include background music AND spoken narration or dialogue.';
+  }
+  
+  requestBody.promptText = enhancedPrompt;
   
   // Step 1: Submit generation request
   const genResponse = await fetch('https://api.dev.runwayml.com/v1/text_to_video', {
@@ -162,15 +185,10 @@ async function generateRunwayVideo(apiKey, prompt) {
       'Content-Type': 'application/json',
       'X-Runway-Version': '2024-11-06',
     },
-    body: JSON.stringify({
-      promptText: prompt,
-      duration: 8, // Valid durations: 4, 6, or 8 seconds
-      ratio: '1080:1920', // VERTICAL 9:16 format (1080 width x 1920 height = portrait for Instagram Reels)
-      model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
-    }),
+    body: JSON.stringify(requestBody),
   });
   
-  console.log('Request sent with VERTICAL aspect ratio: 1080x1920 (9:16 portrait)');
+  console.log('Request sent with VERTICAL aspect ratio: 720x1280 (9:16 portrait)');
   
   if (!genResponse.ok) {
     const errorText = await genResponse.text();

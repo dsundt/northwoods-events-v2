@@ -1814,13 +1814,39 @@ NO mountains, NO deserts - Wisconsin landscape only!`;
             </div>
             
             <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.75rem;">🔊 Audio Options:</label>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="radio" name="audio-mode" value="no_audio" checked style="margin-right: 0.5rem;">
+                        <div>
+                            <strong>No Audio</strong> (Recommended)<br>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Silent video - add music in Instagram app (FREE!)</span>
+                        </div>
+                    </label>
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="radio" name="audio-mode" value="music_only" style="margin-right: 0.5rem;">
+                        <div>
+                            <strong>Music Only</strong><br>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">AI-generated background music, no speech</span>
+                        </div>
+                    </label>
+                    <label style="display: flex; align-items: center; cursor: pointer;">
+                        <input type="radio" name="audio-mode" value="music_and_speech" style="margin-right: 0.5rem;">
+                        <div>
+                            <strong>Music + Speech</strong><br>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Background music with AI narration</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
                     <input type="checkbox" id="add-music" style="margin-right: 0.5rem;">
-                    Add Background Music (Beatoven.ai)
+                    Also Add Beatoven.ai Music (separate track)
                 </label>
                 <div style="font-size: 0.85rem; color: var(--text-muted); margin-left: 1.5rem;">
-                    Generate AI music matched to event mood and genre<br>
-                    <strong>Recommended:</strong> Generate without music, add in Instagram app (FREE!)
+                    Generate additional AI music track matched to event mood
                 </div>
             </div>
             
@@ -1846,6 +1872,10 @@ async function startReelGeneration(event) {
     const generateBtn = document.getElementById('generate-reel-btn');
     const addMusic = document.getElementById('add-music').checked;
     const prompt = promptInput.value.trim();
+    
+    // Get selected audio mode
+    const audioModeRadio = document.querySelector('input[name="audio-mode"]:checked');
+    const audioMode = audioModeRadio ? audioModeRadio.value : 'no_audio';
     
     if (!prompt) {
         showToast('Please enter a prompt', 'warning');
@@ -1938,6 +1968,7 @@ async function startReelGeneration(event) {
                     location: event.location,
                 },
                 addMusic: addMusic,
+                audioMode: audioMode, // 'no_audio', 'music_only', or 'music_and_speech'
             }),
         });
         
