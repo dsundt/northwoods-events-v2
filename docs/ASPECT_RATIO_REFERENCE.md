@@ -14,7 +14,7 @@ Your Instagram Reel generation is **correctly configured** for **9:16 vertical f
 body: JSON.stringify({
   promptText: prompt,
   duration: 8, // seconds
-  ratio: '1080:1920', // 9:16 VERTICAL format for Instagram Reels
+  ratio: '9:16', // 9:16 VERTICAL format for Instagram Reels
   model: 'veo3.1_fast',
 })
 ```
@@ -96,7 +96,7 @@ Perfect for Instagram Reels! 📱
 
 ### 1. In the Backend
 **File**: `backend-example/api/generate-reel.js`  
-**Line 168**: `ratio: '1080:1920'`
+**Line 168**: `ratio: '9:16'`
 
 ### 2. In the API Response
 When a video generates, you'll see:
@@ -164,7 +164,7 @@ ratio: '1920:1080'
 
 ### Current (9:16) - Instagram Reels ✅
 ```javascript
-ratio: '1080:1920' // DO NOT CHANGE - This is correct!
+ratio: '9:16' // DO NOT CHANGE - This is correct!
 ```
 
 ---
@@ -181,9 +181,9 @@ ratio: '1080:1920' // DO NOT CHANGE - This is correct!
 
 **Your Instagram Reel generation is correctly configured for 9:16 vertical format!**
 
-- Backend: ✅ Configured (`ratio: '1080:1920'`)
+- Backend: ✅ Configured (`ratio: '9:16'`)
 - Frontend: ✅ Shows format indicator
 - API Response: ✅ Includes aspect ratio metadata
-- Video Output: ✅ 1080x1920 vertical MP4
+- Video Output: ✅ 1080x1920 vertical MP4 (9:16 portrait)
 
 **No changes needed - your configuration is perfect for Instagram Reels!** 🎉

@@ -2131,26 +2131,30 @@ async function saveReelToGitHub(videoUrl, event) {
         showToast('Committing to repository...', 'info');
         
         // Commit to GitHub
-        const commitResponse = await fetch(
-            `https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: `Add Instagram Reel: ${event.title}`,
-                    content: base64,
-                    branch: 'main',
-                }),
-            }
-        );
+        const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
+        console.log('Committing to:', apiUrl);
+        
+        const commitResponse = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: `Add Instagram Reel: ${event.title}`,
+                content: base64,
+                branch: GITHUB_BRANCH,
+            }),
+        });
         
         if (!commitResponse.ok) {
             const errorData = await commitResponse.json();
             throw new Error(errorData.message || 'Failed to commit to GitHub');
         }
+        
+        const commitData = await commitResponse.json();
+        console.log('Video committed successfully:', commitData);
         
         showToast('✅ Reel saved to repository!', 'success');
         
@@ -2160,7 +2164,7 @@ async function saveReelToGitHub(videoUrl, event) {
         successDiv.innerHTML = `
             <strong>✅ Saved!</strong> View in 
             <a href="reel-gallery.html" target="_blank">Reel Gallery</a> or on 
-            <a href="https://github.com/${GITHUB_REPO}/blob/main/${path}" target="_blank">GitHub</a>
+            <a href="https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${path}" target="_blank">GitHub</a>
         `;
         document.getElementById('reel-preview').appendChild(successDiv);
         

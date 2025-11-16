@@ -165,12 +165,12 @@ async function generateRunwayVideo(apiKey, prompt) {
     body: JSON.stringify({
       promptText: prompt,
       duration: 8, // Valid durations: 4, 6, or 8 seconds
-      ratio: '1080:1920', // 9:16 VERTICAL format for Instagram Reels (1080 width x 1920 height)
+      ratio: '9:16', // 9:16 VERTICAL format for Instagram Reels (portrait orientation)
       model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
     }),
   });
   
-  console.log('Request sent with 9:16 vertical aspect ratio (1080x1920)');
+  console.log('Request sent with 9:16 vertical aspect ratio (portrait)');
   
   if (!genResponse.ok) {
     const errorText = await genResponse.text();
