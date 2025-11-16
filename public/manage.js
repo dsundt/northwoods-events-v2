@@ -1634,8 +1634,8 @@ async function saveImageToGitHub(imageUrl, event) {
 // Runway ML API configuration
 let RUNWAY_API_KEY = localStorage.getItem('runway_api_key') || '';
 
-// Mubert API for music (alternative: use stock music)
-let MUBERT_API_KEY = localStorage.getItem('mubert_api_key') || '';
+// Beatoven.ai API for music
+let BEATOVEN_API_KEY = localStorage.getItem('beatoven_api_key') || '';
 
 function configureRunwayKey() {
     const currentKey = RUNWAY_API_KEY ? '••••••' + RUNWAY_API_KEY.slice(-4) : 'Not configured';
@@ -1682,6 +1682,54 @@ function saveRunwayKey() {
     
     document.querySelector('[style*="fixed"]').remove();
     showToast('Runway ML API key saved!', 'success');
+}
+
+function configureBeatovenKey() {
+    const currentKey = BEATOVEN_API_KEY ? '••••••' + BEATOVEN_API_KEY.slice(-4) : 'Not configured';
+    
+    const dialog = document.createElement('div');
+    dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;';
+    
+    dialog.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 500px; width: 90%;">
+            <h2 style="margin-top: 0;">Configure Beatoven.ai API Key</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Optional for AI-generated background music. Get your key from: 
+                <a href="https://www.beatoven.ai/" target="_blank">Beatoven.ai</a>
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                <strong>Cost:</strong> Free tier available, Pro $20/month<br>
+                <strong>Quality:</strong> High-quality, emotion-based AI music<br>
+                <strong>Alternative:</strong> Add music in Instagram app (FREE!)<br>
+                Current key: <code>${currentKey}</code>
+            </p>
+            <input type="password" id="beatoven-key-input" placeholder="Enter Beatoven.ai API key..." 
+                   style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; margin-bottom: 1rem; font-family: monospace;">
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                <button onclick="this.closest('[style*=fixed]').remove()" class="btn btn-secondary">Cancel</button>
+                <button onclick="saveBeatovenKey()" class="btn btn-primary">Save Key</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+    document.getElementById('beatoven-key-input').focus();
+}
+
+function saveBeatovenKey() {
+    const input = document.getElementById('beatoven-key-input');
+    const key = input.value.trim();
+    
+    if (!key) {
+        showToast('Please enter an API key', 'danger');
+        return;
+    }
+    
+    BEATOVEN_API_KEY = key;
+    localStorage.setItem('beatoven_api_key', key);
+    
+    document.querySelector('[style*="fixed"]').remove();
+    showToast('Beatoven.ai API key saved!', 'success');
 }
 
 async function generateInstagramReel(event) {
@@ -1763,11 +1811,12 @@ NO mountains, NO deserts - Wisconsin landscape only!`;
             
             <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">
-                    <input type="checkbox" id="add-music" checked style="margin-right: 0.5rem;">
-                    Add Background Music (AI-selected)
+                    <input type="checkbox" id="add-music" style="margin-right: 0.5rem;">
+                    Add Background Music (Beatoven.ai)
                 </label>
                 <div style="font-size: 0.85rem; color: var(--text-muted); margin-left: 1.5rem;">
-                    AI will select appropriate music based on event type and video content
+                    Generate AI music matched to event mood and genre<br>
+                    <strong>Recommended:</strong> Generate without music, add in Instagram app (FREE!)
                 </div>
             </div>
             

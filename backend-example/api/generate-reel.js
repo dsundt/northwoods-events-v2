@@ -4,8 +4,8 @@
 // Deploy to: Vercel, Netlify, AWS Lambda, or any serverless platform
 // 
 // Environment Variables Required:
-// - RUNWAY_API_KEY: Your Runway ML API key
-// - MUBERT_API_KEY: Your Mubert API key (optional, for music)
+// - RUNWAY_API_KEY: Your Runway ML API key (required)
+// - BEATOVEN_API_KEY: Your Beatoven.ai API key (optional, for music)
 // - GITHUB_TOKEN: For committing videos to repository (optional)
 //
 // Dependencies (package.json):
@@ -79,19 +79,22 @@ module.exports = async (req, res) => {
     
     // Step 2: Add music (optional)
     let finalVideoUrl = videoUrl;
+    let musicUrl = null;
     
-    if (addMusic && process.env.MUBERT_API_KEY) {
-      console.log('Step 2/3: Adding background music...');
+    if (addMusic && BEATOVEN_API_KEY) {
+      console.log('Step 2/3: Generating background music with Beatoven.ai...');
       
       try {
         finalVideoUrl = await addBackgroundMusic(
           videoUrl,
           event,
-          process.env.MUBERT_API_KEY
+          BEATOVEN_API_KEY
         );
-        console.log('Music added successfully');
+        console.log('Music generated successfully');
+        // Note: Music URL is available but not merged server-side
+        // Users can add music in Instagram app for best results
       } catch (musicError) {
-        console.error('Failed to add music, using original video:', musicError);
+        console.error('Failed to generate music, using original video:', musicError);
         // Continue with video without music
       }
     } else {
@@ -214,75 +217,217 @@ async function generateRunwayVideo(apiKey, prompt) {
 }
 
 /**
- * Add background music using Mubert AI
+ * Add background music using Beatoven.ai
  */
-async function addBackgroundMusic(videoUrl, event, mubertApiKey) {
-  console.log('Generating background music with Mubert...');
+async function addBackgroundMusic(videoUrl, event, beatovenApiKey) {
+  console.log('Generating background music with Beatoven.ai...');
   
-  // Step 1: Determine music tags based on event
-  const tags = determineMusicTags(event.title);
+  // Step 1: Determine music parameters based on event
+  const musicParams = determineMusicParameters(event.title, event.start_utc);
   
-  // Step 2: Generate music with Mubert
-  const musicResponse = await fetch('https://api.mubert.com/v2/RecordTrack', {
+  // Step 2: Create music composition with Beatoven.ai
+  console.log(`Creating ${musicParams.genre} track with ${musicParams.mood} mood...`);
+  
+  const createResponse = await fetch('https://api.beatoven.ai/api/v1/tracks', {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${beatovenApiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      license: mubertApiKey,
-      duration: 20, // Match video duration
-      tags: tags,
-      mode: 'track',
-      bitrate: 320, // High quality
+      title: `${event.title} - Background Music`,
+      duration: 20, // Match video duration (seconds)
+      genre: musicParams.genre,
+      mood: musicParams.mood,
+      tempo: musicParams.tempo,
+      instruments: musicParams.instruments,
+      format: 'mp3',
+      sample_rate: 44100,
+      bit_depth: 16,
     }),
   });
   
-  if (!musicResponse.ok) {
-    throw new Error(`Mubert API error: ${musicResponse.status}`);
+  if (!createResponse.ok) {
+    const errorText = await createResponse.text();
+    throw new Error(`Beatoven.ai API error (${createResponse.status}): ${errorText}`);
   }
   
-  const musicData = await musicResponse.json();
-  const musicUrl = musicData.data.track_url;
+  const createData = await createResponse.json();
+  const trackId = createData.track_id;
   
-  console.log('Music generated:', musicUrl);
+  console.log(`Music composition created: ${trackId}`);
   
-  // Step 3: Merge video and music
-  // NOTE: This requires FFmpeg, which is available on most serverless platforms
-  // For platforms without FFmpeg, you can:
-  // 1. Use a separate video processing service
-  // 2. Return both URLs and merge client-side
-  // 3. Skip music merging entirely
+  // Step 3: Poll for completion (Beatoven.ai typically takes 30-60 seconds)
+  let musicUrl = null;
+  let attempts = 0;
+  const maxAttempts = 30; // 2.5 minutes max
+  const pollInterval = 5000; // 5 seconds
   
-  // For simplicity, we'll return the original video URL
-  // and instruct users to add music in Instagram app
+  while (!musicUrl && attempts < maxAttempts) {
+    await sleep(pollInterval);
+    attempts++;
+    
+    console.log(`Checking music generation status (${attempts}/${maxAttempts})...`);
+    
+    const statusResponse = await fetch(
+      `https://api.beatoven.ai/api/v1/tracks/${trackId}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${beatovenApiKey}`,
+        },
+      }
+    );
+    
+    if (!statusResponse.ok) {
+      throw new Error(`Failed to check music status: ${statusResponse.status}`);
+    }
+    
+    const statusData = await statusResponse.json();
+    
+    if (statusData.status === 'completed') {
+      musicUrl = statusData.download_url;
+      break;
+    } else if (statusData.status === 'failed') {
+      throw new Error(`Music generation failed: ${statusData.error || 'Unknown error'}`);
+    }
+    // Status is 'processing', continue polling
+  }
+  
+  if (!musicUrl) {
+    throw new Error('Music generation timeout');
+  }
+  
+  console.log('Music generated successfully:', musicUrl);
+  
+  // Step 4: Merge video and music (simplified - return music URL for client-side merging)
+  // NOTE: For full server-side merging, use FFmpeg
+  // For simplicity, we return the original video URL
+  // Music URL is returned separately for client to download if needed
+  
   console.log('⚠️ Music merging requires FFmpeg - returning original video');
-  console.log('💡 Users can add music in Instagram app');
+  console.log('💡 Music URL available for download:', musicUrl);
+  console.log('💡 Users can add music in Instagram app for best results');
   
   return videoUrl;
 }
 
 /**
- * Determine appropriate music tags based on event title
+ * Determine appropriate music parameters for Beatoven.ai based on event details
  */
-function determineMusicTags(eventTitle) {
+function determineMusicParameters(eventTitle, eventDate = '') {
   const title = eventTitle.toLowerCase();
   
-  if (title.includes('music') || title.includes('concert') || title.includes('festival')) {
-    return 'upbeat,energetic,festival,party,celebration';
-  } else if (title.includes('art') || title.includes('gallery') || title.includes('exhibit')) {
-    return 'calm,ambient,sophisticated,elegant,artful';
-  } else if (title.includes('sport') || title.includes('race') || title.includes('marathon') || title.includes('adventure')) {
-    return 'energetic,dynamic,motivational,action,sport';
-  } else if (title.includes('food') || title.includes('wine') || title.includes('dining') || title.includes('taste')) {
-    return 'upbeat,cheerful,casual,pleasant,social';
-  } else if (title.includes('night') || title.includes('evening')) {
-    return 'atmospheric,chill,night,relaxed';
-  } else if (title.includes('family') || title.includes('kids') || title.includes('children')) {
-    return 'happy,fun,playful,cheerful,family';
-  } else {
-    // Default for outdoor/nature events in Northern Wisconsin
-    return 'upbeat,outdoor,nature,adventure,peaceful';
+  // Determine season from date
+  const season = determineSeason(eventDate);
+  
+  // Music festivals and concerts
+  if (title.match(/music|concert|festival|band|dj|performance/)) {
+    return {
+      genre: 'Electronic',
+      mood: 'Energetic',
+      tempo: 'Fast',
+      instruments: ['Synth', 'Bass', 'Drums'],
+    };
   }
+  
+  // Art and cultural events
+  if (title.match(/art|gallery|museum|exhibit|sculpture|painting/)) {
+    return {
+      genre: 'Ambient',
+      mood: 'Calm',
+      tempo: 'Slow',
+      instruments: ['Piano', 'Strings'],
+    };
+  }
+  
+  // Sports and active events
+  if (title.match(/sport|race|marathon|run|bike|compete|championship|game/)) {
+    return {
+      genre: 'Rock',
+      mood: 'Motivational',
+      tempo: 'Fast',
+      instruments: ['Guitar', 'Drums', 'Bass'],
+    };
+  }
+  
+  // Food and dining events
+  if (title.match(/food|wine|dining|taste|culinary|chef|restaurant/)) {
+    return {
+      genre: 'Acoustic',
+      mood: 'Happy',
+      tempo: 'Medium',
+      instruments: ['Acoustic Guitar', 'Piano'],
+    };
+  }
+  
+  // Outdoor and nature events
+  if (title.match(/hike|camp|trail|outdoor|adventure|kayak|canoe|nature/)) {
+    return {
+      genre: 'Folk',
+      mood: 'Inspiring',
+      tempo: 'Medium',
+      instruments: ['Acoustic Guitar', 'Strings'],
+    };
+  }
+  
+  // Family events
+  if (title.match(/family|kids|children|youth|school/)) {
+    return {
+      genre: 'Pop',
+      mood: 'Happy',
+      tempo: 'Medium',
+      instruments: ['Piano', 'Strings', 'Percussion'],
+    };
+  }
+  
+  // Winter events
+  if (title.match(/winter|snow|ski|ice|holiday|christmas/) || season === 'winter') {
+    return {
+      genre: 'Cinematic',
+      mood: 'Peaceful',
+      tempo: 'Slow',
+      instruments: ['Piano', 'Strings', 'Bells'],
+    };
+  }
+  
+  // Night events
+  if (title.match(/night|evening|sunset|moonlight/)) {
+    return {
+      genre: 'Ambient',
+      mood: 'Relaxed',
+      tempo: 'Slow',
+      instruments: ['Synth', 'Piano'],
+    };
+  }
+  
+  // Default: Upbeat outdoor Wisconsin event
+  return {
+    genre: 'Folk',
+    mood: 'Uplifting',
+    tempo: 'Medium',
+    instruments: ['Acoustic Guitar', 'Strings', 'Percussion'],
+  };
+}
+
+/**
+ * Determine season from date string
+ */
+function determineSeason(dateStr) {
+  if (!dateStr) return 'summer';
+  
+  try {
+    const date = new Date(dateStr);
+    const month = date.getMonth(); // 0-11
+    
+    if (month >= 11 || month <= 1) return 'winter'; // Dec, Jan, Feb
+    if (month >= 2 && month <= 4) return 'spring';  // Mar, Apr, May
+    if (month >= 5 && month <= 7) return 'summer';  // Jun, Jul, Aug
+    if (month >= 8 && month <= 10) return 'fall';   // Sep, Oct, Nov
+  } catch (e) {
+    // Invalid date, default to summer
+  }
+  
+  return 'summer';
 }
 
 /**

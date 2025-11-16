@@ -21,14 +21,15 @@
 
 | Service | Type | Cost | API | Quality | Licensing | Best For |
 |---------|------|------|-----|---------|-----------|----------|
-| **Mubert AI** | AI-Generated | Free-$14/mo | ✅ Yes | ⭐⭐⭐⭐ | Commercial OK | Auto-matching |
+| **Beatoven.ai** | AI-Generated | Free-$20/mo | ✅ Yes | ⭐⭐⭐⭐⭐ | Commercial OK | Auto-matching |
+| **Instagram Music** | Built-in | Free | N/A | ⭐⭐⭐⭐⭐ | Instagram only | Best option! |
 | **Epidemic Sound** | Curated Library | $15/mo | ❌ No | ⭐⭐⭐⭐⭐ | Commercial OK | Professionals |
 | **Artlist** | Curated Library | $9.99/mo | ❌ No | ⭐⭐⭐⭐⭐ | Commercial OK | Budget-friendly |
 | **AudioJungle** | Marketplace | $1-50/track | ❌ No | ⭐⭐⭐⭐ | Per-track | One-off needs |
+| **Mubert AI** | AI-Generated | Free-$14/mo | ✅ Yes | ⭐⭐⭐⭐ | Commercial OK | Alternative AI |
 | **YouTube Audio** | Free Library | Free | ❌ No | ⭐⭐⭐ | Attribution | Testing |
 | **Free Music Archive** | Community | Free | ❌ No | ⭐⭐⭐ | Varies | Non-commercial |
 | **Incompetech** | Free Library | Free | ❌ No | ⭐⭐ | Attribution | Budget projects |
-| **Instagram Music** | Built-in | Free | N/A | ⭐⭐⭐⭐⭐ | Instagram only | Best option! |
 
 ### Selection Criteria
 
@@ -41,110 +42,157 @@
 
 ---
 
-## Mubert AI (AI-Generated)
+## Beatoven.ai (AI-Generated)
 
-### ✅ Recommended for Automation
+### ⭐ Recommended for Automation
 
-**What it is:** AI generates unique music on-demand based on mood, duration, and genre tags.
+**What it is:** Advanced AI music generation that creates emotion-based, original soundtracks tailored to your content's mood and genre.
+
+**UPDATE:** This is now the primary AI music service integrated into the solution!
 
 ### Pros
 - ✅ **API available** - Perfect for automation
-- ✅ **Unlimited generations** (Pro plan)
+- ✅ **Emotion-based AI** - Intelligent mood and genre matching
+- ✅ **High quality** - Professional, human-like compositions
 - ✅ **Custom duration** - Matches video exactly
-- ✅ **Mood-based** - AI selects appropriate style
+- ✅ **Full control** - Genre, mood, tempo, instruments
 - ✅ **Royalty-free** - Commercial use included
-- ✅ **Unique tracks** - Never repetitive
+- ✅ **Unique tracks** - Every composition is original
+- ✅ **Fast generation** - 30-60 seconds per track
 
 ### Cons
-- ❌ **AI-generated** - Sometimes less polished than human-composed
-- ❌ **Limited control** - Can't pick specific songs
-- ❌ **Requires account** - Not truly free at scale
+- ❌ **Paid only at scale** - Free tier limited to 15 min/month
+- ❌ **Requires account** - API key needed
 
 ### Pricing
 
-| Plan | Cost | Tracks/Month | API Access | Commercial Use |
-|------|------|--------------|------------|----------------|
-| **Free** | $0 | 25 | ✅ Yes | ✅ Yes |
-| **Ambassador** | $14/mo | Unlimited | ✅ Yes | ✅ Yes |
-| **Pro** | $49/mo | Unlimited | ✅ Yes | ✅ Yes + distribution |
+| Plan | Cost | Minutes/Month | API Access | Commercial Use |
+|------|------|---------------|------------|----------------|
+| **Free** | $0 | 15 min | ✅ Yes | Personal only |
+| **Pro** | $20/mo | Unlimited | ✅ Yes | ✅ Yes |
+| **Enterprise** | Custom | Unlimited | ✅ Yes | ✅ Yes |
 
-**Best for:** 25-50 reels/month
+**Best for:** Unlimited reels with Pro plan ($20/month)
 
 ### API Documentation
 
-**Endpoint:** `https://api.mubert.com/v2/RecordTrack`
+**Endpoint:** `POST https://api.beatoven.ai/api/v1/tracks`
 
 **Request:**
 ```javascript
-POST https://api.mubert.com/v2/RecordTrack
+POST https://api.beatoven.ai/api/v1/tracks
+Authorization: Bearer YOUR_API_KEY
 Content-Type: application/json
 
 {
-  "license": "YOUR_API_KEY",
+  "title": "Event Name - Background Music",
   "duration": 20,           // seconds
-  "tags": "upbeat,outdoor,adventure",
-  "mode": "track",
-  "bitrate": 320           // kbps (high quality)
+  "genre": "Folk",          // Genre type
+  "mood": "Uplifting",      // Emotion/mood
+  "tempo": "Medium",        // Slow, Medium, Fast
+  "instruments": ["Acoustic Guitar", "Strings", "Percussion"],
+  "format": "mp3",          // mp3 or wav
+  "sample_rate": 44100,     // Audio quality
+  "bit_depth": 16           // Audio quality
 }
 ```
 
 **Response:**
 ```javascript
 {
-  "status": 1,
-  "data": {
-    "track_url": "https://mubert.com/tracks/xyz123.mp3",
-    "duration": 20
-  }
+  "track_id": "trk_abc123xyz",
+  "status": "processing",
+  "estimated_time": 45      // seconds
 }
 ```
 
-### Tag Examples
+**Check Status:** `GET https://api.beatoven.ai/api/v1/tracks/{track_id}`
 
-**Event Type → Music Tags:**
+**Completed Response:**
 ```javascript
-const musicTags = {
-  "music festival": "upbeat,energetic,festival,party,electronic",
-  "art gallery": "ambient,calm,sophisticated,elegant",
-  "sports event": "energetic,dynamic,motivational,rock",
-  "food festival": "upbeat,cheerful,acoustic,pleasant",
-  "outdoor adventure": "adventure,nature,inspiring,acoustic",
-  "family event": "happy,playful,cheerful,fun",
-  "night event": "chill,atmospheric,electronic,night",
-  "winter activity": "energetic,adventure,indie,uplifting"
+{
+  "track_id": "trk_abc123xyz",
+  "status": "completed",
+  "download_url": "https://beatoven.ai/downloads/abc123.mp3",
+  "duration": 20
+}
+```
+
+### Parameter Examples
+
+**Event Type → Music Parameters:**
+```javascript
+const musicParams = {
+  "music festival": {
+    genre: "Electronic",
+    mood: "Energetic",
+    tempo: "Fast",
+    instruments: ["Synth", "Bass", "Drums"]
+  },
+  "art gallery": {
+    genre: "Ambient",
+    mood: "Calm",
+    tempo: "Slow",
+    instruments: ["Piano", "Strings"]
+  },
+  "sports event": {
+    genre: "Rock",
+    mood: "Motivational",
+    tempo: "Fast",
+    instruments: ["Guitar", "Drums", "Bass"]
+  },
+  "food festival": {
+    genre: "Acoustic",
+    mood: "Happy",
+    tempo: "Medium",
+    instruments: ["Acoustic Guitar", "Piano"]
+  },
+  "outdoor adventure": {
+    genre: "Folk",
+    mood: "Inspiring",
+    tempo: "Medium",
+    instruments: ["Acoustic Guitar", "Strings"]
+  }
 };
 ```
 
 ### Get API Key
 
-1. Sign up: https://mubert.com/
-2. Go to: Profile → API
-3. Click: "Generate API Key"
-4. Copy key: `amb_xxxxxxxxxxxxxxxx`
+1. Sign up: https://www.beatoven.ai/
+2. Go to: Dashboard → Settings → API Keys
+3. Click: "Generate New API Key"
+4. Copy key (save securely!)
 
-### Implementation (Already in your backend)
+### Implementation (Already in your backend!)
 
 ```javascript
 // In backend-example/api/generate-reel.js
-async function addBackgroundMusic(videoUrl, event, mubertApiKey) {
-  const tags = determineMusicTags(event.title);
+async function addBackgroundMusic(videoUrl, event, beatovenApiKey) {
+  const musicParams = determineMusicParameters(event.title, event.start_utc);
   
-  const response = await fetch('https://api.mubert.com/v2/RecordTrack', {
+  const createResponse = await fetch('https://api.beatoven.ai/api/v1/tracks', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Authorization': `Bearer ${beatovenApiKey}`,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
-      license: mubertApiKey,
+      title: `${event.title} - Background Music`,
       duration: 20,
-      tags: tags,
-      mode: 'track',
-      bitrate: 320,
+      genre: musicParams.genre,
+      mood: musicParams.mood,
+      tempo: musicParams.tempo,
+      instruments: musicParams.instruments,
+      format: 'mp3',
     }),
   });
   
-  const data = await response.json();
-  return data.data.track_url;
+  const createData = await createResponse.json();
+  return createData.track_id;
 }
 ```
+
+**See full documentation:** `/docs/BEATOVEN_AI_GUIDE.md`
 
 ---
 
@@ -571,13 +619,24 @@ if (addMusic) {
    - No licensing issues
    - Saves backend complexity
 
-### For Automation: Mubert AI
+### For Automation: Beatoven.ai (NEW!)
 
 **If you must automate music:**
-- Use Mubert AI (already implemented)
+- Use Beatoven.ai (now integrated!)
+- Free tier: 15 minutes/month (~45 reels)
+- Pro: $20/month unlimited
+- Higher quality than Mubert AI
+- Emotion-based matching
+- Better customization
+
+### Alternative AI: Mubert AI
+
+**Previous solution (still works):**
+- Use Mubert AI for simpler needs
 - Free tier: 25 tracks/month
 - Pro: $14/month unlimited
-- Good quality, automatic matching
+- Good quality, tag-based matching
+- See documentation for implementation
 
 ### For High Quality: Epidemic Sound + Manual
 
@@ -605,6 +664,7 @@ if (addMusic) {
 | Option | Setup | Monthly Cost | Quality | Effort |
 |--------|-------|--------------|---------|--------|
 | **No music + Instagram** | Easy | $0 | ⭐⭐⭐⭐⭐ | Low |
+| **Beatoven.ai** | Easy | $20 | ⭐⭐⭐⭐⭐ | Very Low |
 | **Mubert AI** | Easy | $14 | ⭐⭐⭐⭐ | Very Low |
 | **Epidemic Sound** | Medium | $15 | ⭐⭐⭐⭐⭐ | Medium |
 | **Artlist** | Medium | $10 | ⭐⭐⭐⭐ | Medium |
@@ -628,30 +688,37 @@ if (addMusic) {
 1. Keep backend simple (no music processing)
 2. Generate video-only reels
 3. User adds music in Instagram app
-4. **Saves:** $14-15/month + backend complexity
+4. **Saves:** $14-20/month + backend complexity
 
-### Alternative: Mubert AI for Full Automation
+### Alternative: Beatoven.ai for Full Automation
 
 **If you want 100% hands-off:**
-- Use Mubert AI (already in your code)
-- Cost: $14/month (after 25 free tracks)
-- Quality: Good (AI-generated)
+- Use Beatoven.ai (now integrated!)
+- Cost: Free (15 min/mo) or $20/month (unlimited)
+- Quality: Excellent (emotion-based AI)
 - Effort: Zero (fully automated)
+- Better than Mubert AI
 
 ---
 
 ## Implementation Summary
 
 ### Current Status
-✅ **Mubert AI** - Already implemented in backend  
+✅ **Beatoven.ai** - Now implemented in backend (recommended!)  
+✅ **Mubert AI** - Previously implemented, still available  
 ❌ **Other services** - Require manual process
 
-### To Enable Mubert
+### To Enable Beatoven.ai
 ```bash
-vercel env add MUBERT_API_KEY
-# Paste: amb_xxxxxxxxxxxxxxxx
+vercel env add BEATOVEN_API_KEY
+# Paste: bv_xxxxxxxxxxxxxxxx (or your key format)
 vercel --prod
 ```
+
+Configure in web interface:
+- Click "🎵 Beatoven.ai Key"
+- Paste your API key
+- Check "Add Background Music" when generating
 
 ### To Use Instagram Music (Recommended)
 1. Generate reels without music
