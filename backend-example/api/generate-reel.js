@@ -29,12 +29,13 @@ exports.config = {
  * Main handler function
  */
 module.exports = async (req, res) => {
-  // Enable CORS for GitHub Pages
+  // CRITICAL: Set CORS headers FIRST, before any other logic
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
+  res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
   
-  // Handle preflight requests
+  // Handle preflight requests immediately
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -47,7 +48,8 @@ module.exports = async (req, res) => {
       version: '1.0.0',
       timestamp: new Date().toISOString(),
       runwayConfigured: !!process.env.RUNWAY_API_KEY,
-      beatovenConfigured: !!process.env.BEATOVEN_API_KEY
+      beatovenConfigured: !!process.env.BEATOVEN_API_KEY,
+      cors: 'enabled'
     });
   }
   
