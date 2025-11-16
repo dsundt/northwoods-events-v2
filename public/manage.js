@@ -27,6 +27,11 @@ function detectGitHubRepo() {
     // Load token from localStorage
     GITHUB_TOKEN = localStorage.getItem('github_token') || '';
     
+    // Save owner/repo to localStorage for sync feature
+    if (GITHUB_OWNER) localStorage.setItem('github_owner', GITHUB_OWNER);
+    if (GITHUB_REPO) localStorage.setItem('github_repo', GITHUB_REPO);
+    localStorage.setItem('github_branch', GITHUB_BRANCH);
+    
     console.log('Detected:', GITHUB_OWNER, '/', GITHUB_REPO);
 }
 
