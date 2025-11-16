@@ -323,7 +323,8 @@ function renderFeeds() {
                     </div>
                 </div>
                 <div style="margin: 0.5rem 0; color: var(--text-muted); font-size: 0.9rem;">
-                    <strong>ID:</strong> ${feed.id}
+                    <strong>ID:</strong> ${feed.id}<br>
+                    <strong>ICS Filename:</strong> ${slugify(feed.id)}.ics
                 </div>
                 <div class="feed-stats">
                     <div class="stat">
