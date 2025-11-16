@@ -169,9 +169,11 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
   const requestBody = {
     promptText: prompt,
     duration: 8, // Valid durations: 4, 6, or 8 seconds
-    ratio: '720:1280', // VERTICAL 9:16 format (720 width x 1280 height = portrait for Instagram Reels)
+    ratio: '1080:1920', // VERTICAL 9:16 format (1080 width x 1920 height = HD portrait for Instagram Reels)
     model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
   };
+  
+  console.log('Using aspect ratio: 1080:1920 (HD vertical 9:16)');
   
   // Add audio configuration based on mode
   // Note: Runway ML has a 1000 character limit on prompts
@@ -205,7 +207,7 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
     body: JSON.stringify(requestBody),
   });
   
-  console.log('Request sent with VERTICAL aspect ratio: 720x1280 (9:16 portrait)');
+  console.log('Request sent to Runway ML with HD vertical aspect ratio: 1080x1920');
   
   if (!genResponse.ok) {
     const errorText = await genResponse.text();
