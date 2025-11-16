@@ -1768,32 +1768,7 @@ function showReelGenerationDialog(event) {
         year: 'numeric'
     });
     
-    const defaultPrompt = `Create a vibrant vertical video (9:16 VERTICAL aspect ratio - 1080x1920px) for "${event.title}" in Northern Wisconsin.
-
-SETTING: Northwoods of Wisconsin
-- Dense pine forests and pristine lakes
-- Rustic cabins and charming small towns
-- Rolling hills (NO mountains)
-- Natural Wisconsin beauty
-
-VIDEO STYLE: 
-- Cinematic, professional tourism videography
-- Smooth camera movements (pans, slow zooms)
-- Golden hour or vibrant daylight
-- Inviting and energetic
-
-SCENES TO INCLUDE:
-- Sweeping forest views with tall pines
-- Beautiful lake with gentle waves
-- Rustic wooden structures or town scenes
-- Outdoor recreation atmosphere
-- Seasonal appropriate (${dateStr.split(',')[0]})
-
-MOOD: Exciting, inviting, captures the spirit of the event and Northern Wisconsin's natural beauty.
-
-Duration: 8 seconds (automatically set)
-Format: VERTICAL 9:16 (1080x1920px - Instagram Reel format)
-NO mountains, NO deserts - Wisconsin landscape only!`;
+    const defaultPrompt = `Vibrant vertical video for "${event.title}" in Northern Wisconsin. Northwoods setting: dense pine forests, pristine lakes, rustic cabins, charming small towns, rolling hills. Cinematic style with smooth camera movements (pans, slow zooms), golden hour lighting. Scenes: sweeping forest views, beautiful lake, rustic structures, outdoor recreation. Mood: exciting, inviting, captures Northern Wisconsin beauty. 8 seconds, vertical 9:16 format. NO mountains - Wisconsin landscape only!`;
     
     const dialog = document.createElement('div');
     dialog.id = 'reel-dialog';

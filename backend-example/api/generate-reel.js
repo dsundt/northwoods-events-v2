@@ -166,18 +166,25 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
   };
   
   // Add audio configuration based on mode
-  // Note: Runway ML's audio capabilities may vary by model
-  // For now, we'll add it to the prompt for best results
+  // Note: Runway ML has a 1000 character limit on prompts
   let enhancedPrompt = prompt;
-  if (audioMode === 'no_audio') {
-    enhancedPrompt += '\n\nIMPORTANT: Generate this video WITHOUT any audio, music, or sound effects. Silent video only.';
-  } else if (audioMode === 'music_only') {
-    enhancedPrompt += '\n\nIMPORTANT: Include background music only. No spoken words or dialogue.';
+  
+  // Add shorter audio instructions if needed
+  if (audioMode === 'music_only') {
+    enhancedPrompt += '\nWith background music.';
   } else if (audioMode === 'music_and_speech') {
-    enhancedPrompt += '\n\nIMPORTANT: Include background music AND spoken narration or dialogue.';
+    enhancedPrompt += '\nWith music and narration.';
+  }
+  // Note: 'no_audio' doesn't add anything - saves characters
+  
+  // Truncate if still too long (max 1000 characters)
+  if (enhancedPrompt.length > 1000) {
+    console.warn(`Prompt too long (${enhancedPrompt.length} chars), truncating to 1000`);
+    enhancedPrompt = enhancedPrompt.substring(0, 997) + '...';
   }
   
   requestBody.promptText = enhancedPrompt;
+  console.log(`Prompt length: ${enhancedPrompt.length} characters`);
   
   // Step 1: Submit generation request
   const genResponse = await fetch('https://api.dev.runwayml.com/v1/text_to_video', {
