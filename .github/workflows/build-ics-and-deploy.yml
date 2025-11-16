@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write  # Changed from 'read' to 'write' to allow committing
   pages: write
   id-token: write
 
@@ -39,6 +39,14 @@ jobs:
       - name: Build calendars
         run: |
           python -m src.main
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/curated/*.ics public/by-source/*.ics public/combined.ics public/report.json || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generate ICS files [skip ci]"
+          git push || true
 
       - name: Publish Pages Artifact
         uses: actions/upload-pages-artifact@v3
