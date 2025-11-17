@@ -267,14 +267,27 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
       // Log full response to see what Runway ML is returning
       console.error('FAILED status received. Full response:', JSON.stringify(statusData, null, 2));
       
-      // Check for different possible error fields
-      const errorMsg = statusData.failure_reason 
+      // Extract error from various possible fields
+      let errorMsg = statusData.failure_reason 
         || statusData.failureReason 
+        || statusData.failure  // This is the field Runway ML actually uses!
         || statusData.error 
         || statusData.message 
         || 'No error details provided by Runway ML';
       
-      throw new Error(`Video generation failed: ${errorMsg}. Full status: ${JSON.stringify(statusData)}`);
+      // Parse nested JSON if present
+      if (typeof errorMsg === 'string' && errorMsg.includes('{"code"')) {
+        try {
+          const parsed = JSON.parse(errorMsg.match(/\{.*\}/)[0]);
+          errorMsg = `${parsed.message} (Code: ${parsed.code})`;
+        } catch (e) {
+          // Keep original if parsing fails
+        }
+      }
+      
+      const failureCode = statusData.failureCode || 'UNKNOWN';
+      
+      throw new Error(`Video generation failed [${failureCode}]: ${errorMsg}`);
     } else if (statusData.status === 'CANCELLED') {
       throw new Error('Video generation was cancelled');
     }
