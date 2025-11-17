@@ -2208,10 +2208,42 @@ async function saveReelToGitHub(videoUrl, event) {
         
         showToast('Committing to repository...', 'info');
         
-        // Commit to GitHub
+        // Check if file already exists
         const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
         console.log('Committing to:', apiUrl);
         
+        let fileSha = null;
+        try {
+            const checkResponse = await fetch(apiUrl, {
+                headers: {
+                    'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                },
+            });
+            
+            if (checkResponse.ok) {
+                const existingFile = await checkResponse.json();
+                fileSha = existingFile.sha;
+                console.log('File exists, will update with SHA:', fileSha);
+            }
+        } catch (e) {
+            // File doesn't exist, will create new
+            console.log('File does not exist, will create new');
+        }
+        
+        // Prepare commit body
+        const commitBody = {
+            message: fileSha ? `Update Instagram Reel: ${event.title}` : `Add Instagram Reel: ${event.title}`,
+            content: base64,
+            branch: GITHUB_BRANCH,
+        };
+        
+        // Add SHA if file exists (updating)
+        if (fileSha) {
+            commitBody.sha = fileSha;
+        }
+        
+        // Commit to GitHub
         const commitResponse = await fetch(apiUrl, {
             method: 'PUT',
             headers: {
@@ -2219,11 +2251,7 @@ async function saveReelToGitHub(videoUrl, event) {
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                message: `Add Instagram Reel: ${event.title}`,
-                content: base64,
-                branch: GITHUB_BRANCH,
-            }),
+            body: JSON.stringify(commitBody),
         });
         
         if (!commitResponse.ok) {
