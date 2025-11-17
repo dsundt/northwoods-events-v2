@@ -175,26 +175,19 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
   
   console.log('Using aspect ratio: 1080:1920 (HD vertical 9:16)');
   
-  // Add audio configuration based on mode
-  // Note: Runway ML has a 1000 character limit on prompts
-  let enhancedPrompt = prompt;
+  // Note: Runway ML text_to_video API does not have explicit audio control
+  // Audio is generated automatically by the model based on the video content
+  // We'll just use the prompt as-is without adding audio instructions
   
-  // Add shorter audio instructions if needed
-  if (audioMode === 'music_only') {
-    enhancedPrompt += '\nWith background music.';
-  } else if (audioMode === 'music_and_speech') {
-    enhancedPrompt += '\nWith music and narration.';
-  }
-  // Note: 'no_audio' doesn't add anything - saves characters
-  
-  // Truncate if still too long (max 1000 characters)
-  if (enhancedPrompt.length > 1000) {
-    console.warn(`Prompt too long (${enhancedPrompt.length} chars), truncating to 1000`);
-    enhancedPrompt = enhancedPrompt.substring(0, 997) + '...';
+  // Truncate if too long (max 1000 characters)
+  if (prompt.length > 1000) {
+    console.warn(`Prompt too long (${prompt.length} chars), truncating to 1000`);
+    prompt = prompt.substring(0, 997) + '...';
   }
   
-  requestBody.promptText = enhancedPrompt;
-  console.log(`Prompt length: ${enhancedPrompt.length} characters`);
+  requestBody.promptText = prompt;
+  console.log(`Prompt length: ${prompt.length} characters`);
+  console.log(`Audio mode: ${audioMode} (note: Runway ML generates audio automatically, no manual control)`);
   
   // Step 1: Submit generation request
   const genResponse = await fetch('https://api.dev.runwayml.com/v1/text_to_video', {

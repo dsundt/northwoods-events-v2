@@ -1805,29 +1805,9 @@ function showReelGenerationDialog(event) {
             </div>
             
             <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-weight: 600; margin-bottom: 0.75rem;">🔊 Audio Options:</label>
-                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                    <label style="display: flex; align-items: center; cursor: pointer;">
-                        <input type="radio" name="audio-mode" value="no_audio" checked style="margin-right: 0.5rem;">
-                        <div>
-                            <strong>No Audio</strong> (Recommended)<br>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">Silent video - add music in Instagram app (FREE!)</span>
-                        </div>
-                    </label>
-                    <label style="display: flex; align-items: center; cursor: pointer;">
-                        <input type="radio" name="audio-mode" value="music_only" style="margin-right: 0.5rem;">
-                        <div>
-                            <strong>Music Only</strong><br>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">AI-generated background music, no speech</span>
-                        </div>
-                    </label>
-                    <label style="display: flex; align-items: center; cursor: pointer;">
-                        <input type="radio" name="audio-mode" value="music_and_speech" style="margin-right: 0.5rem;">
-                        <div>
-                            <strong>Music + Speech</strong><br>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">Background music with AI narration</span>
-                        </div>
-                    </label>
+                <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1rem; border-radius: 4px;">
+                    <strong>🔊 Audio Note:</strong> Runway ML automatically generates audio for videos. 
+                    After downloading, you can add/replace music in Instagram app for FREE!
                 </div>
             </div>
             
