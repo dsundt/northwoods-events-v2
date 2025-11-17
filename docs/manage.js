@@ -1768,7 +1768,7 @@ function showReelGenerationDialog(event) {
         year: 'numeric'
     });
     
-    const defaultPrompt = `Vibrant vertical video for "${event.title}" in Northern Wisconsin. Northwoods setting: dense pine forests, pristine lakes, rustic cabins, charming small towns, rolling hills. Cinematic style with smooth camera movements (pans, slow zooms), golden hour lighting. Scenes: sweeping forest views, beautiful lake, rustic structures, outdoor recreation. Mood: exciting, inviting, captures Northern Wisconsin beauty. 8 seconds, vertical 9:16 format. NO mountains - Wisconsin landscape only!`;
+    const defaultPrompt = `Vibrant vertical video for "${event.title}" in Northern Wisconsin. Northwoods setting: dense pine forests, pristine lakes, rustic cabins, charming small towns, rolling hills. Cinematic style with smooth camera movements (pans, slow zooms), golden hour lighting. Scenes: sweeping forest views, beautiful lake, rustic structures, outdoor recreation. Mood: exciting, inviting, captures Northern Wisconsin beauty. 8 seconds, vertical 9:16 format. NO mountains - Wisconsin landscape only! IMPORTANT: No text, no words, no captions, no titles in the video - visual content only.`;
     
     const dialog = document.createElement('div');
     dialog.id = 'reel-dialog';
