@@ -164,8 +164,11 @@ module.exports = async (req, res) => {
       resolution: '1080x1920',
       format: 'vertical',
       message: 'Reel generated successfully in 9:16 vertical format!',
+      configuredRatio: '1080:1920', // What we sent to Runway ML
       tips: [
         'Video is 9:16 vertical - perfect for Instagram Reels!',
+        'Right-click video → Properties to verify dimensions',
+        'Should show: 1080 width × 1920 height',
         'Download the video to your device',
         'Use "Save to Repository" to commit to GitHub',
         'Add text overlays and music in Instagram app',
@@ -293,6 +296,9 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
     
     if (statusData.status === 'SUCCEEDED') {
       videoUrl = statusData.output[0]; // Runway returns array of outputs
+      console.log('✅ Video generation SUCCEEDED!');
+      console.log('Video URL:', videoUrl);
+      console.log('Full success response:', JSON.stringify(statusData, null, 2));
       break;
     } else if (statusData.status === 'FAILED') {
       // Log full response to see what Runway ML is returning
