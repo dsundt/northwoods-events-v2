@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
   // CRITICAL: Set CORS headers FIRST, before any other logic
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, Cache-Control');
   res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
   
   // Handle preflight requests immediately
