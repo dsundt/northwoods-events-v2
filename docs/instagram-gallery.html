@@ -327,9 +327,17 @@
             const stats = document.getElementById('stats');
 
             try {
-                // Fetch list of files from GitHub API
-                const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${IMAGES_PATH}?ref=${GITHUB_BRANCH}`;
-                const response = await fetch(apiUrl);
+                // Fetch list of files from GitHub API with cache-busting
+                const cacheBuster = Date.now();
+                const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${IMAGES_PATH}?ref=${GITHUB_BRANCH}&_=${cacheBuster}`;
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                    },
+                    cache: 'no-store',
+                });
 
                 if (!response.ok) {
                     throw new Error(`GitHub API error: ${response.status}`);
@@ -493,58 +501,39 @@
                     throw new Error(error.message || `Delete failed: ${deleteResponse.status}`);
                 }
                 
-                // Show deletion confirmation
+                // IMMEDIATE: Remove item from DOM (optimistic update)
+                const imageCard = btn.closest('.image-card');
+                if (imageCard) {
+                    imageCard.style.opacity = '0.5';
+                    imageCard.style.pointerEvents = 'none';
+                }
+                
                 showStatusMessage('✅ Image deleted from GitHub!', 'success');
-                showStatusMessage('🔄 Verifying deletion...', 'info');
                 
-                // Poll to verify file is actually gone
-                let verified = false;
-                const maxPolls = 10;
-                const pollInterval = 2000; // 2 seconds
-                
-                for (let poll = 0; poll < maxPolls; poll++) {
-                    await new Promise(resolve => setTimeout(resolve, pollInterval));
-                    
-                    try {
-                        const verifyResponse = await fetch(
-                            `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${IMAGES_PATH}/${fileName}`,
-                            {
-                                headers: {
-                                    'Authorization': `token ${token}`,
-                                    'Accept': 'application/vnd.github.v3+json',
-                                },
-                            }
-                        );
-                        
-                        // File should return 404 if deleted
-                        if (verifyResponse.status === 404) {
-                            verified = true;
-                            console.log(`✅ Deletion verified after ${(poll + 1) * 2} seconds`);
-                            showStatusMessage(`✅ Deletion verified! Refreshing gallery... (${(poll + 1) * 2}s)`, 'success');
-                            break;
-                        }
-                    } catch (e) {
-                        // 404 error means file is gone - success!
-                        verified = true;
-                        break;
-                    }
-                }
-                
-                if (!verified) {
-                    showStatusMessage('⚠️ Deletion timeout - refreshing anyway...', 'warning');
-                }
-                
-                // Clear caches
+                // Clear ALL caches immediately
                 if ('caches' in window) {
-                    caches.keys().then(keys => {
-                        keys.forEach(key => caches.delete(key));
-                    });
+                    await caches.keys().then(keys => Promise.all(keys.map(key => caches.delete(key))));
                 }
                 
-                // Force reload page with cache bypass
-                setTimeout(() => {
-                    window.location.reload(true);
-                }, 1000);
+                // Clear localStorage cache if any
+                localStorage.removeItem('images_cache');
+                
+                showStatusMessage('🔄 Refreshing gallery...', 'info');
+                
+                // Wait 3 seconds for GitHub to propagate
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                // Reload gallery with fresh data
+                const gallery = document.getElementById('gallery');
+                const loading = document.getElementById('loading');
+                
+                gallery.style.display = 'none';
+                loading.style.display = 'block';
+                
+                // Reload with cache-busting
+                await loadGallery();
+                
+                showStatusMessage('✅ Gallery updated!', 'success');
                 
             } catch (error) {
                 console.error('Delete error:', error);
