@@ -1891,26 +1891,54 @@ async function startReelGeneration(event) {
             </div>
         `;
         
-        // Test connection with health check
-        try {
-            const healthCheck = await fetch(BACKEND_URL, {
-                method: 'GET',
-                headers: { 'Accept': 'application/json' }
-            });
-            
-            if (!healthCheck.ok) {
-                throw new Error(`Backend returned status ${healthCheck.status}. Please verify the URL and deployment.`);
+        // Test connection with health check (with retry for transient errors)
+        let healthCheckSuccess = false;
+        let lastHealthError = null;
+        
+        for (let attempt = 0; attempt < 3; attempt++) {
+            try {
+                if (attempt > 0) {
+                    console.log(`Health check retry ${attempt}/2...`);
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+                }
+                
+                const healthCheck = await fetch(BACKEND_URL, {
+                    method: 'GET',
+                    headers: { 
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    },
+                    cache: 'no-store'
+                });
+                
+                if (!healthCheck.ok) {
+                    throw new Error(`Backend returned status ${healthCheck.status}. Please verify the URL and deployment.`);
+                }
+                
+                const healthData = await healthCheck.json();
+                console.log('Backend health check passed:', healthData);
+                
+                if (!healthData.runwayConfigured) {
+                    throw new Error('Runway ML API key not configured on backend. Please set RUNWAY_API_KEY environment variable in Vercel.');
+                }
+                
+                healthCheckSuccess = true;
+                break; // Success!
+                
+            } catch (healthError) {
+                lastHealthError = healthError;
+                console.warn(`Health check attempt ${attempt + 1} failed:`, healthError.message);
+                
+                // If it's a CORS or fetch error, retry
+                if (attempt < 2) {
+                    continue;
+                }
             }
-            
-            const healthData = await healthCheck.json();
-            console.log('Backend health check:', healthData);
-            
-            if (!healthData.runwayConfigured) {
-                throw new Error('Runway ML API key not configured on backend. Please set RUNWAY_API_KEY environment variable in Vercel.');
-            }
-        } catch (healthError) {
-            console.error('Health check error:', healthError);
-            throw new Error(`Cannot connect to backend: ${healthError.message}. Verify URL: ${BACKEND_URL}`);
+        }
+        
+        if (!healthCheckSuccess) {
+            console.error('Health check failed after 3 attempts:', lastHealthError);
+            throw new Error(`Cannot connect to backend after 3 attempts: ${lastHealthError.message}. Verify URL: ${BACKEND_URL}`);
         }
         
         statusDiv.innerHTML = `
@@ -1974,13 +2002,19 @@ async function startReelGeneration(event) {
                 <source src="${data.videoUrl || data.video}" type="video/mp4">
                 Your browser does not support video playback.
             </video>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
                 <a href="${data.videoUrl || data.video}" download="reel-${Date.now()}.mp4" class="btn btn-success">
                     💾 Download Reel
                 </a>
                 <button onclick="saveReelToGitHub('${(data.videoUrl || data.video).replace(/'/g, "\\'")}', ${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-primary">
                     ☁️ Save to Repository
                 </button>
+                <a href="reel-gallery.html" target="_blank" class="btn btn-secondary">
+                    🎥 View All Reels
+                </a>
+            </div>
+            <div style="background: #e7f3ff; border: 1px solid #2196F3; padding: 0.75rem; border-radius: 4px; font-size: 0.9rem;">
+                💡 <strong>Tip:</strong> Check dimensions: Right-click video → Properties → Should be 1080×1920 (vertical)
             </div>
         `;
         
@@ -2170,15 +2204,28 @@ async function saveReelToGitHub(videoUrl, event) {
         
         showToast('✅ Reel saved to repository!', 'success');
         
-        // Show success message with link
-        const successDiv = document.createElement('div');
-        successDiv.style.cssText = 'background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; border-radius: 4px; margin-top: 1rem;';
-        successDiv.innerHTML = `
-            <strong>✅ Saved!</strong> View in 
-            <a href="reel-gallery.html" target="_blank">Reel Gallery</a> or on 
-            <a href="https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${path}" target="_blank">GitHub</a>
-        `;
-        document.getElementById('reel-preview').appendChild(successDiv);
+        // Update the existing preview to add save confirmation
+        const previewDiv = document.getElementById('reel-preview');
+        const existingGalleryLink = previewDiv.querySelector('a[href="reel-gallery.html"]');
+        
+        if (existingGalleryLink) {
+            // Highlight existing link
+            existingGalleryLink.style.background = '#28a745';
+            existingGalleryLink.classList.remove('btn-secondary');
+            existingGalleryLink.classList.add('btn-success');
+            existingGalleryLink.innerHTML = '✅ Saved! View Gallery';
+        }
+        
+        // Add GitHub link if not present
+        const buttonContainer = previewDiv.querySelector('[style*="flex"]');
+        if (buttonContainer && !buttonContainer.querySelector('a[href*="github.com"]')) {
+            const githubLink = document.createElement('a');
+            githubLink.href = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_BRANCH}/${path}`;
+            githubLink.target = '_blank';
+            githubLink.className = 'btn btn-secondary';
+            githubLink.innerHTML = '📂 View on GitHub';
+            buttonContainer.appendChild(githubLink);
+        }
         
     } catch (error) {
         console.error('Error saving reel:', error);
