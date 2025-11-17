@@ -2107,21 +2107,44 @@ async function saveBackendUrl() {
     // Test the URL before saving
     showToast('Testing backend connection...', 'info');
     
+    console.log('Testing URL:', url);
+    
     try {
         const response = await fetch(url, {
             method: 'GET',
-            headers: { 'Accept': 'application/json' }
+            headers: { 
+                'Accept': 'application/json',
+                'Cache-Control': 'no-cache'
+            },
+            cache: 'no-store'
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response headers:', {
+            'content-type': response.headers.get('content-type'),
+            'cors': response.headers.get('access-control-allow-origin')
         });
         
         if (!response.ok) {
-            throw new Error(`Backend returned status ${response.status}`);
+            const text = await response.text();
+            console.error('Error response:', text.substring(0, 200));
+            throw new Error(`Backend returned status ${response.status}. Check that /api/generate-reel path is included in URL.`);
+        }
+        
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Non-JSON response:', text.substring(0, 500));
+            throw new Error(`Backend returned HTML instead of JSON. Check that URL includes /api/generate-reel path. Got: ${text.substring(0, 100)}...`);
         }
         
         const data = await response.json();
+        console.log('Backend response:', data);
         
         if (data.status === 'ok') {
             localStorage.setItem('reel_backend_url', url);
-            document.querySelector('[style*="fixed"]').remove();
+            const dialog = document.querySelector('[style*="fixed"]');
+            if (dialog) dialog.remove();
             
             let message = '✅ Backend connected!';
             if (!data.runwayConfigured) {
@@ -2130,15 +2153,24 @@ async function saveBackendUrl() {
             if (!data.beatovenConfigured) {
                 message += '\n⚠️ Music generation unavailable (Beatoven.ai not configured)';
             }
+            if (data.cors === 'enabled') {
+                message += '\n✅ CORS enabled';
+            }
             
             showToast(message, 'success');
-            console.log('Backend health:', data);
+            console.log('✅ Backend health check passed:', data);
         } else {
-            throw new Error('Invalid backend response');
+            throw new Error('Invalid backend response - missing status field');
         }
     } catch (error) {
         console.error('Backend test failed:', error);
-        showToast(`❌ Cannot connect to backend: ${error.message}`, 'danger');
+        
+        let errorMsg = error.message;
+        if (error.message.includes('<!doctype') || error.message.includes('<!DOCTYPE')) {
+            errorMsg = `URL is returning a webpage (HTML) instead of API endpoint. Make sure URL ends with /api/generate-reel`;
+        }
+        
+        showToast(`❌ Cannot connect to backend: ${errorMsg}`, 'danger');
     }
 }
 
