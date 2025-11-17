@@ -1872,7 +1872,7 @@ async function startReelGeneration(event) {
     `;
     
     try {
-        const BACKEND_URL = localStorage.getItem('reel_backend_url') || 'https://northwoods-reel-api.vercel.app/api/generate-reel';
+        const BACKEND_URL = localStorage.getItem('reel_backend_url') || 'https://northwoods-reel-bktn7xmx6-dan-sundts-projects.vercel.app/api/generate-reel';
         
         if (!BACKEND_URL) {
             throw new Error('Backend URL not configured. Please set up your backend service first.');
@@ -2059,7 +2059,7 @@ async function startReelGeneration(event) {
 }
 
 function configureBackendUrl() {
-    const currentUrl = localStorage.getItem('reel_backend_url') || 'https://northwoods-reel-api.vercel.app/api/generate-reel';
+    const currentUrl = localStorage.getItem('reel_backend_url') || 'https://northwoods-reel-bktn7xmx6-dan-sundts-projects.vercel.app/api/generate-reel';
     
     const dialog = document.createElement('div');
     dialog.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;';
@@ -2072,8 +2072,8 @@ function configureBackendUrl() {
             </p>
             <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
                 <strong>Default:</strong><br>
-                <code style="display: block; background: #f5f5f5; padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem;">
-                https://northwoods-reel-api.vercel.app/api/generate-reel
+                <code style="display: block; background: #f5f5f5; padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem; font-size: 0.75rem;">
+                https://northwoods-reel-bktn7xmx6-dan-sundts-projects.vercel.app/api/generate-reel
                 </code>
             </p>
             <input type="url" id="backend-url-input" placeholder="https://..." 
