@@ -627,21 +627,29 @@
         }
     }
 
-    // Override export function to add GitHub save option
-    const originalExportConfig = exportConfig;
-    exportConfig = function() {
-        if (isGitHubConfigured()) {
-            if (confirm('Save to GitHub repository?\n\nClick OK to commit directly to GitHub.\nClick Cancel to download file manually.')) {
-                saveToGitHub(confirm('Also trigger GitHub Actions workflow to regenerate feeds?'));
-                return;
-            }
-        }
-        originalExportConfig();
-    };
     </script>
 
     <script src="auth.js"></script>
     <script src="config-sync.js"></script>
     <script src="manage.js"></script>
+    
+    <script>
+    // Override export function after manage.js loads
+    // This must run AFTER manage.js to access exportConfig
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof exportConfig !== 'undefined') {
+            const originalExportConfig = exportConfig;
+            exportConfig = function() {
+                if (isGitHubConfigured()) {
+                    if (confirm('Save to GitHub repository?\n\nClick OK to commit directly to GitHub.\nClick Cancel to download file manually.')) {
+                        saveToGitHub(confirm('Also trigger GitHub Actions workflow to regenerate feeds?'));
+                        return;
+                    }
+                }
+                originalExportConfig();
+            };
+        }
+    });
+    </script>
 </body>
 </html>
