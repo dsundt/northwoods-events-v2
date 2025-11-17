@@ -6,30 +6,15 @@
       "memory": 2048
     }
   },
+  "rewrites": [
+    {
+      "source": "/api/generate-reel",
+      "destination": "/api/generate-reel.js"
+    }
+  ],
   "headers": [
     {
       "source": "/api/generate-reel",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization, Accept, X-Requested-With, Cache-Control"
-        },
-        {
-          "key": "Access-Control-Max-Age",
-          "value": "86400"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
