@@ -2262,7 +2262,42 @@ async function saveReelToGitHub(videoUrl, event) {
         const commitData = await commitResponse.json();
         console.log('Video committed successfully:', commitData);
         
-        showToast('✅ Reel saved to repository!', 'success');
+        showToast('✅ Reel committed to GitHub!', 'success');
+        showToast('🔄 Verifying file in repository...', 'info');
+        
+        // Poll to verify file actually exists in repository
+        let verified = false;
+        const maxPolls = 10;
+        const pollInterval = 2000; // 2 seconds
+        
+        for (let poll = 0; poll < maxPolls; poll++) {
+            await new Promise(resolve => setTimeout(resolve, pollInterval));
+            
+            try {
+                const verifyResponse = await fetch(apiUrl, {
+                    headers: {
+                        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                    },
+                });
+                
+                if (verifyResponse.ok) {
+                    const fileData = await verifyResponse.json();
+                    if (fileData.sha) {
+                        verified = true;
+                        console.log(`✅ File verified in repository after ${(poll + 1) * 2} seconds`);
+                        showToast(`✅ Reel verified in repository! (${(poll + 1) * 2}s)`, 'success');
+                        break;
+                    }
+                }
+            } catch (e) {
+                console.log(`Poll ${poll + 1}/${maxPolls}: File not yet available`);
+            }
+        }
+        
+        if (!verified) {
+            showToast('⚠️ Reel saved but verification timeout - check gallery in 1 minute', 'warning');
+        }
         
         // Update the existing preview to add save confirmation
         const previewDiv = document.getElementById('reel-preview');
@@ -2270,10 +2305,10 @@ async function saveReelToGitHub(videoUrl, event) {
         
         if (existingGalleryLink) {
             // Highlight existing link
-            existingGalleryLink.style.background = '#28a745';
+            existingGalleryLink.style.background = verified ? '#28a745' : '#ffc107';
             existingGalleryLink.classList.remove('btn-secondary');
-            existingGalleryLink.classList.add('btn-success');
-            existingGalleryLink.innerHTML = '✅ Saved! View Gallery';
+            existingGalleryLink.classList.add(verified ? 'btn-success' : 'btn-warning');
+            existingGalleryLink.innerHTML = verified ? '✅ Saved & Verified! View Gallery' : '⚠️ Saved (verifying...) View Gallery';
         }
         
         // Add GitHub link if not present
