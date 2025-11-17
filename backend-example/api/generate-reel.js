@@ -164,7 +164,7 @@ module.exports = async (req, res) => {
       resolution: '1080x1920',
       format: 'vertical',
       message: 'Reel generated successfully in 9:16 vertical format!',
-      configuredRatio: '1080:1920', // What we sent to Runway ML
+      configuredRatio: '1920:1080', // What we sent to Runway ML (testing opposite to get vertical)
       tips: [
         'Video is 9:16 vertical - perfect for Instagram Reels!',
         'Right-click video → Properties to verify dimensions',
@@ -207,14 +207,17 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
   console.log('Audio mode requested:', audioMode);
   
   // Prepare request body with audio settings
+  // CRITICAL: User reported 1080:1920 produces 1920×1080 (horizontal)
+  // Trying opposite ratio to get vertical output
   const requestBody = {
     promptText: prompt,
     duration: 8, // Valid durations: 4, 6, or 8 seconds
-    ratio: '1080:1920', // VERTICAL 9:16 format (1080 width x 1920 height = HD portrait for Instagram Reels)
+    ratio: '1920:1080', // Trying this to get 1080×1920 vertical (counterintuitive but testing)
     model: 'veo3.1_fast', // Using Veo 3.1 Fast for good balance of speed and quality
   };
   
-  console.log('Using aspect ratio: 1080:1920 (HD vertical 9:16)');
+  console.log('⚠️ TESTING: Using ratio 1920:1080 to attempt getting vertical 1080×1920 output');
+  console.log('User reported 1080:1920 ratio produced horizontal 1920×1080 video');
   
   // Note: Runway ML text_to_video API does not have explicit audio control
   // Audio is generated automatically by the model based on the video content
@@ -241,7 +244,7 @@ async function generateRunwayVideo(apiKey, prompt, audioMode = 'no_audio') {
     body: JSON.stringify(requestBody),
   });
   
-  console.log('Request sent to Runway ML with HD vertical aspect ratio: 1080x1920');
+  console.log('Request sent to Runway ML - Testing ratio 1920:1080 to get vertical output');
   
   if (!genResponse.ok) {
     const errorText = await genResponse.text();
