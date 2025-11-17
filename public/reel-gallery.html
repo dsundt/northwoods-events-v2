@@ -605,8 +605,22 @@
                 
                 alert(`✅ "${fileName}" deleted successfully!`);
                 
-                // Reload gallery
-                loadReels();
+                // Clear caches to ensure deleted item doesn't show
+                if ('caches' in window) {
+                    caches.keys().then(keys => {
+                        keys.forEach(key => caches.delete(key));
+                    });
+                }
+                
+                // Clear any service worker cache
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+                }
+                
+                // Force reload page with cache bypass
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 500);
                 
             } catch (error) {
                 console.error('Delete error:', error);
@@ -644,7 +658,42 @@
                 }
                 
                 const fileData = await response.json();
-                await deleteReel(fileName, fileData.sha);
+                
+                // Delete the reel
+                const deleteResponse = await fetch(
+                    `https://api.github.com/repos/${GITHUB_REPO}/contents/${REELS_PATH}/${fileName}`,
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: `Delete reel: ${fileName}`,
+                            sha: fileData.sha,
+                        }),
+                    }
+                );
+                
+                if (!deleteResponse.ok) {
+                    const error = await deleteResponse.json();
+                    throw new Error(error.message || `Delete failed: ${deleteResponse.status}`);
+                }
+                
+                alert(`✅ "${fileName}" deleted successfully!`);
+                
+                // Clear caches
+                if ('caches' in window) {
+                    caches.keys().then(keys => {
+                        keys.forEach(key => caches.delete(key));
+                    });
+                }
+                
+                // Force reload with cache bypass
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 500);
                 
             } catch (error) {
                 console.error('Delete error:', error);

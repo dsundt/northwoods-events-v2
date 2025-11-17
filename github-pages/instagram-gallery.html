@@ -495,8 +495,22 @@
                 
                 alert(`✅ "${fileName}" deleted successfully!`);
                 
-                // Reload gallery
-                loadGallery();
+                // Clear caches to ensure deleted item doesn't show
+                if ('caches' in window) {
+                    caches.keys().then(keys => {
+                        keys.forEach(key => caches.delete(key));
+                    });
+                }
+                
+                // Clear any service worker cache
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+                }
+                
+                // Force reload page with cache bypass
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 500);
                 
             } catch (error) {
                 console.error('Delete error:', error);
