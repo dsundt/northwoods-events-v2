@@ -84,10 +84,48 @@ module.exports = async (req, res) => {
   console.log('Starting reel generation for:', event.title);
   
   try {
-    // Step 1: Generate video with Runway ML
+    // Step 1: Generate video with Runway ML (with retry for internal errors)
     console.log('Step 1/3: Submitting to Runway ML...');
     
-    const videoUrl = await generateRunwayVideo(RUNWAY_API_KEY, prompt, audioMode);
+    let videoUrl = null;
+    let lastError = null;
+    const maxRetries = 2; // Try up to 3 times total (1 initial + 2 retries)
+    
+    for (let retry = 0; retry <= maxRetries; retry++) {
+      try {
+        if (retry > 0) {
+          console.log(`🔄 Retry attempt ${retry}/${maxRetries} after INTERNAL error...`);
+          await sleep(15000); // Wait 15 seconds before retry
+        }
+        
+        videoUrl = await generateRunwayVideo(RUNWAY_API_KEY, prompt, audioMode);
+        
+        if (videoUrl) {
+          console.log('✅ Video generated successfully:', videoUrl);
+          break; // Success - exit retry loop
+        }
+      } catch (error) {
+        lastError = error;
+        
+        // Check if it's a retryable error (INTERNAL or Code 13)
+        const isInternalError = error.message.includes('[INTERNAL]') 
+          || error.message.includes('Code: 13')
+          || error.message.includes('Internal error');
+        
+        if (isInternalError && retry < maxRetries) {
+          console.warn(`⚠️ Internal error on attempt ${retry + 1}, will retry in 15 seconds...`);
+          continue; // Try again
+        } else {
+          // Not retryable or out of retries
+          console.error(`❌ Error is not retryable or max retries reached`);
+          throw error;
+        }
+      }
+    }
+    
+    if (!videoUrl) {
+      throw lastError || new Error('Video generation failed after all retry attempts');
+    }
     
     console.log('Video generated:', videoUrl);
     
