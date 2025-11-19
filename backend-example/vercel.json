@@ -4,17 +4,25 @@
     "api/generate-reel.js": {
       "maxDuration": 300,
       "memory": 2048
+    },
+    "api/generate-image.js": {
+      "maxDuration": 60,
+      "memory": 1024
     }
   },
   "rewrites": [
     {
       "source": "/api/generate-reel",
       "destination": "/api/generate-reel.js"
+    },
+    {
+      "source": "/api/generate-image",
+      "destination": "/api/generate-image.js"
     }
   ],
   "headers": [
     {
-      "source": "/api/generate-reel",
+      "source": "/api/(.*)",
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",

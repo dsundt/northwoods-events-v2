@@ -1213,13 +1213,7 @@ function saveOpenAIKey() {
 }
 
 async function generateInstagramImage(event) {
-    if (!OPENAI_API_KEY) {
-        showToast('Please configure OpenAI API key first', 'warning');
-        configureOpenAIKey();
-        return;
-    }
-    
-    // Show generation dialog
+    // Show generation dialog (backend handles API keys)
     showImageGenerationDialog(event);
 }
 
@@ -1277,6 +1271,17 @@ Create an image that makes people want to visit Northern Wisconsin!`;
             </div>
             
             <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Image Generation Model:</label>
+                <select id="image-model" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; margin-bottom: 0.5rem;" onchange="updateImageModelInfo()">
+                    <option value="dall-e-3" selected>🎨 OpenAI DALL-E 3 - Artistic & Creative ($0.04)</option>
+                    <option value="google-gemini">🤖 Google Gemini 2.5 Flash + Imagen 3 - Photorealistic ($0.02)</option>
+                </select>
+                <div id="model-info" style="font-size: 0.85rem; color: var(--text-muted); padding: 0.75rem; background: #e7f3ff; border: 1px solid #b3d9ff; border-radius: 4px; margin-bottom: 1rem;">
+                    <strong>DALL-E 3:</strong> Best for creative, artistic, and stylized images. Excellent at following complex prompts. Higher cost but consistently high quality.
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 1.5rem;">
                 <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">AI Image Prompt:</label>
                 <textarea id="image-prompt" rows="6" 
                           style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-family: inherit; resize: vertical;">${defaultPrompt}</textarea>
@@ -1290,9 +1295,9 @@ Create an image that makes people want to visit Northern Wisconsin!`;
             
             <div style="display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap;">
                 <button onclick="document.getElementById('instagram-dialog').remove()" class="btn btn-secondary">Close</button>
-                <button onclick="configureOpenAIKey()" class="btn btn-secondary">⚙️ API Key</button>
+                <button onclick="configureBackendUrl()" class="btn btn-secondary">⚙️ Backend</button>
                 <button onclick="startImageGeneration(${JSON.stringify(event).replace(/"/g, '&quot;')})" class="btn btn-primary" id="generate-btn">
-                    ✨ Generate Image ($0.04)
+                    ✨ Generate Image
                 </button>
             </div>
         </div>
@@ -1301,11 +1306,41 @@ Create an image that makes people want to visit Northern Wisconsin!`;
     document.body.appendChild(dialog);
 }
 
+// Update model info when selection changes
+function updateImageModelInfo() {
+    const modelSelect = document.getElementById('image-model');
+    const modelInfo = document.getElementById('model-info');
+    const generateBtn = document.getElementById('generate-btn');
+    
+    const modelDescriptions = {
+        'dall-e-3': {
+            description: '<strong>DALL-E 3:</strong> Best for creative, artistic, and stylized images. Excellent at following complex prompts. Higher cost but consistently high quality.',
+            cost: '$0.04',
+            color: '#e7f3ff',
+            border: '#b3d9ff'
+        },
+        'google-gemini': {
+            description: '<strong>Google Gemini 2.5 Flash + Imagen 3:</strong> Best for photorealistic, natural-looking images. Fast generation, lower cost. Great for realistic event photography.',
+            cost: '$0.02',
+            color: '#e8f5e9',
+            border: '#a5d6a7'
+        }
+    };
+    
+    const selected = modelDescriptions[modelSelect.value];
+    modelInfo.innerHTML = selected.description;
+    modelInfo.style.background = selected.color;
+    modelInfo.style.borderColor = selected.border;
+    generateBtn.textContent = `✨ Generate Image (${selected.cost})`;
+}
+
 async function startImageGeneration(event) {
     const promptInput = document.getElementById('image-prompt');
+    const modelSelect = document.getElementById('image-model');
     const statusDiv = document.getElementById('generation-status');
     const generateBtn = document.getElementById('generate-btn');
     const prompt = promptInput.value.trim();
+    const selectedModel = modelSelect.value;
     
     if (!prompt) {
         showToast('Please enter a prompt', 'warning');
@@ -1315,11 +1350,16 @@ async function startImageGeneration(event) {
     generateBtn.disabled = true;
     generateBtn.textContent = '⏳ Generating...';
     
+    const modelNames = {
+        'dall-e-3': 'DALL-E 3',
+        'google-gemini': 'Google Gemini 2.5 Flash + Imagen 3'
+    };
+    
     statusDiv.innerHTML = `
         <div style="background: #e7f3ff; border: 1px solid #b3d9ff; padding: 1rem; border-radius: 4px;">
             <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <div style="width: 20px; height: 20px; border: 3px solid #0066cc; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                <span>Generating image with DALL-E 3... This may take 10-30 seconds.</span>
+                <span>Generating image with ${modelNames[selectedModel]}... This may take 10-30 seconds.</span>
             </div>
         </div>
         <style>
@@ -1328,33 +1368,45 @@ async function startImageGeneration(event) {
     `;
     
     try {
-        // Call OpenAI DALL-E API - request base64 to avoid CORS issues
-        const response = await fetch('https://api.openai.com/v1/images/generations', {
+        // Get backend URL
+        const BACKEND_URL = localStorage.getItem('reel_backend_url') || 'https://northwoods-reel-api.vercel.app/api/generate-reel';
+        const IMAGE_API_URL = BACKEND_URL.replace('/generate-reel', '/generate-image');
+        
+        console.log('Calling backend image API:', IMAGE_API_URL);
+        console.log('Model:', selectedModel);
+        
+        // Call backend API
+        const response = await fetch(IMAGE_API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: 'dall-e-3',
                 prompt: prompt,
-                n: 1,
-                size: '1024x1024',
-                quality: 'standard',
-                response_format: 'b64_json'  // Request base64 instead of URL to avoid CORS
+                model: selectedModel,
+                eventData: {
+                    title: event.title,
+                    location: event.location,
+                    date: event.start_utc
+                }
             })
         });
         
         if (!response.ok) {
             const error = await response.json();
-            throw new Error(error.error?.message || 'Failed to generate image');
+            throw new Error(error.error || error.message || 'Image generation failed');
         }
         
         const data = await response.json();
-        const imageBase64 = data.data[0].b64_json;
+        
+        if (!data.success || !data.imageBase64) {
+            throw new Error('No image returned from API');
+        }
+        
+        console.log(`Image generated successfully with ${data.model}`);
         
         // Convert base64 to data URL
-        const imageDataUrl = `data:image/png;base64,${imageBase64}`;
+        const imageDataUrl = `data:image/png;base64,${data.imageBase64}`;
         
         // Download and process the image
         await processGeneratedImage(imageDataUrl, event);
@@ -1364,10 +1416,16 @@ async function startImageGeneration(event) {
         statusDiv.innerHTML = `
             <div style="background: #ffe7e7; border: 1px solid #ffb3b3; padding: 1rem; border-radius: 4px; color: #cc0000;">
                 <strong>Error:</strong> ${escapeHtml(error.message)}
+                ${selectedModel === 'google-gemini' ? `
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        💡 Google Gemini may require additional setup. Try DALL-E 3 instead, or check backend logs.
+                    </p>
+                ` : ''}
             </div>
         `;
         generateBtn.disabled = false;
-        generateBtn.textContent = '✨ Generate Image ($0.04)';
+        const modelInfo = modelSelect.options[modelSelect.selectedIndex].text.match(/\$[\d.]+/);
+        generateBtn.textContent = `✨ Generate Image ${modelInfo ? '(' + modelInfo[0] + ')' : ''}`;
     }
 }
 

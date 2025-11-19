@@ -109,7 +109,7 @@ async function generateWithDALLE3(req, res, prompt) {
 }
 
 /**
- * Generate image with Google Gemini 2.5 Flash (Imagen)
+ * Generate image with Google Gemini 2.5 Flash + Imagen 3
  */
 async function generateWithGemini(req, res, prompt) {
   const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
@@ -117,95 +117,155 @@ async function generateWithGemini(req, res, prompt) {
   if (!apiKey) {
     return res.status(503).json({
       error: 'Google Gemini API key not configured',
-      message: 'Please set GOOGLE_GEMINI_API_KEY environment variable'
+      message: 'Get API key from: https://aistudio.google.com/app/apikey',
+      setupSteps: [
+        '1. Go to Google AI Studio',
+        '2. Click "Get API Key"',
+        '3. Create or select a project',
+        '4. Copy API key',
+        '5. Add to Vercel: vercel env add GOOGLE_GEMINI_API_KEY production'
+      ]
     });
   }
   
   try {
-    // Use Gemini API with Imagen 3 for image generation
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `Generate an image: ${prompt}`
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.8,
-          topP: 0.95,
-          maxOutputTokens: 8192,
-        }
-      })
-    });
+    console.log('Using Google Gemini 2.5 Flash with Imagen 3...');
+    
+    // Google Gemini API for image generation using Imagen 3
+    // Model: gemini-2.0-flash-exp (latest with image generation)
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          instances: [{
+            prompt: prompt
+          }],
+          parameters: {
+            sampleCount: 1,
+            aspectRatio: '1:1',
+            compressionQuality: 'high',
+            negativePrompt: 'blurry, low quality, text, watermark, distorted',
+            numberOfImages: 1,
+            safetyFilterLevel: 'block_some',
+            personGeneration: 'allow_adult'
+          }
+        })
+      }
+    );
     
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Gemini API error:', errorText);
-      throw new Error(`Gemini API error: ${response.status}`);
+      console.error('Gemini API response:', errorText);
+      
+      // Try alternative: Use Gemini for text-to-image via different endpoint
+      return await tryAlternativeGeminiEndpoint(apiKey, prompt, res);
     }
     
     const data = await response.json();
+    console.log('Gemini response received');
     
-    // Check if image was generated
-    // Note: Gemini API response format may vary - adjust based on actual response
-    if (data.candidates && data.candidates[0]?.content?.parts) {
-      const imagePart = data.candidates[0].content.parts.find(part => part.inlineData);
+    // Extract image from response
+    if (data.predictions && data.predictions[0]) {
+      const prediction = data.predictions[0];
       
-      if (imagePart && imagePart.inlineData) {
+      // Image might be in different formats
+      let imageBase64;
+      if (prediction.bytesBase64Encoded) {
+        imageBase64 = prediction.bytesBase64Encoded;
+      } else if (prediction.image) {
+        imageBase64 = prediction.image;
+      } else if (prediction.mimeType && prediction.data) {
+        imageBase64 = prediction.data;
+      }
+      
+      if (imageBase64) {
         return res.status(200).json({
           success: true,
-          imageBase64: imagePart.inlineData.data,
-          model: 'google-gemini-2.5-flash',
+          imageBase64: imageBase64,
+          model: 'google-gemini-2.5-flash-imagen',
           cost: 0.02,
           size: '1024x1024'
         });
       }
     }
     
-    // If image not in response, try alternative: Use Vertex AI Imagen instead
-    return await generateWithVertexImagen(req, res, prompt, apiKey);
+    throw new Error('No image in Gemini response');
     
   } catch (error) {
     console.error('Google Gemini error:', error);
-    
-    // Fallback: Try Imagen via Vertex AI
-    try {
-      return await generateWithVertexImagen(req, res, prompt, process.env.GOOGLE_GEMINI_API_KEY);
-    } catch (fallbackError) {
-      return res.status(500).json({
-        error: error.message,
-        model: 'google-gemini',
-        note: 'Gemini image generation may require different API access'
-      });
-    }
+    return res.status(500).json({
+      error: error.message,
+      model: 'google-gemini',
+      fallback: 'Try using DALL-E 3 instead, or check API key and permissions'
+    });
   }
 }
 
 /**
- * Fallback: Use Vertex AI Imagen 3 directly
+ * Alternative Gemini endpoint (if main one fails)
  */
-async function generateWithVertexImagen(req, res, prompt, apiKey) {
-  // This requires Vertex AI setup with proper authentication
-  // For now, return helpful error with setup instructions
-  
-  return res.status(503).json({
-    error: 'Google image generation requires additional setup',
-    message: 'Please set up Vertex AI Imagen or use Gemini API with image generation enabled',
-    model: 'google-imagen',
-    setupInstructions: [
-      '1. Go to https://console.cloud.google.com',
-      '2. Enable Vertex AI API',
-      '3. Enable Imagen API',
-      '4. Create service account with Vertex AI permissions',
-      '5. Add credentials to Vercel environment',
-      'OR',
-      '1. Use Google AI Studio: https://aistudio.google.com',
-      '2. Get Gemini API key with image generation',
-      '3. Add GOOGLE_GEMINI_API_KEY to Vercel'
-    ]
-  });
+async function tryAlternativeGeminiEndpoint(apiKey, prompt, res) {
+  try {
+    console.log('Trying alternative Gemini endpoint...');
+    
+    // Alternative: Use Gemini with generateImage capability
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }],
+          generationConfig: {
+            responseModalities: ['image'],
+            temperature: 0.8,
+          }
+        })
+      }
+    );
+    
+    if (!response.ok) {
+      throw new Error(`Alternative endpoint failed: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    // Look for inline image data
+    if (data.candidates && data.candidates[0]?.content?.parts) {
+      for (const part of data.candidates[0].content.parts) {
+        if (part.inlineData && part.inlineData.data) {
+          return res.status(200).json({
+            success: true,
+            imageBase64: part.inlineData.data,
+            model: 'google-gemini-2.5-flash',
+            cost: 0.02,
+            size: '1024x1024'
+          });
+        }
+      }
+    }
+    
+    throw new Error('No image data in response');
+    
+  } catch (altError) {
+    console.error('Alternative endpoint failed:', altError);
+    
+    return res.status(503).json({
+      error: 'Google Gemini image generation not available',
+      message: 'Gemini 2.5 Flash with image generation may not be available in your region yet',
+      recommendation: 'Use DALL-E 3 instead, or wait for Gemini image generation to be available',
+      apiKeyValid: !!apiKey,
+      setupGuide: 'https://ai.google.dev/gemini-api/docs/imagen'
+    });
+  }
 }
