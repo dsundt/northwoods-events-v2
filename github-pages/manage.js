@@ -218,22 +218,113 @@ async function loadData() {
     }
 }
 
-// localStorage management
-function loadFeedsFromStorage() {
+// localStorage management with GitHub sync
+async function loadFeedsFromStorage() {
+    // First try to load from GitHub repository
+    try {
+        const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/config/curated.yaml?_=${Date.now()}`);
+        
+        if (response.ok) {
+            const yamlText = await response.text();
+            const feedsFromYaml = parseYAMLToFeeds(yamlText);
+            
+            if (feedsFromYaml && feedsFromYaml.length > 0) {
+                curatedFeeds = feedsFromYaml;
+                // Also save to localStorage for offline access
+                localStorage.setItem('northwoods_curated_feeds', JSON.stringify(curatedFeeds));
+                console.log(`✅ Loaded ${curatedFeeds.length} curated feeds from GitHub`);
+                renderFeeds();
+                return;
+            }
+        }
+    } catch (error) {
+        console.warn('Could not load feeds from GitHub, trying localStorage:', error);
+    }
+    
+    // Fallback to localStorage
     const stored = localStorage.getItem('northwoods_curated_feeds');
     if (stored) {
         try {
             curatedFeeds = JSON.parse(stored);
+            console.log(`Loaded ${curatedFeeds.length} feeds from localStorage`);
         } catch (e) {
             curatedFeeds = getDefaultFeeds();
         }
     } else {
         curatedFeeds = getDefaultFeeds();
     }
+    
+    renderFeeds();
 }
 
 function saveFeedsToStorage() {
     localStorage.setItem('northwoods_curated_feeds', JSON.stringify(curatedFeeds));
+}
+
+// Parse YAML config file to feed objects
+function parseYAMLToFeeds(yamlText) {
+    try {
+        const feeds = [];
+        const lines = yamlText.split('\n');
+        let currentFeed = null;
+        let inPreferences = false;
+        let currentArray = null;
+        
+        for (const line of lines) {
+            const trimmed = line.trim();
+            
+            if (trimmed.startsWith('- id:')) {
+                if (currentFeed) feeds.push(currentFeed);
+                currentFeed = {
+                    id: trimmed.substring(5).trim(),
+                    name: '',
+                    enabled: true,
+                    selected_events: [],
+                    preferences: {
+                        include_sources: [],
+                        exclude_sources: [],
+                        locations: [],
+                        keywords: [],
+                        exclude_keywords: [],
+                        max_auto_events: 50,
+                        days_ahead: 180
+                    }
+                };
+                inPreferences = false;
+            } else if (currentFeed && trimmed.startsWith('name:')) {
+                currentFeed.name = trimmed.substring(5).trim().replace(/['"]/g, '');
+            } else if (currentFeed && trimmed.startsWith('enabled:')) {
+                currentFeed.enabled = trimmed.includes('true');
+            } else if (currentFeed && trimmed === 'preferences:') {
+                inPreferences = true;
+            } else if (inPreferences) {
+                if (trimmed.startsWith('include_sources:')) currentArray = 'include_sources';
+                else if (trimmed.startsWith('exclude_sources:')) currentArray = 'exclude_sources';
+                else if (trimmed.startsWith('locations:')) currentArray = 'locations';
+                else if (trimmed.startsWith('keywords:')) currentArray = 'keywords';
+                else if (trimmed.startsWith('exclude_keywords:')) currentArray = 'exclude_keywords';
+                else if (trimmed.startsWith('max_auto_events:')) {
+                    currentFeed.preferences.max_auto_events = parseInt(trimmed.split(':')[1]) || 50;
+                    currentArray = null;
+                } else if (trimmed.startsWith('days_ahead:')) {
+                    currentFeed.preferences.days_ahead = parseInt(trimmed.split(':')[1]) || 180;
+                    currentArray = null;
+                } else if (trimmed.startsWith('- ') && currentArray) {
+                    const value = trimmed.substring(2).trim().replace(/['"]/g, '');
+                    if (value && currentFeed.preferences[currentArray]) {
+                        currentFeed.preferences[currentArray].push(value);
+                    }
+                }
+            }
+        }
+        
+        if (currentFeed) feeds.push(currentFeed);
+        
+        return feeds;
+    } catch (error) {
+        console.error('Error parsing YAML:', error);
+        return null;
+    }
 }
 
 function getDefaultFeeds() {
