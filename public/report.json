@@ -1,19 +1,21 @@
 {
-  "generated_at": "2025-11-20T18:29:32.915967+00:00",
+  "generated_at": "2025-11-21T04:22:14.351184+00:00",
   "sources_processed": 8,
-  "total_events": 630,
+  "total_events": 576,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
       "name": "Boulder Junction (TEC)",
       "type": "tec_rest",
       "url": "https://boulderjct.org/",
-      "ok": true,
-      "count": 51,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "404 Client Error: Not Found for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2025-11-21&end_date=2026-03-21&per_page=50&page=2",
       "slug": "boulder-junction-tec",
-      "ics_path": "by-source/boulder-junction-tec.ics",
-      "warnings": [],
+      "ics_path": null,
+      "warnings": [
+        "tec_rest request failed: 404 Client Error: Not Found for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2025-11-21&end_date=2026-03-21&per_page=50&page=2"
+      ],
       "notes": []
     },
     {
@@ -22,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 439,
+      "count": 436,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -110,655 +112,6 @@
   ],
   "events_preview": [
     {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Linocut Printmaking at LOLA",
-      "start_utc": "2025-11-20 00:00:00",
-      "end_utc": "2025-11-21 23:59:59",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/linocut-printmaking-at-lola/",
-      "uid": "51282",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Singo Bingo at Aqualand Ale House",
-      "start_utc": "2025-11-20 18:00:00",
-      "end_utc": "2025-11-20 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/singo-bingo-at-aqualand-ale-house-2025-11-20/",
-      "uid": "51261",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-21 20:00:00",
-      "end_utc": "2025-11-21 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-21/",
-      "uid": "51291",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Wool Felted Woodland Gnomes Workshop at North Lakeland Discovery Center",
-      "start_utc": "2025-11-22 13:00:00",
-      "end_utc": "2025-11-22 16:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/wool-felted-woodland-gnomes-workshop-at-north-lakeland-discovery-center/",
-      "uid": "51266",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-22 20:00:00",
-      "end_utc": "2025-11-22 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-22/",
-      "uid": "51292",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-11-24 13:00:00",
-      "end_utc": "2025-11-24 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-11-24/",
-      "uid": "49183",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "MAC 8th Annual Gobble Wobble",
-      "start_utc": "2025-11-28 08:30:00",
-      "end_utc": "2025-11-28 10:30:00",
-      "location": "Manitowish Waters Athletic Club (MAC), 13870 Woodland Lane, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/mac-8th-annual-gobble-wobble/",
-      "uid": "51231",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Winter Wonderland Arts &#038; Crafts Fair",
-      "start_utc": "2025-11-28 10:00:00",
-      "end_utc": "2025-11-28 16:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/winter-wonderland-2-copy/",
-      "uid": "48428",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Christmas Walk",
-      "start_utc": "2025-11-28 15:00:00",
-      "end_utc": "2025-11-28 19:00:00",
-      "location": "Downtown Boulder Junction, Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/36th-annual-christmas-walk-copy/",
-      "uid": "48422",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Friends of the Boulder Junction Public Library Cookie Walk",
-      "start_utc": "2025-11-28 16:00:00",
-      "end_utc": "2025-11-28 19:00:00",
-      "location": "Acorn Lodge, 10370 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/friends-of-the-boulder-junction-public-library-cookie-walk/",
-      "uid": "47117",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-28 20:00:00",
-      "end_utc": "2025-11-28 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-28/",
-      "uid": "51293",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Small Business Saturday",
-      "start_utc": "2025-11-29 00:00:00",
-      "end_utc": "2025-11-29 23:59:59",
-      "location": null,
-      "url": "https://boulderjct.org/events/small-business-saturday-2-copy/",
-      "uid": "48419",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-29 20:00:00",
-      "end_utc": "2025-11-29 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-29/",
-      "uid": "51294",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-01 13:00:00",
-      "end_utc": "2025-12-01 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-01/",
-      "uid": "49184",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chat n Craft at the Boulder Junction Public Library",
-      "start_utc": "2025-12-03 10:00:00",
-      "end_utc": "2025-12-03 12:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/chat-n-craft-at-the-boulder-junction-public-library-4-copy-copy-copy-copy-2-copy-copy/",
-      "uid": "49227",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Holiday Felted Garland Workshop at North Lakeland Discovery Center",
-      "start_utc": "2025-12-05 09:00:00",
-      "end_utc": "2025-12-05 12:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/holiday-felted-garland-workshop-at-north-lakeland-discovery-center/",
-      "uid": "51270",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "A Classic Christmas by Frisson at Campanile",
-      "start_utc": "2025-12-05 18:00:00",
-      "end_utc": "2025-12-05 21:30:00",
-      "location": "Campanile Center for the Arts, 131 Milwaukee Street, Minocqua, WI",
-      "url": "https://boulderjct.org/events/a-classic-christmas-by-frisson-at-campanile/",
-      "uid": "51302",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/",
-      "uid": "51244",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Partners Cribbage Tournaments at Northern Waters Casino",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 17:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/partners-cribbage-tournaments-at-northern-waters-casino-2025-12-06/",
-      "uid": "50760",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chubby Checker at Lake of the Torches Resort Casino",
-      "start_utc": "2025-12-06 19:00:00",
-      "end_utc": "2025-12-06 21:00:00",
-      "location": "Lake of the Torches Resort Casino, 510 Old Abe Rd, Lac du Flambeau, WI",
-      "url": "https://boulderjct.org/events/chubby-checker-at-lake-of-the-torches-resort-casino/",
-      "uid": "51300",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-08 13:00:00",
-      "end_utc": "2025-12-08 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-08/",
-      "uid": "49185",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Holiday Wreath Making Workshop at North Lakeland Discovery Center",
-      "start_utc": "2025-12-08 17:00:00",
-      "end_utc": "2025-12-08 20:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/holiday-wreath-making-workshop-at-north-lakeland-discovery-center/",
-      "uid": "51272",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Northwoods Music Collective",
-      "start_utc": "2025-12-09 17:00:00",
-      "end_utc": "2025-12-09 19:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/northwoods-music-collective-2025-12-09/",
-      "uid": "49261",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Book Club sponsored by the Boulder Junction Public Library",
-      "start_utc": "2025-12-10 13:30:00",
-      "end_utc": "2025-12-10 15:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/book-club-sponsored-by-the-boulder-junction-public-library-2025-12-10/",
-      "uid": "49249",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Smokey&#8217;s Holiday Wine Pairing Dinner",
-      "start_utc": "2025-12-10 18:00:00",
-      "end_utc": "2025-12-10 20:00:00",
-      "location": "Smokey&#8217;s, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/smokeys-holiday-wine-pairing-dinner/",
-      "uid": "51387",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Jewelry Inspired by Nature at North Lakeland Discovery Center",
-      "start_utc": "2025-12-13 11:00:00",
-      "end_utc": "2025-12-13 15:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/jewelry-inspired-by-nature-at-north-lakeland-discovery-center/",
-      "uid": "51274",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-15 13:00:00",
-      "end_utc": "2025-12-15 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-15/",
-      "uid": "49186",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chat n Craft at the Boulder Junction Public Library",
-      "start_utc": "2025-12-17 10:00:00",
-      "end_utc": "2025-12-17 12:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/chat-n-craft-at-the-boulder-junction-public-library-4-copy-copy-copy-copy-2-copy-copy-2025-12-17/",
-      "uid": "49228",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "The Ides of March Christmas show at Campanile",
-      "start_utc": "2025-12-17 18:00:00",
-      "end_utc": "2025-12-17 20:30:00",
-      "location": "Campanile Center for the Arts, 131 Milwaukee Street, Minocqua, WI",
-      "url": "https://boulderjct.org/events/the-ides-of-march-christmas-show-at-campanile/",
-      "uid": "51258",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2025-12-20 10:00:00",
-      "end_utc": "2025-12-20 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2025-12-20/",
-      "uid": "51245",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bingo at Northern Waters Casino",
-      "start_utc": "2025-12-20 12:00:00",
-      "end_utc": "2025-12-20 13:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/bingo-at-northern-waters-casino-2025-12-20/",
-      "uid": "50736",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "LOLA Arts Make Music Day Winter",
-      "start_utc": "2025-12-21 00:00:00",
-      "end_utc": "2025-12-21 23:59:59",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/lola-arts-make-music-day-copy/",
-      "uid": "48632",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-22 13:00:00",
-      "end_utc": "2025-12-22 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-22/",
-      "uid": "49187",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Candlelit Snowshoe Soiree at North Lakeland Discovery Center",
-      "start_utc": "2025-12-27 17:00:00",
-      "end_utc": "2025-12-27 19:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/candlelit-snowshoe-soiree-at-north-lakeland-discovery-center/",
-      "uid": "51268",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-29 13:00:00",
-      "end_utc": "2025-12-29 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-29/",
-      "uid": "49188",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "WinMan Trails Snowshoe Social",
-      "start_utc": "2025-12-29 17:00:00",
-      "end_utc": "2025-12-29 20:00:00",
-      "location": "WinMan Trails, 6870 County Hwy W, Winchester, WI",
-      "url": "https://boulderjct.org/events/winman-trails-snowshoe-social/",
-      "uid": "48704",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "North Lakeland Discovery Center Winter Family Play Day",
-      "start_utc": "2025-12-30 11:00:00",
-      "end_utc": "2025-12-30 14:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/north-lakeland-discovery-center-winter-family-play-day/",
-      "uid": "48637",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Beer Bar New Years Eve Party",
-      "start_utc": "2025-12-31 18:00:00",
-      "end_utc": "2026-01-01 00:00:00",
-      "location": "Boulder Beer Bar, 5509 Hwy M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-beer-bar-new-years-eve-party-copy/",
-      "uid": "48417",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-03 10:00:00",
-      "end_utc": "2026-01-03 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-01-03/",
-      "uid": "51246",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Environmental Education hosted by North Lakeland Discovery Center",
-      "start_utc": "2026-01-03 10:30:00",
-      "end_utc": "2026-01-03 11:30:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/environmental-education-hosted-by-north-lakeland-discovery-center/",
-      "uid": "51252",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Illuminations hosted by Boulder Junction Parks Board",
-      "start_utc": "2026-01-10 17:00:00",
-      "end_utc": "2026-01-10 19:00:00",
-      "location": "Boulder Junction Winter Park, 10135 Old K Road, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/illuminations-hosted-by-boulder-junction-parks-board/",
-      "uid": "51009",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mason Dixon Line at Campanile",
-      "start_utc": "2026-01-15 18:00:00",
-      "end_utc": "2026-01-15 21:30:00",
-      "location": "Campanile Center for the Arts, 131 Milwaukee Street, Minocqua, WI",
-      "url": "https://boulderjct.org/events/mason-dixon-line-at-campanile/",
-      "uid": "51304",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-17 10:00:00",
-      "end_utc": "2026-01-17 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-01-17/",
-      "uid": "51247",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Breakfast",
-      "start_utc": "2026-01-18 08:00:00",
-      "end_utc": "2026-01-18 11:00:00",
-      "location": "Boulder Beer Bar, 5509 Hwy M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-breakfast-2/",
-      "uid": "51147",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Snowshoe the Lumberjack Trails with North Lakeland Discovery Center",
-      "start_utc": "2026-01-23 13:00:00",
-      "end_utc": "2026-01-23 16:00:00",
-      "location": "Lumberjack Trail, 9603 Concora Road, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/snowshoe-the-lumberjack-trails-with-north-lakeland-discovery-center/",
-      "uid": "51254",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-31 10:00:00",
-      "end_utc": "2026-01-31 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-01-31/",
-      "uid": "51248",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Spaghetti Dinner",
-      "start_utc": "2026-02-12 16:00:00",
-      "end_utc": "2026-02-12 19:00:00",
-      "location": "Rustic Roadhaus, 5194 US HWY 51, Manitowish Waters",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-spaghetti-dinner/",
-      "uid": "51151",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-14 10:00:00",
-      "end_utc": "2026-02-14 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-02-14/",
-      "uid": "51249",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Breakfast",
-      "start_utc": "2026-02-15 08:30:00",
-      "end_utc": "2026-02-15 11:30:00",
-      "location": "The Guide&#8217;s Inn, 5427 Park Street, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-breakfast-3/",
-      "uid": "51149",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Trailside Brat Fry",
-      "start_utc": "2026-02-21 11:00:00",
-      "end_utc": "2026-02-21 14:00:00",
-      "location": "Boulder Junction Snowmobile Club, 5387 Park St, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-trailside-brat-fry/",
-      "uid": "51153",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-28 10:00:00",
-      "end_utc": "2026-02-28 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-02-28/",
-      "uid": "51250",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Aunt Grace&#8217;s Sewing Circle",
-      "start_utc": "2025-11-20 09:00:00",
-      "end_utc": "2025-11-20 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2025-11-20/",
-      "uid": "10010061",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dementia Care Giver Support Group",
-      "start_utc": "2025-11-20 10:30:00",
-      "end_utc": "2025-11-20 11:30:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/dementia-care-giver-support-group/2025-11-20/",
-      "uid": "10014551",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
-      "start_utc": "2025-11-20 12:30:00",
-      "end_utc": "2025-11-20 15:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2025-11-20/",
-      "uid": "10014321",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Genealogical Society",
-      "start_utc": "2025-11-20 14:00:00",
-      "end_utc": "2025-11-20 16:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/eagle-river-genealogical-society/2025-11-20/",
-      "uid": "10009865",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kids Book Club-Walter E. Olson Memorial Library",
-      "start_utc": "2025-11-20 16:00:00",
-      "end_utc": "2025-11-20 17:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/kids-book-club-walter-e-olson-memorial-library/2025-11-20/",
-      "uid": "10017882",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Clay Trees at the Warehouse",
-      "start_utc": "2025-11-20 16:30:00",
-      "end_utc": "2025-11-20 18:00:00",
-      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/clay-trees-at-the-warehouse/",
-      "uid": "25548",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Garden Centers First Ever Christmas at Custom",
-      "start_utc": "2025-11-20 17:00:00",
-      "end_utc": "2025-11-20 17:30:00",
-      "location": "Custom Landscaping, 1144 Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/the-garden-centers-first-ever-christmas-at-custom/2025-11-20/",
-      "uid": "10018173",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Brew Station Thursday Game Night",
-      "start_utc": "2025-11-20 19:00:00",
-      "end_utc": "2025-11-20 21:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3/2025-11-20/",
-      "uid": "10015953",
-      "_source": null
-    },
-    {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
       "title": "The Garden Centers First Ever Christmas at Custom",
@@ -2972,6 +2325,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "25th Vintage World Championship Snowmobile Races",
+      "start_utc": "2026-01-08 00:00:00",
+      "end_utc": "2026-01-11 23:59:59",
+      "location": "World Championship Derby Complex, 1311 North Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/vintage-snowmobile-races/",
+      "uid": "16471",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Aunt Grace&#8217;s Sewing Circle",
       "start_utc": "2026-01-08 09:00:00",
       "end_utc": "2026-01-08 11:00:00",
@@ -3231,6 +2595,17 @@
       "location": "Kalmar Community Center",
       "url": "https://eagleriver.org/events/northwoods-carvers-scrabble-cribbage/2026-01-14/",
       "uid": "10014968",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "63rd World Championship Snowmobile Derby",
+      "start_utc": "2026-01-15 00:00:00",
+      "end_utc": "2026-01-18 23:59:59",
+      "location": "World Championship Derby Complex, 1311 North Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/world-championship-snowmobile-derby/",
+      "uid": "18054",
       "_source": null
     },
     {
@@ -5500,6 +4875,39 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-03-21 07:00:00",
+      "end_utc": "2026-03-21 12:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-03-21/",
+      "uid": "10013591",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Saturday Studio: Drop In Art at the Library",
+      "start_utc": "2026-03-21 09:00:00",
+      "end_utc": "2026-03-21 15:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/saturday-studio-drop-in-art-at-the-library/2026-03-21/",
+      "uid": "10017486",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-03-21 21:00:00",
+      "end_utc": "2026-03-21 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-03-21/",
+      "uid": "10018729",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Holiday Marketplace 2025",
@@ -5650,7 +5058,7 @@
       "end_utc": null,
       "location": "s by November 19th.",
       "url": "https://www.minocqua.org/event/last-day-for-arbor-vitae-fire-department-coat-drive/39822/",
-      "uid": "sv-9186202665286420820",
+      "uid": "sv-4472019481688684828",
       "_source": null
     },
     {
@@ -5661,7 +5069,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5092150487985903656",
+      "uid": "sv-2618808932994562301",
       "_source": null
     },
     {
@@ -5672,7 +5080,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-7305330896464769025",
+      "uid": "sv-3094305530670355261",
       "_source": null
     },
     {
@@ -5683,7 +5091,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "The Waters of Minocqua",
       "url": "https://www.minocqua.org/event/the-waters-holiday-market-2025/39845/",
-      "uid": "sv-4182555902046467251",
+      "uid": "sv-9162813465624289216",
       "_source": null
     },
     {
@@ -5694,7 +5102,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/design-at-the-distillery/39838/",
-      "uid": "sv-4567637829256748174",
+      "uid": "sv-8593434882172541986",
       "_source": null
     },
     {
@@ -5705,7 +5113,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-4698067764824136936",
+      "uid": "sv-4061617763122586276",
       "_source": null
     },
     {
@@ -5716,7 +5124,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "Knotty Barrel Lodge",
       "url": "https://www.minocqua.org/event/wine-%26-equine/39841/",
-      "uid": "sv-7059936334322790142",
+      "uid": "sv-7367402136558743889",
       "_source": null
     },
     {
@@ -5727,7 +5135,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-8428530168165960508",
+      "uid": "sv-9193977493417380064",
       "_source": null
     },
     {
@@ -5738,7 +5146,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-4054134262329565584",
+      "uid": "sv-5521644209067542448",
       "_source": null
     },
     {
@@ -5749,7 +5157,7 @@
       "end_utc": null,
       "location": "Sheri's Pub N' Grub for a free Thanksgiving Dinner. MONDAY",
       "url": "https://www.minocqua.org/event/free-thanksgiving-dinner-at-sheris-pun-n-grub/39832/",
-      "uid": "sv-3889807593686882306",
+      "uid": "sv-5612736909390166495",
       "_source": null
     },
     {
@@ -5760,7 +5168,7 @@
       "end_utc": "2025-11-25 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long-stories-from-the-nutshell-gallery-and-other-maurice-sendak-tales/39811/",
-      "uid": "sv-7199998151251204316",
+      "uid": "sv-2960286163784458743",
       "_source": null
     },
     {
@@ -5771,7 +5179,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-4819169153298250856",
+      "uid": "sv-7647323632304744030",
       "_source": null
     },
     {
@@ -5782,7 +5190,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-2730314574880399509",
+      "uid": "sv-7539662549407892160",
       "_source": null
     },
     {
@@ -5793,7 +5201,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39692/",
-      "uid": "sv-1576809054373381929",
+      "uid": "sv-4451500889099119853",
       "_source": null
     },
     {
@@ -5804,7 +5212,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/christmas-gift-%26-craft-fair/39835/",
-      "uid": "sv-1896042770243456320",
+      "uid": "sv-7932380313300552583",
       "_source": null
     },
     {
@@ -5815,7 +5223,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "Veterans Park in Downtown Minocqua for Christmas carols",
       "url": "https://www.minocqua.org/event/merry-minocqua-town-tree-lighing-with-santa!/39840/",
-      "uid": "sv-3516887489275925059",
+      "uid": "sv-4373031225773734859",
       "_source": null
     },
     {
@@ -5826,7 +5234,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/santa-visits-and-sleigh-rides/39834/",
-      "uid": "sv-1187591510509950651",
+      "uid": "sv-4144015923142686435",
       "_source": null
     },
     {
@@ -5837,7 +5245,7 @@
       "end_utc": "2025-12-03 00:00:00",
       "location": "Bushel",
       "url": "https://www.minocqua.org/event/white-friday/39833/",
-      "uid": "sv-8601707310543568204",
+      "uid": "sv-3181221390147946698",
       "_source": null
     },
     {
@@ -5848,7 +5256,7 @@
       "end_utc": "2025-12-04 00:00:00",
       "location": "TalonSong Gaming",
       "url": "https://www.minocqua.org/event/talonsong-book-club/39808/",
-      "uid": "sv-5458437083632876717",
+      "uid": "sv-7671264807606390735",
       "_source": null
     },
     {
@@ -5859,7 +5267,7 @@
       "end_utc": "2025-12-05 00:00:00",
       "location": "The Bottled Bean",
       "url": "https://www.minocqua.org/event/festival-of-trees-opening-ceremony/39850/",
-      "uid": "sv-7361406016981003012",
+      "uid": "sv-8613425133701197069",
       "_source": null
     },
     {
@@ -6728,7 +6136,7 @@
       "end_utc": "2025-11-21 00:00:00",
       "location": "Winchester Library",
       "url": "https://manitowishwaters.org/event/stitch-%26-sip/644/",
-      "uid": "sv-1051707330361613423",
+      "uid": "sv-8061619440698024312",
       "_source": null
     },
     {
@@ -6739,7 +6147,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-foxes/621/",
-      "uid": "sv-494309721528158757",
+      "uid": "sv-5990438901815259395",
       "_source": null
     },
     {
@@ -6750,7 +6158,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "Lakeside Living",
       "url": "https://manitowishwaters.org/event/holiday-2025-open-house/650/",
-      "uid": "sv-6101418744859419874",
+      "uid": "sv-8620868227908472990",
       "_source": null
     },
     {
@@ -6761,7 +6169,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/587/",
-      "uid": "sv-8577741387027385692",
+      "uid": "sv-9114015484960101031",
       "_source": null
     },
     {
@@ -6772,7 +6180,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/601/",
-      "uid": "sv-5862089846130147387",
+      "uid": "sv-7839446039554967948",
       "_source": null
     },
     {
@@ -6783,7 +6191,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wool-felted-woodland-gnomes-workshop/622/",
-      "uid": "sv-833184558214597017",
+      "uid": "sv-2258498611202868788",
       "_source": null
     },
     {
@@ -6794,7 +6202,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-6827747190479843197",
+      "uid": "sv-3122669680369627437",
       "_source": null
     },
     {
@@ -6805,7 +6213,7 @@
       "end_utc": "2025-11-28 00:00:00",
       "location": "13870 Woodland Lane,",
       "url": "https://manitowishwaters.org/event/gobble-wobble/645/",
-      "uid": "sv-8749556817110762897",
+      "uid": "sv-3004624886723506185",
       "_source": null
     },
     {
@@ -6816,7 +6224,7 @@
       "end_utc": "2025-12-03 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-northwoods-wildlife/654/",
-      "uid": "sv-8445072370276603620",
+      "uid": "sv-5168057927187356465",
       "_source": null
     },
     {
@@ -6827,7 +6235,7 @@
       "end_utc": "2025-12-04 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/book-club-elegance-of-the-hedgehog/653/",
-      "uid": "sv-2587255974690763254",
+      "uid": "sv-1908362472110046094",
       "_source": null
     },
     {
@@ -6838,7 +6246,7 @@
       "end_utc": "2025-12-05 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-felted-garland-workshop/655/",
-      "uid": "sv-1474737791393775000",
+      "uid": "sv-4501836658731648899",
       "_source": null
     },
     {
@@ -6849,7 +6257,7 @@
       "end_utc": "2025-12-05 00:00:00",
       "location": "Manitowish Waters Visitors Bureau",
       "url": "https://manitowishwaters.org/event/small-town-christmas/648/",
-      "uid": "sv-3948755352222437416",
+      "uid": "sv-7706112325615507294",
       "_source": null
     },
     {
@@ -6860,7 +6268,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-7273505618197063173",
+      "uid": "sv-3537323931108761935",
       "_source": null
     },
     {
@@ -6871,7 +6279,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Little Bohemia Lodge",
       "url": "https://manitowishwaters.org/event/mani*wish-christmas/666/",
-      "uid": "sv-8878570810393360941",
+      "uid": "sv-4401515274789431194",
       "_source": null
     },
     {
@@ -6882,7 +6290,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "The Bear Lodge",
       "url": "https://manitowishwaters.org/event/nostalgia-night/652/",
-      "uid": "sv-5530032370209667546",
+      "uid": "sv-8234009124583149759",
       "_source": null
     },
     {
@@ -6893,7 +6301,7 @@
       "end_utc": "2025-12-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-wreath-making-workshop/657/",
-      "uid": "sv-6690188891305928356",
+      "uid": "sv-8940627817191303623",
       "_source": null
     },
     {
@@ -6904,7 +6312,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "The MAC",
       "url": "https://manitowishwaters.org/event/wisconsin-national-politics-mark-belling/640/",
-      "uid": "sv-5868853524436656110",
+      "uid": "sv-832747564020430055",
       "_source": null
     },
     {
@@ -6915,7 +6323,7 @@
       "end_utc": "2025-12-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-indigenous-stories-and-legends-connecting-our-past-present-and-future/658/",
-      "uid": "sv-8254680230551259857",
+      "uid": "sv-5054806877363915619",
       "_source": null
     },
     {
@@ -6926,7 +6334,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-2472165170576681373",
+      "uid": "sv-6806357678962945035",
       "_source": null
     },
     {
@@ -6937,7 +6345,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-5491222707347754446",
+      "uid": "sv-8921529778996132993",
       "_source": null
     },
     {
@@ -6948,7 +6356,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-2195786915019030095",
+      "uid": "sv-5311432358745900343",
       "_source": null
     },
     {
@@ -6959,7 +6367,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-957331105921589024",
+      "uid": "sv-3918890802332832995",
       "_source": null
     },
     {
@@ -6970,7 +6378,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-1507169879659420510",
+      "uid": "sv-6894625528911678691",
       "_source": null
     },
     {
@@ -6981,7 +6389,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-4313761996926062493",
+      "uid": "sv-6774601036554133472",
       "_source": null
     },
     {
@@ -6992,7 +6400,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-4784941607387045113",
+      "uid": "sv-4357062320403730556",
       "_source": null
     },
     {
@@ -7003,7 +6411,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-5289828087898805154",
+      "uid": "sv-8791444992005389072",
       "_source": null
     },
     {
@@ -7014,7 +6422,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-7980862179403386237",
+      "uid": "sv-7392147069652282526",
       "_source": null
     },
     {
@@ -7042,655 +6450,6 @@
   ],
   "normalized_events": [
     {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Linocut Printmaking at LOLA",
-      "start_utc": "2025-11-20 00:00:00",
-      "end_utc": "2025-11-21 23:59:59",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/linocut-printmaking-at-lola/",
-      "uid": "51282",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Singo Bingo at Aqualand Ale House",
-      "start_utc": "2025-11-20 18:00:00",
-      "end_utc": "2025-11-20 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/singo-bingo-at-aqualand-ale-house-2025-11-20/",
-      "uid": "51261",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-21 20:00:00",
-      "end_utc": "2025-11-21 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-21/",
-      "uid": "51291",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Wool Felted Woodland Gnomes Workshop at North Lakeland Discovery Center",
-      "start_utc": "2025-11-22 13:00:00",
-      "end_utc": "2025-11-22 16:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/wool-felted-woodland-gnomes-workshop-at-north-lakeland-discovery-center/",
-      "uid": "51266",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-22 20:00:00",
-      "end_utc": "2025-11-22 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-22/",
-      "uid": "51292",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-11-24 13:00:00",
-      "end_utc": "2025-11-24 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-11-24/",
-      "uid": "49183",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "MAC 8th Annual Gobble Wobble",
-      "start_utc": "2025-11-28 08:30:00",
-      "end_utc": "2025-11-28 10:30:00",
-      "location": "Manitowish Waters Athletic Club (MAC), 13870 Woodland Lane, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/mac-8th-annual-gobble-wobble/",
-      "uid": "51231",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Winter Wonderland Arts &#038; Crafts Fair",
-      "start_utc": "2025-11-28 10:00:00",
-      "end_utc": "2025-11-28 16:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/winter-wonderland-2-copy/",
-      "uid": "48428",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Christmas Walk",
-      "start_utc": "2025-11-28 15:00:00",
-      "end_utc": "2025-11-28 19:00:00",
-      "location": "Downtown Boulder Junction, Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/36th-annual-christmas-walk-copy/",
-      "uid": "48422",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Friends of the Boulder Junction Public Library Cookie Walk",
-      "start_utc": "2025-11-28 16:00:00",
-      "end_utc": "2025-11-28 19:00:00",
-      "location": "Acorn Lodge, 10370 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/friends-of-the-boulder-junction-public-library-cookie-walk/",
-      "uid": "47117",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-28 20:00:00",
-      "end_utc": "2025-11-28 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-28/",
-      "uid": "51293",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Small Business Saturday",
-      "start_utc": "2025-11-29 00:00:00",
-      "end_utc": "2025-11-29 23:59:59",
-      "location": null,
-      "url": "https://boulderjct.org/events/small-business-saturday-2-copy/",
-      "uid": "48419",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Live Music at Northern Waters Casino Resort",
-      "start_utc": "2025-11-29 20:00:00",
-      "end_utc": "2025-11-29 20:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/live-music-at-northern-waters-casino-resort-5-2025-11-29/",
-      "uid": "51294",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-01 13:00:00",
-      "end_utc": "2025-12-01 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-01/",
-      "uid": "49184",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chat n Craft at the Boulder Junction Public Library",
-      "start_utc": "2025-12-03 10:00:00",
-      "end_utc": "2025-12-03 12:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/chat-n-craft-at-the-boulder-junction-public-library-4-copy-copy-copy-copy-2-copy-copy/",
-      "uid": "49227",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Holiday Felted Garland Workshop at North Lakeland Discovery Center",
-      "start_utc": "2025-12-05 09:00:00",
-      "end_utc": "2025-12-05 12:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/holiday-felted-garland-workshop-at-north-lakeland-discovery-center/",
-      "uid": "51270",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "A Classic Christmas by Frisson at Campanile",
-      "start_utc": "2025-12-05 18:00:00",
-      "end_utc": "2025-12-05 21:30:00",
-      "location": "Campanile Center for the Arts, 131 Milwaukee Street, Minocqua, WI",
-      "url": "https://boulderjct.org/events/a-classic-christmas-by-frisson-at-campanile/",
-      "uid": "51302",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/",
-      "uid": "51244",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Partners Cribbage Tournaments at Northern Waters Casino",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 17:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/partners-cribbage-tournaments-at-northern-waters-casino-2025-12-06/",
-      "uid": "50760",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chubby Checker at Lake of the Torches Resort Casino",
-      "start_utc": "2025-12-06 19:00:00",
-      "end_utc": "2025-12-06 21:00:00",
-      "location": "Lake of the Torches Resort Casino, 510 Old Abe Rd, Lac du Flambeau, WI",
-      "url": "https://boulderjct.org/events/chubby-checker-at-lake-of-the-torches-resort-casino/",
-      "uid": "51300",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-08 13:00:00",
-      "end_utc": "2025-12-08 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-08/",
-      "uid": "49185",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Holiday Wreath Making Workshop at North Lakeland Discovery Center",
-      "start_utc": "2025-12-08 17:00:00",
-      "end_utc": "2025-12-08 20:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/holiday-wreath-making-workshop-at-north-lakeland-discovery-center/",
-      "uid": "51272",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Northwoods Music Collective",
-      "start_utc": "2025-12-09 17:00:00",
-      "end_utc": "2025-12-09 19:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/northwoods-music-collective-2025-12-09/",
-      "uid": "49261",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Book Club sponsored by the Boulder Junction Public Library",
-      "start_utc": "2025-12-10 13:30:00",
-      "end_utc": "2025-12-10 15:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/book-club-sponsored-by-the-boulder-junction-public-library-2025-12-10/",
-      "uid": "49249",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Smokey&#8217;s Holiday Wine Pairing Dinner",
-      "start_utc": "2025-12-10 18:00:00",
-      "end_utc": "2025-12-10 20:00:00",
-      "location": "Smokey&#8217;s, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/smokeys-holiday-wine-pairing-dinner/",
-      "uid": "51387",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Jewelry Inspired by Nature at North Lakeland Discovery Center",
-      "start_utc": "2025-12-13 11:00:00",
-      "end_utc": "2025-12-13 15:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/jewelry-inspired-by-nature-at-north-lakeland-discovery-center/",
-      "uid": "51274",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-15 13:00:00",
-      "end_utc": "2025-12-15 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-15/",
-      "uid": "49186",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chat n Craft at the Boulder Junction Public Library",
-      "start_utc": "2025-12-17 10:00:00",
-      "end_utc": "2025-12-17 12:00:00",
-      "location": "Boulder Junction Public Library, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/chat-n-craft-at-the-boulder-junction-public-library-4-copy-copy-copy-copy-2-copy-copy-2025-12-17/",
-      "uid": "49228",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "The Ides of March Christmas show at Campanile",
-      "start_utc": "2025-12-17 18:00:00",
-      "end_utc": "2025-12-17 20:30:00",
-      "location": "Campanile Center for the Arts, 131 Milwaukee Street, Minocqua, WI",
-      "url": "https://boulderjct.org/events/the-ides-of-march-christmas-show-at-campanile/",
-      "uid": "51258",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2025-12-20 10:00:00",
-      "end_utc": "2025-12-20 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2025-12-20/",
-      "uid": "51245",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bingo at Northern Waters Casino",
-      "start_utc": "2025-12-20 12:00:00",
-      "end_utc": "2025-12-20 13:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/bingo-at-northern-waters-casino-2025-12-20/",
-      "uid": "50736",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "LOLA Arts Make Music Day Winter",
-      "start_utc": "2025-12-21 00:00:00",
-      "end_utc": "2025-12-21 23:59:59",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/lola-arts-make-music-day-copy/",
-      "uid": "48632",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-22 13:00:00",
-      "end_utc": "2025-12-22 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-22/",
-      "uid": "49187",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Candlelit Snowshoe Soiree at North Lakeland Discovery Center",
-      "start_utc": "2025-12-27 17:00:00",
-      "end_utc": "2025-12-27 19:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/candlelit-snowshoe-soiree-at-north-lakeland-discovery-center/",
-      "uid": "51268",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mah Jongg at the Boulder Junction Public Library",
-      "start_utc": "2025-12-29 13:00:00",
-      "end_utc": "2025-12-29 16:00:00",
-      "location": "Bouder Junction Public Library",
-      "url": "https://boulderjct.org/events/mah-jongg-at-the-boulder-junction-public-library-2025-12-29/",
-      "uid": "49188",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "WinMan Trails Snowshoe Social",
-      "start_utc": "2025-12-29 17:00:00",
-      "end_utc": "2025-12-29 20:00:00",
-      "location": "WinMan Trails, 6870 County Hwy W, Winchester, WI",
-      "url": "https://boulderjct.org/events/winman-trails-snowshoe-social/",
-      "uid": "48704",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "North Lakeland Discovery Center Winter Family Play Day",
-      "start_utc": "2025-12-30 11:00:00",
-      "end_utc": "2025-12-30 14:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/north-lakeland-discovery-center-winter-family-play-day/",
-      "uid": "48637",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Beer Bar New Years Eve Party",
-      "start_utc": "2025-12-31 18:00:00",
-      "end_utc": "2026-01-01 00:00:00",
-      "location": "Boulder Beer Bar, 5509 Hwy M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-beer-bar-new-years-eve-party-copy/",
-      "uid": "48417",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-03 10:00:00",
-      "end_utc": "2026-01-03 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-01-03/",
-      "uid": "51246",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Environmental Education hosted by North Lakeland Discovery Center",
-      "start_utc": "2026-01-03 10:30:00",
-      "end_utc": "2026-01-03 11:30:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/environmental-education-hosted-by-north-lakeland-discovery-center/",
-      "uid": "51252",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Illuminations hosted by Boulder Junction Parks Board",
-      "start_utc": "2026-01-10 17:00:00",
-      "end_utc": "2026-01-10 19:00:00",
-      "location": "Boulder Junction Winter Park, 10135 Old K Road, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/illuminations-hosted-by-boulder-junction-parks-board/",
-      "uid": "51009",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Mason Dixon Line at Campanile",
-      "start_utc": "2026-01-15 18:00:00",
-      "end_utc": "2026-01-15 21:30:00",
-      "location": "Campanile Center for the Arts, 131 Milwaukee Street, Minocqua, WI",
-      "url": "https://boulderjct.org/events/mason-dixon-line-at-campanile/",
-      "uid": "51304",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-17 10:00:00",
-      "end_utc": "2026-01-17 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-01-17/",
-      "uid": "51247",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Breakfast",
-      "start_utc": "2026-01-18 08:00:00",
-      "end_utc": "2026-01-18 11:00:00",
-      "location": "Boulder Beer Bar, 5509 Hwy M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-breakfast-2/",
-      "uid": "51147",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Snowshoe the Lumberjack Trails with North Lakeland Discovery Center",
-      "start_utc": "2026-01-23 13:00:00",
-      "end_utc": "2026-01-23 16:00:00",
-      "location": "Lumberjack Trail, 9603 Concora Road, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/snowshoe-the-lumberjack-trails-with-north-lakeland-discovery-center/",
-      "uid": "51254",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-31 10:00:00",
-      "end_utc": "2026-01-31 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-01-31/",
-      "uid": "51248",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Spaghetti Dinner",
-      "start_utc": "2026-02-12 16:00:00",
-      "end_utc": "2026-02-12 19:00:00",
-      "location": "Rustic Roadhaus, 5194 US HWY 51, Manitowish Waters",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-spaghetti-dinner/",
-      "uid": "51151",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-14 10:00:00",
-      "end_utc": "2026-02-14 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-02-14/",
-      "uid": "51249",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Breakfast",
-      "start_utc": "2026-02-15 08:30:00",
-      "end_utc": "2026-02-15 11:30:00",
-      "location": "The Guide&#8217;s Inn, 5427 Park Street, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-breakfast-3/",
-      "uid": "51149",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Trailside Brat Fry",
-      "start_utc": "2026-02-21 11:00:00",
-      "end_utc": "2026-02-21 14:00:00",
-      "location": "Boulder Junction Snowmobile Club, 5387 Park St, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-trailside-brat-fry/",
-      "uid": "51153",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-28 10:00:00",
-      "end_utc": "2026-02-28 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy-2026-02-28/",
-      "uid": "51250",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Aunt Grace&#8217;s Sewing Circle",
-      "start_utc": "2025-11-20 09:00:00",
-      "end_utc": "2025-11-20 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2025-11-20/",
-      "uid": "10010061",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dementia Care Giver Support Group",
-      "start_utc": "2025-11-20 10:30:00",
-      "end_utc": "2025-11-20 11:30:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/dementia-care-giver-support-group/2025-11-20/",
-      "uid": "10014551",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
-      "start_utc": "2025-11-20 12:30:00",
-      "end_utc": "2025-11-20 15:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2025-11-20/",
-      "uid": "10014321",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Genealogical Society",
-      "start_utc": "2025-11-20 14:00:00",
-      "end_utc": "2025-11-20 16:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/eagle-river-genealogical-society/2025-11-20/",
-      "uid": "10009865",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kids Book Club-Walter E. Olson Memorial Library",
-      "start_utc": "2025-11-20 16:00:00",
-      "end_utc": "2025-11-20 17:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/kids-book-club-walter-e-olson-memorial-library/2025-11-20/",
-      "uid": "10017882",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Clay Trees at the Warehouse",
-      "start_utc": "2025-11-20 16:30:00",
-      "end_utc": "2025-11-20 18:00:00",
-      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/clay-trees-at-the-warehouse/",
-      "uid": "25548",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Garden Centers First Ever Christmas at Custom",
-      "start_utc": "2025-11-20 17:00:00",
-      "end_utc": "2025-11-20 17:30:00",
-      "location": "Custom Landscaping, 1144 Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/the-garden-centers-first-ever-christmas-at-custom/2025-11-20/",
-      "uid": "10018173",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Brew Station Thursday Game Night",
-      "start_utc": "2025-11-20 19:00:00",
-      "end_utc": "2025-11-20 21:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3/2025-11-20/",
-      "uid": "10015953",
-      "_source": null
-    },
-    {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
       "title": "The Garden Centers First Ever Christmas at Custom",
@@ -9904,6 +8663,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "25th Vintage World Championship Snowmobile Races",
+      "start_utc": "2026-01-08 00:00:00",
+      "end_utc": "2026-01-11 23:59:59",
+      "location": "World Championship Derby Complex, 1311 North Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/vintage-snowmobile-races/",
+      "uid": "16471",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Aunt Grace&#8217;s Sewing Circle",
       "start_utc": "2026-01-08 09:00:00",
       "end_utc": "2026-01-08 11:00:00",
@@ -10163,6 +8933,17 @@
       "location": "Kalmar Community Center",
       "url": "https://eagleriver.org/events/northwoods-carvers-scrabble-cribbage/2026-01-14/",
       "uid": "10014968",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "63rd World Championship Snowmobile Derby",
+      "start_utc": "2026-01-15 00:00:00",
+      "end_utc": "2026-01-18 23:59:59",
+      "location": "World Championship Derby Complex, 1311 North Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/world-championship-snowmobile-derby/",
+      "uid": "18054",
       "_source": null
     },
     {
@@ -12432,6 +11213,39 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-03-21 07:00:00",
+      "end_utc": "2026-03-21 12:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-03-21/",
+      "uid": "10013591",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Saturday Studio: Drop In Art at the Library",
+      "start_utc": "2026-03-21 09:00:00",
+      "end_utc": "2026-03-21 15:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/saturday-studio-drop-in-art-at-the-library/2026-03-21/",
+      "uid": "10017486",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-03-21 21:00:00",
+      "end_utc": "2026-03-21 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-03-21/",
+      "uid": "10018729",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Holiday Marketplace 2025",
@@ -12582,7 +11396,7 @@
       "end_utc": null,
       "location": "s by November 19th.",
       "url": "https://www.minocqua.org/event/last-day-for-arbor-vitae-fire-department-coat-drive/39822/",
-      "uid": "sv-9186202665286420820",
+      "uid": "sv-4472019481688684828",
       "_source": null
     },
     {
@@ -12593,7 +11407,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5092150487985903656",
+      "uid": "sv-2618808932994562301",
       "_source": null
     },
     {
@@ -12604,7 +11418,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-7305330896464769025",
+      "uid": "sv-3094305530670355261",
       "_source": null
     },
     {
@@ -12615,7 +11429,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "The Waters of Minocqua",
       "url": "https://www.minocqua.org/event/the-waters-holiday-market-2025/39845/",
-      "uid": "sv-4182555902046467251",
+      "uid": "sv-9162813465624289216",
       "_source": null
     },
     {
@@ -12626,7 +11440,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/design-at-the-distillery/39838/",
-      "uid": "sv-4567637829256748174",
+      "uid": "sv-8593434882172541986",
       "_source": null
     },
     {
@@ -12637,7 +11451,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-4698067764824136936",
+      "uid": "sv-4061617763122586276",
       "_source": null
     },
     {
@@ -12648,7 +11462,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "Knotty Barrel Lodge",
       "url": "https://www.minocqua.org/event/wine-%26-equine/39841/",
-      "uid": "sv-7059936334322790142",
+      "uid": "sv-7367402136558743889",
       "_source": null
     },
     {
@@ -12659,7 +11473,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-8428530168165960508",
+      "uid": "sv-9193977493417380064",
       "_source": null
     },
     {
@@ -12670,7 +11484,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-4054134262329565584",
+      "uid": "sv-5521644209067542448",
       "_source": null
     },
     {
@@ -12681,7 +11495,7 @@
       "end_utc": null,
       "location": "Sheri's Pub N' Grub for a free Thanksgiving Dinner. MONDAY",
       "url": "https://www.minocqua.org/event/free-thanksgiving-dinner-at-sheris-pun-n-grub/39832/",
-      "uid": "sv-3889807593686882306",
+      "uid": "sv-5612736909390166495",
       "_source": null
     },
     {
@@ -12692,7 +11506,7 @@
       "end_utc": "2025-11-25 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long-stories-from-the-nutshell-gallery-and-other-maurice-sendak-tales/39811/",
-      "uid": "sv-7199998151251204316",
+      "uid": "sv-2960286163784458743",
       "_source": null
     },
     {
@@ -12703,7 +11517,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-4819169153298250856",
+      "uid": "sv-7647323632304744030",
       "_source": null
     },
     {
@@ -12714,7 +11528,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-2730314574880399509",
+      "uid": "sv-7539662549407892160",
       "_source": null
     },
     {
@@ -12725,7 +11539,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39692/",
-      "uid": "sv-1576809054373381929",
+      "uid": "sv-4451500889099119853",
       "_source": null
     },
     {
@@ -12736,7 +11550,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/christmas-gift-%26-craft-fair/39835/",
-      "uid": "sv-1896042770243456320",
+      "uid": "sv-7932380313300552583",
       "_source": null
     },
     {
@@ -12747,7 +11561,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "Veterans Park in Downtown Minocqua for Christmas carols",
       "url": "https://www.minocqua.org/event/merry-minocqua-town-tree-lighing-with-santa!/39840/",
-      "uid": "sv-3516887489275925059",
+      "uid": "sv-4373031225773734859",
       "_source": null
     },
     {
@@ -12758,7 +11572,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/santa-visits-and-sleigh-rides/39834/",
-      "uid": "sv-1187591510509950651",
+      "uid": "sv-4144015923142686435",
       "_source": null
     },
     {
@@ -12769,7 +11583,7 @@
       "end_utc": "2025-12-03 00:00:00",
       "location": "Bushel",
       "url": "https://www.minocqua.org/event/white-friday/39833/",
-      "uid": "sv-8601707310543568204",
+      "uid": "sv-3181221390147946698",
       "_source": null
     },
     {
@@ -12780,7 +11594,7 @@
       "end_utc": "2025-12-04 00:00:00",
       "location": "TalonSong Gaming",
       "url": "https://www.minocqua.org/event/talonsong-book-club/39808/",
-      "uid": "sv-5458437083632876717",
+      "uid": "sv-7671264807606390735",
       "_source": null
     },
     {
@@ -12791,7 +11605,7 @@
       "end_utc": "2025-12-05 00:00:00",
       "location": "The Bottled Bean",
       "url": "https://www.minocqua.org/event/festival-of-trees-opening-ceremony/39850/",
-      "uid": "sv-7361406016981003012",
+      "uid": "sv-8613425133701197069",
       "_source": null
     },
     {
@@ -13660,7 +12474,7 @@
       "end_utc": "2025-11-21 00:00:00",
       "location": "Winchester Library",
       "url": "https://manitowishwaters.org/event/stitch-%26-sip/644/",
-      "uid": "sv-1051707330361613423",
+      "uid": "sv-8061619440698024312",
       "_source": null
     },
     {
@@ -13671,7 +12485,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-foxes/621/",
-      "uid": "sv-494309721528158757",
+      "uid": "sv-5990438901815259395",
       "_source": null
     },
     {
@@ -13682,7 +12496,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "Lakeside Living",
       "url": "https://manitowishwaters.org/event/holiday-2025-open-house/650/",
-      "uid": "sv-6101418744859419874",
+      "uid": "sv-8620868227908472990",
       "_source": null
     },
     {
@@ -13693,7 +12507,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/587/",
-      "uid": "sv-8577741387027385692",
+      "uid": "sv-9114015484960101031",
       "_source": null
     },
     {
@@ -13704,7 +12518,7 @@
       "end_utc": "2025-11-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/601/",
-      "uid": "sv-5862089846130147387",
+      "uid": "sv-7839446039554967948",
       "_source": null
     },
     {
@@ -13715,7 +12529,7 @@
       "end_utc": "2025-11-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wool-felted-woodland-gnomes-workshop/622/",
-      "uid": "sv-833184558214597017",
+      "uid": "sv-2258498611202868788",
       "_source": null
     },
     {
@@ -13726,7 +12540,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-6827747190479843197",
+      "uid": "sv-3122669680369627437",
       "_source": null
     },
     {
@@ -13737,7 +12551,7 @@
       "end_utc": "2025-11-28 00:00:00",
       "location": "13870 Woodland Lane,",
       "url": "https://manitowishwaters.org/event/gobble-wobble/645/",
-      "uid": "sv-8749556817110762897",
+      "uid": "sv-3004624886723506185",
       "_source": null
     },
     {
@@ -13748,7 +12562,7 @@
       "end_utc": "2025-12-03 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-northwoods-wildlife/654/",
-      "uid": "sv-8445072370276603620",
+      "uid": "sv-5168057927187356465",
       "_source": null
     },
     {
@@ -13759,7 +12573,7 @@
       "end_utc": "2025-12-04 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/book-club-elegance-of-the-hedgehog/653/",
-      "uid": "sv-2587255974690763254",
+      "uid": "sv-1908362472110046094",
       "_source": null
     },
     {
@@ -13770,7 +12584,7 @@
       "end_utc": "2025-12-05 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-felted-garland-workshop/655/",
-      "uid": "sv-1474737791393775000",
+      "uid": "sv-4501836658731648899",
       "_source": null
     },
     {
@@ -13781,7 +12595,7 @@
       "end_utc": "2025-12-05 00:00:00",
       "location": "Manitowish Waters Visitors Bureau",
       "url": "https://manitowishwaters.org/event/small-town-christmas/648/",
-      "uid": "sv-3948755352222437416",
+      "uid": "sv-7706112325615507294",
       "_source": null
     },
     {
@@ -13792,7 +12606,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-7273505618197063173",
+      "uid": "sv-3537323931108761935",
       "_source": null
     },
     {
@@ -13803,7 +12617,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Little Bohemia Lodge",
       "url": "https://manitowishwaters.org/event/mani*wish-christmas/666/",
-      "uid": "sv-8878570810393360941",
+      "uid": "sv-4401515274789431194",
       "_source": null
     },
     {
@@ -13814,7 +12628,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "The Bear Lodge",
       "url": "https://manitowishwaters.org/event/nostalgia-night/652/",
-      "uid": "sv-5530032370209667546",
+      "uid": "sv-8234009124583149759",
       "_source": null
     },
     {
@@ -13825,7 +12639,7 @@
       "end_utc": "2025-12-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-wreath-making-workshop/657/",
-      "uid": "sv-6690188891305928356",
+      "uid": "sv-8940627817191303623",
       "_source": null
     },
     {
@@ -13836,7 +12650,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "The MAC",
       "url": "https://manitowishwaters.org/event/wisconsin-national-politics-mark-belling/640/",
-      "uid": "sv-5868853524436656110",
+      "uid": "sv-832747564020430055",
       "_source": null
     },
     {
@@ -13847,7 +12661,7 @@
       "end_utc": "2025-12-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-indigenous-stories-and-legends-connecting-our-past-present-and-future/658/",
-      "uid": "sv-8254680230551259857",
+      "uid": "sv-5054806877363915619",
       "_source": null
     },
     {
@@ -13858,7 +12672,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-2472165170576681373",
+      "uid": "sv-6806357678962945035",
       "_source": null
     },
     {
@@ -13869,7 +12683,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-5491222707347754446",
+      "uid": "sv-8921529778996132993",
       "_source": null
     },
     {
@@ -13880,7 +12694,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-2195786915019030095",
+      "uid": "sv-5311432358745900343",
       "_source": null
     },
     {
@@ -13891,7 +12705,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-957331105921589024",
+      "uid": "sv-3918890802332832995",
       "_source": null
     },
     {
@@ -13902,7 +12716,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-1507169879659420510",
+      "uid": "sv-6894625528911678691",
       "_source": null
     },
     {
@@ -13913,7 +12727,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-4313761996926062493",
+      "uid": "sv-6774601036554133472",
       "_source": null
     },
     {
@@ -13924,7 +12738,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-4784941607387045113",
+      "uid": "sv-4357062320403730556",
       "_source": null
     },
     {
@@ -13935,7 +12749,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-5289828087898805154",
+      "uid": "sv-8791444992005389072",
       "_source": null
     },
     {
@@ -13946,7 +12760,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-7980862179403386237",
+      "uid": "sv-7392147069652282526",
       "_source": null
     },
     {
@@ -13972,9 +12786,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 630,
+  "events_preview_count": 576,
   "curated_feeds": {
-    "generated_at": "2025-11-20T18:29:32.959865+00:00",
+    "generated_at": "2025-11-21T04:22:14.391948+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
@@ -13991,19 +12805,19 @@
         "id": "min-events",
         "name": "Minocqua Events",
         "enabled": true,
-        "count": 9,
+        "count": 5,
         "path": "curated/min-events.ics",
         "manual_count": 0,
-        "auto_count": 9
+        "auto_count": 5
       },
       {
         "id": "RCLMinocquaEvents",
         "name": "RCL Minocqua Events",
         "enabled": true,
-        "count": 9,
+        "count": 5,
         "path": "curated/rclminocquaevents.ics",
         "manual_count": 0,
-        "auto_count": 9
+        "auto_count": 5
       }
     ]
   }
