@@ -143,7 +143,7 @@ If you only want to use DALL-E 3 (and skip Google setup):
 ### **Backend**
 - ✅ New `/api/generate-image` endpoint
 - ✅ Supports DALL-E 3
-- ✅ Supports Google Gemini 2.0 Flash image generation
+- ✅ Supports Google Gemini 3 Pro Image (Vertex AI)
 - ✅ Secure API key handling
 - ✅ Model routing logic
 - ✅ Error handling with helpful messages

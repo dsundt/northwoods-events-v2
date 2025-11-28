@@ -5,7 +5,7 @@
 You can now choose between **two image generation models**:
 
 1. **🎨 OpenAI DALL-E 3** - Artistic, creative, stylized ($0.04/image)
-2. **🤖 Google Gemini 2.0 Flash** - Photorealistic, native image generation ($0.02/image)
+2. **🤖 Google Gemini 3 Pro Image** - Photorealistic, Vertex AI ($0.02/image)
 
 ---
 
@@ -24,7 +24,7 @@ When generating an image, you'll see:
 │                                          │
 │ Options:                                 │
 │ • DALL-E 3 - Artistic & Creative ($0.04) │
-│ • Google Gemini 2.0 Flash ($0.02)        │
+│ • Gemini 3 Pro Image ($0.02)             │
 └──────────────────────────────────────────┘
 ```
 
@@ -68,25 +68,46 @@ If you already have OpenAI configured:
 - Skip Google Gemini setup
 - Can add Google later if desired
 
-#### **Option B: Add Google Gemini** (Recommended - Cheaper!)
+#### **Option B: Add Google Gemini 3 Pro Image** (Recommended - Cheaper!)
 
-**Get Gemini API Key**:
+**For full Gemini 3 Pro Image support, you need:**
 
-1. **Go to**: https://aistudio.google.com/app/apikey
+1. **Google Cloud Project** with Vertex AI API enabled
+2. **API Key** from Google AI Studio or service account
 
-2. **Click**: "Get API Key" or "Create API Key"
+**Setup Steps:**
 
-3. **Select/Create Project**: Choose a Google Cloud project or create new
+1. **Enable Vertex AI API**:
+   - Go to: https://console.cloud.google.com/apis/library/aiplatform.googleapis.com
+   - Select your project
+   - Click "Enable"
 
-4. **Copy the key**: Starts with something like `AIza...`
+2. **Get API Key** (from AI Studio):
+   - Go to: https://aistudio.google.com/app/apikey
+   - Click "Create API Key"
+   - Select your Google Cloud project
+   - Copy the API key
 
-5. **Add to Vercel**:
+3. **Get Project ID**:
+   - Go to: https://console.cloud.google.com/
+   - Your project ID is in the URL or project selector
+   - Example: `my-project-12345`
+
+4. **Add Environment Variables to Vercel**:
    ```bash
    cd ~/Documents/northwoods-events-v2/backend-example
    
-   # Add Gemini API key
+   # Add API key (required)
    vercel env add GOOGLE_GEMINI_API_KEY production
-   # Paste your key when prompted
+   # Paste your API key when prompted
+   
+   # Add Project ID (required for Vertex AI / Gemini 3 Pro)
+   vercel env add GOOGLE_CLOUD_PROJECT_ID production
+   # Enter your project ID when prompted
+   
+   # Optional: Set region (defaults to us-central1)
+   vercel env add GOOGLE_CLOUD_REGION production
+   # Enter: us-central1 (or your preferred region)
    
    # Redeploy to apply
    vercel --prod
@@ -95,7 +116,7 @@ If you already have OpenAI configured:
    vercel alias northwoods-reel-api.vercel.app
    ```
 
-6. **Test**:
+5. **Test**:
    ```bash
    curl https://northwoods-reel-api.vercel.app/api/generate-image \
      -X POST \
@@ -116,10 +137,12 @@ vercel env ls
 
 **Should show**:
 ```
-RUNWAY_API_KEY       → Encrypted (Production)
-BEATOVEN_API_KEY     → Encrypted (Production)
-OPENAI_API_KEY       → Encrypted (Production)      [For DALL-E]
-GOOGLE_GEMINI_API_KEY → Encrypted (Production)     [NEW!]
+RUNWAY_API_KEY           → Encrypted (Production)
+BEATOVEN_API_KEY         → Encrypted (Production)
+OPENAI_API_KEY           → Encrypted (Production)      [For DALL-E]
+GOOGLE_GEMINI_API_KEY    → Encrypted (Production)      [For Gemini]
+GOOGLE_CLOUD_PROJECT_ID  → Encrypted (Production)      [For Vertex AI]
+GOOGLE_CLOUD_REGION      → Encrypted (Production)      [Optional]
 ```
 
 **If missing**:
@@ -127,8 +150,9 @@ GOOGLE_GEMINI_API_KEY → Encrypted (Production)     [NEW!]
 # Add OpenAI key (if not already set)
 vercel env add OPENAI_API_KEY production
 
-# Add Google Gemini key
+# Add Google credentials
 vercel env add GOOGLE_GEMINI_API_KEY production
+vercel env add GOOGLE_CLOUD_PROJECT_ID production
 ```
 
 ---
@@ -156,26 +180,26 @@ After GitHub Pages deploys (2-3 minutes):
 
 ---
 
-### **Test 3: Google Gemini Generation**
+### **Test 3: Google Gemini 3 Pro Image Generation**
 
-1. Select "🤖 Google Gemini 2.5 Flash"
+1. Select "🤖 Google Gemini 3 Pro Image"
 2. Click "✨ Generate Image ($0.02)"
-3. **If API key configured**: Image generates
+3. **If credentials configured**: Image generates
 4. **If not configured**: Shows helpful error with setup instructions
 
 ---
 
 ## 📊 **Model Comparison**
 
-| Feature | DALL-E 3 | Google Gemini 2.0 Flash |
-|---------|----------|------------------------|
+| Feature | DALL-E 3 | Google Gemini 3 Pro Image |
+|---------|----------|--------------------------|
 | **Cost** | $0.04/image | $0.02/image (50% cheaper!) |
 | **Style** | Artistic, creative | Photorealistic, natural |
 | **Speed** | 10-30 seconds | 10-30 seconds |
 | **Quality** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
 | **Best For** | Stylized, artistic scenes | Realistic event photos |
 | **Prompt Following** | Excellent | Very Good |
-| **Setup** | OpenAI account | Google AI Studio |
+| **Setup** | OpenAI account | Google Cloud + Vertex AI |
 
 ---
 
@@ -196,7 +220,7 @@ After GitHub Pages deploys (2-3 minutes):
 
 ---
 
-### **Use Google Gemini for**:
+### **Use Google Gemini 3 Pro Image for**:
 - ✅ Photorealistic event photography
 - ✅ Natural landscape shots
 - ✅ Realistic venue depictions
@@ -241,7 +265,7 @@ Total: $0.60/month (25% savings!)
 ```json
 {
   "prompt": "Beautiful lake scene in Northern Wisconsin",
-  "model": "google-gemini",  // or "dall-e-3"
+  "model": "google-gemini",
   "eventData": {
     "title": "Summer Concert",
     "location": "Minocqua",
@@ -255,7 +279,7 @@ Total: $0.60/month (25% savings!)
 {
   "success": true,
   "imageBase64": "iVBORw0KGgo...",
-  "model": "gemini-2.0-flash-preview-image-generation",
+  "model": "vertex-ai/gemini-3.0-pro-image-generation",
   "cost": 0.02,
   "size": "1024x1024"
 }
@@ -286,15 +310,17 @@ Total: $0.60/month (25% savings!)
 
 ## 🐛 **Troubleshooting**
 
-### **"Google Gemini API key not configured"**
+### **"Google credentials not configured"**
 
 **Solution**:
-1. Get key from: https://aistudio.google.com/app/apikey
-2. Add to Vercel:
+1. Get API key from: https://aistudio.google.com/app/apikey
+2. Get Project ID from Google Cloud Console
+3. Add to Vercel:
    ```bash
    vercel env add GOOGLE_GEMINI_API_KEY production
+   vercel env add GOOGLE_CLOUD_PROJECT_ID production
    ```
-3. Redeploy:
+4. Redeploy:
    ```bash
    cd ~/Documents/northwoods-events-v2
    ./deploy-backend.sh
@@ -305,23 +331,25 @@ Total: $0.60/month (25% savings!)
 ### **"Google Gemini image generation not available"**
 
 **Possible causes**:
-1. **API key not valid**: The API key may be invalid or expired
-2. **Model not available**: The image generation models may not be available in your region
-3. **Billing not enabled**: Some features require billing to be enabled on the Google Cloud project
-4. **Rate limiting**: Too many requests in a short period
+1. **Vertex AI API not enabled**: Enable it in Google Cloud Console
+2. **API key not valid**: The API key may be invalid or expired
+3. **Model not available**: Gemini 3 Pro Image may not be available in your region
+4. **Billing not enabled**: Some features require billing on the Google Cloud project
+5. **Wrong Project ID**: Ensure the project ID matches the API key's project
 
 **Solutions**:
-1. Verify your API key at: https://aistudio.google.com/app/apikey
-2. Ensure the Generative Language API is enabled in Google Cloud Console
-3. Enable billing on your Google Cloud project
+1. Enable Vertex AI API: https://console.cloud.google.com/apis/library/aiplatform.googleapis.com
+2. Verify your API key at: https://aistudio.google.com/app/apikey
+3. Ensure your Google Cloud project has billing enabled
 4. Use DALL-E 3 instead (always works)
 5. Check backend logs for detailed error messages
 
 **Models attempted by backend** (in order):
-- `gemini-2.0-flash-preview-image-generation`
-- `gemini-2.0-flash-exp-image-generation`
-- `gemini-2.0-flash-exp`
-- `imagen-3.0-generate-002`
+1. `gemini-3.0-pro-image-generation` (Vertex AI - primary)
+2. `gemini-3-pro-image` (Vertex AI)
+3. `gemini-3.0-pro-vision` (Vertex AI)
+4. `gemini-2.0-flash-preview-image-generation` (AI Studio fallback)
+5. `imagen-3.0-generate-002` (AI Studio fallback)
 
 ---
 
@@ -338,9 +366,11 @@ If DALL-E fails:
 
 - [ ] Pull latest code: `git pull origin main`
 - [ ] Deploy backend: `./deploy-backend.sh`
-- [ ] Add Google Gemini API key to Vercel (if using)
+- [ ] Enable Vertex AI API in Google Cloud Console
+- [ ] Add Google Gemini API key to Vercel
+- [ ] Add Google Cloud Project ID to Vercel
 - [ ] Test DALL-E 3: Generate an image
-- [ ] Test Google Gemini: Generate an image
+- [ ] Test Google Gemini 3 Pro: Generate an image
 - [ ] Verify model selector shows both options
 - [ ] Check cost display updates correctly
 
@@ -359,6 +389,7 @@ If DALL-E fails:
 - ✅ Variable cost ($0.02-0.04)
 - ✅ Two distinct styles (artistic vs photorealistic)
 - ✅ API keys secure in backend
+- ✅ Vertex AI integration for Gemini 3 Pro Image
 - ✅ Easy to add more models later
 - ✅ Better error handling
 - ✅ Model-specific tips
@@ -373,17 +404,21 @@ If DALL-E fails:
    ./deploy-backend.sh
    ```
 
-2. **Add Google Gemini API key** (optional)
+2. **Enable Vertex AI API**
+   - https://console.cloud.google.com/apis/library/aiplatform.googleapis.com
+
+3. **Add Google credentials**
    ```bash
    vercel env add GOOGLE_GEMINI_API_KEY production
+   vercel env add GOOGLE_CLOUD_PROJECT_ID production
    vercel --prod
    ```
 
-3. **Test both models** (after GitHub Pages deploys)
+4. **Test both models** (after GitHub Pages deploys)
 
-4. **Compare results** - see which model you prefer!
+5. **Compare results** - see which model you prefer!
 
-5. **Save preference** - system remembers your choice
+6. **Save preference** - system remembers your choice
 
 ---
 
@@ -393,8 +428,8 @@ If DALL-E fails:
 
 **For events**:
 - **Artistic/Creative events** → DALL-E 3
-- **Outdoor/Nature events** → Google Gemini
-- **Budget-conscious** → Google Gemini
+- **Outdoor/Nature events** → Google Gemini 3 Pro Image
+- **Budget-conscious** → Google Gemini 3 Pro Image
 - **Highest quality** → Try both, pick best!
 
 ### **Prompt Optimization**
@@ -404,7 +439,7 @@ If DALL-E fails:
 - Style references ("in the style of...")
 - Creative interpretations
 
-**Google Gemini responds well to**:
+**Google Gemini 3 Pro responds well to**:
 - Realistic descriptions ("photorealistic", "natural lighting")
 - Specific details ("golden hour", "wide-angle shot")
 - Photography terms
@@ -418,11 +453,11 @@ If DALL-E fails:
 - Pricing: https://openai.com/pricing
 - API Keys: https://platform.openai.com/api-keys
 
-**Google Gemini**:
+**Google Gemini 3 Pro Image**:
+- Vertex AI Docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image
 - AI Studio: https://aistudio.google.com
-- Docs: https://ai.google.dev/gemini-api/docs
-- Image Generation: https://ai.google.dev/gemini-api/docs/imagen
-- Pricing: https://ai.google.dev/pricing
+- API Keys: https://aistudio.google.com/app/apikey
+- Pricing: https://cloud.google.com/vertex-ai/pricing
 
 ---
 
@@ -432,15 +467,17 @@ If DALL-E fails:
 - ✅ Backend multi-model endpoint (`/api/generate-image`)
 - ✅ Frontend model selector UI
 - ✅ Support for DALL-E 3
-- ✅ Support for Google Gemini 2.0 Flash image generation
+- ✅ Support for Google Gemini 3 Pro Image (Vertex AI)
 - ✅ Dynamic cost display
 - ✅ Model-specific descriptions
 - ✅ Secure API key handling (backend only)
 - ✅ Comprehensive error handling
+- ✅ Multiple fallback models
 
 **Next**:
 - Deploy backend
-- Add Google Gemini API key (optional)
+- Enable Vertex AI API
+- Add Google credentials
 - Test both models
 - Compare results!
 
@@ -450,4 +487,4 @@ If DALL-E fails:
 
 **Last Updated**: 2025-11-28  
 **Feature**: Multi-Model Image Generation  
-**Models**: DALL-E 3 + Google Gemini 2.0 Flash
+**Primary Model**: Google Gemini 3 Pro Image (Vertex AI)

@@ -1,12 +1,14 @@
 // ============================================================================
 // Multi-Model Image Generation API
-// Supports: OpenAI DALL-E 3, Google Gemini 2.0 Flash (native image generation)
+// Supports: Google Gemini 3 Pro Image (Vertex AI), OpenAI DALL-E 3
 // 
-// Gemini models tried (in order):
-//   1. gemini-2.0-flash-preview-image-generation
-//   2. gemini-2.0-flash-exp-image-generation
-//   3. gemini-2.0-flash-exp
-//   4. imagen-3.0-generate-002 (fallback)
+// Primary Model: gemini-3.0-pro-image-generation (Vertex AI)
+// Fallback Models:
+//   - gemini-2.0-flash-preview-image-generation (AI Studio)
+//   - imagen-3.0-generate-002 (AI Studio)
+//   - dall-e-3 (OpenAI)
+//
+// Vertex AI Docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image
 // ============================================================================
 
 const fetch = require('node-fetch');
@@ -42,12 +44,13 @@ module.exports = async (req, res) => {
       
       case 'google-gemini':
       case 'google-imagen':
-        return await generateWithGemini(req, res, prompt);
+      case 'gemini-3-pro':
+        return await generateWithGemini3Pro(req, res, prompt);
       
       default:
         return res.status(400).json({ 
           error: `Unsupported model: ${model}`,
-          supportedModels: ['dall-e-3', 'google-gemini']
+          supportedModels: ['dall-e-3', 'google-gemini', 'gemini-3-pro']
         });
     }
     
@@ -115,213 +118,330 @@ async function generateWithDALLE3(req, res, prompt) {
 }
 
 /**
- * Generate image with Google Gemini 2.0 Flash (native image generation)
+ * Generate image with Google Gemini 3 Pro Image
  * 
- * Uses the gemini-2.0-flash-preview-image-generation model which supports
- * native image generation via the AI Studio API.
+ * Primary: Vertex AI endpoint with gemini-3.0-pro-image-generation
+ * Fallback: AI Studio API with various models
  * 
- * API Docs: https://ai.google.dev/gemini-api/docs/image-generation
+ * Vertex AI Docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image
  */
-async function generateWithGemini(req, res, prompt) {
+async function generateWithGemini3Pro(req, res, prompt) {
   const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
+  const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
+  const region = process.env.GOOGLE_CLOUD_REGION || 'us-central1';
   
-  if (!apiKey) {
+  // Check for required credentials
+  if (!apiKey && !projectId) {
     return res.status(503).json({
-      error: 'Google Gemini API key not configured',
-      message: 'Get API key from: https://aistudio.google.com/app/apikey',
-      setupSteps: [
-        '1. Go to Google AI Studio: https://aistudio.google.com/app/apikey',
-        '2. Click "Create API Key"',
-        '3. Select or create a Google Cloud project',
-        '4. Copy the API key',
-        '5. Add to Vercel: vercel env add GOOGLE_GEMINI_API_KEY production',
-        '6. Redeploy: vercel --prod'
-      ]
+      error: 'Google credentials not configured',
+      message: 'Configure either GOOGLE_GEMINI_API_KEY (AI Studio) or GOOGLE_CLOUD_PROJECT_ID (Vertex AI)',
+      setupOptions: {
+        option1_aiStudio: {
+          description: 'Simple setup with API key',
+          steps: [
+            '1. Go to: https://aistudio.google.com/app/apikey',
+            '2. Create an API key',
+            '3. Add to Vercel: vercel env add GOOGLE_GEMINI_API_KEY production'
+          ]
+        },
+        option2_vertexAI: {
+          description: 'Full Vertex AI setup (recommended for Gemini 3 Pro Image)',
+          steps: [
+            '1. Enable Vertex AI API in Google Cloud Console',
+            '2. Create a service account or use Application Default Credentials',
+            '3. Add env vars: GOOGLE_CLOUD_PROJECT_ID, GOOGLE_CLOUD_REGION',
+            '4. For API key auth: GOOGLE_GEMINI_API_KEY'
+          ]
+        }
+      }
     });
   }
-  
-  // List of models to try in order of preference
-  const modelsToTry = [
-    'gemini-2.0-flash-preview-image-generation',
-    'gemini-2.0-flash-exp-image-generation', 
-    'gemini-2.0-flash-exp'
-  ];
   
   let lastError = null;
   
-  for (const model of modelsToTry) {
+  // Strategy 1: Try Vertex AI with Gemini 3 Pro Image (if project ID is configured)
+  if (projectId && apiKey) {
     try {
-      console.log(`Trying Google Gemini image generation with model: ${model}...`);
-      
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: `Generate a high-quality image: ${prompt}`
-              }]
-            }],
-            generationConfig: {
-              responseModalities: ['IMAGE', 'TEXT'],
-              responseMimeType: 'text/plain'
-            },
-            safetySettings: [
-              {
-                category: 'HARM_CATEGORY_HARASSMENT',
-                threshold: 'BLOCK_ONLY_HIGH'
-              },
-              {
-                category: 'HARM_CATEGORY_HATE_SPEECH', 
-                threshold: 'BLOCK_ONLY_HIGH'
-              },
-              {
-                category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-                threshold: 'BLOCK_ONLY_HIGH'
-              },
-              {
-                category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-                threshold: 'BLOCK_ONLY_HIGH'
-              }
-            ]
-          })
-        }
-      );
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(`Model ${model} failed:`, errorText);
-        lastError = errorText;
-        continue; // Try next model
+      const result = await tryVertexAIGemini3Pro(projectId, region, apiKey, prompt);
+      if (result.success) {
+        return res.status(200).json(result);
       }
-      
-      const data = await response.json();
-      console.log(`Gemini ${model} response received`);
-      
-      // Extract image from response - look for inlineData in parts
-      if (data.candidates && data.candidates[0]?.content?.parts) {
-        for (const part of data.candidates[0].content.parts) {
-          if (part.inlineData && part.inlineData.data) {
-            console.log(`Image generated successfully with ${model}`);
-            return res.status(200).json({
-              success: true,
-              imageBase64: part.inlineData.data,
-              mimeType: part.inlineData.mimeType || 'image/png',
-              model: model,
-              cost: 0.02,
-              size: '1024x1024'
-            });
-          }
-        }
-      }
-      
-      // Check for blocked content
-      if (data.candidates && data.candidates[0]?.finishReason === 'SAFETY') {
-        console.log('Content blocked by safety filters');
-        return res.status(400).json({
-          error: 'Content blocked by safety filters',
-          message: 'The prompt was flagged by Google\'s safety filters. Try a different prompt.',
-          model: model
-        });
-      }
-      
-      console.log(`No image found in response from ${model}, trying next...`);
-      lastError = 'No image data in response';
-      
+      lastError = result.error;
     } catch (error) {
-      console.error(`Error with model ${model}:`, error.message);
+      console.error('Vertex AI Gemini 3 Pro failed:', error.message);
       lastError = error.message;
-      continue; // Try next model
     }
   }
   
-  // All models failed - try the Imagen 3 endpoint as last resort
-  return await tryImagen3Endpoint(apiKey, prompt, res, lastError);
+  // Strategy 2: Try AI Studio API with various models
+  if (apiKey) {
+    const aiStudioModels = [
+      // Gemini 3 Pro Image variants (try these first)
+      'gemini-3.0-pro-image-generation',
+      'gemini-3-pro-image-generation',
+      'gemini-pro-3.0-image',
+      // Gemini 2.0 Flash with image generation
+      'gemini-2.0-flash-preview-image-generation',
+      'gemini-2.0-flash-exp-image-generation',
+      'gemini-2.0-flash-exp'
+    ];
+    
+    for (const model of aiStudioModels) {
+      try {
+        const result = await tryAIStudioModel(apiKey, model, prompt);
+        if (result.success) {
+          return res.status(200).json(result);
+        }
+        lastError = result.error || 'No image in response';
+      } catch (error) {
+        console.error(`AI Studio model ${model} failed:`, error.message);
+        lastError = error.message;
+      }
+    }
+    
+    // Strategy 3: Try Imagen 3 via AI Studio
+    try {
+      const result = await tryImagen3(apiKey, prompt);
+      if (result.success) {
+        return res.status(200).json(result);
+      }
+      lastError = result.error;
+    } catch (error) {
+      console.error('Imagen 3 failed:', error.message);
+      lastError = error.message;
+    }
+  }
+  
+  // All strategies failed
+  return res.status(503).json({
+    error: 'Google Gemini image generation not available',
+    message: 'All Gemini image generation models failed',
+    details: lastError,
+    troubleshooting: [
+      '1. For Gemini 3 Pro Image: Set GOOGLE_CLOUD_PROJECT_ID and enable Vertex AI API',
+      '2. Verify API key at: https://aistudio.google.com/app/apikey',
+      '3. Enable billing on your Google Cloud project',
+      '4. Check if image generation is available in your region',
+      '5. Review Vertex AI docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image'
+    ],
+    recommendation: 'Use DALL-E 3 as fallback, or configure Vertex AI for Gemini 3 Pro Image',
+    configuredCredentials: {
+      apiKey: !!apiKey,
+      projectId: !!projectId,
+      region: region
+    },
+    docsUrl: 'https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image'
+  });
 }
 
 /**
- * Try Imagen 3 via AI Studio API (last resort fallback)
- * Note: Imagen 3 standalone may require Vertex AI for full functionality
+ * Try Vertex AI endpoint with Gemini 3 Pro Image
+ * 
+ * Endpoint: https://{REGION}-aiplatform.googleapis.com/v1/projects/{PROJECT}/locations/{REGION}/publishers/google/models/{MODEL}:generateContent
  */
-async function tryImagen3Endpoint(apiKey, prompt, res, previousError) {
-  try {
-    console.log('Trying Imagen 3 endpoint as fallback...');
-    
-    // Try the Imagen 3 generate endpoint
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`,
-      {
+async function tryVertexAIGemini3Pro(projectId, region, apiKey, prompt) {
+  console.log(`Trying Vertex AI Gemini 3 Pro Image (project: ${projectId}, region: ${region})...`);
+  
+  // Gemini 3 Pro Image model IDs to try
+  const modelIds = [
+    'gemini-3.0-pro-image-generation',
+    'gemini-3-pro-image',
+    'gemini-3.0-pro-vision'
+  ];
+  
+  for (const modelId of modelIds) {
+    try {
+      const endpoint = `https://${region}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${region}/publishers/google/models/${modelId}:generateContent`;
+      
+      console.log(`Trying Vertex AI model: ${modelId}`);
+      
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+          'x-goog-user-project': projectId
         },
         body: JSON.stringify({
-          instances: [{
-            prompt: prompt
+          contents: [{
+            role: 'user',
+            parts: [{
+              text: `Generate a high-quality, photorealistic image: ${prompt}`
+            }]
           }],
-          parameters: {
-            sampleCount: 1,
-            aspectRatio: '1:1',
-            personGeneration: 'ALLOW_ADULT'
-          }
+          generationConfig: {
+            responseModalities: ['IMAGE', 'TEXT'],
+            temperature: 0.8,
+            candidateCount: 1
+          },
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' }
+          ]
         })
-      }
-    );
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Imagen 3 endpoint failed:', errorText);
-      throw new Error(`Imagen 3 endpoint failed: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    // Extract image from Imagen response
-    if (data.predictions && data.predictions[0]) {
-      const prediction = data.predictions[0];
-      let imageBase64 = prediction.bytesBase64Encoded || prediction.image || prediction.data;
+      });
       
-      if (imageBase64) {
-        return res.status(200).json({
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Vertex AI ${modelId} error:`, errorText);
+        continue;
+      }
+      
+      const data = await response.json();
+      
+      // Extract image from response
+      if (data.candidates && data.candidates[0]?.content?.parts) {
+        for (const part of data.candidates[0].content.parts) {
+          if (part.inlineData && part.inlineData.data) {
+            console.log(`Image generated successfully with Vertex AI ${modelId}`);
+            return {
+              success: true,
+              imageBase64: part.inlineData.data,
+              mimeType: part.inlineData.mimeType || 'image/png',
+              model: `vertex-ai/${modelId}`,
+              cost: 0.02,
+              size: '1024x1024'
+            };
+          }
+        }
+      }
+      
+      // Check for safety block
+      if (data.candidates?.[0]?.finishReason === 'SAFETY') {
+        return {
+          success: false,
+          error: 'Content blocked by safety filters'
+        };
+      }
+      
+    } catch (error) {
+      console.error(`Vertex AI ${modelId} exception:`, error.message);
+    }
+  }
+  
+  return { success: false, error: 'All Vertex AI models failed' };
+}
+
+/**
+ * Try AI Studio (Generative Language API) with a specific model
+ */
+async function tryAIStudioModel(apiKey, model, prompt) {
+  console.log(`Trying AI Studio model: ${model}...`);
+  
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Generate a high-quality image: ${prompt}`
+          }]
+        }],
+        generationConfig: {
+          responseModalities: ['IMAGE', 'TEXT'],
+          responseMimeType: 'text/plain'
+        },
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' }
+        ]
+      })
+    }
+  );
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error(`AI Studio ${model} failed:`, errorText);
+    return { success: false, error: errorText };
+  }
+  
+  const data = await response.json();
+  
+  // Extract image from response
+  if (data.candidates && data.candidates[0]?.content?.parts) {
+    for (const part of data.candidates[0].content.parts) {
+      if (part.inlineData && part.inlineData.data) {
+        console.log(`Image generated successfully with AI Studio ${model}`);
+        return {
           success: true,
-          imageBase64: imageBase64,
-          model: 'imagen-3.0',
+          imageBase64: part.inlineData.data,
+          mimeType: part.inlineData.mimeType || 'image/png',
+          model: model,
           cost: 0.02,
           size: '1024x1024'
-        });
+        };
       }
     }
-    
-    throw new Error('No image data in Imagen response');
-    
-  } catch (imagenError) {
-    console.error('Imagen 3 endpoint also failed:', imagenError);
-    
-    // Return comprehensive error with troubleshooting info
-    return res.status(503).json({
-      error: 'Google Gemini image generation not available',
-      message: 'All Gemini image generation models failed',
-      details: previousError || imagenError.message,
-      troubleshooting: [
-        '1. Verify your API key is valid at: https://aistudio.google.com/app/apikey',
-        '2. Ensure the Generative Language API is enabled in Google Cloud Console',
-        '3. Check if image generation is available in your region',
-        '4. The API key must be from a project with billing enabled for some models',
-        '5. Try waiting a few minutes and retry - the service may be temporarily unavailable'
-      ],
-      recommendation: 'Use DALL-E 3 instead while Gemini image generation is being set up',
-      apiKeyConfigured: true,
-      modelsAttempted: [
-        'gemini-2.0-flash-preview-image-generation',
-        'gemini-2.0-flash-exp-image-generation',
-        'gemini-2.0-flash-exp',
-        'imagen-3.0-generate-002'
-      ],
-      docsUrl: 'https://ai.google.dev/gemini-api/docs/image-generation'
-    });
   }
+  
+  // Check for safety block
+  if (data.candidates?.[0]?.finishReason === 'SAFETY') {
+    return {
+      success: false,
+      error: 'Content blocked by safety filters'
+    };
+  }
+  
+  return { success: false, error: 'No image in response' };
+}
+
+/**
+ * Try Imagen 3 via AI Studio predict endpoint
+ */
+async function tryImagen3(apiKey, prompt) {
+  console.log('Trying Imagen 3 via AI Studio...');
+  
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        instances: [{
+          prompt: prompt
+        }],
+        parameters: {
+          sampleCount: 1,
+          aspectRatio: '1:1',
+          personGeneration: 'ALLOW_ADULT'
+        }
+      })
+    }
+  );
+  
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('Imagen 3 failed:', errorText);
+    return { success: false, error: errorText };
+  }
+  
+  const data = await response.json();
+  
+  if (data.predictions && data.predictions[0]) {
+    const prediction = data.predictions[0];
+    const imageBase64 = prediction.bytesBase64Encoded || prediction.image || prediction.data;
+    
+    if (imageBase64) {
+      console.log('Image generated successfully with Imagen 3');
+      return {
+        success: true,
+        imageBase64: imageBase64,
+        model: 'imagen-3.0',
+        cost: 0.02,
+        size: '1024x1024'
+      };
+    }
+  }
+  
+  return { success: false, error: 'No image in Imagen 3 response' };
 }
