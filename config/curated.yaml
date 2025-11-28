@@ -5,15 +5,17 @@
   name: "Family-Friendly Northwoods Events"
   enabled: true
   
-  selected_events: []
+  selected_events:
+    []
   
   preferences:
     include_sources:
-      - "boulder-junction-tec"
-      - "eagle-river-chamber-tec"
-      - "vilas-county-tourism-tec"
+      - boulder-junction-tec
+      - eagle-river-chamber-tec
+      - vilas-county-tourism-tec
     
-    exclude_sources: []
+    exclude_sources:
+      []
     
     locations:
       - "Boulder Junction"
@@ -38,42 +40,52 @@
   name: "Minocqua Events"
   enabled: true
   
-  selected_events: []
+  selected_events:
+    []
   
   preferences:
-    include_sources: []
+    include_sources:
+      []
     
-    exclude_sources: []
+    exclude_sources:
+      []
     
     locations:
       - "Minocqua"
     
-    keywords: []
+    keywords:
+      []
     
-    exclude_keywords: []
+    exclude_keywords:
+      []
     
-    max_auto_events: 0
+    max_auto_events: 50
     days_ahead: 180
 
 - id: RCLMinocquaEvents
   name: "RCL Minocqua Events"
   enabled: true
   
-  selected_events: []
+  selected_events:
+    []
   
   preferences:
-    include_sources: []
+    include_sources:
+      []
     
-    exclude_sources: []
+    exclude_sources:
+      []
     
     locations:
       - "Minocqua"
       - "Christmas"
     
-    keywords: []
+    keywords:
+      []
     
     exclude_keywords:
       - "Eagle River"
     
-    max_auto_events: 0
+    max_auto_events: 50
     days_ahead: 180
+
