@@ -330,13 +330,11 @@
                 // Fetch list of files from GitHub API with cache-busting
                 const cacheBuster = Date.now();
                 const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${IMAGES_PATH}?ref=${GITHUB_BRANCH}&_=${cacheBuster}`;
+                // Only send simple headers because GitHub's CORS policy blocks cache-control/pragmas.
                 const response = await fetch(apiUrl, {
                     headers: {
                         'Accept': 'application/vnd.github.v3+json',
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
                     },
-                    cache: 'no-store',
                 });
 
                 if (!response.ok) {
