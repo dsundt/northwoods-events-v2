@@ -1,14 +1,16 @@
 // ============================================================================
 // Multi-Model Image Generation API
-// Supports: Google Gemini 3 Pro Image (Vertex AI), OpenAI DALL-E 3
+// Supports: Google Gemini (AI Studio + Vertex AI), OpenAI DALL-E 3
 // 
-// Primary Model: gemini-3.0-pro-image-generation (Vertex AI)
-// Fallback Models:
-//   - gemini-2.0-flash-preview-image-generation (AI Studio)
-//   - imagen-3.0-generate-002 (AI Studio)
-//   - dall-e-3 (OpenAI)
+// SIMPLE SETUP (just need API key):
+//   - GOOGLE_GEMINI_API_KEY from https://aistudio.google.com/app/apikey
+//   - Models: gemini-2.0-flash-preview-image-generation, imagen-3.0
 //
-// Vertex AI Docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image
+// ADVANCED SETUP (for Gemini 3 Pro Image):
+//   - Also add: GOOGLE_CLOUD_PROJECT_ID, GOOGLE_CLOUD_REGION
+//   - Models: gemini-3.0-pro-image-generation (Vertex AI)
+//
+// Docs: https://ai.google.dev/gemini-api/docs/image-generation
 // ============================================================================
 
 const fetch = require('node-fetch');
@@ -118,49 +120,72 @@ async function generateWithDALLE3(req, res, prompt) {
 }
 
 /**
- * Generate image with Google Gemini 3 Pro Image
+ * Generate image with Google Gemini
  * 
- * Primary: Vertex AI endpoint with gemini-3.0-pro-image-generation
- * Fallback: AI Studio API with various models
+ * Simple setup: Just needs GOOGLE_GEMINI_API_KEY (from AI Studio)
+ * Advanced setup: Add GOOGLE_CLOUD_PROJECT_ID for Vertex AI / Gemini 3 Pro
  * 
- * Vertex AI Docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image
+ * AI Studio: https://aistudio.google.com/app/apikey
+ * Vertex AI: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image
  */
 async function generateWithGemini3Pro(req, res, prompt) {
   const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
   const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
   const region = process.env.GOOGLE_CLOUD_REGION || 'us-central1';
   
-  // Check for required credentials
-  if (!apiKey && !projectId) {
+  // Check for API key (minimum requirement)
+  if (!apiKey) {
     return res.status(503).json({
-      error: 'Google credentials not configured',
-      message: 'Configure either GOOGLE_GEMINI_API_KEY (AI Studio) or GOOGLE_CLOUD_PROJECT_ID (Vertex AI)',
-      setupOptions: {
-        option1_aiStudio: {
-          description: 'Simple setup with API key',
-          steps: [
-            '1. Go to: https://aistudio.google.com/app/apikey',
-            '2. Create an API key',
-            '3. Add to Vercel: vercel env add GOOGLE_GEMINI_API_KEY production'
-          ]
-        },
-        option2_vertexAI: {
-          description: 'Full Vertex AI setup (recommended for Gemini 3 Pro Image)',
-          steps: [
-            '1. Enable Vertex AI API in Google Cloud Console',
-            '2. Create a service account or use Application Default Credentials',
-            '3. Add env vars: GOOGLE_CLOUD_PROJECT_ID, GOOGLE_CLOUD_REGION',
-            '4. For API key auth: GOOGLE_GEMINI_API_KEY'
-          ]
-        }
+      error: 'Google API key not configured',
+      message: 'Set GOOGLE_GEMINI_API_KEY environment variable',
+      setup: {
+        steps: [
+          '1. Go to: https://aistudio.google.com/app/apikey',
+          '2. Create an API key',
+          '3. Add to Vercel: vercel env add GOOGLE_GEMINI_API_KEY production',
+          '4. Redeploy: vercel --prod'
+        ],
+        optional: 'For Gemini 3 Pro Image, also add GOOGLE_CLOUD_PROJECT_ID'
       }
     });
   }
   
   let lastError = null;
   
-  // Strategy 1: Try Vertex AI with Gemini 3 Pro Image (if project ID is configured)
-  if (projectId && apiKey) {
+  // Strategy 1: Try AI Studio API first (simpler, just needs API key)
+  const aiStudioModels = [
+    'gemini-2.0-flash-preview-image-generation',
+    'gemini-2.0-flash-exp-image-generation',
+    'gemini-2.0-flash-exp'
+  ];
+  
+  for (const model of aiStudioModels) {
+    try {
+      const result = await tryAIStudioModel(apiKey, model, prompt);
+      if (result.success) {
+        return res.status(200).json(result);
+      }
+      lastError = result.error || 'No image in response';
+    } catch (error) {
+      console.error(`AI Studio model ${model} failed:`, error.message);
+      lastError = error.message;
+    }
+  }
+  
+  // Strategy 2: Try Imagen 3 via AI Studio
+  try {
+    const result = await tryImagen3(apiKey, prompt);
+    if (result.success) {
+      return res.status(200).json(result);
+    }
+    lastError = result.error;
+  } catch (error) {
+    console.error('Imagen 3 failed:', error.message);
+    lastError = error.message;
+  }
+  
+  // Strategy 3: Try Vertex AI (if project ID is configured)
+  if (projectId) {
     try {
       const result = await tryVertexAIGemini3Pro(projectId, region, apiKey, prompt);
       if (result.success) {
@@ -168,46 +193,7 @@ async function generateWithGemini3Pro(req, res, prompt) {
       }
       lastError = result.error;
     } catch (error) {
-      console.error('Vertex AI Gemini 3 Pro failed:', error.message);
-      lastError = error.message;
-    }
-  }
-  
-  // Strategy 2: Try AI Studio API with various models
-  if (apiKey) {
-    const aiStudioModels = [
-      // Gemini 3 Pro Image variants (try these first)
-      'gemini-3.0-pro-image-generation',
-      'gemini-3-pro-image-generation',
-      'gemini-pro-3.0-image',
-      // Gemini 2.0 Flash with image generation
-      'gemini-2.0-flash-preview-image-generation',
-      'gemini-2.0-flash-exp-image-generation',
-      'gemini-2.0-flash-exp'
-    ];
-    
-    for (const model of aiStudioModels) {
-      try {
-        const result = await tryAIStudioModel(apiKey, model, prompt);
-        if (result.success) {
-          return res.status(200).json(result);
-        }
-        lastError = result.error || 'No image in response';
-      } catch (error) {
-        console.error(`AI Studio model ${model} failed:`, error.message);
-        lastError = error.message;
-      }
-    }
-    
-    // Strategy 3: Try Imagen 3 via AI Studio
-    try {
-      const result = await tryImagen3(apiKey, prompt);
-      if (result.success) {
-        return res.status(200).json(result);
-      }
-      lastError = result.error;
-    } catch (error) {
-      console.error('Imagen 3 failed:', error.message);
+      console.error('Vertex AI failed:', error.message);
       lastError = error.message;
     }
   }
@@ -218,19 +204,18 @@ async function generateWithGemini3Pro(req, res, prompt) {
     message: 'All Gemini image generation models failed',
     details: lastError,
     troubleshooting: [
-      '1. For Gemini 3 Pro Image: Set GOOGLE_CLOUD_PROJECT_ID and enable Vertex AI API',
-      '2. Verify API key at: https://aistudio.google.com/app/apikey',
-      '3. Enable billing on your Google Cloud project',
-      '4. Check if image generation is available in your region',
-      '5. Review Vertex AI docs: https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image'
+      '1. Verify API key at: https://aistudio.google.com/app/apikey',
+      '2. Check if image generation models are available in your region',
+      '3. Some models require billing enabled on Google Cloud project',
+      '4. For Gemini 3 Pro: Add GOOGLE_CLOUD_PROJECT_ID for Vertex AI access'
     ],
-    recommendation: 'Use DALL-E 3 as fallback, or configure Vertex AI for Gemini 3 Pro Image',
+    recommendation: 'Use DALL-E 3 as fallback while troubleshooting',
     configuredCredentials: {
       apiKey: !!apiKey,
       projectId: !!projectId,
       region: region
     },
-    docsUrl: 'https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-pro-image'
+    docsUrl: 'https://ai.google.dev/gemini-api/docs/image-generation'
   });
 }
 

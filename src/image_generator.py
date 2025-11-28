@@ -50,11 +50,18 @@ class GeminiImageGenerator:
     """Generate images using Gemini 3 Pro Image model"""
     
     # Models to try in order of preference
-    MODELS = [
+    # AI Studio models (simpler, just need API key)
+    AI_STUDIO_MODELS = [
+        "gemini-2.0-flash-preview-image-generation",
+        "gemini-2.0-flash-exp-image-generation", 
+        "gemini-2.0-flash-exp",
+        "imagen-3.0-generate-002",
+    ]
+    
+    # Vertex AI models (need project ID)
+    VERTEX_MODELS = [
         "gemini-3.0-pro-image-generation",
         "gemini-3-pro-image",
-        "gemini-2.0-flash-preview-image-generation",
-        "gemini-2.0-flash-exp-image-generation",
     ]
     
     def __init__(
@@ -85,7 +92,8 @@ class GeminiImageGenerator:
         self,
         prompt: str,
         output_path: Optional[str] = None,
-        model: Optional[str] = None
+        model: Optional[str] = None,
+        prefer_vertex: bool = False
     ) -> Tuple[Optional[bytes], str]:
         """
         Generate an image from a text prompt.
@@ -94,11 +102,22 @@ class GeminiImageGenerator:
             prompt: Text description of the image to generate
             output_path: Optional path to save the image
             model: Specific model to use (default: try multiple)
+            prefer_vertex: If True, try Vertex AI models first (requires project_id)
             
         Returns:
             Tuple of (image_bytes, model_used) or (None, error_message)
         """
-        models_to_try = [model] if model else self.MODELS
+        if model:
+            models_to_try = [model]
+        elif prefer_vertex and self.project_id:
+            # Vertex AI first, then AI Studio fallback
+            models_to_try = self.VERTEX_MODELS + self.AI_STUDIO_MODELS
+        else:
+            # AI Studio first (simpler), then Vertex AI if configured
+            models_to_try = self.AI_STUDIO_MODELS.copy()
+            if self.project_id:
+                models_to_try.extend(self.VERTEX_MODELS)
+        
         last_error = None
         
         for model_name in models_to_try:
