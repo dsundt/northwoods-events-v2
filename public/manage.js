@@ -1365,7 +1365,7 @@ Create an image that makes people want to visit Northern Wisconsin!`;
                 <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Image Generation Model:</label>
                 <select id="image-model" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; margin-bottom: 0.5rem;" onchange="updateImageModelInfo()">
                     <option value="dall-e-3" selected>🎨 OpenAI DALL-E 3 - Artistic & Creative ($0.04)</option>
-                    <option value="google-gemini">🤖 Google Gemini 2.5 Flash + Imagen 3 - Photorealistic ($0.02)</option>
+                    <option value="google-gemini">🤖 Google Gemini 2.0 Flash - Photorealistic ($0.02)</option>
                 </select>
                 <div id="model-info" style="font-size: 0.85rem; color: var(--text-muted); padding: 0.75rem; background: #e7f3ff; border: 1px solid #b3d9ff; border-radius: 4px; margin-bottom: 1rem;">
                     <strong>DALL-E 3:</strong> Best for creative, artistic, and stylized images. Excellent at following complex prompts. Higher cost but consistently high quality.
@@ -1411,7 +1411,7 @@ function updateImageModelInfo() {
             border: '#b3d9ff'
         },
         'google-gemini': {
-            description: '<strong>Google Gemini 2.5 Flash + Imagen 3:</strong> Best for photorealistic, natural-looking images. Fast generation, lower cost. Great for realistic event photography.',
+            description: '<strong>Google Gemini 2.0 Flash:</strong> Best for photorealistic, natural-looking images. Fast generation, lower cost. Uses native Gemini image generation capabilities.',
             cost: '$0.02',
             color: '#e8f5e9',
             border: '#a5d6a7'
@@ -1443,7 +1443,7 @@ async function startImageGeneration(event) {
     
     const modelNames = {
         'dall-e-3': 'DALL-E 3',
-        'google-gemini': 'Google Gemini 2.5 Flash + Imagen 3'
+        'google-gemini': 'Google Gemini 2.0 Flash'
     };
     
     statusDiv.innerHTML = `

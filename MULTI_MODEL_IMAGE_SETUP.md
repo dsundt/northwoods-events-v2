@@ -5,7 +5,7 @@
 You can now choose between **two image generation models**:
 
 1. **🎨 OpenAI DALL-E 3** - Artistic, creative, stylized ($0.04/image)
-2. **🤖 Google Gemini 2.5 Flash + Imagen 3** - Photorealistic, natural ($0.02/image)
+2. **🤖 Google Gemini 2.0 Flash** - Photorealistic, native image generation ($0.02/image)
 
 ---
 
@@ -24,7 +24,7 @@ When generating an image, you'll see:
 │                                          │
 │ Options:                                 │
 │ • DALL-E 3 - Artistic & Creative ($0.04) │
-│ • Google Gemini 2.5 Flash ($0.02)        │
+│ • Google Gemini 2.0 Flash ($0.02)        │
 └──────────────────────────────────────────┘
 ```
 
@@ -167,7 +167,7 @@ After GitHub Pages deploys (2-3 minutes):
 
 ## 📊 **Model Comparison**
 
-| Feature | DALL-E 3 | Google Gemini 2.5 Flash |
+| Feature | DALL-E 3 | Google Gemini 2.0 Flash |
 |---------|----------|------------------------|
 | **Cost** | $0.04/image | $0.02/image (50% cheaper!) |
 | **Style** | Artistic, creative | Photorealistic, natural |
@@ -255,7 +255,7 @@ Total: $0.60/month (25% savings!)
 {
   "success": true,
   "imageBase64": "iVBORw0KGgo...",
-  "model": "google-gemini-2.5-flash-imagen",
+  "model": "gemini-2.0-flash-preview-image-generation",
   "cost": 0.02,
   "size": "1024x1024"
 }
@@ -305,14 +305,23 @@ Total: $0.60/month (25% savings!)
 ### **"Google Gemini image generation not available"**
 
 **Possible causes**:
-1. **Region restriction**: Gemini image gen may not be available in your region yet
-2. **API not enabled**: Need to enable Imagen API in Google Cloud
-3. **Wrong endpoint**: Google's API structure may have changed
+1. **API key not valid**: The API key may be invalid or expired
+2. **Model not available**: The image generation models may not be available in your region
+3. **Billing not enabled**: Some features require billing to be enabled on the Google Cloud project
+4. **Rate limiting**: Too many requests in a short period
 
 **Solutions**:
-- Use DALL-E 3 instead (always works)
-- Check Google AI Studio for image generation availability
-- Wait for Gemini image generation to launch in your region
+1. Verify your API key at: https://aistudio.google.com/app/apikey
+2. Ensure the Generative Language API is enabled in Google Cloud Console
+3. Enable billing on your Google Cloud project
+4. Use DALL-E 3 instead (always works)
+5. Check backend logs for detailed error messages
+
+**Models attempted by backend** (in order):
+- `gemini-2.0-flash-preview-image-generation`
+- `gemini-2.0-flash-exp-image-generation`
+- `gemini-2.0-flash-exp`
+- `imagen-3.0-generate-002`
 
 ---
 
@@ -423,7 +432,7 @@ If DALL-E fails:
 - ✅ Backend multi-model endpoint (`/api/generate-image`)
 - ✅ Frontend model selector UI
 - ✅ Support for DALL-E 3
-- ✅ Support for Google Gemini 2.5 Flash + Imagen 3
+- ✅ Support for Google Gemini 2.0 Flash image generation
 - ✅ Dynamic cost display
 - ✅ Model-specific descriptions
 - ✅ Secure API key handling (backend only)
@@ -439,6 +448,6 @@ If DALL-E fails:
 
 ---
 
-**Last Updated**: 2025-11-17  
+**Last Updated**: 2025-11-28  
 **Feature**: Multi-Model Image Generation  
-**Models**: DALL-E 3 + Google Gemini 2.5 Flash
+**Models**: DALL-E 3 + Google Gemini 2.0 Flash
