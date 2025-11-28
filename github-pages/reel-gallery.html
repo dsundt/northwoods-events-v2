@@ -350,12 +350,10 @@
                 const response = await fetch(
                     `https://api.github.com/repos/${GITHUB_REPO}/contents/${REELS_PATH}?_=${cacheBuster}`,
                     {
+                        // Keep headers simple so GitHub's CORS policy does not reject the request.
                         headers: {
                             'Accept': 'application/vnd.github.v3+json',
-                            'Cache-Control': 'no-cache, no-store, must-revalidate',
-                            'Pragma': 'no-cache',
                         },
-                        cache: 'no-store',
                     }
                 );
                 
