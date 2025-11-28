@@ -1,272 +1,126 @@
-# 🚀 Deploy Multi-Model Image Generation - Action Plan
+# 🚀 Deploy Image Generation - Quick Start
 
-## ✅ **What's Ready**
+## ⚡ **5-Minute Setup**
 
-Multi-model image generation is **coded and committed**! Now you need to deploy it.
-
----
-
-## 📋 **Deployment Steps** (15 minutes total)
-
-### **Step 1: Deploy Backend** (5 minutes)
-
-**From your local machine**:
+### **Step 1: Deploy Backend** (2 minutes)
 
 ```bash
-cd ~/Documents/northwoods-events-v2
+cd backend-example
 
-# Pull latest changes
-git pull origin main
+# Deploy to Vercel
+vercel --prod
 
-# Deploy backend
-./deploy-backend.sh
+# Set alias (optional)
+vercel alias your-deployment-url.vercel.app northwoods-reel-api.vercel.app
 ```
 
-**What this does**:
-- Deploys new `/api/generate-image` endpoint
-- Supports both DALL-E 3 and Google Gemini
-- Auto-aliases to production domain
-- Tests deployment
-
-**Expected output**:
-```
-✅ Deployment Complete!
-Production URL: https://northwoods-reel-api.vercel.app/api/generate-reel
-```
-
----
-
-### **Step 2: Add Google Gemini API Key** (10 minutes)
-
-#### **2A: Get Gemini API Key**
-
-1. **Go to**: https://aistudio.google.com/app/apikey
-
-2. **Sign in** with Google account
-
-3. **Click**: "Get API key" or "Create API key"
-
-4. **Select project** or create new one
-
-5. **Copy the API key** (starts with `AIza...`)
-
-#### **2B: Add to Vercel**
+### **Step 2: Add OpenAI API Key** (2 minutes)
 
 ```bash
-cd ~/Documents/northwoods-events-v2/backend-example
+# Add OpenAI key for DALL-E 3
+vercel env add OPENAI_API_KEY production
+# Paste your key when prompted
 
-# Add Gemini API key
-vercel env add GOOGLE_GEMINI_API_KEY production
+# Redeploy to apply
+vercel --prod
+```
 
-# When prompted, paste your API key
-# Then press Enter
+### **Step 3: Verify** (1 minute)
 
-# Verify it's added
+```bash
+# Check environment variables
 vercel env ls
 ```
 
-**Should show**:
+Should show:
 ```
-GOOGLE_GEMINI_API_KEY → Encrypted (Production) ✅
+OPENAI_API_KEY → Encrypted (Production) ✅
 ```
 
-#### **2C: Redeploy**
+---
+
+## 🧪 **Test It**
+
+### **Quick API Test**
 
 ```bash
-# Redeploy to apply new environment variable
-cd ~/Documents/northwoods-events-v2
-./deploy-backend.sh
-```
-
----
-
-### **Step 3: Test Multi-Model** (5 minutes)
-
-**After backend deploys** (should be done now):
-
-#### **3A: Test Backend Directly**
-
-```bash
-# Test with DALL-E 3
-curl https://northwoods-reel-api.vercel.app/api/generate-image \
+curl https://your-backend.vercel.app/api/generate-image \
   -X POST \
   -H "Content-Type: application/json" \
-  -d '{"prompt":"Beautiful Wisconsin lake","model":"dall-e-3"}'
-
-# Test with Google Gemini
-curl https://northwoods-reel-api.vercel.app/api/generate-image \
-  -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"prompt":"Beautiful Wisconsin lake","model":"google-gemini"}'
+  -d '{"prompt":"Beautiful Wisconsin lake at sunset"}'
 ```
 
-**Expected**:
-- DALL-E: Returns image base64 (should work if OpenAI key configured)
-- Gemini: Returns image or helpful error with setup instructions
+**Expected response**:
+```json
+{
+  "success": true,
+  "imageBase64": "iVBORw0KGgo...",
+  "model": "dall-e-3",
+  "cost": 0.04,
+  "size": "1024x1024"
+}
+```
+
+### **UI Test**
+
+1. Open manage.html
+2. Click "📸 Generate Image" on any event
+3. Click "✨ Generate Image ($0.04)"
+4. Wait 10-30 seconds
+5. Image appears!
 
 ---
 
-#### **3B: Test in Browser**
-
-**Wait 2-3 minutes for GitHub Pages**, then:
-
-1. **Clear cache**: Cmd+Shift+Delete
-2. **Go to**: https://dsundt.github.io/northwoods-events-v2/manage.html
-3. **Click**: "📸 Generate Image" on any event
-4. **Check**: Dropdown shows both models ✅
-5. **Select**: Google Gemini
-6. **Click**: Generate Image ($0.02)
-7. **Wait**: 10-30 seconds
-8. **Result**: Image should generate!
-
----
-
-## 🎯 **Quick Start (If You Just Want DALL-E)**
-
-If you only want to use DALL-E 3 (and skip Google setup):
-
-1. **Deploy backend**:
-   ```bash
-   cd ~/Documents/northwoods-events-v2
-   ./deploy-backend.sh
-   ```
-
-2. **That's it!**
-   - DALL-E 3 option will work immediately
-   - Google Gemini will show "not configured" (gracefully)
-   - Can add Google later anytime
-
----
-
-## 📊 **What's Been Added**
+## 📊 **What's Included**
 
 ### **Backend**
-- ✅ New `/api/generate-image` endpoint
-- ✅ Supports DALL-E 3
-- ✅ Supports Google Gemini 3 Pro Image (Vertex AI)
+- ✅ `/api/generate-image` endpoint
+- ✅ OpenAI DALL-E 3 integration
 - ✅ Secure API key handling
-- ✅ Model routing logic
 - ✅ Error handling with helpful messages
-- ✅ Fallback mechanisms
 
 ### **Frontend**
-- ✅ Model selector dropdown
-- ✅ Dynamic model info display
-- ✅ Cost display per model
-- ✅ Color-coded info boxes
-- ✅ Backend API integration
-- ✅ Model-specific error messages
-- ✅ Removed API key from browser (more secure!)
-
-### **Configuration**
-- ✅ Updated `vercel.json` with new endpoint
-- ✅ CORS headers for `/api/generate-image`
-- ✅ Proper routing and rewrites
-- ✅ Environment variable support
+- ✅ Generate Image button on events
+- ✅ AI prompt editor
+- ✅ Image preview
+- ✅ Download functionality
 
 ---
 
-## 🔍 **Verification**
+## 🐛 **Troubleshooting**
 
-### **Check Backend Deployed**
+### **"OpenAI API key not configured"**
 
 ```bash
-# Should return JSON (not 404)
-curl https://northwoods-reel-api.vercel.app/api/generate-image
+vercel env add OPENAI_API_KEY production
+vercel --prod
 ```
 
-**Expected**: Method not allowed (it's POST only) - but not 404!
+### **"DALL-E API error"**
 
-### **Check Frontend Deployed**
-
-**After 2-3 minutes**:
-1. Open: https://dsundt.github.io/northwoods-events-v2/manage.html
-2. Generate Image dialog should show model dropdown
-3. Dropdown should have 2 options
+1. Check API key: https://platform.openai.com/api-keys
+2. Check credits: https://platform.openai.com/usage
+3. Check status: https://status.openai.com
 
 ---
 
-## 🎨 **Model Selector Preview**
+## 💰 **Costs**
 
-### **What You'll See**
-
-```
-┌────────────────────────────────────────────────┐
-│ Image Generation Model:                        │
-│ ┌────────────────────────────────────────────┐ │
-│ │ 🎨 OpenAI DALL-E 3            [▼]         │ │
-│ └────────────────────────────────────────────┘ │
-│                                                │
-│ ┌────────────────────────────────────────────┐ │
-│ │ DALL-E 3: Best for creative, artistic,    │ │
-│ │ and stylized images. Excellent at         │ │
-│ │ following complex prompts. Higher cost    │ │
-│ │ but consistently high quality.            │ │
-│ └────────────────────────────────────────────┘ │
-│                                                │
-│ AI Image Prompt:                               │
-│ ┌────────────────────────────────────────────┐ │
-│ │ Create a beautiful, vibrant Instagram...  │ │
-│ │                                            │ │
-│ └────────────────────────────────────────────┘ │
-│                                                │
-│ [Close] [⚙️ Backend] [✨ Generate Image ($0.04)]│
-└────────────────────────────────────────────────┘
-```
-
-**When you select Google Gemini**:
-- Info box turns **green**
-- Text updates to Gemini description
-- Button shows **($0.02)** instead of ($0.04)
+| Action | Cost |
+|--------|------|
+| Generate 1 image | $0.04 |
+| Generate 10 images | $0.40 |
+| Generate 25 images | $1.00 |
 
 ---
 
-## ⚡ **DO THIS NOW**
+## ✅ **Checklist**
 
-### **Immediate Deployment**:
-
-```bash
-cd ~/Documents/northwoods-events-v2
-git pull origin main
-./deploy-backend.sh
-```
-
-**That's it!** DALL-E 3 will work immediately.
-
-### **Add Google Gemini** (Optional):
-
-```bash
-# Get API key from: https://aistudio.google.com/app/apikey
-
-# Add to Vercel
-vercel env add GOOGLE_GEMINI_API_KEY production
-# Paste key when prompted
-
-# Redeploy
-./deploy-backend.sh
-```
+- [ ] Deploy backend: `vercel --prod`
+- [ ] Add OPENAI_API_KEY
+- [ ] Test API with curl
+- [ ] Test UI with manage.html
 
 ---
 
-## 🎉 **What You'll Get**
-
-**Immediate**:
-- ✅ Model selector in image generation dialog
-- ✅ DALL-E 3 works as before
-- ✅ Google Gemini option available (shows setup if not configured)
-
-**After adding Gemini key**:
-- ✅ Both models fully functional
-- ✅ Choose best model per event
-- ✅ Save 50% on costs with Gemini
-- ✅ Compare artistic vs photorealistic styles
-
----
-
-**Run `./deploy-backend.sh` now and the feature will be live in ~5 minutes!** 🚀
-
----
-
-**Last Updated**: 2025-11-17  
-**Status**: Ready to Deploy  
-**Action**: Run deployment script
+**Done!** Your image generation is ready to use. 🎨
