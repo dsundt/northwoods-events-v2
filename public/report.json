@@ -1,7 +1,7 @@
 {
-  "generated_at": "2025-12-06T18:26:13.187768+00:00",
+  "generated_at": "2025-12-07T04:32:10.736447+00:00",
   "sources_processed": 8,
-  "total_events": 614,
+  "total_events": 597,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -9,7 +9,7 @@
       "type": "tec_rest",
       "url": "https://boulderjct.org/",
       "ok": true,
-      "count": 49,
+      "count": 46,
       "error": null,
       "slug": "boulder-junction-tec",
       "ics_path": "by-source/boulder-junction-tec.ics",
@@ -22,7 +22,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 433,
+      "count": 425,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -74,7 +74,7 @@
       "type": "tec_rest",
       "url": "https://vilaswi.com/",
       "ok": true,
-      "count": 73,
+      "count": 67,
       "error": null,
       "slug": "vilas-county-tourism-tec",
       "ics_path": "by-source/vilas-county-tourism-tec.ics",
@@ -104,7 +104,11 @@
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
-      "warnings": [],
+      "warnings": [
+        "Used TEC ICS fallback: https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-06",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)"
+      ],
       "notes": []
     }
   ],
@@ -112,39 +116,6 @@
     {
       "calendar": "Boulder Junction (TEC)",
       "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2025-12-06/",
-      "uid": "51244",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Partners Cribbage Tournaments at Northern Waters Casino",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 17:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/partners-cribbage-tournaments-at-northern-waters-casino/2025-12-06/",
-      "uid": "50760",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chubby Checker at Lake of the Torches Resort Casino",
-      "start_utc": "2025-12-06 19:00:00",
-      "end_utc": "2025-12-06 21:00:00",
-      "location": "Lake of the Torches Resort Casino, 510 Old Abe Rd, Lac du Flambeau, WI",
-      "url": "https://boulderjct.org/events/chubby-checker-at-lake-of-the-torches-resort-casino/",
-      "uid": "51300",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
       "title": "Mah Jongg at the Boulder Junction Public Library",
       "start_utc": "2025-12-08 13:00:00",
       "end_utc": "2025-12-08 16:00:00",
@@ -646,138 +617,6 @@
       "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
       "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-02-28/",
       "uid": "51250",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "School Walking Hours at NPHS",
-      "start_utc": "2025-12-06 07:00:00",
-      "end_utc": "2025-12-06 12:00:00",
-      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2025-12-06/",
-      "uid": "10013576",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Saturday Studio: Drop In Art at the Library",
-      "start_utc": "2025-12-06 09:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/saturday-studio-drop-in-art-at-the-library/2025-12-06/",
-      "uid": "10017471",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Garden Centers First Ever Christmas at Custom",
-      "start_utc": "2025-12-06 09:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "Custom Landscaping, 1144 Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/the-garden-centers-first-ever-christmas-at-custom/2025-12-06/",
-      "uid": "10018180",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Mending Day at Walter E. Olson Memorial Library",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 12:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-mending-day-at-walter-e-olson-memorial-library/2025-12-06/",
-      "uid": "10008921",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Holiday Open House and Art Bazaar",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 16:00:00",
-      "location": "LOLA &#8211; Land O&#8217;Lakes Art Center, 4262 Cty Hwy B, Land O'Lakes, WI",
-      "url": "https://eagleriver.org/events/holiday-open-house-and-art-bazaar/",
-      "uid": "23535",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Christmas Market at the Warehouse",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 16:00:00",
-      "location": "Warehouse Community Art Center",
-      "url": "https://eagleriver.org/events/christmas-market-at-the-warehouse/",
-      "uid": "25271",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Garden Railroad on Display at St. Mary of the Snows",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 14:00:00",
-      "location": "St. Mary of the Snows, 1019 East Wall Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows/2025-12-06/",
-      "uid": "10018982",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Intro to Sourdough with Tom Dunphy at Walter E. Olson Memorial Library",
-      "start_utc": "2025-12-06 13:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/intro-to-sourdough-with-tom-dunphy-at-walter-e-olson-memorial-library/",
-      "uid": "24846",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Christmas Kickoff",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 18:30:00",
-      "location": "Riverview Park",
-      "url": "https://eagleriver.org/events/christmas-kickoff/",
-      "uid": "17113",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "2025 Partners Cribbage Tournaments at Northern Waters Casino and Resort",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 19:00:00",
-      "location": "Lac Vieux Desert Northern Casino Resort",
-      "url": "https://eagleriver.org/events/2025-partners-cribbage-tournaments-at-northern-waters-casino-and-resort/2025-12-06/",
-      "uid": "10017423",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Christ Lutheran School:  Living Nativity",
-      "start_utc": "2025-12-06 18:00:00",
-      "end_utc": "2025-12-06 20:00:00",
-      "location": "Christ Lutheran Church &amp; School, 201 North 3rd Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/christ-lutheran-school-living-nativity/2025-12-06/",
-      "uid": "10014113",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2025-12-06 21:00:00",
-      "end_utc": "2025-12-06 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2025-12-06/",
-      "uid": "10018714",
       "_source": null
     },
     {
@@ -5412,6 +5251,50 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-04-06 05:30:00",
+      "end_utc": "2026-04-06 07:30:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs/2026-04-06/",
+      "uid": "10011559",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-04-06 14:00:00",
+      "end_utc": "2026-04-06 16:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-04-06/",
+      "uid": "10013057",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Ukulele Practice/ Jam Session",
+      "start_utc": "2026-04-06 14:30:00",
+      "end_utc": "2026-04-06 16:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/ukulele-practice-jam-session/2026-04-06/",
+      "uid": "10009700",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Hatha Yoga Monday Nights at The Warehouse Community Art Center",
+      "start_utc": "2026-04-06 18:00:00",
+      "end_utc": "2026-04-06 19:30:00",
+      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/hatha-yoga-monday-nights-at-the-warehouse-community-art-center/2026-04-06/",
+      "uid": "10016465",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -5606,7 +5489,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Rock of Ages Church",
       "url": "https://www.minocqua.org/event/rock-of-ages-ladies-guild-cookie-walk/39849/",
-      "uid": "sv-1839677869577712062",
+      "uid": "sv-2455121277631801792",
       "_source": null
     },
     {
@@ -5617,7 +5500,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime/39812/",
-      "uid": "sv-1096774761365807926",
+      "uid": "sv-4428306297285467784",
       "_source": null
     },
     {
@@ -5628,7 +5511,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-7143724535686411452",
+      "uid": "sv-4001535099591666093",
       "_source": null
     },
     {
@@ -5639,7 +5522,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-8063012798511690130",
+      "uid": "sv-2431451919426644905",
       "_source": null
     },
     {
@@ -5650,7 +5533,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-5814967953074581290",
+      "uid": "sv-150426504769862712",
       "_source": null
     },
     {
@@ -5661,7 +5544,7 @@
       "end_utc": "2025-12-09 00:00:00",
       "location": "Generation's Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-lights-tour-%26-pizza-party/39853/",
-      "uid": "sv-1351075598659386099",
+      "uid": "sv-536242331234247591",
       "_source": null
     },
     {
@@ -5672,7 +5555,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/free-library-book-fair/39846/",
-      "uid": "sv-4212393970964212525",
+      "uid": "sv-6166132550484893872",
       "_source": null
     },
     {
@@ -5683,7 +5566,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-706138733744507028",
+      "uid": "sv-2761649174628094990",
       "_source": null
     },
     {
@@ -5694,7 +5577,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-3840571534057131314",
+      "uid": "sv-8986923881369740742",
       "_source": null
     },
     {
@@ -5705,7 +5588,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5319752722166099605",
+      "uid": "sv-1608450282154560938",
       "_source": null
     },
     {
@@ -5716,7 +5599,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines, 415 Chippewa Street Minocqua, WI 54548",
       "url": "https://www.minocqua.org/event/cookie-walk-%26-craft-sale/39859/",
-      "uid": "sv-4072291222165661905",
+      "uid": "sv-7511252642108613951",
       "_source": null
     },
     {
@@ -5727,7 +5610,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines The United Women in Faith have been busy as Christmas elves",
       "url": "https://www.minocqua.org/event/craft-sale-at-church-of-the-pines/39860/",
-      "uid": "sv-4631754741074270668",
+      "uid": "sv-8782856268941239191",
       "_source": null
     },
     {
@@ -5738,7 +5621,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Trinity Lutheran Church and School Minocqua",
       "url": "https://www.minocqua.org/event/the-journey-to-the-manger/39820/",
-      "uid": "sv-5874819064643542601",
+      "uid": "sv-4752905197653006266",
       "_source": null
     },
     {
@@ -5749,7 +5632,7 @@
       "end_utc": "2025-12-15 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-concert-potluck-%26-social/39844/",
-      "uid": "sv-6197561146605894574",
+      "uid": "sv-7900374896157087734",
       "_source": null
     },
     {
@@ -5760,7 +5643,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/the-ides-of-march-christmas-show-featuring-jim-peterik/39823/",
-      "uid": "sv-828883514181193663",
+      "uid": "sv-8680096849795453353",
       "_source": null
     },
     {
@@ -5771,7 +5654,7 @@
       "end_utc": "2025-12-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long/39813/",
-      "uid": "sv-7713104383439153303",
+      "uid": "sv-5940088965461933753",
       "_source": null
     },
     {
@@ -5782,7 +5665,7 @@
       "end_utc": "2025-12-20 00:00:00",
       "location": "Downtown Minocqua",
       "url": "https://www.minocqua.org/event/the-grinch-visits-downtown-minocqua!/39851/",
-      "uid": "sv-4308631452092207072",
+      "uid": "sv-590257848970595802",
       "_source": null
     },
     {
@@ -5793,7 +5676,7 @@
       "end_utc": "2025-12-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/music-time-with-hailee-wingo/39862/",
-      "uid": "sv-2437739758478533671",
+      "uid": "sv-3761899256277756271",
       "_source": null
     },
     {
@@ -5804,7 +5687,7 @@
       "end_utc": "2025-12-23 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/holiday-movie-at-the-library/39863/",
-      "uid": "sv-1318903531671729592",
+      "uid": "sv-4792939483534960669",
       "_source": null
     },
     {
@@ -5815,7 +5698,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-2420008139203356460",
+      "uid": "sv-752918041312591370",
       "_source": null
     },
     {
@@ -5826,7 +5709,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39693/",
-      "uid": "sv-6065725105491600171",
+      "uid": "sv-5705715377662643168",
       "_source": null
     },
     {
@@ -5837,7 +5720,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-4769158868726916498",
+      "uid": "sv-5729489199933895769",
       "_source": null
     },
     {
@@ -5848,7 +5731,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-8370029989687918916",
+      "uid": "sv-8569282109308656908",
       "_source": null
     },
     {
@@ -5859,73 +5742,7 @@
       "end_utc": "2026-01-08 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pet-cents/39696/",
-      "uid": "sv-902448052229341900",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Holiday Marketplace",
-      "start_utc": "2025-12-06 09:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "St Germain Community Center, 545 Hwy 155, St Germain, WI",
-      "url": "https://vilaswi.com/event/holiday-marketplace-2/",
-      "uid": "8356",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Jingle Bell 5K Run",
-      "start_utc": "2025-12-06 15:00:00",
-      "end_utc": "2025-12-06 18:00:00",
-      "location": "St Germain Chamber of Commerce Office, 473 Hwy 70E, St Germain, WI",
-      "url": "https://vilaswi.com/event/jingle-bell-3k-run-walk-2/",
-      "uid": "8361",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Phelps Christmas Tree Lighting",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 18:00:00",
-      "location": "Downtown Phelps, 2276 Hwy 17, Phelps, WI",
-      "url": "https://vilaswi.com/event/phelps-christmas-tree-lighting/",
-      "uid": "4168",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Holiday Hometown Celebration",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 20:00:00",
-      "location": "Sayner Community Center, Sayner-Star Lake",
-      "url": "https://vilaswi.com/event/holiday-hometown-celebration/",
-      "uid": "7154",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Christmas Kickoff",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 18:30:00",
-      "location": "Riverview Park",
-      "url": "https://vilaswi.com/event/christmas-kickoff-3/",
-      "uid": "8474",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Mani * Wish Christmas",
-      "start_utc": "2025-12-06 17:00:00",
-      "end_utc": "2025-12-06 17:00:00",
-      "location": "Little Bohemia Lodge, 142 US-51, Manitowish Waters, WI",
-      "url": "https://vilaswi.com/event/mani-wish-christmas/",
-      "uid": "8578",
+      "uid": "sv-608828834544384203",
       "_source": null
     },
     {
@@ -6673,7 +6490,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-8227671384369169685",
+      "uid": "sv-5904061465953309597",
       "_source": null
     },
     {
@@ -6684,7 +6501,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Little Bohemia Lodge",
       "url": "https://manitowishwaters.org/event/mani*wish-christmas/666/",
-      "uid": "sv-8197172449409721399",
+      "uid": "sv-2717951340456909241",
       "_source": null
     },
     {
@@ -6695,7 +6512,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "The Bear Lodge",
       "url": "https://manitowishwaters.org/event/nostalgia-night/652/",
-      "uid": "sv-2077577213082394940",
+      "uid": "sv-8854988158520271037",
       "_source": null
     },
     {
@@ -6706,7 +6523,7 @@
       "end_utc": "2025-12-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-wreath-making-workshop/657/",
-      "uid": "sv-5938620910802901847",
+      "uid": "sv-7248127659382009893",
       "_source": null
     },
     {
@@ -6717,7 +6534,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-103681769934778826",
+      "uid": "sv-197395670465208342",
       "_source": null
     },
     {
@@ -6728,7 +6545,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "The MAC",
       "url": "https://manitowishwaters.org/event/wisconsin-national-politics-mark-belling/640/",
-      "uid": "sv-7230212541537485315",
+      "uid": "sv-2444074182255854267",
       "_source": null
     },
     {
@@ -6739,7 +6556,7 @@
       "end_utc": "2025-12-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-indigenous-stories-and-legends-connecting-our-past-present-and-future/658/",
-      "uid": "sv-8052811708204501752",
+      "uid": "sv-5415766744206580624",
       "_source": null
     },
     {
@@ -6750,7 +6567,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-1400616166692627810",
+      "uid": "sv-4599282669920782732",
       "_source": null
     },
     {
@@ -6761,7 +6578,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-7247157992503939652",
+      "uid": "sv-3512687679923676273",
       "_source": null
     },
     {
@@ -6772,7 +6589,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-535494701626424764",
+      "uid": "sv-5107595681645893297",
       "_source": null
     },
     {
@@ -6783,7 +6600,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-7926664919048736333",
+      "uid": "sv-89310070763086338",
       "_source": null
     },
     {
@@ -6794,7 +6611,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-1422281639453590361",
+      "uid": "sv-2571253431056941971",
       "_source": null
     },
     {
@@ -6805,7 +6622,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-6388818197797282199",
+      "uid": "sv-8960426028758254040",
       "_source": null
     },
     {
@@ -6816,7 +6633,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-865410556999930190",
+      "uid": "sv-8933640855445537707",
       "_source": null
     },
     {
@@ -6827,7 +6644,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-6888743591731252248",
+      "uid": "sv-2752195426703943440",
       "_source": null
     },
     {
@@ -6838,7 +6655,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-5503086767774491181",
+      "uid": "sv-4763843160522422695",
       "_source": null
     },
     {
@@ -6849,18 +6666,18 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-6610784854984986443",
+      "uid": "sv-7983369679032575759",
       "_source": null
     },
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Hometown Holiday Celebration",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 21:00:00",
-      "location": "Sayner Community Center, 545 WI-155, Sayner",
+      "start_utc": "2025-12-06T22:00:00+00:00",
+      "end_utc": "2025-12-07T03:00:00+00:00",
+      "location": "Sayner Community Center, 545 WI-155, Sayner, WI, 54560",
       "url": "https://sayner-starlake-cloverland.org/event/hometown-holiday-celebration/",
-      "uid": "963",
+      "uid": "747b44e827247a3623b2b30fb8ac1b01378e1661@northwoods-v2",
       "_source": null
     }
   ],
@@ -6868,39 +6685,6 @@
     {
       "calendar": "Boulder Junction (TEC)",
       "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2025-12-06/",
-      "uid": "51244",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Partners Cribbage Tournaments at Northern Waters Casino",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 17:00:00",
-      "location": "Northern Waters Casino Resort, N5384 US 45, Watersmeet",
-      "url": "https://boulderjct.org/events/partners-cribbage-tournaments-at-northern-waters-casino/2025-12-06/",
-      "uid": "50760",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Chubby Checker at Lake of the Torches Resort Casino",
-      "start_utc": "2025-12-06 19:00:00",
-      "end_utc": "2025-12-06 21:00:00",
-      "location": "Lake of the Torches Resort Casino, 510 Old Abe Rd, Lac du Flambeau, WI",
-      "url": "https://boulderjct.org/events/chubby-checker-at-lake-of-the-torches-resort-casino/",
-      "uid": "51300",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
       "title": "Mah Jongg at the Boulder Junction Public Library",
       "start_utc": "2025-12-08 13:00:00",
       "end_utc": "2025-12-08 16:00:00",
@@ -7402,138 +7186,6 @@
       "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
       "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-02-28/",
       "uid": "51250",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "School Walking Hours at NPHS",
-      "start_utc": "2025-12-06 07:00:00",
-      "end_utc": "2025-12-06 12:00:00",
-      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2025-12-06/",
-      "uid": "10013576",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Saturday Studio: Drop In Art at the Library",
-      "start_utc": "2025-12-06 09:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/saturday-studio-drop-in-art-at-the-library/2025-12-06/",
-      "uid": "10017471",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Garden Centers First Ever Christmas at Custom",
-      "start_utc": "2025-12-06 09:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "Custom Landscaping, 1144 Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/the-garden-centers-first-ever-christmas-at-custom/2025-12-06/",
-      "uid": "10018180",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Mending Day at Walter E. Olson Memorial Library",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 12:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-mending-day-at-walter-e-olson-memorial-library/2025-12-06/",
-      "uid": "10008921",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Holiday Open House and Art Bazaar",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 16:00:00",
-      "location": "LOLA &#8211; Land O&#8217;Lakes Art Center, 4262 Cty Hwy B, Land O'Lakes, WI",
-      "url": "https://eagleriver.org/events/holiday-open-house-and-art-bazaar/",
-      "uid": "23535",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Christmas Market at the Warehouse",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 16:00:00",
-      "location": "Warehouse Community Art Center",
-      "url": "https://eagleriver.org/events/christmas-market-at-the-warehouse/",
-      "uid": "25271",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Garden Railroad on Display at St. Mary of the Snows",
-      "start_utc": "2025-12-06 10:00:00",
-      "end_utc": "2025-12-06 14:00:00",
-      "location": "St. Mary of the Snows, 1019 East Wall Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows/2025-12-06/",
-      "uid": "10018982",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Intro to Sourdough with Tom Dunphy at Walter E. Olson Memorial Library",
-      "start_utc": "2025-12-06 13:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/intro-to-sourdough-with-tom-dunphy-at-walter-e-olson-memorial-library/",
-      "uid": "24846",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Christmas Kickoff",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 18:30:00",
-      "location": "Riverview Park",
-      "url": "https://eagleriver.org/events/christmas-kickoff/",
-      "uid": "17113",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "2025 Partners Cribbage Tournaments at Northern Waters Casino and Resort",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 19:00:00",
-      "location": "Lac Vieux Desert Northern Casino Resort",
-      "url": "https://eagleriver.org/events/2025-partners-cribbage-tournaments-at-northern-waters-casino-and-resort/2025-12-06/",
-      "uid": "10017423",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Christ Lutheran School:  Living Nativity",
-      "start_utc": "2025-12-06 18:00:00",
-      "end_utc": "2025-12-06 20:00:00",
-      "location": "Christ Lutheran Church &amp; School, 201 North 3rd Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/christ-lutheran-school-living-nativity/2025-12-06/",
-      "uid": "10014113",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2025-12-06 21:00:00",
-      "end_utc": "2025-12-06 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2025-12-06/",
-      "uid": "10018714",
       "_source": null
     },
     {
@@ -12168,6 +11820,50 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-04-06 05:30:00",
+      "end_utc": "2026-04-06 07:30:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs/2026-04-06/",
+      "uid": "10011559",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-04-06 14:00:00",
+      "end_utc": "2026-04-06 16:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-04-06/",
+      "uid": "10013057",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Ukulele Practice/ Jam Session",
+      "start_utc": "2026-04-06 14:30:00",
+      "end_utc": "2026-04-06 16:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/ukulele-practice-jam-session/2026-04-06/",
+      "uid": "10009700",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Hatha Yoga Monday Nights at The Warehouse Community Art Center",
+      "start_utc": "2026-04-06 18:00:00",
+      "end_utc": "2026-04-06 19:30:00",
+      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/hatha-yoga-monday-nights-at-the-warehouse-community-art-center/2026-04-06/",
+      "uid": "10016465",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -12362,7 +12058,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Rock of Ages Church",
       "url": "https://www.minocqua.org/event/rock-of-ages-ladies-guild-cookie-walk/39849/",
-      "uid": "sv-1839677869577712062",
+      "uid": "sv-2455121277631801792",
       "_source": null
     },
     {
@@ -12373,7 +12069,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime/39812/",
-      "uid": "sv-1096774761365807926",
+      "uid": "sv-4428306297285467784",
       "_source": null
     },
     {
@@ -12384,7 +12080,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-7143724535686411452",
+      "uid": "sv-4001535099591666093",
       "_source": null
     },
     {
@@ -12395,7 +12091,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-8063012798511690130",
+      "uid": "sv-2431451919426644905",
       "_source": null
     },
     {
@@ -12406,7 +12102,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-5814967953074581290",
+      "uid": "sv-150426504769862712",
       "_source": null
     },
     {
@@ -12417,7 +12113,7 @@
       "end_utc": "2025-12-09 00:00:00",
       "location": "Generation's Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-lights-tour-%26-pizza-party/39853/",
-      "uid": "sv-1351075598659386099",
+      "uid": "sv-536242331234247591",
       "_source": null
     },
     {
@@ -12428,7 +12124,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/free-library-book-fair/39846/",
-      "uid": "sv-4212393970964212525",
+      "uid": "sv-6166132550484893872",
       "_source": null
     },
     {
@@ -12439,7 +12135,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-706138733744507028",
+      "uid": "sv-2761649174628094990",
       "_source": null
     },
     {
@@ -12450,7 +12146,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-3840571534057131314",
+      "uid": "sv-8986923881369740742",
       "_source": null
     },
     {
@@ -12461,7 +12157,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5319752722166099605",
+      "uid": "sv-1608450282154560938",
       "_source": null
     },
     {
@@ -12472,7 +12168,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines, 415 Chippewa Street Minocqua, WI 54548",
       "url": "https://www.minocqua.org/event/cookie-walk-%26-craft-sale/39859/",
-      "uid": "sv-4072291222165661905",
+      "uid": "sv-7511252642108613951",
       "_source": null
     },
     {
@@ -12483,7 +12179,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines The United Women in Faith have been busy as Christmas elves",
       "url": "https://www.minocqua.org/event/craft-sale-at-church-of-the-pines/39860/",
-      "uid": "sv-4631754741074270668",
+      "uid": "sv-8782856268941239191",
       "_source": null
     },
     {
@@ -12494,7 +12190,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Trinity Lutheran Church and School Minocqua",
       "url": "https://www.minocqua.org/event/the-journey-to-the-manger/39820/",
-      "uid": "sv-5874819064643542601",
+      "uid": "sv-4752905197653006266",
       "_source": null
     },
     {
@@ -12505,7 +12201,7 @@
       "end_utc": "2025-12-15 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-concert-potluck-%26-social/39844/",
-      "uid": "sv-6197561146605894574",
+      "uid": "sv-7900374896157087734",
       "_source": null
     },
     {
@@ -12516,7 +12212,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/the-ides-of-march-christmas-show-featuring-jim-peterik/39823/",
-      "uid": "sv-828883514181193663",
+      "uid": "sv-8680096849795453353",
       "_source": null
     },
     {
@@ -12527,7 +12223,7 @@
       "end_utc": "2025-12-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long/39813/",
-      "uid": "sv-7713104383439153303",
+      "uid": "sv-5940088965461933753",
       "_source": null
     },
     {
@@ -12538,7 +12234,7 @@
       "end_utc": "2025-12-20 00:00:00",
       "location": "Downtown Minocqua",
       "url": "https://www.minocqua.org/event/the-grinch-visits-downtown-minocqua!/39851/",
-      "uid": "sv-4308631452092207072",
+      "uid": "sv-590257848970595802",
       "_source": null
     },
     {
@@ -12549,7 +12245,7 @@
       "end_utc": "2025-12-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/music-time-with-hailee-wingo/39862/",
-      "uid": "sv-2437739758478533671",
+      "uid": "sv-3761899256277756271",
       "_source": null
     },
     {
@@ -12560,7 +12256,7 @@
       "end_utc": "2025-12-23 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/holiday-movie-at-the-library/39863/",
-      "uid": "sv-1318903531671729592",
+      "uid": "sv-4792939483534960669",
       "_source": null
     },
     {
@@ -12571,7 +12267,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-2420008139203356460",
+      "uid": "sv-752918041312591370",
       "_source": null
     },
     {
@@ -12582,7 +12278,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39693/",
-      "uid": "sv-6065725105491600171",
+      "uid": "sv-5705715377662643168",
       "_source": null
     },
     {
@@ -12593,7 +12289,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-4769158868726916498",
+      "uid": "sv-5729489199933895769",
       "_source": null
     },
     {
@@ -12604,7 +12300,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-8370029989687918916",
+      "uid": "sv-8569282109308656908",
       "_source": null
     },
     {
@@ -12615,73 +12311,7 @@
       "end_utc": "2026-01-08 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pet-cents/39696/",
-      "uid": "sv-902448052229341900",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Holiday Marketplace",
-      "start_utc": "2025-12-06 09:00:00",
-      "end_utc": "2025-12-06 15:00:00",
-      "location": "St Germain Community Center, 545 Hwy 155, St Germain, WI",
-      "url": "https://vilaswi.com/event/holiday-marketplace-2/",
-      "uid": "8356",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Jingle Bell 5K Run",
-      "start_utc": "2025-12-06 15:00:00",
-      "end_utc": "2025-12-06 18:00:00",
-      "location": "St Germain Chamber of Commerce Office, 473 Hwy 70E, St Germain, WI",
-      "url": "https://vilaswi.com/event/jingle-bell-3k-run-walk-2/",
-      "uid": "8361",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Phelps Christmas Tree Lighting",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 18:00:00",
-      "location": "Downtown Phelps, 2276 Hwy 17, Phelps, WI",
-      "url": "https://vilaswi.com/event/phelps-christmas-tree-lighting/",
-      "uid": "4168",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Holiday Hometown Celebration",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 20:00:00",
-      "location": "Sayner Community Center, Sayner-Star Lake",
-      "url": "https://vilaswi.com/event/holiday-hometown-celebration/",
-      "uid": "7154",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Christmas Kickoff",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 18:30:00",
-      "location": "Riverview Park",
-      "url": "https://vilaswi.com/event/christmas-kickoff-3/",
-      "uid": "8474",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Mani * Wish Christmas",
-      "start_utc": "2025-12-06 17:00:00",
-      "end_utc": "2025-12-06 17:00:00",
-      "location": "Little Bohemia Lodge, 142 US-51, Manitowish Waters, WI",
-      "url": "https://vilaswi.com/event/mani-wish-christmas/",
-      "uid": "8578",
+      "uid": "sv-608828834544384203",
       "_source": null
     },
     {
@@ -13429,7 +13059,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-8227671384369169685",
+      "uid": "sv-5904061465953309597",
       "_source": null
     },
     {
@@ -13440,7 +13070,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "Little Bohemia Lodge",
       "url": "https://manitowishwaters.org/event/mani*wish-christmas/666/",
-      "uid": "sv-8197172449409721399",
+      "uid": "sv-2717951340456909241",
       "_source": null
     },
     {
@@ -13451,7 +13081,7 @@
       "end_utc": "2025-12-06 00:00:00",
       "location": "The Bear Lodge",
       "url": "https://manitowishwaters.org/event/nostalgia-night/652/",
-      "uid": "sv-2077577213082394940",
+      "uid": "sv-8854988158520271037",
       "_source": null
     },
     {
@@ -13462,7 +13092,7 @@
       "end_utc": "2025-12-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-wreath-making-workshop/657/",
-      "uid": "sv-5938620910802901847",
+      "uid": "sv-7248127659382009893",
       "_source": null
     },
     {
@@ -13473,7 +13103,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-103681769934778826",
+      "uid": "sv-197395670465208342",
       "_source": null
     },
     {
@@ -13484,7 +13114,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "The MAC",
       "url": "https://manitowishwaters.org/event/wisconsin-national-politics-mark-belling/640/",
-      "uid": "sv-7230212541537485315",
+      "uid": "sv-2444074182255854267",
       "_source": null
     },
     {
@@ -13495,7 +13125,7 @@
       "end_utc": "2025-12-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-indigenous-stories-and-legends-connecting-our-past-present-and-future/658/",
-      "uid": "sv-8052811708204501752",
+      "uid": "sv-5415766744206580624",
       "_source": null
     },
     {
@@ -13506,7 +13136,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-1400616166692627810",
+      "uid": "sv-4599282669920782732",
       "_source": null
     },
     {
@@ -13517,7 +13147,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-7247157992503939652",
+      "uid": "sv-3512687679923676273",
       "_source": null
     },
     {
@@ -13528,7 +13158,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-535494701626424764",
+      "uid": "sv-5107595681645893297",
       "_source": null
     },
     {
@@ -13539,7 +13169,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-7926664919048736333",
+      "uid": "sv-89310070763086338",
       "_source": null
     },
     {
@@ -13550,7 +13180,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-1422281639453590361",
+      "uid": "sv-2571253431056941971",
       "_source": null
     },
     {
@@ -13561,7 +13191,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-6388818197797282199",
+      "uid": "sv-8960426028758254040",
       "_source": null
     },
     {
@@ -13572,7 +13202,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-865410556999930190",
+      "uid": "sv-8933640855445537707",
       "_source": null
     },
     {
@@ -13583,7 +13213,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-6888743591731252248",
+      "uid": "sv-2752195426703943440",
       "_source": null
     },
     {
@@ -13594,7 +13224,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-5503086767774491181",
+      "uid": "sv-4763843160522422695",
       "_source": null
     },
     {
@@ -13605,24 +13235,24 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-6610784854984986443",
+      "uid": "sv-7983369679032575759",
       "_source": null
     },
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Hometown Holiday Celebration",
-      "start_utc": "2025-12-06 16:00:00",
-      "end_utc": "2025-12-06 21:00:00",
-      "location": "Sayner Community Center, 545 WI-155, Sayner",
+      "start_utc": "2025-12-06T22:00:00+00:00",
+      "end_utc": "2025-12-07T03:00:00+00:00",
+      "location": "Sayner Community Center, 545 WI-155, Sayner, WI, 54560",
       "url": "https://sayner-starlake-cloverland.org/event/hometown-holiday-celebration/",
-      "uid": "963",
+      "uid": "747b44e827247a3623b2b30fb8ac1b01378e1661@northwoods-v2",
       "_source": null
     }
   ],
-  "events_preview_count": 614,
+  "events_preview_count": 597,
   "curated_feeds": {
-    "generated_at": "2025-12-06T18:26:13.234401+00:00",
+    "generated_at": "2025-12-07T04:32:10.777587+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
