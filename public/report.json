@@ -1,7 +1,7 @@
 {
-  "generated_at": "2025-12-07T04:32:10.736447+00:00",
+  "generated_at": "2025-12-07T08:48:37.071888+00:00",
   "sources_processed": 8,
-  "total_events": 597,
+  "total_events": 583,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -48,7 +48,7 @@
       "type": "stgermain_wp",
       "url": "https://st-germain.com/events/",
       "ok": true,
-      "count": 14,
+      "count": 3,
       "error": null,
       "slug": "st-germain-chamber-wp",
       "ics_path": "by-source/st-germain-chamber-wp.ics",
@@ -87,7 +87,7 @@
       "type": "simpleview_html",
       "url": "https://manitowishwaters.org/event/rss/",
       "ok": true,
-      "count": 17,
+      "count": 15,
       "error": null,
       "slug": "manitowish-waters-chamber-tec",
       "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
@@ -99,15 +99,58 @@
       "name": "Sayner Star Lake Cloverland (TEC)",
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
-      "ok": true,
-      "count": 1,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30)",
       "slug": "sayner-star-lake-cloverland-tec",
-      "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
+      "ics_path": null,
       "warnings": [
-        "Used TEC ICS fallback: https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-06",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)"
+        "tec_rest request failed: HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-06&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2025-12-06&end_date=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2025-12-06&endDate=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-06&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2025-12-06&end_date=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2025-12-06&endDate=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-06&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2025-12-06&end_date=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2025-12-06&endDate=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-06&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2025-12-06&end_date=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2025-12-06&endDate=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-06&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2025-12-06)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2025-12-06&end_date=2026-06-05)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2025-12-06&endDate=2026-06-05)"
       ],
       "notes": []
     }
@@ -5330,72 +5373,6 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
-      "title": "Arrowhead Groomer Show 2026",
-      "start_utc": "2026-02-05T00:00:00",
-      "end_utc": null,
-      "location": "February 5th, 2026",
-      "url": "https://st-germain.com/events/arrowhead-groomer-show-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Awassa by Candlelight 2026",
-      "start_utc": "2026-01-17T00:00:00",
-      "end_utc": null,
-      "location": "January 17th, 2026",
-      "url": "https://st-germain.com/events/awassa-by-candlelight-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Bo-Boen Chili Fest",
-      "start_utc": "2025-12-06T00:00:00",
-      "end_utc": null,
-      "location": "December 6th, 2025",
-      "url": "https://st-germain.com/events/bo-boen-chili-fest/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Chamber Christmas Membership Meeting 2025",
-      "start_utc": "2025-12-18T00:00:00",
-      "end_utc": null,
-      "location": "December 18th, 2025",
-      "url": "https://st-germain.com/events/chamber-christmas-membership-meeting-2025/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Classic Sled Round Up 2026",
-      "start_utc": "2026-05-24T00:00:00",
-      "end_utc": null,
-      "location": "May 24th, 2026",
-      "url": "https://st-germain.com/events/classic-sled-round-up-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "(untitled)",
-      "start_utc": "2026-07-08T00:00:00",
-      "end_utc": null,
-      "location": null,
-      "url": "https://st-germain.com/events/feed/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
       "title": "Jingle Bell 5K Run Canceled",
       "start_utc": "2025-12-06T00:00:00",
       "end_utc": null,
@@ -5427,94 +5404,6 @@
       "_source": "stgermain_wp"
     },
     {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Martinis in May 2026",
-      "start_utc": "2026-05-02T00:00:00",
-      "end_utc": null,
-      "location": "May 2nd, 2026",
-      "url": "https://st-germain.com/events/martinis-in-may-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Events",
-      "start_utc": "2025-11-29T00:00:00",
-      "end_utc": null,
-      "location": null,
-      "url": "https://st-germain.com/events/page/2/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Ride with the Champs 2026",
-      "start_utc": "2026-02-21T00:00:00",
-      "end_utc": null,
-      "location": "February 21st, 2026",
-      "url": "https://st-germain.com/events/ride-with-the-champs-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Snowmobile Safety Class 2025",
-      "start_utc": "2025-12-14T00:00:00",
-      "end_utc": null,
-      "location": "December 14th, 2025",
-      "url": "https://st-germain.com/events/snowmobile-safety-class-2025/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "St. Germain Radar Run 2026",
-      "start_utc": "2026-02-13T00:00:00",
-      "end_utc": "2026-02-14T00:00:00",
-      "location": "February 14th, 2026",
-      "url": "https://st-germain.com/events/st-germain-radar-run-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Rock of Ages Ladies Guild Cookie Walk",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "Rock of Ages Church",
-      "url": "https://www.minocqua.org/event/rock-of-ages-ladies-guild-cookie-walk/39849/",
-      "uid": "sv-2455121277631801792",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Saturday StoryTime",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "Minocqua Public Library",
-      "url": "https://www.minocqua.org/event/saturday-storytime/39812/",
-      "uid": "sv-4428306297285467784",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Sound & Sauna Saturdays",
-      "start_utc": "2025-06-07 00:00:00",
-      "end_utc": "2025-12-27 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-4001535099591666093",
-      "_source": null
-    },
-    {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
       "title": "Minocqua Winter Market",
@@ -5522,7 +5411,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-2431451919426644905",
+      "uid": "sv-5589787191573595916",
       "_source": null
     },
     {
@@ -5533,7 +5422,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-150426504769862712",
+      "uid": "sv-8922823611043581419",
       "_source": null
     },
     {
@@ -5544,7 +5433,7 @@
       "end_utc": "2025-12-09 00:00:00",
       "location": "Generation's Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-lights-tour-%26-pizza-party/39853/",
-      "uid": "sv-536242331234247591",
+      "uid": "sv-1391666429378130708",
       "_source": null
     },
     {
@@ -5555,7 +5444,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/free-library-book-fair/39846/",
-      "uid": "sv-6166132550484893872",
+      "uid": "sv-8378309041425924479",
       "_source": null
     },
     {
@@ -5566,7 +5455,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-2761649174628094990",
+      "uid": "sv-4794940633697401363",
       "_source": null
     },
     {
@@ -5577,7 +5466,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-8986923881369740742",
+      "uid": "sv-414496918826739958",
       "_source": null
     },
     {
@@ -5588,7 +5477,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-1608450282154560938",
+      "uid": "sv-3247033211006477653",
       "_source": null
     },
     {
@@ -5599,7 +5488,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines, 415 Chippewa Street Minocqua, WI 54548",
       "url": "https://www.minocqua.org/event/cookie-walk-%26-craft-sale/39859/",
-      "uid": "sv-7511252642108613951",
+      "uid": "sv-8046090688936174313",
       "_source": null
     },
     {
@@ -5610,7 +5499,18 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines The United Women in Faith have been busy as Christmas elves",
       "url": "https://www.minocqua.org/event/craft-sale-at-church-of-the-pines/39860/",
-      "uid": "sv-8782856268941239191",
+      "uid": "sv-2913487924013675263",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound & Sauna Saturdays",
+      "start_utc": "2025-06-07 00:00:00",
+      "end_utc": "2025-12-27 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
+      "uid": "sv-2974921192796926449",
       "_source": null
     },
     {
@@ -5621,7 +5521,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Trinity Lutheran Church and School Minocqua",
       "url": "https://www.minocqua.org/event/the-journey-to-the-manger/39820/",
-      "uid": "sv-4752905197653006266",
+      "uid": "sv-8040978092966140018",
       "_source": null
     },
     {
@@ -5632,7 +5532,7 @@
       "end_utc": "2025-12-15 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-concert-potluck-%26-social/39844/",
-      "uid": "sv-7900374896157087734",
+      "uid": "sv-7037400979866749548",
       "_source": null
     },
     {
@@ -5643,7 +5543,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/the-ides-of-march-christmas-show-featuring-jim-peterik/39823/",
-      "uid": "sv-8680096849795453353",
+      "uid": "sv-2796350024649136198",
       "_source": null
     },
     {
@@ -5654,7 +5554,7 @@
       "end_utc": "2025-12-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long/39813/",
-      "uid": "sv-5940088965461933753",
+      "uid": "sv-9202682686302718853",
       "_source": null
     },
     {
@@ -5665,7 +5565,7 @@
       "end_utc": "2025-12-20 00:00:00",
       "location": "Downtown Minocqua",
       "url": "https://www.minocqua.org/event/the-grinch-visits-downtown-minocqua!/39851/",
-      "uid": "sv-590257848970595802",
+      "uid": "sv-1449769500184687769",
       "_source": null
     },
     {
@@ -5676,7 +5576,7 @@
       "end_utc": "2025-12-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/music-time-with-hailee-wingo/39862/",
-      "uid": "sv-3761899256277756271",
+      "uid": "sv-191225378019904482",
       "_source": null
     },
     {
@@ -5687,7 +5587,7 @@
       "end_utc": "2025-12-23 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/holiday-movie-at-the-library/39863/",
-      "uid": "sv-4792939483534960669",
+      "uid": "sv-134067225641299822",
       "_source": null
     },
     {
@@ -5698,7 +5598,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-752918041312591370",
+      "uid": "sv-1949201491540475447",
       "_source": null
     },
     {
@@ -5709,7 +5609,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39693/",
-      "uid": "sv-5705715377662643168",
+      "uid": "sv-6679683030066365592",
       "_source": null
     },
     {
@@ -5720,7 +5620,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-5729489199933895769",
+      "uid": "sv-8984347132249841976",
       "_source": null
     },
     {
@@ -5731,7 +5631,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-8569282109308656908",
+      "uid": "sv-2325626807200731637",
       "_source": null
     },
     {
@@ -5742,7 +5642,29 @@
       "end_utc": "2026-01-08 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pet-cents/39696/",
-      "uid": "sv-608828834544384203",
+      "uid": "sv-9178764846963365666",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Uncork & Unwind",
+      "start_utc": "2025-01-08 00:00:00",
+      "end_utc": null,
+      "location": "Norwood Pines in Mincoqua from 5-8 pm. Wine tasting",
+      "url": "https://www.minocqua.org/event/uncork-%26-unwind/39843/",
+      "uid": "sv-643984320868380365",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Snofest- Presented by the Cross Country Cruisers",
+      "start_utc": "2026-01-16 00:00:00",
+      "end_utc": "2026-01-17 00:00:00",
+      "location": "Cross Country Cruisers Snowmobile Club",
+      "url": "https://www.minocqua.org/event/snofest-presented-by-the-cross-country-cruisers/39775/",
+      "uid": "sv-6422252889561620555",
       "_source": null
     },
     {
@@ -6485,45 +6407,12 @@
     {
       "calendar": "Manitowish Waters Chamber (TEC)",
       "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Lakeside Yoga Stretch",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-27 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-5904061465953309597",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Mani*Wish Christmas",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "Little Bohemia Lodge",
-      "url": "https://manitowishwaters.org/event/mani*wish-christmas/666/",
-      "uid": "sv-2717951340456909241",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Nostalgia Night",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "The Bear Lodge",
-      "url": "https://manitowishwaters.org/event/nostalgia-night/652/",
-      "uid": "sv-8854988158520271037",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
       "title": "Holiday Wreath Making Workshop",
       "start_utc": "2025-12-08 00:00:00",
       "end_utc": "2025-12-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-wreath-making-workshop/657/",
-      "uid": "sv-7248127659382009893",
+      "uid": "sv-6947879376895288526",
       "_source": null
     },
     {
@@ -6534,7 +6423,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-197395670465208342",
+      "uid": "sv-4581318617837843332",
       "_source": null
     },
     {
@@ -6545,7 +6434,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "The MAC",
       "url": "https://manitowishwaters.org/event/wisconsin-national-politics-mark-belling/640/",
-      "uid": "sv-2444074182255854267",
+      "uid": "sv-3666151107017079050",
       "_source": null
     },
     {
@@ -6556,7 +6445,7 @@
       "end_utc": "2025-12-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-indigenous-stories-and-legends-connecting-our-past-present-and-future/658/",
-      "uid": "sv-5415766744206580624",
+      "uid": "sv-6401226141857661796",
       "_source": null
     },
     {
@@ -6567,7 +6456,18 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-4599282669920782732",
+      "uid": "sv-1487348997571140412",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Lakeside Yoga Stretch",
+      "start_utc": "2025-12-06 00:00:00",
+      "end_utc": "2025-12-27 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
+      "uid": "sv-941729055363734601",
       "_source": null
     },
     {
@@ -6578,7 +6478,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-3512687679923676273",
+      "uid": "sv-8293008852786991501",
       "_source": null
     },
     {
@@ -6589,7 +6489,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-5107595681645893297",
+      "uid": "sv-3655951710915948225",
       "_source": null
     },
     {
@@ -6600,7 +6500,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-89310070763086338",
+      "uid": "sv-5908740463831500980",
       "_source": null
     },
     {
@@ -6611,7 +6511,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-2571253431056941971",
+      "uid": "sv-8120207664057413477",
       "_source": null
     },
     {
@@ -6622,7 +6522,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-8960426028758254040",
+      "uid": "sv-4197053378435974353",
       "_source": null
     },
     {
@@ -6633,7 +6533,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-8933640855445537707",
+      "uid": "sv-4724578867970724237",
       "_source": null
     },
     {
@@ -6644,7 +6544,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-2752195426703943440",
+      "uid": "sv-5041990688532334211",
       "_source": null
     },
     {
@@ -6655,7 +6555,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-4763843160522422695",
+      "uid": "sv-6806866250250440040",
       "_source": null
     },
     {
@@ -6666,18 +6566,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-7983369679032575759",
-      "_source": null
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Hometown Holiday Celebration",
-      "start_utc": "2025-12-06T22:00:00+00:00",
-      "end_utc": "2025-12-07T03:00:00+00:00",
-      "location": "Sayner Community Center, 545 WI-155, Sayner, WI, 54560",
-      "url": "https://sayner-starlake-cloverland.org/event/hometown-holiday-celebration/",
-      "uid": "747b44e827247a3623b2b30fb8ac1b01378e1661@northwoods-v2",
+      "uid": "sv-5341207582753332606",
       "_source": null
     }
   ],
@@ -11899,72 +11788,6 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
-      "title": "Arrowhead Groomer Show 2026",
-      "start_utc": "2026-02-05T00:00:00",
-      "end_utc": null,
-      "location": "February 5th, 2026",
-      "url": "https://st-germain.com/events/arrowhead-groomer-show-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Awassa by Candlelight 2026",
-      "start_utc": "2026-01-17T00:00:00",
-      "end_utc": null,
-      "location": "January 17th, 2026",
-      "url": "https://st-germain.com/events/awassa-by-candlelight-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Bo-Boen Chili Fest",
-      "start_utc": "2025-12-06T00:00:00",
-      "end_utc": null,
-      "location": "December 6th, 2025",
-      "url": "https://st-germain.com/events/bo-boen-chili-fest/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Chamber Christmas Membership Meeting 2025",
-      "start_utc": "2025-12-18T00:00:00",
-      "end_utc": null,
-      "location": "December 18th, 2025",
-      "url": "https://st-germain.com/events/chamber-christmas-membership-meeting-2025/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Classic Sled Round Up 2026",
-      "start_utc": "2026-05-24T00:00:00",
-      "end_utc": null,
-      "location": "May 24th, 2026",
-      "url": "https://st-germain.com/events/classic-sled-round-up-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "(untitled)",
-      "start_utc": "2026-07-08T00:00:00",
-      "end_utc": null,
-      "location": null,
-      "url": "https://st-germain.com/events/feed/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
       "title": "Jingle Bell 5K Run Canceled",
       "start_utc": "2025-12-06T00:00:00",
       "end_utc": null,
@@ -11996,94 +11819,6 @@
       "_source": "stgermain_wp"
     },
     {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Martinis in May 2026",
-      "start_utc": "2026-05-02T00:00:00",
-      "end_utc": null,
-      "location": "May 2nd, 2026",
-      "url": "https://st-germain.com/events/martinis-in-may-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Events",
-      "start_utc": "2025-11-29T00:00:00",
-      "end_utc": null,
-      "location": null,
-      "url": "https://st-germain.com/events/page/2/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Ride with the Champs 2026",
-      "start_utc": "2026-02-21T00:00:00",
-      "end_utc": null,
-      "location": "February 21st, 2026",
-      "url": "https://st-germain.com/events/ride-with-the-champs-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "Snowmobile Safety Class 2025",
-      "start_utc": "2025-12-14T00:00:00",
-      "end_utc": null,
-      "location": "December 14th, 2025",
-      "url": "https://st-germain.com/events/snowmobile-safety-class-2025/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "St. Germain Radar Run 2026",
-      "start_utc": "2026-02-13T00:00:00",
-      "end_utc": "2026-02-14T00:00:00",
-      "location": "February 14th, 2026",
-      "url": "https://st-germain.com/events/st-germain-radar-run-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Rock of Ages Ladies Guild Cookie Walk",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "Rock of Ages Church",
-      "url": "https://www.minocqua.org/event/rock-of-ages-ladies-guild-cookie-walk/39849/",
-      "uid": "sv-2455121277631801792",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Saturday StoryTime",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "Minocqua Public Library",
-      "url": "https://www.minocqua.org/event/saturday-storytime/39812/",
-      "uid": "sv-4428306297285467784",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Sound & Sauna Saturdays",
-      "start_utc": "2025-06-07 00:00:00",
-      "end_utc": "2025-12-27 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-4001535099591666093",
-      "_source": null
-    },
-    {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
       "title": "Minocqua Winter Market",
@@ -12091,7 +11826,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-2431451919426644905",
+      "uid": "sv-5589787191573595916",
       "_source": null
     },
     {
@@ -12102,7 +11837,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-150426504769862712",
+      "uid": "sv-8922823611043581419",
       "_source": null
     },
     {
@@ -12113,7 +11848,7 @@
       "end_utc": "2025-12-09 00:00:00",
       "location": "Generation's Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-lights-tour-%26-pizza-party/39853/",
-      "uid": "sv-536242331234247591",
+      "uid": "sv-1391666429378130708",
       "_source": null
     },
     {
@@ -12124,7 +11859,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/free-library-book-fair/39846/",
-      "uid": "sv-6166132550484893872",
+      "uid": "sv-8378309041425924479",
       "_source": null
     },
     {
@@ -12135,7 +11870,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-2761649174628094990",
+      "uid": "sv-4794940633697401363",
       "_source": null
     },
     {
@@ -12146,7 +11881,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-8986923881369740742",
+      "uid": "sv-414496918826739958",
       "_source": null
     },
     {
@@ -12157,7 +11892,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-1608450282154560938",
+      "uid": "sv-3247033211006477653",
       "_source": null
     },
     {
@@ -12168,7 +11903,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines, 415 Chippewa Street Minocqua, WI 54548",
       "url": "https://www.minocqua.org/event/cookie-walk-%26-craft-sale/39859/",
-      "uid": "sv-7511252642108613951",
+      "uid": "sv-8046090688936174313",
       "_source": null
     },
     {
@@ -12179,7 +11914,18 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines The United Women in Faith have been busy as Christmas elves",
       "url": "https://www.minocqua.org/event/craft-sale-at-church-of-the-pines/39860/",
-      "uid": "sv-8782856268941239191",
+      "uid": "sv-2913487924013675263",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound & Sauna Saturdays",
+      "start_utc": "2025-06-07 00:00:00",
+      "end_utc": "2025-12-27 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
+      "uid": "sv-2974921192796926449",
       "_source": null
     },
     {
@@ -12190,7 +11936,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Trinity Lutheran Church and School Minocqua",
       "url": "https://www.minocqua.org/event/the-journey-to-the-manger/39820/",
-      "uid": "sv-4752905197653006266",
+      "uid": "sv-8040978092966140018",
       "_source": null
     },
     {
@@ -12201,7 +11947,7 @@
       "end_utc": "2025-12-15 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-concert-potluck-%26-social/39844/",
-      "uid": "sv-7900374896157087734",
+      "uid": "sv-7037400979866749548",
       "_source": null
     },
     {
@@ -12212,7 +11958,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/the-ides-of-march-christmas-show-featuring-jim-peterik/39823/",
-      "uid": "sv-8680096849795453353",
+      "uid": "sv-2796350024649136198",
       "_source": null
     },
     {
@@ -12223,7 +11969,7 @@
       "end_utc": "2025-12-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long/39813/",
-      "uid": "sv-5940088965461933753",
+      "uid": "sv-9202682686302718853",
       "_source": null
     },
     {
@@ -12234,7 +11980,7 @@
       "end_utc": "2025-12-20 00:00:00",
       "location": "Downtown Minocqua",
       "url": "https://www.minocqua.org/event/the-grinch-visits-downtown-minocqua!/39851/",
-      "uid": "sv-590257848970595802",
+      "uid": "sv-1449769500184687769",
       "_source": null
     },
     {
@@ -12245,7 +11991,7 @@
       "end_utc": "2025-12-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/music-time-with-hailee-wingo/39862/",
-      "uid": "sv-3761899256277756271",
+      "uid": "sv-191225378019904482",
       "_source": null
     },
     {
@@ -12256,7 +12002,7 @@
       "end_utc": "2025-12-23 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/holiday-movie-at-the-library/39863/",
-      "uid": "sv-4792939483534960669",
+      "uid": "sv-134067225641299822",
       "_source": null
     },
     {
@@ -12267,7 +12013,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-752918041312591370",
+      "uid": "sv-1949201491540475447",
       "_source": null
     },
     {
@@ -12278,7 +12024,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39693/",
-      "uid": "sv-5705715377662643168",
+      "uid": "sv-6679683030066365592",
       "_source": null
     },
     {
@@ -12289,7 +12035,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-5729489199933895769",
+      "uid": "sv-8984347132249841976",
       "_source": null
     },
     {
@@ -12300,7 +12046,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-8569282109308656908",
+      "uid": "sv-2325626807200731637",
       "_source": null
     },
     {
@@ -12311,7 +12057,29 @@
       "end_utc": "2026-01-08 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pet-cents/39696/",
-      "uid": "sv-608828834544384203",
+      "uid": "sv-9178764846963365666",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Uncork & Unwind",
+      "start_utc": "2025-01-08 00:00:00",
+      "end_utc": null,
+      "location": "Norwood Pines in Mincoqua from 5-8 pm. Wine tasting",
+      "url": "https://www.minocqua.org/event/uncork-%26-unwind/39843/",
+      "uid": "sv-643984320868380365",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Snofest- Presented by the Cross Country Cruisers",
+      "start_utc": "2026-01-16 00:00:00",
+      "end_utc": "2026-01-17 00:00:00",
+      "location": "Cross Country Cruisers Snowmobile Club",
+      "url": "https://www.minocqua.org/event/snofest-presented-by-the-cross-country-cruisers/39775/",
+      "uid": "sv-6422252889561620555",
       "_source": null
     },
     {
@@ -13054,45 +12822,12 @@
     {
       "calendar": "Manitowish Waters Chamber (TEC)",
       "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Lakeside Yoga Stretch",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-27 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-5904061465953309597",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Mani*Wish Christmas",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "Little Bohemia Lodge",
-      "url": "https://manitowishwaters.org/event/mani*wish-christmas/666/",
-      "uid": "sv-2717951340456909241",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Nostalgia Night",
-      "start_utc": "2025-12-06 00:00:00",
-      "end_utc": "2025-12-06 00:00:00",
-      "location": "The Bear Lodge",
-      "url": "https://manitowishwaters.org/event/nostalgia-night/652/",
-      "uid": "sv-8854988158520271037",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
       "title": "Holiday Wreath Making Workshop",
       "start_utc": "2025-12-08 00:00:00",
       "end_utc": "2025-12-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/holiday-wreath-making-workshop/657/",
-      "uid": "sv-7248127659382009893",
+      "uid": "sv-6947879376895288526",
       "_source": null
     },
     {
@@ -13103,7 +12838,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-197395670465208342",
+      "uid": "sv-4581318617837843332",
       "_source": null
     },
     {
@@ -13114,7 +12849,7 @@
       "end_utc": "2025-12-10 00:00:00",
       "location": "The MAC",
       "url": "https://manitowishwaters.org/event/wisconsin-national-politics-mark-belling/640/",
-      "uid": "sv-2444074182255854267",
+      "uid": "sv-3666151107017079050",
       "_source": null
     },
     {
@@ -13125,7 +12860,7 @@
       "end_utc": "2025-12-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-indigenous-stories-and-legends-connecting-our-past-present-and-future/658/",
-      "uid": "sv-5415766744206580624",
+      "uid": "sv-6401226141857661796",
       "_source": null
     },
     {
@@ -13136,7 +12871,18 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-4599282669920782732",
+      "uid": "sv-1487348997571140412",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Lakeside Yoga Stretch",
+      "start_utc": "2025-12-06 00:00:00",
+      "end_utc": "2025-12-27 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
+      "uid": "sv-941729055363734601",
       "_source": null
     },
     {
@@ -13147,7 +12893,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-3512687679923676273",
+      "uid": "sv-8293008852786991501",
       "_source": null
     },
     {
@@ -13158,7 +12904,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-5107595681645893297",
+      "uid": "sv-3655951710915948225",
       "_source": null
     },
     {
@@ -13169,7 +12915,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-89310070763086338",
+      "uid": "sv-5908740463831500980",
       "_source": null
     },
     {
@@ -13180,7 +12926,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-2571253431056941971",
+      "uid": "sv-8120207664057413477",
       "_source": null
     },
     {
@@ -13191,7 +12937,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-8960426028758254040",
+      "uid": "sv-4197053378435974353",
       "_source": null
     },
     {
@@ -13202,7 +12948,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-8933640855445537707",
+      "uid": "sv-4724578867970724237",
       "_source": null
     },
     {
@@ -13213,7 +12959,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-2752195426703943440",
+      "uid": "sv-5041990688532334211",
       "_source": null
     },
     {
@@ -13224,7 +12970,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-4763843160522422695",
+      "uid": "sv-6806866250250440040",
       "_source": null
     },
     {
@@ -13235,24 +12981,13 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-7983369679032575759",
-      "_source": null
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Hometown Holiday Celebration",
-      "start_utc": "2025-12-06T22:00:00+00:00",
-      "end_utc": "2025-12-07T03:00:00+00:00",
-      "location": "Sayner Community Center, 545 WI-155, Sayner, WI, 54560",
-      "url": "https://sayner-starlake-cloverland.org/event/hometown-holiday-celebration/",
-      "uid": "747b44e827247a3623b2b30fb8ac1b01378e1661@northwoods-v2",
+      "uid": "sv-5341207582753332606",
       "_source": null
     }
   ],
-  "events_preview_count": 597,
+  "events_preview_count": 583,
   "curated_feeds": {
-    "generated_at": "2025-12-07T04:32:10.777587+00:00",
+    "generated_at": "2025-12-07T08:48:37.114268+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
