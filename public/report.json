@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-12T08:53:07.619621+00:00",
+  "generated_at": "2025-12-12T18:34:49.480785+00:00",
   "sources_processed": 8,
   "total_events": 583,
   "source_logs": [
@@ -99,58 +99,57 @@
       "name": "Sayner Star Lake Cloverland (TEC)",
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
-      "ok": false,
+      "ok": true,
       "count": 0,
-      "error": "HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /wp-json/tribe/events/v1/events?start_date=2025-12-12&end_date=2026-04-11&per_page=50&page=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340418e590>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)'))",
+      "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /wp-json/tribe/events/v1/events?start_date=2025-12-12&end_date=2026-04-11&per_page=50&page=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340418e590>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)'))",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403bc5610>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&tribe_display=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34041dcb50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c8050>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403955e10>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&eventDisplay=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34041dfcd0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&eventDisplay=list&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34039286d0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&eventDisplay=month&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340418db10>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&start_date=2025-12-11&end_date=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038cbcd0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&startDate=2025-12-11&endDate=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340392bd50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403928750>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&tribe_display=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038cb210>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340434ded0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340434f4d0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&eventDisplay=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038cbc10>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&eventDisplay=list&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34040cef10>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&eventDisplay=month&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f340392a5d0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&start_date=2025-12-11&end_date=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c8110>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events?ical=1&startDate=2025-12-11&endDate=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34039125d0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34040cce50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&tribe_display=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038cae10>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403955210>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403929310>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&eventDisplay=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038cbfd0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&eventDisplay=list&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34036ef850>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&eventDisplay=month&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3404315190>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&start_date=2025-12-11&end_date=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038cb190>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/list?ical=1&startDate=2025-12-11&endDate=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403d62cd0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403703050>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&tribe_display=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c8590>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403759f50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403d62750>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&eventDisplay=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c9cd0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&eventDisplay=list&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403766950>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&eventDisplay=month&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403759e50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&start_date=2025-12-11&end_date=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c9350>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events?ical=1&startDate=2025-12-11&endDate=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34036a3190>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403766f90>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&tribe_display=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403955c50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403740790>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34036a01d0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&eventDisplay=list (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c9dd0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&eventDisplay=list&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403743d50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&eventDisplay=month&eventDate=2025-12-11 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403743c50>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2025-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&start_date=2025-12-11&end_date=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f34038c96d0>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /index.php/events/list?ical=1&startDate=2025-12-11&endDate=2026-06-10 (Caused by ConnectTimeoutError(<HTTPSConnection(host='sayner-starlake-cloverland.org', port=443) at 0x7f3403753390>, 'Connection to sayner-starlake-cloverland.org timed out. (connect timeout=30)')) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2025-12-11&endDate=2026-06-10)"
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2025-12-11&endDate=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2025-12-11&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2025-12-11)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2025-12-11&end_date=2026-06-10)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Found no components where exactly one is required: b'' (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2025-12-11&endDate=2026-06-10)"
       ],
       "notes": []
     }
@@ -5433,7 +5432,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines, 415 Chippewa Street Minocqua, WI 54548",
       "url": "https://www.minocqua.org/event/cookie-walk-%26-craft-sale/39859/",
-      "uid": "sv-7079744317710681845",
+      "uid": "sv-3606017657721244433",
       "_source": null
     },
     {
@@ -5444,7 +5443,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines The United Women in Faith have been busy as Christmas elves",
       "url": "https://www.minocqua.org/event/craft-sale-at-church-of-the-pines/39860/",
-      "uid": "sv-6102539456512664995",
+      "uid": "sv-5453941431303346699",
       "_source": null
     },
     {
@@ -5455,7 +5454,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/santa-claus-at-arbor-vitae-fire-department/39884/",
-      "uid": "sv-8322879152489817101",
+      "uid": "sv-6556592408563562201",
       "_source": null
     },
     {
@@ -5466,7 +5465,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-5218559404283417023",
+      "uid": "sv-5806045746559315569",
       "_source": null
     },
     {
@@ -5477,7 +5476,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Trinity Lutheran Church and School Minocqua",
       "url": "https://www.minocqua.org/event/the-journey-to-the-manger/39820/",
-      "uid": "sv-1577452997303745619",
+      "uid": "sv-2574045225201038933",
       "_source": null
     },
     {
@@ -5488,7 +5487,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-1935875286129682718",
+      "uid": "sv-5731483428923921206",
       "_source": null
     },
     {
@@ -5499,7 +5498,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-6696607330861796255",
+      "uid": "sv-3495131108693065062",
       "_source": null
     },
     {
@@ -5510,7 +5509,7 @@
       "end_utc": "2025-12-15 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-concert-potluck-%26-social/39844/",
-      "uid": "sv-7255685348459190846",
+      "uid": "sv-5188051168062947376",
       "_source": null
     },
     {
@@ -5521,7 +5520,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-2636556079155685957",
+      "uid": "sv-5423136181184375504",
       "_source": null
     },
     {
@@ -5532,7 +5531,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-1104038627975682039",
+      "uid": "sv-6583143185148973079",
       "_source": null
     },
     {
@@ -5543,7 +5542,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/the-ides-of-march-christmas-show-featuring-jim-peterik/39823/",
-      "uid": "sv-7538945227794773602",
+      "uid": "sv-5553390954444544412",
       "_source": null
     },
     {
@@ -5554,7 +5553,7 @@
       "end_utc": "2025-12-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long/39813/",
-      "uid": "sv-4551638139070824781",
+      "uid": "sv-7067112762667674574",
       "_source": null
     },
     {
@@ -5565,7 +5564,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5531574211697722461",
+      "uid": "sv-1855749998698908237",
       "_source": null
     },
     {
@@ -5576,7 +5575,7 @@
       "end_utc": "2025-12-20 00:00:00",
       "location": "Downtown Minocqua",
       "url": "https://www.minocqua.org/event/the-grinch-visits-downtown-minocqua!/39851/",
-      "uid": "sv-5550390559529425254",
+      "uid": "sv-8833841954790445869",
       "_source": null
     },
     {
@@ -5587,7 +5586,7 @@
       "end_utc": "2025-12-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/music-time-with-hailee-wingo/39862/",
-      "uid": "sv-1112254238831127886",
+      "uid": "sv-3023785038757591388",
       "_source": null
     },
     {
@@ -5598,7 +5597,7 @@
       "end_utc": "2025-12-23 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/holiday-movie-at-the-library/39863/",
-      "uid": "sv-7560836021893313690",
+      "uid": "sv-689695357445691889",
       "_source": null
     },
     {
@@ -5609,7 +5608,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-2315293982708711332",
+      "uid": "sv-2215568630474173975",
       "_source": null
     },
     {
@@ -5620,7 +5619,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39693/",
-      "uid": "sv-762732323542579145",
+      "uid": "sv-8937698715382057305",
       "_source": null
     },
     {
@@ -5631,7 +5630,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-1317557585546056707",
+      "uid": "sv-3130609131638082076",
       "_source": null
     },
     {
@@ -5642,7 +5641,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-3313375828839826965",
+      "uid": "sv-2084150529105029410",
       "_source": null
     },
     {
@@ -5653,7 +5652,7 @@
       "end_utc": "2026-01-08 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pet-cents/39696/",
-      "uid": "sv-4116742231750500517",
+      "uid": "sv-6057655092130502390",
       "_source": null
     },
     {
@@ -5664,7 +5663,7 @@
       "end_utc": null,
       "location": "Norwood Pines in Mincoqua from 5-8 pm. Wine tasting",
       "url": "https://www.minocqua.org/event/uncork-%26-unwind/39843/",
-      "uid": "sv-1138625581041543797",
+      "uid": "sv-8492058853131366325",
       "_source": null
     },
     {
@@ -5675,7 +5674,7 @@
       "end_utc": "2026-01-17 00:00:00",
       "location": "Cross Country Cruisers Snowmobile Club",
       "url": "https://www.minocqua.org/event/snofest-presented-by-the-cross-country-cruisers/39775/",
-      "uid": "sv-6135886358618129022",
+      "uid": "sv-2140934107892957002",
       "_source": null
     },
     {
@@ -6445,7 +6444,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-5118746268423417328",
+      "uid": "sv-7820545939730933946",
       "_source": null
     },
     {
@@ -6456,7 +6455,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-2446435239362798300",
+      "uid": "sv-2543489898928347307",
       "_source": null
     },
     {
@@ -6467,7 +6466,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-1817442203756539108",
+      "uid": "sv-2226382699742593207",
       "_source": null
     },
     {
@@ -6478,7 +6477,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-2328111786565357028",
+      "uid": "sv-3965709126033150047",
       "_source": null
     },
     {
@@ -6489,7 +6488,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-4902645170572507655",
+      "uid": "sv-1946103725605589753",
       "_source": null
     },
     {
@@ -6500,7 +6499,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-1733469149999189537",
+      "uid": "sv-5986362576915132058",
       "_source": null
     },
     {
@@ -6511,7 +6510,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-1702008997910992526",
+      "uid": "sv-3498855178611028065",
       "_source": null
     },
     {
@@ -6522,7 +6521,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-2568663994668675128",
+      "uid": "sv-1846077780969365665",
       "_source": null
     },
     {
@@ -6533,7 +6532,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-1094111866626644708",
+      "uid": "sv-641988717578946192",
       "_source": null
     },
     {
@@ -6544,7 +6543,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-3617452405178483320",
+      "uid": "sv-2291179030561459542",
       "_source": null
     },
     {
@@ -6555,7 +6554,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-357956862797125423",
+      "uid": "sv-3428059488719437160",
       "_source": null
     },
     {
@@ -6566,7 +6565,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-6798875609381956776",
+      "uid": "sv-2519479544081508385",
       "_source": null
     }
   ],
@@ -11848,7 +11847,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines, 415 Chippewa Street Minocqua, WI 54548",
       "url": "https://www.minocqua.org/event/cookie-walk-%26-craft-sale/39859/",
-      "uid": "sv-7079744317710681845",
+      "uid": "sv-3606017657721244433",
       "_source": null
     },
     {
@@ -11859,7 +11858,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Church of the Pines The United Women in Faith have been busy as Christmas elves",
       "url": "https://www.minocqua.org/event/craft-sale-at-church-of-the-pines/39860/",
-      "uid": "sv-6102539456512664995",
+      "uid": "sv-5453941431303346699",
       "_source": null
     },
     {
@@ -11870,7 +11869,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/santa-claus-at-arbor-vitae-fire-department/39884/",
-      "uid": "sv-8322879152489817101",
+      "uid": "sv-6556592408563562201",
       "_source": null
     },
     {
@@ -11881,7 +11880,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-5218559404283417023",
+      "uid": "sv-5806045746559315569",
       "_source": null
     },
     {
@@ -11892,7 +11891,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Trinity Lutheran Church and School Minocqua",
       "url": "https://www.minocqua.org/event/the-journey-to-the-manger/39820/",
-      "uid": "sv-1577452997303745619",
+      "uid": "sv-2574045225201038933",
       "_source": null
     },
     {
@@ -11903,7 +11902,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-1935875286129682718",
+      "uid": "sv-5731483428923921206",
       "_source": null
     },
     {
@@ -11914,7 +11913,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-6696607330861796255",
+      "uid": "sv-3495131108693065062",
       "_source": null
     },
     {
@@ -11925,7 +11924,7 @@
       "end_utc": "2025-12-15 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/christmas-concert-potluck-%26-social/39844/",
-      "uid": "sv-7255685348459190846",
+      "uid": "sv-5188051168062947376",
       "_source": null
     },
     {
@@ -11936,7 +11935,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-2636556079155685957",
+      "uid": "sv-5423136181184375504",
       "_source": null
     },
     {
@@ -11947,7 +11946,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime!/39709/",
-      "uid": "sv-1104038627975682039",
+      "uid": "sv-6583143185148973079",
       "_source": null
     },
     {
@@ -11958,7 +11957,7 @@
       "end_utc": "2025-12-17 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/the-ides-of-march-christmas-show-featuring-jim-peterik/39823/",
-      "uid": "sv-7538945227794773602",
+      "uid": "sv-5553390954444544412",
       "_source": null
     },
     {
@@ -11969,7 +11968,7 @@
       "end_utc": "2025-12-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/family-read-a-long/39813/",
-      "uid": "sv-4551638139070824781",
+      "uid": "sv-7067112762667674574",
       "_source": null
     },
     {
@@ -11980,7 +11979,7 @@
       "end_utc": "2025-12-25 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5531574211697722461",
+      "uid": "sv-1855749998698908237",
       "_source": null
     },
     {
@@ -11991,7 +11990,7 @@
       "end_utc": "2025-12-20 00:00:00",
       "location": "Downtown Minocqua",
       "url": "https://www.minocqua.org/event/the-grinch-visits-downtown-minocqua!/39851/",
-      "uid": "sv-5550390559529425254",
+      "uid": "sv-8833841954790445869",
       "_source": null
     },
     {
@@ -12002,7 +12001,7 @@
       "end_utc": "2025-12-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/music-time-with-hailee-wingo/39862/",
-      "uid": "sv-1112254238831127886",
+      "uid": "sv-3023785038757591388",
       "_source": null
     },
     {
@@ -12013,7 +12012,7 @@
       "end_utc": "2025-12-23 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/holiday-movie-at-the-library/39863/",
-      "uid": "sv-7560836021893313690",
+      "uid": "sv-689695357445691889",
       "_source": null
     },
     {
@@ -12024,7 +12023,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-2315293982708711332",
+      "uid": "sv-2215568630474173975",
       "_source": null
     },
     {
@@ -12035,7 +12034,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/builders-club/39693/",
-      "uid": "sv-762732323542579145",
+      "uid": "sv-8937698715382057305",
       "_source": null
     },
     {
@@ -12046,7 +12045,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-1317557585546056707",
+      "uid": "sv-3130609131638082076",
       "_source": null
     },
     {
@@ -12057,7 +12056,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-3313375828839826965",
+      "uid": "sv-2084150529105029410",
       "_source": null
     },
     {
@@ -12068,7 +12067,7 @@
       "end_utc": "2026-01-08 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pet-cents/39696/",
-      "uid": "sv-4116742231750500517",
+      "uid": "sv-6057655092130502390",
       "_source": null
     },
     {
@@ -12079,7 +12078,7 @@
       "end_utc": null,
       "location": "Norwood Pines in Mincoqua from 5-8 pm. Wine tasting",
       "url": "https://www.minocqua.org/event/uncork-%26-unwind/39843/",
-      "uid": "sv-1138625581041543797",
+      "uid": "sv-8492058853131366325",
       "_source": null
     },
     {
@@ -12090,7 +12089,7 @@
       "end_utc": "2026-01-17 00:00:00",
       "location": "Cross Country Cruisers Snowmobile Club",
       "url": "https://www.minocqua.org/event/snofest-presented-by-the-cross-country-cruisers/39775/",
-      "uid": "sv-6135886358618129022",
+      "uid": "sv-2140934107892957002",
       "_source": null
     },
     {
@@ -12860,7 +12859,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/jewelry-inspired-by-nature-with-darcy-lanz-sage-and-jenna-richardson/659/",
-      "uid": "sv-5118746268423417328",
+      "uid": "sv-7820545939730933946",
       "_source": null
     },
     {
@@ -12871,7 +12870,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-2446435239362798300",
+      "uid": "sv-2543489898928347307",
       "_source": null
     },
     {
@@ -12882,7 +12881,7 @@
       "end_utc": "2025-12-13 00:00:00",
       "location": "Pine Lawn Cemetery",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/641/",
-      "uid": "sv-1817442203756539108",
+      "uid": "sv-2226382699742593207",
       "_source": null
     },
     {
@@ -12893,7 +12892,7 @@
       "end_utc": "2025-12-16 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-hidden-life-of-trees-by-peter-wohlleben/660/",
-      "uid": "sv-2328111786565357028",
+      "uid": "sv-3965709126033150047",
       "_source": null
     },
     {
@@ -12904,7 +12903,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-4902645170572507655",
+      "uid": "sv-1946103725605589753",
       "_source": null
     },
     {
@@ -12915,7 +12914,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/candlelit-snowshoe-soiree/663/",
-      "uid": "sv-1733469149999189537",
+      "uid": "sv-5986362576915132058",
       "_source": null
     },
     {
@@ -12926,7 +12925,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/661/",
-      "uid": "sv-1702008997910992526",
+      "uid": "sv-3498855178611028065",
       "_source": null
     },
     {
@@ -12937,7 +12936,7 @@
       "end_utc": "2025-12-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-the-mitten-by-jan-brett/662/",
-      "uid": "sv-2568663994668675128",
+      "uid": "sv-1846077780969365665",
       "_source": null
     },
     {
@@ -12948,7 +12947,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "Manitowish Waters Sno-Skeeters Snowmobile Club",
       "url": "https://manitowishwaters.org/event/snowmobile-safety-class/665/",
-      "uid": "sv-1094111866626644708",
+      "uid": "sv-641988717578946192",
       "_source": null
     },
     {
@@ -12959,7 +12958,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/649/",
-      "uid": "sv-3617452405178483320",
+      "uid": "sv-2291179030561459542",
       "_source": null
     },
     {
@@ -12970,7 +12969,7 @@
       "end_utc": "2025-12-30 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/winter-family-play-day/664/",
-      "uid": "sv-357956862797125423",
+      "uid": "sv-3428059488719437160",
       "_source": null
     },
     {
@@ -12981,13 +12980,13 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-6798875609381956776",
+      "uid": "sv-2519479544081508385",
       "_source": null
     }
   ],
   "events_preview_count": 583,
   "curated_feeds": {
-    "generated_at": "2025-12-12T08:53:07.662729+00:00",
+    "generated_at": "2025-12-12T18:34:49.523914+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
@@ -12995,10 +12994,10 @@
         "id": "family-events",
         "name": "Family-Friendly Northwoods Events",
         "enabled": true,
-        "count": 16,
+        "count": 17,
         "path": "curated/family-events.ics",
         "manual_count": 0,
-        "auto_count": 16
+        "auto_count": 17
       },
       {
         "id": "min-events",
