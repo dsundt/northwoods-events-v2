@@ -1,19 +1,21 @@
 {
-  "generated_at": "2026-01-28T18:36:44.893719+00:00",
+  "generated_at": "2026-01-29T05:06:44.507157+00:00",
   "sources_processed": 8,
-  "total_events": 619,
+  "total_events": 521,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
       "name": "Boulder Junction (TEC)",
       "type": "tec_rest",
       "url": "https://boulderjct.org/",
-      "ok": true,
-      "count": 30,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "521 Server Error: <none> for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-01-29&end_date=2026-05-29&per_page=50&page=1",
       "slug": "boulder-junction-tec",
-      "ics_path": "by-source/boulder-junction-tec.ics",
-      "warnings": [],
+      "ics_path": null,
+      "warnings": [
+        "tec_rest request failed: 521 Server Error: <none> for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-01-29&end_date=2026-05-29&per_page=50&page=1"
+      ],
       "notes": []
     },
     {
@@ -22,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 475,
+      "count": 476,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -34,11 +36,11 @@
       "name": "St. Germain Chamber (GrowthZone)",
       "type": "growthzone_html",
       "url": "https://stgermainwi.chambermaster.com/events/calendar?o=alpha",
-      "ok": true,
-      "count": 3,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "500 Server Error: Internal Server Error for url: https://stgermainwi.chambermaster.com/events/calendar?o=alpha",
       "slug": "st-germain-chamber-growthzone",
-      "ics_path": "by-source/st-germain-chamber-growthzone.ics",
+      "ics_path": null,
       "warnings": [],
       "notes": []
     },
@@ -73,12 +75,14 @@
       "name": "Vilas County Tourism (TEC)",
       "type": "tec_rest",
       "url": "https://vilaswi.com/",
-      "ok": true,
-      "count": 70,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "500 Server Error: Internal Server Error for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-01-29&end_date=2026-05-29&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
-      "ics_path": "by-source/vilas-county-tourism-tec.ics",
-      "warnings": [],
+      "ics_path": null,
+      "warnings": [
+        "tec_rest request failed: 500 Server Error: Internal Server Error for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-01-29&end_date=2026-05-29&per_page=50&page=1"
+      ],
       "notes": []
     },
     {
@@ -87,7 +91,7 @@
       "type": "simpleview_html",
       "url": "https://manitowishwaters.org/event/rss/",
       "ok": true,
-      "count": 7,
+      "count": 11,
       "error": null,
       "slug": "manitowish-waters-chamber-tec",
       "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
@@ -109,380 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Snowshoe the Lumberjack Trails with North Lakeland Discovery Center",
-      "start_utc": "2026-01-29 13:00:00",
-      "end_utc": "2026-01-29 16:00:00",
-      "location": "Lumberjack Trail, 9603 Concora Road, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/snowshoe-the-lumberjack-trails-with-north-lakeland-discovery-center/",
-      "uid": "51254",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-01-29 18:00:00",
-      "end_utc": "2026-01-29 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-01-29/",
-      "uid": "51596",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Ribbon Cutting and Grand Opening of Boulder Jct. Brewing Co.",
-      "start_utc": "2026-01-30 13:00:00",
-      "end_utc": "2026-01-30 20:00:00",
-      "location": "Boulder Jct Brewing Co., 10351 Main Street, Boulder Junction",
-      "url": "https://boulderjct.org/events/ribbon-cutting-and-grand-opening-of-boulder-jct-brewing-co/",
-      "uid": "51785",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-31 10:00:00",
-      "end_utc": "2026-01-31 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-01-31/",
-      "uid": "51248",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-03 11:00:00",
-      "end_utc": "2026-02-03 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-03/",
-      "uid": "51722",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-05 18:00:00",
-      "end_utc": "2026-02-05 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-05/",
-      "uid": "51598",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Lynx Lake Resort &#038; Bar: King of the Lake Snow Drags",
-      "start_utc": "2026-02-07 08:00:00",
-      "end_utc": "2026-02-07 17:00:00",
-      "location": "Lynx Lake Resort &#038; Bar, 10683 County Road B, Presque Isle",
-      "url": "https://boulderjct.org/events/lynx-lake-resort-bar-king-of-the-lake-snow-drags/",
-      "uid": "48526",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Stained Glass Garden Stake at LOLA 2-day Workshop",
-      "start_utc": "2026-02-09 10:00:00",
-      "end_utc": "2026-02-09 16:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/stained-glass-garden-stake-at-lola-2-day-workshop/2026-02-09/",
-      "uid": "51473",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Stained Glass Garden Stake at LOLA 2-day Workshop",
-      "start_utc": "2026-02-10 10:00:00",
-      "end_utc": "2026-02-10 16:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/stained-glass-garden-stake-at-lola-2-day-workshop/2026-02-10/",
-      "uid": "51474",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-10 11:00:00",
-      "end_utc": "2026-02-10 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-10/",
-      "uid": "51723",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-12 18:00:00",
-      "end_utc": "2026-02-12 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-12/",
-      "uid": "51600",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-14 10:00:00",
-      "end_utc": "2026-02-14 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-02-14/",
-      "uid": "51249",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Breakfast",
-      "start_utc": "2026-02-15 08:30:00",
-      "end_utc": "2026-02-15 11:30:00",
-      "location": "The Guide&#8217;s Inn, 5427 Park Street, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-breakfast-3/",
-      "uid": "51149",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-17 11:00:00",
-      "end_utc": "2026-02-17 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-17/",
-      "uid": "51724",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Acrylic Sunflowers on Wood at LOLA",
-      "start_utc": "2026-02-19 10:00:00",
-      "end_utc": "2026-02-19 14:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/acrylic-sunflowers-on-wood-at-lola/2026-02-19/",
-      "uid": "51470",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Spaghetti Dinner",
-      "start_utc": "2026-02-19 16:00:00",
-      "end_utc": "2026-02-19 19:00:00",
-      "location": "Rustic Roadhaus, 5194 US HWY 51, Manitowish Waters",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-spaghetti-dinner/",
-      "uid": "51151",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-19 18:00:00",
-      "end_utc": "2026-02-19 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-19/",
-      "uid": "51603",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Acrylic Sunflowers on Wood at LOLA",
-      "start_utc": "2026-02-20 10:00:00",
-      "end_utc": "2026-02-20 14:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/acrylic-sunflowers-on-wood-at-lola/2026-02-20/",
-      "uid": "51471",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Trailside Brat Fry",
-      "start_utc": "2026-02-21 11:00:00",
-      "end_utc": "2026-02-21 14:00:00",
-      "location": "Boulder Junction Snowmobile Club, 5387 Park St, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-trailside-brat-fry/",
-      "uid": "51153",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-24 11:00:00",
-      "end_utc": "2026-02-24 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-24/",
-      "uid": "51725",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-26 18:00:00",
-      "end_utc": "2026-02-26 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-26/",
-      "uid": "51605",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-28 10:00:00",
-      "end_utc": "2026-02-28 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-02-28/",
-      "uid": "51250",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-03-03 11:00:00",
-      "end_utc": "2026-03-03 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-03-03/",
-      "uid": "51726",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Cabin Fever Party",
-      "start_utc": "2026-03-07 16:00:00",
-      "end_utc": "2026-03-07 20:00:00",
-      "location": "Gooch&#8217;s 2 Bar &#038; Grill, 6215 County Hwy M, Boulder Junction",
-      "url": "https://boulderjct.org/events/snowmobile-club-cabin-fever-party/",
-      "uid": "46728",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-03-10 11:00:00",
-      "end_utc": "2026-03-10 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-03-10/",
-      "uid": "51727",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Lions Club Easter Bunny Breakfast",
-      "start_utc": "2026-03-28 09:30:00",
-      "end_utc": "2026-03-28 22:30:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-lions-club-easter-bunny-breakfast/",
-      "uid": "47053",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "North Lakeland Discovery Center Woods &#038; Water Conference",
-      "start_utc": "2026-04-24 08:00:00",
-      "end_utc": "2026-04-24 17:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/north-lakeland-woods-water-conference/",
-      "uid": "51479",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "North Lakeland Discovery Center: 21st Annual Bird &#038; Wildlife Festival",
-      "start_utc": "2026-05-09 08:00:00",
-      "end_utc": "2026-05-09 17:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/north-lakeland-discovery-center-20th-annual-bird-wildlife-festival/",
-      "uid": "48550",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "White Deer Triathlon",
-      "start_utc": "2026-05-16 09:00:00",
-      "end_utc": "2026-05-16 15:30:00",
-      "location": "Boulder Lake, 5960 Airport Rd, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/white-deer-tri/",
-      "uid": "48553",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "American Legion Post 451 Memorial Day Service",
-      "start_utc": "2026-05-25 11:00:00",
-      "end_utc": "2026-05-25 12:00:00",
-      "location": "Downtown Boulder Junction, Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/american-legion-post-451-memorial-day-service/",
-      "uid": "47057",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Heart and Soul Quilters Group",
-      "start_utc": "2026-01-28 09:00:00",
-      "end_utc": "2026-01-28 12:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/heart-and-soul-quilters-group/2026-01-28/",
-      "uid": "10015231",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Sno-Eagles Weekly Trail Rides",
-      "start_utc": "2026-01-28 10:00:00",
-      "end_utc": "2026-01-28 15:30:00",
-      "location": "Eagle River Depot Museum",
-      "url": "https://eagleriver.org/events/sno-eagles-weekly-trail-rides-2-3/2026-01-28/",
-      "uid": "10019592",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Northwoods Carvers/Scrabble/Cribbage",
-      "start_utc": "2026-01-28 12:30:00",
-      "end_utc": "2026-01-28 16:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/northwoods-carvers-scrabble-cribbage/2026-01-28/",
-      "uid": "10014970",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Care Giver Support Group",
-      "start_utc": "2026-01-28 13:00:00",
-      "end_utc": "2026-01-28 14:00:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/care-giver-support-group/2026-01-28/",
-      "uid": "10014733",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -5665,37 +5295,59 @@
       "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell 5K Run Canceled",
-      "start_utc": "2025-12-06T00:00:00",
-      "end_utc": null,
-      "location": "December 6th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-5k-run-canceled/",
-      "uid": null,
-      "_source": "growthzone_html"
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "24rd Trees for Tomorrow Golf Outing Fundraiser",
+      "start_utc": "2026-05-29 07:30:00",
+      "end_utc": "2026-05-29 15:30:00",
+      "location": "Eagle River Golf Course, 457 McKinley Blvd, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/trees-for-tomorrow-golf-outing/",
+      "uid": "21367",
+      "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell Run 2025",
-      "start_utc": "2025-12-04T10:00:00",
-      "end_utc": null,
-      "location": "December 4th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-run-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Wiggle Giggle &#038; Shake",
+      "start_utc": "2026-05-29 10:00:00",
+      "end_utc": "2026-05-29 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/wiggle-giggle-shake/2026-05-29/",
+      "uid": "10009186",
+      "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Lighting Up St. Germain 2025",
-      "start_utc": "2025-11-29T16:30:00",
-      "end_utc": null,
-      "location": "November 29th, 2025",
-      "url": "https://st-germain.com/events/lighting-up-st-germain-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Happy Hour at The Brew Station",
+      "start_utc": "2026-05-29 16:00:00",
+      "end_utc": "2026-05-29 18:00:00",
+      "location": "The Brew Station",
+      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-05-29/",
+      "uid": "10013906",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Free Live Music at Pirates Hideaway",
+      "start_utc": "2026-05-29 18:00:00",
+      "end_utc": "2026-05-29 21:00:00",
+      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-4-2-2/2026-05-29/",
+      "uid": "10019800",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-05-29 21:00:00",
+      "end_utc": "2026-05-29 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-05-29/",
+      "uid": "10018217",
+      "_source": null
     },
     {
       "calendar": "St. Germain Chamber (WP)",
@@ -5903,7 +5555,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-4005927324013817546",
+      "uid": "sv-2746518679657186940",
       "_source": null
     },
     {
@@ -5914,7 +5566,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-4424884173968406430",
+      "uid": "sv-6411945802814199238",
       "_source": null
     },
     {
@@ -5925,7 +5577,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-2240186737782931041",
+      "uid": "sv-1506034278076905709",
       "_source": null
     },
     {
@@ -5936,7 +5588,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-6145514735182089122",
+      "uid": "sv-2565718520561239754",
       "_source": null
     },
     {
@@ -5947,7 +5599,7 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "Minocqua Winter Park",
       "url": "https://www.minocqua.org/event/wolf-tracks-rendezvous/39924/",
-      "uid": "sv-1020990592515988857",
+      "uid": "sv-8725196736152855513",
       "_source": null
     },
     {
@@ -5958,7 +5610,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-7265215104421349818",
+      "uid": "sv-6604290790034065812",
       "_source": null
     },
     {
@@ -5969,7 +5621,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-7379682707565534268",
+      "uid": "sv-5244544636780229576",
       "_source": null
     },
     {
@@ -5980,7 +5632,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-6924497002950809333",
+      "uid": "sv-5467475980248158440",
       "_source": null
     },
     {
@@ -5991,7 +5643,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Aqua Bowl",
       "url": "https://www.minocqua.org/event/american-pond-hockey-invitational/39368/",
-      "uid": "sv-5210168467689633369",
+      "uid": "sv-6444852962607601182",
       "_source": null
     },
     {
@@ -6002,7 +5654,7 @@
       "end_utc": "2026-02-12 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pokemon-%40-the-library/39702/",
-      "uid": "sv-3019352693818987577",
+      "uid": "sv-4732571575263066971",
       "_source": null
     },
     {
@@ -6013,7 +5665,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/sweethouse-decorating/39916/",
-      "uid": "sv-4802198138907499549",
+      "uid": "sv-4406208129300354244",
       "_source": null
     },
     {
@@ -6024,7 +5676,7 @@
       "end_utc": "2026-02-20 00:00:00",
       "location": "The Pines Event Center. This in-person event is your chance to mingle with",
       "url": "https://www.minocqua.org/event/womens-business-collective-networking-night-out/39903/",
-      "uid": "sv-2234396387016040022",
+      "uid": "sv-3729201602440108834",
       "_source": null
     },
     {
@@ -6035,7 +5687,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "Minocqua Yacht Club",
       "url": "https://www.minocqua.org/event/2nd-annual-turkey-bowling/39923/",
-      "uid": "sv-8878688964266010305",
+      "uid": "sv-1818110179409590226",
       "_source": null
     },
     {
@@ -6046,777 +5698,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-5285647393547818219",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-01-28 10:00:00",
-      "end_utc": "2026-01-28 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-01-28/",
-      "uid": "10003650",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "MS Snowmobile Tour",
-      "start_utc": "2026-01-29 00:00:00",
-      "end_utc": "2026-01-29 23:59:59",
-      "location": "Lake of the Torches, 10 Old Abe Rd, Lac Du Flambeau",
-      "url": "https://vilaswi.com/event/ms-snowmobile-tour/2026-01-29/",
-      "uid": "10003759",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Pond Hockey National Championship",
-      "start_utc": "2026-01-29 00:00:00",
-      "end_utc": "2026-02-01 23:59:59",
-      "location": "Eagle River, WI",
-      "url": "https://vilaswi.com/event/2024-pond-hockey-national-championship-2/",
-      "uid": "10582",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-01-29 10:00:00",
-      "end_utc": "2026-01-29 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-01-29/",
-      "uid": "10003618",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "MS Snowmobile Tour",
-      "start_utc": "2026-01-30 00:00:00",
-      "end_utc": "2026-01-30 23:59:59",
-      "location": "Lake of the Torches, 10 Old Abe Rd, Lac Du Flambeau",
-      "url": "https://vilaswi.com/event/ms-snowmobile-tour/2026-01-30/",
-      "uid": "10003760",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "MS Snowmobile Tour",
-      "start_utc": "2026-01-31 00:00:00",
-      "end_utc": "2026-01-31 23:59:59",
-      "location": "Lake of the Torches, 10 Old Abe Rd, Lac Du Flambeau",
-      "url": "https://vilaswi.com/event/ms-snowmobile-tour/2026-01-31/",
-      "uid": "10003761",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Phelps Snowmobile Radar Run",
-      "start_utc": "2026-01-31 09:00:00",
-      "end_utc": "2026-01-31 16:00:00",
-      "location": "North Twin Lake, N Twin Lake Landing Rd, Phelps",
-      "url": "https://vilaswi.com/event/phelps-hillside-radar-run/",
-      "uid": "4075",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Snowshoe Celebration Himanaji Winter Challenge",
-      "start_utc": "2026-01-31 10:00:00",
-      "end_utc": "2026-01-31 21:00:00",
-      "location": "Tara Lila&#8217;s Ripco Road Park Unit, 7550 Ripco Road, Eagle River",
-      "url": "https://vilaswi.com/event/snowshoe-celebration-himanaji-winter-challenge/",
-      "uid": "10999",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "WINTER WILDLIFE SNOWSHOE HIKE Trees For Tomorrow Outdoor Adventures at Tara Lila",
-      "start_utc": "2026-01-31 13:00:00",
-      "end_utc": "2026-01-31 16:00:00",
-      "location": "Tara Lila&#8217;s Ripco Road Park Unit, 7550 Ripco Road, Eagle River",
-      "url": "https://vilaswi.com/event/winter-wildlife-snowshoe-hike-trees-for-tomorrow-outdoor-adventures-at-tara-lila/",
-      "uid": "11006",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-03 13:00:00",
-      "end_utc": "2026-02-03 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-03/",
-      "uid": "10003690",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-04 10:00:00",
-      "end_utc": "2026-02-04 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-04/",
-      "uid": "10003651",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Arrowhead Groomer Show",
-      "start_utc": "2026-02-05 00:00:00",
-      "end_utc": "2026-02-06 23:59:59",
-      "location": "Arrowhead Groomers, 6351 Hwy 70E, St Germain, WI",
-      "url": "https://vilaswi.com/event/arrowhead-groomer-show-2/",
-      "uid": "8039",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-05 10:00:00",
-      "end_utc": "2026-02-05 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-05/",
-      "uid": "10003619",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "King of the Lake Snow Drag Races",
-      "start_utc": "2026-02-07 08:00:00",
-      "end_utc": "2026-02-07 17:00:00",
-      "location": "Lynx Lake Resort &amp; Bar, 10683 County Hwy B",
-      "url": "https://vilaswi.com/event/king-of-the-lake-snow-drag-races/",
-      "uid": "10820",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Three Bear Sled Dog Races",
-      "start_utc": "2026-02-07 09:00:00",
-      "end_utc": "2026-02-07 15:00:00",
-      "location": "Land O Lakes Town Hall, 4331 County Road B, Land O' Lakes, WI",
-      "url": "https://vilaswi.com/event/three-bear-sled-dog-races-2/2026-02-07/",
-      "uid": "10003770",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Three Bear Sled Dog Races",
-      "start_utc": "2026-02-08 09:00:00",
-      "end_utc": "2026-02-08 15:00:00",
-      "location": "Land O Lakes Town Hall, 4331 County Road B, Land O' Lakes, WI",
-      "url": "https://vilaswi.com/event/three-bear-sled-dog-races-2/2026-02-08/",
-      "uid": "10003771",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-10 13:00:00",
-      "end_utc": "2026-02-10 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-10/",
-      "uid": "10003691",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-11 10:00:00",
-      "end_utc": "2026-02-11 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-11/",
-      "uid": "10003652",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-12 10:00:00",
-      "end_utc": "2026-02-12 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-12/",
-      "uid": "10003620",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "St Germain Shoot-Out and Knocker&#8217;s Bikini Run",
-      "start_utc": "2026-02-13 00:00:00",
-      "end_utc": "2026-02-14 23:59:59",
-      "location": "West Bay on Little St. Germain Lake",
-      "url": "https://vilaswi.com/event/st-germain-shoot-out-and-knockers-bikini-run/",
-      "uid": "10729",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sand Lake Pub Ice Fishing Derby",
-      "start_utc": "2026-02-14 07:00:00",
-      "end_utc": "2026-02-14 15:00:00",
-      "location": "Sand Lake Pub, Phelps",
-      "url": "https://vilaswi.com/event/sand-lake-pub-ice-fishing-derby/",
-      "uid": "4094",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Bent&#8217;s Camp Snowmobile Radar Run",
-      "start_utc": "2026-02-14 09:00:00",
-      "end_utc": "2026-02-14 16:00:00",
-      "location": "Bent&#8217;s Camp, 6882 Helen Creek Rd., Land O' Lakes, WI",
-      "url": "https://vilaswi.com/event/bents-camp-snowmobile-radar-run/",
-      "uid": "8063",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Bo-Boen Snowmobile Club Scavenger Hunt &#038; Family Fun Day",
-      "start_utc": "2026-02-15 10:00:00",
-      "end_utc": "2026-02-15 15:00:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/bo-boen-snowmobile-club-scavenger-hunt-family-fun-day/",
-      "uid": "11004",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-17 13:00:00",
-      "end_utc": "2026-02-17 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-17/",
-      "uid": "10003692",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-18 10:00:00",
-      "end_utc": "2026-02-18 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-18/",
-      "uid": "10003653",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-19 10:00:00",
-      "end_utc": "2026-02-19 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-19/",
-      "uid": "10003621",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Ride with the Champs",
-      "start_utc": "2026-02-20 00:00:00",
-      "end_utc": "2026-02-21 23:59:59",
-      "location": "Snowmobile Hall of Fame, 1246 Sled World Blvd., St Germain, WI",
-      "url": "https://vilaswi.com/event/ride-with-the-champs-2/",
-      "uid": "8057",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-24 13:00:00",
-      "end_utc": "2026-02-24 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-24/",
-      "uid": "10003693",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-25 10:00:00",
-      "end_utc": "2026-02-25 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-25/",
-      "uid": "10003654",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-26 10:00:00",
-      "end_utc": "2026-02-26 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-26/",
-      "uid": "10003655",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-03 13:00:00",
-      "end_utc": "2026-03-03 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-03/",
-      "uid": "10003694",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-04 10:00:00",
-      "end_utc": "2026-03-04 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-04/",
-      "uid": "10003656",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-05 10:00:00",
-      "end_utc": "2026-03-05 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-05/",
-      "uid": "10003657",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Groom to Ride Raffle Drawing and Party",
-      "start_utc": "2026-03-07 11:00:00",
-      "end_utc": "2026-03-07 14:00:00",
-      "location": "World Championship Derby Complex",
-      "url": "https://vilaswi.com/event/groom-to-ride-raffle-drawing-and-party/",
-      "uid": "10515",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-10 13:00:00",
-      "end_utc": "2026-03-10 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-10/",
-      "uid": "10003695",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-11 10:00:00",
-      "end_utc": "2026-03-11 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-11/",
-      "uid": "10003658",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-12 10:00:00",
-      "end_utc": "2026-03-12 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-12/",
-      "uid": "10003659",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-17 13:00:00",
-      "end_utc": "2026-03-17 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-17/",
-      "uid": "10003696",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-18 10:00:00",
-      "end_utc": "2026-03-18 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-18/",
-      "uid": "10003660",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-19 10:00:00",
-      "end_utc": "2026-03-19 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-19/",
-      "uid": "10003661",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-24 13:00:00",
-      "end_utc": "2026-03-24 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-24/",
-      "uid": "10003697",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-25 10:00:00",
-      "end_utc": "2026-03-25 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-25/",
-      "uid": "10003662",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-26 10:00:00",
-      "end_utc": "2026-03-26 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-26/",
-      "uid": "10003663",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-31 13:00:00",
-      "end_utc": "2026-03-31 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-31/",
-      "uid": "10003698",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-07 13:00:00",
-      "end_utc": "2026-04-07 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-07/",
-      "uid": "10003699",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Phelps Maple Syrup Fest",
-      "start_utc": "2026-04-11 09:00:00",
-      "end_utc": "2026-04-11 15:00:00",
-      "location": "Phelps School, Phelps",
-      "url": "https://vilaswi.com/event/13th-annual-phelps-maple-syrup-fest/",
-      "uid": "4103",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-14 13:00:00",
-      "end_utc": "2026-04-14 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-14/",
-      "uid": "10003700",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-21 13:00:00",
-      "end_utc": "2026-04-21 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-21/",
-      "uid": "10003701",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-28 13:00:00",
-      "end_utc": "2026-04-28 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-28/",
-      "uid": "10003702",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Martinis in May",
-      "start_utc": "2026-05-02 18:00:00",
-      "end_utc": "2026-05-02 22:00:00",
-      "location": "Whitetail Inn, 9038 Hwy 70 West, St Germain, WI",
-      "url": "https://vilaswi.com/event/martinis-in-may/",
-      "uid": "8068",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-05-05 13:00:00",
-      "end_utc": "2026-05-05 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-05-05/",
-      "uid": "10003703",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-06 08:30:00",
-      "end_utc": "2026-05-06 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-06/",
-      "uid": "10001734",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-05-12 13:00:00",
-      "end_utc": "2026-05-12 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-05-12/",
-      "uid": "10003704",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-13 08:30:00",
-      "end_utc": "2026-05-13 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-13/",
-      "uid": "10003730",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Presque Isle 34th Annual Walleye Tournament",
-      "start_utc": "2026-05-15 00:00:00",
-      "end_utc": "2026-05-17 23:59:59",
-      "location": "Vilas County Lakes",
-      "url": "https://vilaswi.com/event/32nd-annual-walleye-tournament-2/",
-      "uid": "7458",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Boulder Junction&#8217;s White Deer Triathlon",
-      "start_utc": "2026-05-16 09:00:00",
-      "end_utc": "2026-05-16 13:00:00",
-      "location": "Boulder Junction, PO Box 286, Boulder Junction, WI",
-      "url": "https://vilaswi.com/event/white-deer-warm-up-5k-10k-fun-run/",
-      "uid": "5847",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-20 08:30:00",
-      "end_utc": "2026-05-20 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-20/",
-      "uid": "10003731",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Wheels, Wings and Watercraft Show",
-      "start_utc": "2026-05-23 10:00:00",
-      "end_utc": "2026-05-23 15:00:00",
-      "location": "Manitowish Waters Community Center, 5733 Airport Rd, Manitowish Waters",
-      "url": "https://vilaswi.com/event/wheels-wings-and-watercraft-show/",
-      "uid": "8072",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Lobsterfest",
-      "start_utc": "2026-05-23 16:00:00",
-      "end_utc": "2026-05-23 21:00:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/lions-lobster-steak-dinner/",
-      "uid": "10822",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Chain Skimmers Water Ski Show",
-      "start_utc": "2026-05-23 19:00:00",
-      "end_utc": "2026-05-23 21:00:00",
-      "location": "Lake Pleasant, 5280 Hwy 45 North, Conover, WI",
-      "url": "https://vilaswi.com/event/chain-skimmers-water-ski-show-2-2/2026-05-23/",
-      "uid": "10003243",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Classic Sled Roundup",
-      "start_utc": "2026-05-24 07:00:00",
-      "end_utc": "2026-05-24 15:00:00",
-      "location": "St Germain Community Park, 545 Hwy 155, St Germain, WI",
-      "url": "https://vilaswi.com/event/classic-sled-roundup-2/",
-      "uid": "8075",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Sunday Farmers Market",
-      "start_utc": "2026-05-24 08:30:00",
-      "end_utc": "2026-05-24 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-sunday-farmers-market-2-2/2026-05-24/",
-      "uid": "10000448",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Memorial Day Arts Crafts Show and Sidewalk Sales",
-      "start_utc": "2026-05-24 10:00:00",
-      "end_utc": "2026-05-24 16:00:00",
-      "location": "Downtown Eagle River",
-      "url": "https://vilaswi.com/event/memorial-day-arts-and-crafts-show-and-sidewalk-sales/",
-      "uid": "3977",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Music in the Park",
-      "start_utc": "2026-05-24 16:00:00",
-      "end_utc": "2026-05-24 18:00:00",
-      "location": "Koller Park, Hwy W, Manitowish Waters",
-      "url": "https://vilaswi.com/event/music-in-the-park-2-2/2026-05-24/",
-      "uid": "10003214",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Presque Isle BINGO",
-      "start_utc": "2026-05-24 16:00:00",
-      "end_utc": "2026-05-24 21:00:00",
-      "location": "Presque Isle American Legion Post 480, Hwy W, Presque Isle, WI",
-      "url": "https://vilaswi.com/event/presque-isle-bingo-2/",
-      "uid": "10843",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "St. Germain Flea Market",
-      "start_utc": "2026-05-25 08:00:00",
-      "end_utc": "2026-05-25 15:00:00",
-      "location": "St Germain Community Park, 545 Hwy 155, St Germain, WI",
-      "url": "https://vilaswi.com/event/st-germain-flea-market-2/2026-05-25/",
-      "uid": "10003229",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Summer Bingo at Kalmar Community Center",
-      "start_utc": "2026-05-25 17:00:00",
-      "end_utc": "2026-05-25 21:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/summer-bingo-at-kalmar-community-center/2026-05-25/",
-      "uid": "10003664",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Chain Skimmers Water Ski Show",
-      "start_utc": "2026-05-26 19:00:00",
-      "end_utc": "2026-05-26 21:00:00",
-      "location": "Lake Pleasant, 5280 Hwy 45 North, Conover, WI",
-      "url": "https://vilaswi.com/event/chain-skimmers-water-ski-show-4/2026-05-26/",
-      "uid": "10004262",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-27 08:30:00",
-      "end_utc": "2026-05-27 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-27/",
-      "uid": "10003732",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Chain Skimmers Water Ski Show",
-      "start_utc": "2026-05-28 19:00:00",
-      "end_utc": "2026-05-28 21:00:00",
-      "location": "Lake Pleasant, 5280 Hwy 45 North, Conover, WI",
-      "url": "https://vilaswi.com/event/chain-skimmers-water-ski-show-5/2026-05-28/",
-      "uid": "10004291",
+      "uid": "sv-8522435308677251005",
       "_source": null
     },
     {
@@ -6827,7 +5709,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-780236331617410314",
+      "uid": "sv-336163997822308108",
       "_source": null
     },
     {
@@ -6838,7 +5720,7 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-8298117953513168237",
+      "uid": "sv-1044666449077521117",
       "_source": null
     },
     {
@@ -6849,7 +5731,7 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "MECCA Ski Club",
       "url": "https://manitowishwaters.org/event/moonshoe-showshoe-at-mecca-trails/682/",
-      "uid": "sv-2730537523847618194",
+      "uid": "sv-8077098715852759916",
       "_source": null
     },
     {
@@ -6860,7 +5742,51 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-twelve-days-of-winter%3a-a-wildlife-celebration-by-sherri-maret/680/",
-      "uid": "sv-4116488029823788112",
+      "uid": "sv-3425388146044057038",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Knowledge at Night: Animal Tracking and Sign",
+      "start_utc": "2026-02-04 00:00:00",
+      "end_utc": "2026-02-04 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/knowledge-at-night%3a-animal-tracking-and-sign/693/",
+      "uid": "sv-1703231524250873493",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Knowledge at Noon: Animal Tracking & Sign",
+      "start_utc": "2026-02-04 00:00:00",
+      "end_utc": "2026-02-04 00:00:00",
+      "location": "Koller Library",
+      "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-animal-tracking-%26-sign/692/",
+      "uid": "sv-7529610817010979893",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Fat Bike Weekend Experience",
+      "start_utc": "2026-02-07 00:00:00",
+      "end_utc": "2026-02-07 00:00:00",
+      "location": "WinMan Trails",
+      "url": "https://manitowishwaters.org/event/fat-bike-weekend-experience/691/",
+      "uid": "sv-3626758361770709964",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Valentine Heart Felted Cabins Workshop",
+      "start_utc": "2026-02-07 00:00:00",
+      "end_utc": "2026-02-07 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/valentine-heart-felted-cabins-workshop/694/",
+      "uid": "sv-9155343487655008615",
       "_source": null
     },
     {
@@ -6871,7 +5797,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Pea Patch",
       "url": "https://manitowishwaters.org/event/manitowish-waters-sno-skeeters-breakfast/688/",
-      "uid": "sv-485859359084999899",
+      "uid": "sv-4548280751746682064",
       "_source": null
     },
     {
@@ -6882,7 +5808,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "MW Fire Hall",
       "url": "https://manitowishwaters.org/event/sno-skeeters-winter-rendezvous/689/",
-      "uid": "sv-5516527928769244789",
+      "uid": "sv-5266781983505271762",
       "_source": null
     },
     {
@@ -6893,7 +5819,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-2628162107495232160",
+      "uid": "sv-563727794237042231",
       "_source": null
     },
     {
@@ -6921,380 +5847,6 @@
   ],
   "normalized_events": [
     {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Snowshoe the Lumberjack Trails with North Lakeland Discovery Center",
-      "start_utc": "2026-01-29 13:00:00",
-      "end_utc": "2026-01-29 16:00:00",
-      "location": "Lumberjack Trail, 9603 Concora Road, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/snowshoe-the-lumberjack-trails-with-north-lakeland-discovery-center/",
-      "uid": "51254",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-01-29 18:00:00",
-      "end_utc": "2026-01-29 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-01-29/",
-      "uid": "51596",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Ribbon Cutting and Grand Opening of Boulder Jct. Brewing Co.",
-      "start_utc": "2026-01-30 13:00:00",
-      "end_utc": "2026-01-30 20:00:00",
-      "location": "Boulder Jct Brewing Co., 10351 Main Street, Boulder Junction",
-      "url": "https://boulderjct.org/events/ribbon-cutting-and-grand-opening-of-boulder-jct-brewing-co/",
-      "uid": "51785",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-01-31 10:00:00",
-      "end_utc": "2026-01-31 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-01-31/",
-      "uid": "51248",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-03 11:00:00",
-      "end_utc": "2026-02-03 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-03/",
-      "uid": "51722",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-05 18:00:00",
-      "end_utc": "2026-02-05 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-05/",
-      "uid": "51598",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Lynx Lake Resort &#038; Bar: King of the Lake Snow Drags",
-      "start_utc": "2026-02-07 08:00:00",
-      "end_utc": "2026-02-07 17:00:00",
-      "location": "Lynx Lake Resort &#038; Bar, 10683 County Road B, Presque Isle",
-      "url": "https://boulderjct.org/events/lynx-lake-resort-bar-king-of-the-lake-snow-drags/",
-      "uid": "48526",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Stained Glass Garden Stake at LOLA 2-day Workshop",
-      "start_utc": "2026-02-09 10:00:00",
-      "end_utc": "2026-02-09 16:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/stained-glass-garden-stake-at-lola-2-day-workshop/2026-02-09/",
-      "uid": "51473",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Stained Glass Garden Stake at LOLA 2-day Workshop",
-      "start_utc": "2026-02-10 10:00:00",
-      "end_utc": "2026-02-10 16:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/stained-glass-garden-stake-at-lola-2-day-workshop/2026-02-10/",
-      "uid": "51474",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-10 11:00:00",
-      "end_utc": "2026-02-10 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-10/",
-      "uid": "51723",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-12 18:00:00",
-      "end_utc": "2026-02-12 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-12/",
-      "uid": "51600",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-14 10:00:00",
-      "end_utc": "2026-02-14 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-02-14/",
-      "uid": "51249",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Breakfast",
-      "start_utc": "2026-02-15 08:30:00",
-      "end_utc": "2026-02-15 11:30:00",
-      "location": "The Guide&#8217;s Inn, 5427 Park Street, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-breakfast-3/",
-      "uid": "51149",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-17 11:00:00",
-      "end_utc": "2026-02-17 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-17/",
-      "uid": "51724",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Acrylic Sunflowers on Wood at LOLA",
-      "start_utc": "2026-02-19 10:00:00",
-      "end_utc": "2026-02-19 14:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/acrylic-sunflowers-on-wood-at-lola/2026-02-19/",
-      "uid": "51470",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Spaghetti Dinner",
-      "start_utc": "2026-02-19 16:00:00",
-      "end_utc": "2026-02-19 19:00:00",
-      "location": "Rustic Roadhaus, 5194 US HWY 51, Manitowish Waters",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-spaghetti-dinner/",
-      "uid": "51151",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-19 18:00:00",
-      "end_utc": "2026-02-19 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-19/",
-      "uid": "51603",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Acrylic Sunflowers on Wood at LOLA",
-      "start_utc": "2026-02-20 10:00:00",
-      "end_utc": "2026-02-20 14:00:00",
-      "location": "Land O&#8217;Lakes Arts (LOLA), 4262 Cty Hwy B, Land O Lakes, WI",
-      "url": "https://boulderjct.org/events/acrylic-sunflowers-on-wood-at-lola/2026-02-20/",
-      "uid": "51471",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Trailside Brat Fry",
-      "start_utc": "2026-02-21 11:00:00",
-      "end_utc": "2026-02-21 14:00:00",
-      "location": "Boulder Junction Snowmobile Club, 5387 Park St, Boulder Junction",
-      "url": "https://boulderjct.org/events/boulder-junction-snowmobile-club-trailside-brat-fry/",
-      "uid": "51153",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-02-24 11:00:00",
-      "end_utc": "2026-02-24 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-02-24/",
-      "uid": "51725",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Aqualand Trivia Night",
-      "start_utc": "2026-02-26 18:00:00",
-      "end_utc": "2026-02-26 20:00:00",
-      "location": "Aqualand Ale House, 10450 Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/aqualand-trivia-night-2/2026-02-26/",
-      "uid": "51605",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Bill Sherer&#8217;s Fly Tying Classes",
-      "start_utc": "2026-02-28 10:00:00",
-      "end_utc": "2026-02-28 15:30:00",
-      "location": "Bill Sherer&#8217;s We Tie It Fly Shop, 5570 County Rd. M, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/bill-sherers-fly-tying-classes-copy/2026-02-28/",
-      "uid": "51250",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-03-03 11:00:00",
-      "end_utc": "2026-03-03 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-03-03/",
-      "uid": "51726",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Snowmobile Club Cabin Fever Party",
-      "start_utc": "2026-03-07 16:00:00",
-      "end_utc": "2026-03-07 20:00:00",
-      "location": "Gooch&#8217;s 2 Bar &#038; Grill, 6215 County Hwy M, Boulder Junction",
-      "url": "https://boulderjct.org/events/snowmobile-club-cabin-fever-party/",
-      "uid": "46728",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Public Library Winter Wellness Series",
-      "start_utc": "2026-03-10 11:00:00",
-      "end_utc": "2026-03-10 12:00:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-public-library-winter-wellness-series/2026-03-10/",
-      "uid": "51727",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "Boulder Junction Lions Club Easter Bunny Breakfast",
-      "start_utc": "2026-03-28 09:30:00",
-      "end_utc": "2026-03-28 22:30:00",
-      "location": "Boulder Junction Community Center, 5392 Park Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/boulder-junction-lions-club-easter-bunny-breakfast/",
-      "uid": "47053",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "North Lakeland Discovery Center Woods &#038; Water Conference",
-      "start_utc": "2026-04-24 08:00:00",
-      "end_utc": "2026-04-24 17:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/north-lakeland-woods-water-conference/",
-      "uid": "51479",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "North Lakeland Discovery Center: 21st Annual Bird &#038; Wildlife Festival",
-      "start_utc": "2026-05-09 08:00:00",
-      "end_utc": "2026-05-09 17:00:00",
-      "location": "North Lakeland Discovery Center, 14006 Discovery Ln, Manitowish Waters, WI",
-      "url": "https://boulderjct.org/events/north-lakeland-discovery-center-20th-annual-bird-wildlife-festival/",
-      "uid": "48550",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "White Deer Triathlon",
-      "start_utc": "2026-05-16 09:00:00",
-      "end_utc": "2026-05-16 15:30:00",
-      "location": "Boulder Lake, 5960 Airport Rd, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/white-deer-tri/",
-      "uid": "48553",
-      "_source": null
-    },
-    {
-      "calendar": "Boulder Junction (TEC)",
-      "source": "Boulder Junction (TEC)",
-      "title": "American Legion Post 451 Memorial Day Service",
-      "start_utc": "2026-05-25 11:00:00",
-      "end_utc": "2026-05-25 12:00:00",
-      "location": "Downtown Boulder Junction, Main Street, Boulder Junction, WI",
-      "url": "https://boulderjct.org/events/american-legion-post-451-memorial-day-service/",
-      "uid": "47057",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Heart and Soul Quilters Group",
-      "start_utc": "2026-01-28 09:00:00",
-      "end_utc": "2026-01-28 12:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/heart-and-soul-quilters-group/2026-01-28/",
-      "uid": "10015231",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Sno-Eagles Weekly Trail Rides",
-      "start_utc": "2026-01-28 10:00:00",
-      "end_utc": "2026-01-28 15:30:00",
-      "location": "Eagle River Depot Museum",
-      "url": "https://eagleriver.org/events/sno-eagles-weekly-trail-rides-2-3/2026-01-28/",
-      "uid": "10019592",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Northwoods Carvers/Scrabble/Cribbage",
-      "start_utc": "2026-01-28 12:30:00",
-      "end_utc": "2026-01-28 16:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/northwoods-carvers-scrabble-cribbage/2026-01-28/",
-      "uid": "10014970",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Care Giver Support Group",
-      "start_utc": "2026-01-28 13:00:00",
-      "end_utc": "2026-01-28 14:00:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/care-giver-support-group/2026-01-28/",
-      "uid": "10014733",
-      "_source": null
-    },
-    {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
       "title": "2026 Pond Hockey Championship",
@@ -12476,37 +11028,59 @@
       "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell 5K Run Canceled",
-      "start_utc": "2025-12-06T00:00:00",
-      "end_utc": null,
-      "location": "December 6th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-5k-run-canceled/",
-      "uid": null,
-      "_source": "growthzone_html"
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "24rd Trees for Tomorrow Golf Outing Fundraiser",
+      "start_utc": "2026-05-29 07:30:00",
+      "end_utc": "2026-05-29 15:30:00",
+      "location": "Eagle River Golf Course, 457 McKinley Blvd, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/trees-for-tomorrow-golf-outing/",
+      "uid": "21367",
+      "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell Run 2025",
-      "start_utc": "2025-12-04T10:00:00",
-      "end_utc": null,
-      "location": "December 4th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-run-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Wiggle Giggle &#038; Shake",
+      "start_utc": "2026-05-29 10:00:00",
+      "end_utc": "2026-05-29 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/wiggle-giggle-shake/2026-05-29/",
+      "uid": "10009186",
+      "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Lighting Up St. Germain 2025",
-      "start_utc": "2025-11-29T16:30:00",
-      "end_utc": null,
-      "location": "November 29th, 2025",
-      "url": "https://st-germain.com/events/lighting-up-st-germain-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Happy Hour at The Brew Station",
+      "start_utc": "2026-05-29 16:00:00",
+      "end_utc": "2026-05-29 18:00:00",
+      "location": "The Brew Station",
+      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-05-29/",
+      "uid": "10013906",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Free Live Music at Pirates Hideaway",
+      "start_utc": "2026-05-29 18:00:00",
+      "end_utc": "2026-05-29 21:00:00",
+      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-4-2-2/2026-05-29/",
+      "uid": "10019800",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-05-29 21:00:00",
+      "end_utc": "2026-05-29 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-05-29/",
+      "uid": "10018217",
+      "_source": null
     },
     {
       "calendar": "St. Germain Chamber (WP)",
@@ -12714,7 +11288,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-4005927324013817546",
+      "uid": "sv-2746518679657186940",
       "_source": null
     },
     {
@@ -12725,7 +11299,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-4424884173968406430",
+      "uid": "sv-6411945802814199238",
       "_source": null
     },
     {
@@ -12736,7 +11310,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-2240186737782931041",
+      "uid": "sv-1506034278076905709",
       "_source": null
     },
     {
@@ -12747,7 +11321,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-6145514735182089122",
+      "uid": "sv-2565718520561239754",
       "_source": null
     },
     {
@@ -12758,7 +11332,7 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "Minocqua Winter Park",
       "url": "https://www.minocqua.org/event/wolf-tracks-rendezvous/39924/",
-      "uid": "sv-1020990592515988857",
+      "uid": "sv-8725196736152855513",
       "_source": null
     },
     {
@@ -12769,7 +11343,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-7265215104421349818",
+      "uid": "sv-6604290790034065812",
       "_source": null
     },
     {
@@ -12780,7 +11354,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-7379682707565534268",
+      "uid": "sv-5244544636780229576",
       "_source": null
     },
     {
@@ -12791,7 +11365,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-6924497002950809333",
+      "uid": "sv-5467475980248158440",
       "_source": null
     },
     {
@@ -12802,7 +11376,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Aqua Bowl",
       "url": "https://www.minocqua.org/event/american-pond-hockey-invitational/39368/",
-      "uid": "sv-5210168467689633369",
+      "uid": "sv-6444852962607601182",
       "_source": null
     },
     {
@@ -12813,7 +11387,7 @@
       "end_utc": "2026-02-12 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pokemon-%40-the-library/39702/",
-      "uid": "sv-3019352693818987577",
+      "uid": "sv-4732571575263066971",
       "_source": null
     },
     {
@@ -12824,7 +11398,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/sweethouse-decorating/39916/",
-      "uid": "sv-4802198138907499549",
+      "uid": "sv-4406208129300354244",
       "_source": null
     },
     {
@@ -12835,7 +11409,7 @@
       "end_utc": "2026-02-20 00:00:00",
       "location": "The Pines Event Center. This in-person event is your chance to mingle with",
       "url": "https://www.minocqua.org/event/womens-business-collective-networking-night-out/39903/",
-      "uid": "sv-2234396387016040022",
+      "uid": "sv-3729201602440108834",
       "_source": null
     },
     {
@@ -12846,7 +11420,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "Minocqua Yacht Club",
       "url": "https://www.minocqua.org/event/2nd-annual-turkey-bowling/39923/",
-      "uid": "sv-8878688964266010305",
+      "uid": "sv-1818110179409590226",
       "_source": null
     },
     {
@@ -12857,777 +11431,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-5285647393547818219",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-01-28 10:00:00",
-      "end_utc": "2026-01-28 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-01-28/",
-      "uid": "10003650",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "MS Snowmobile Tour",
-      "start_utc": "2026-01-29 00:00:00",
-      "end_utc": "2026-01-29 23:59:59",
-      "location": "Lake of the Torches, 10 Old Abe Rd, Lac Du Flambeau",
-      "url": "https://vilaswi.com/event/ms-snowmobile-tour/2026-01-29/",
-      "uid": "10003759",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Pond Hockey National Championship",
-      "start_utc": "2026-01-29 00:00:00",
-      "end_utc": "2026-02-01 23:59:59",
-      "location": "Eagle River, WI",
-      "url": "https://vilaswi.com/event/2024-pond-hockey-national-championship-2/",
-      "uid": "10582",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-01-29 10:00:00",
-      "end_utc": "2026-01-29 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-01-29/",
-      "uid": "10003618",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "MS Snowmobile Tour",
-      "start_utc": "2026-01-30 00:00:00",
-      "end_utc": "2026-01-30 23:59:59",
-      "location": "Lake of the Torches, 10 Old Abe Rd, Lac Du Flambeau",
-      "url": "https://vilaswi.com/event/ms-snowmobile-tour/2026-01-30/",
-      "uid": "10003760",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "MS Snowmobile Tour",
-      "start_utc": "2026-01-31 00:00:00",
-      "end_utc": "2026-01-31 23:59:59",
-      "location": "Lake of the Torches, 10 Old Abe Rd, Lac Du Flambeau",
-      "url": "https://vilaswi.com/event/ms-snowmobile-tour/2026-01-31/",
-      "uid": "10003761",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Phelps Snowmobile Radar Run",
-      "start_utc": "2026-01-31 09:00:00",
-      "end_utc": "2026-01-31 16:00:00",
-      "location": "North Twin Lake, N Twin Lake Landing Rd, Phelps",
-      "url": "https://vilaswi.com/event/phelps-hillside-radar-run/",
-      "uid": "4075",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Snowshoe Celebration Himanaji Winter Challenge",
-      "start_utc": "2026-01-31 10:00:00",
-      "end_utc": "2026-01-31 21:00:00",
-      "location": "Tara Lila&#8217;s Ripco Road Park Unit, 7550 Ripco Road, Eagle River",
-      "url": "https://vilaswi.com/event/snowshoe-celebration-himanaji-winter-challenge/",
-      "uid": "10999",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "WINTER WILDLIFE SNOWSHOE HIKE Trees For Tomorrow Outdoor Adventures at Tara Lila",
-      "start_utc": "2026-01-31 13:00:00",
-      "end_utc": "2026-01-31 16:00:00",
-      "location": "Tara Lila&#8217;s Ripco Road Park Unit, 7550 Ripco Road, Eagle River",
-      "url": "https://vilaswi.com/event/winter-wildlife-snowshoe-hike-trees-for-tomorrow-outdoor-adventures-at-tara-lila/",
-      "uid": "11006",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-03 13:00:00",
-      "end_utc": "2026-02-03 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-03/",
-      "uid": "10003690",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-04 10:00:00",
-      "end_utc": "2026-02-04 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-04/",
-      "uid": "10003651",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Arrowhead Groomer Show",
-      "start_utc": "2026-02-05 00:00:00",
-      "end_utc": "2026-02-06 23:59:59",
-      "location": "Arrowhead Groomers, 6351 Hwy 70E, St Germain, WI",
-      "url": "https://vilaswi.com/event/arrowhead-groomer-show-2/",
-      "uid": "8039",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-05 10:00:00",
-      "end_utc": "2026-02-05 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-05/",
-      "uid": "10003619",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "King of the Lake Snow Drag Races",
-      "start_utc": "2026-02-07 08:00:00",
-      "end_utc": "2026-02-07 17:00:00",
-      "location": "Lynx Lake Resort &amp; Bar, 10683 County Hwy B",
-      "url": "https://vilaswi.com/event/king-of-the-lake-snow-drag-races/",
-      "uid": "10820",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Three Bear Sled Dog Races",
-      "start_utc": "2026-02-07 09:00:00",
-      "end_utc": "2026-02-07 15:00:00",
-      "location": "Land O Lakes Town Hall, 4331 County Road B, Land O' Lakes, WI",
-      "url": "https://vilaswi.com/event/three-bear-sled-dog-races-2/2026-02-07/",
-      "uid": "10003770",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Three Bear Sled Dog Races",
-      "start_utc": "2026-02-08 09:00:00",
-      "end_utc": "2026-02-08 15:00:00",
-      "location": "Land O Lakes Town Hall, 4331 County Road B, Land O' Lakes, WI",
-      "url": "https://vilaswi.com/event/three-bear-sled-dog-races-2/2026-02-08/",
-      "uid": "10003771",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-10 13:00:00",
-      "end_utc": "2026-02-10 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-10/",
-      "uid": "10003691",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-11 10:00:00",
-      "end_utc": "2026-02-11 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-11/",
-      "uid": "10003652",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-12 10:00:00",
-      "end_utc": "2026-02-12 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-12/",
-      "uid": "10003620",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "St Germain Shoot-Out and Knocker&#8217;s Bikini Run",
-      "start_utc": "2026-02-13 00:00:00",
-      "end_utc": "2026-02-14 23:59:59",
-      "location": "West Bay on Little St. Germain Lake",
-      "url": "https://vilaswi.com/event/st-germain-shoot-out-and-knockers-bikini-run/",
-      "uid": "10729",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sand Lake Pub Ice Fishing Derby",
-      "start_utc": "2026-02-14 07:00:00",
-      "end_utc": "2026-02-14 15:00:00",
-      "location": "Sand Lake Pub, Phelps",
-      "url": "https://vilaswi.com/event/sand-lake-pub-ice-fishing-derby/",
-      "uid": "4094",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Bent&#8217;s Camp Snowmobile Radar Run",
-      "start_utc": "2026-02-14 09:00:00",
-      "end_utc": "2026-02-14 16:00:00",
-      "location": "Bent&#8217;s Camp, 6882 Helen Creek Rd., Land O' Lakes, WI",
-      "url": "https://vilaswi.com/event/bents-camp-snowmobile-radar-run/",
-      "uid": "8063",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Bo-Boen Snowmobile Club Scavenger Hunt &#038; Family Fun Day",
-      "start_utc": "2026-02-15 10:00:00",
-      "end_utc": "2026-02-15 15:00:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/bo-boen-snowmobile-club-scavenger-hunt-family-fun-day/",
-      "uid": "11004",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-17 13:00:00",
-      "end_utc": "2026-02-17 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-17/",
-      "uid": "10003692",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-18 10:00:00",
-      "end_utc": "2026-02-18 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-18/",
-      "uid": "10003653",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-19 10:00:00",
-      "end_utc": "2026-02-19 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-19/",
-      "uid": "10003621",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Ride with the Champs",
-      "start_utc": "2026-02-20 00:00:00",
-      "end_utc": "2026-02-21 23:59:59",
-      "location": "Snowmobile Hall of Fame, 1246 Sled World Blvd., St Germain, WI",
-      "url": "https://vilaswi.com/event/ride-with-the-champs-2/",
-      "uid": "8057",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-02-24 13:00:00",
-      "end_utc": "2026-02-24 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-02-24/",
-      "uid": "10003693",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-25 10:00:00",
-      "end_utc": "2026-02-25 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-25/",
-      "uid": "10003654",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-02-26 10:00:00",
-      "end_utc": "2026-02-26 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-02-26/",
-      "uid": "10003655",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-03 13:00:00",
-      "end_utc": "2026-03-03 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-03/",
-      "uid": "10003694",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-04 10:00:00",
-      "end_utc": "2026-03-04 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-04/",
-      "uid": "10003656",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-05 10:00:00",
-      "end_utc": "2026-03-05 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-05/",
-      "uid": "10003657",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Groom to Ride Raffle Drawing and Party",
-      "start_utc": "2026-03-07 11:00:00",
-      "end_utc": "2026-03-07 14:00:00",
-      "location": "World Championship Derby Complex",
-      "url": "https://vilaswi.com/event/groom-to-ride-raffle-drawing-and-party/",
-      "uid": "10515",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-10 13:00:00",
-      "end_utc": "2026-03-10 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-10/",
-      "uid": "10003695",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-11 10:00:00",
-      "end_utc": "2026-03-11 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-11/",
-      "uid": "10003658",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-12 10:00:00",
-      "end_utc": "2026-03-12 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-12/",
-      "uid": "10003659",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-17 13:00:00",
-      "end_utc": "2026-03-17 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-17/",
-      "uid": "10003696",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-18 10:00:00",
-      "end_utc": "2026-03-18 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-18/",
-      "uid": "10003660",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-19 10:00:00",
-      "end_utc": "2026-03-19 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-19/",
-      "uid": "10003661",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-24 13:00:00",
-      "end_utc": "2026-03-24 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-24/",
-      "uid": "10003697",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-25 10:00:00",
-      "end_utc": "2026-03-25 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-25/",
-      "uid": "10003662",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Sno-Eagles Snowmobile Club Weekly Trail Rides",
-      "start_utc": "2026-03-26 10:00:00",
-      "end_utc": "2026-03-26 15:30:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/10528/2026-03-26/",
-      "uid": "10003663",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-03-31 13:00:00",
-      "end_utc": "2026-03-31 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-03-31/",
-      "uid": "10003698",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-07 13:00:00",
-      "end_utc": "2026-04-07 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-07/",
-      "uid": "10003699",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Phelps Maple Syrup Fest",
-      "start_utc": "2026-04-11 09:00:00",
-      "end_utc": "2026-04-11 15:00:00",
-      "location": "Phelps School, Phelps",
-      "url": "https://vilaswi.com/event/13th-annual-phelps-maple-syrup-fest/",
-      "uid": "4103",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-14 13:00:00",
-      "end_utc": "2026-04-14 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-14/",
-      "uid": "10003700",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-21 13:00:00",
-      "end_utc": "2026-04-21 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-21/",
-      "uid": "10003701",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-04-28 13:00:00",
-      "end_utc": "2026-04-28 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-04-28/",
-      "uid": "10003702",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Martinis in May",
-      "start_utc": "2026-05-02 18:00:00",
-      "end_utc": "2026-05-02 22:00:00",
-      "location": "Whitetail Inn, 9038 Hwy 70 West, St Germain, WI",
-      "url": "https://vilaswi.com/event/martinis-in-may/",
-      "uid": "8068",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-05-05 13:00:00",
-      "end_utc": "2026-05-05 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-05-05/",
-      "uid": "10003703",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-06 08:30:00",
-      "end_utc": "2026-05-06 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-06/",
-      "uid": "10001734",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Winter  Bingo at Kalmar Community Center",
-      "start_utc": "2026-05-12 13:00:00",
-      "end_utc": "2026-05-12 16:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/winter-bingo-at-kalmar-community-center/2026-05-12/",
-      "uid": "10003704",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-13 08:30:00",
-      "end_utc": "2026-05-13 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-13/",
-      "uid": "10003730",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Presque Isle 34th Annual Walleye Tournament",
-      "start_utc": "2026-05-15 00:00:00",
-      "end_utc": "2026-05-17 23:59:59",
-      "location": "Vilas County Lakes",
-      "url": "https://vilaswi.com/event/32nd-annual-walleye-tournament-2/",
-      "uid": "7458",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Boulder Junction&#8217;s White Deer Triathlon",
-      "start_utc": "2026-05-16 09:00:00",
-      "end_utc": "2026-05-16 13:00:00",
-      "location": "Boulder Junction, PO Box 286, Boulder Junction, WI",
-      "url": "https://vilaswi.com/event/white-deer-warm-up-5k-10k-fun-run/",
-      "uid": "5847",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-20 08:30:00",
-      "end_utc": "2026-05-20 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-20/",
-      "uid": "10003731",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Wheels, Wings and Watercraft Show",
-      "start_utc": "2026-05-23 10:00:00",
-      "end_utc": "2026-05-23 15:00:00",
-      "location": "Manitowish Waters Community Center, 5733 Airport Rd, Manitowish Waters",
-      "url": "https://vilaswi.com/event/wheels-wings-and-watercraft-show/",
-      "uid": "8072",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Lobsterfest",
-      "start_utc": "2026-05-23 16:00:00",
-      "end_utc": "2026-05-23 21:00:00",
-      "location": null,
-      "url": "https://vilaswi.com/event/lions-lobster-steak-dinner/",
-      "uid": "10822",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Chain Skimmers Water Ski Show",
-      "start_utc": "2026-05-23 19:00:00",
-      "end_utc": "2026-05-23 21:00:00",
-      "location": "Lake Pleasant, 5280 Hwy 45 North, Conover, WI",
-      "url": "https://vilaswi.com/event/chain-skimmers-water-ski-show-2-2/2026-05-23/",
-      "uid": "10003243",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Classic Sled Roundup",
-      "start_utc": "2026-05-24 07:00:00",
-      "end_utc": "2026-05-24 15:00:00",
-      "location": "St Germain Community Park, 545 Hwy 155, St Germain, WI",
-      "url": "https://vilaswi.com/event/classic-sled-roundup-2/",
-      "uid": "8075",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Sunday Farmers Market",
-      "start_utc": "2026-05-24 08:30:00",
-      "end_utc": "2026-05-24 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-sunday-farmers-market-2-2/2026-05-24/",
-      "uid": "10000448",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Memorial Day Arts Crafts Show and Sidewalk Sales",
-      "start_utc": "2026-05-24 10:00:00",
-      "end_utc": "2026-05-24 16:00:00",
-      "location": "Downtown Eagle River",
-      "url": "https://vilaswi.com/event/memorial-day-arts-and-crafts-show-and-sidewalk-sales/",
-      "uid": "3977",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Music in the Park",
-      "start_utc": "2026-05-24 16:00:00",
-      "end_utc": "2026-05-24 18:00:00",
-      "location": "Koller Park, Hwy W, Manitowish Waters",
-      "url": "https://vilaswi.com/event/music-in-the-park-2-2/2026-05-24/",
-      "uid": "10003214",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Presque Isle BINGO",
-      "start_utc": "2026-05-24 16:00:00",
-      "end_utc": "2026-05-24 21:00:00",
-      "location": "Presque Isle American Legion Post 480, Hwy W, Presque Isle, WI",
-      "url": "https://vilaswi.com/event/presque-isle-bingo-2/",
-      "uid": "10843",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "St. Germain Flea Market",
-      "start_utc": "2026-05-25 08:00:00",
-      "end_utc": "2026-05-25 15:00:00",
-      "location": "St Germain Community Park, 545 Hwy 155, St Germain, WI",
-      "url": "https://vilaswi.com/event/st-germain-flea-market-2/2026-05-25/",
-      "uid": "10003229",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Summer Bingo at Kalmar Community Center",
-      "start_utc": "2026-05-25 17:00:00",
-      "end_utc": "2026-05-25 21:00:00",
-      "location": "Kalmar Community Center, 1013 N Railroad St.",
-      "url": "https://vilaswi.com/event/summer-bingo-at-kalmar-community-center/2026-05-25/",
-      "uid": "10003664",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Chain Skimmers Water Ski Show",
-      "start_utc": "2026-05-26 19:00:00",
-      "end_utc": "2026-05-26 21:00:00",
-      "location": "Lake Pleasant, 5280 Hwy 45 North, Conover, WI",
-      "url": "https://vilaswi.com/event/chain-skimmers-water-ski-show-4/2026-05-26/",
-      "uid": "10004262",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Eagle River Wednesday Farmers Market",
-      "start_utc": "2026-05-27 08:30:00",
-      "end_utc": "2026-05-27 13:00:00",
-      "location": "Eagle River Farmers Market, 613 Michigan Street, Eagle River, WI",
-      "url": "https://vilaswi.com/event/eagle-river-wednesday-farmers-market-2-2/2026-05-27/",
-      "uid": "10003732",
-      "_source": null
-    },
-    {
-      "calendar": "Vilas County Tourism (TEC)",
-      "source": "Vilas County Tourism (TEC)",
-      "title": "Chain Skimmers Water Ski Show",
-      "start_utc": "2026-05-28 19:00:00",
-      "end_utc": "2026-05-28 21:00:00",
-      "location": "Lake Pleasant, 5280 Hwy 45 North, Conover, WI",
-      "url": "https://vilaswi.com/event/chain-skimmers-water-ski-show-5/2026-05-28/",
-      "uid": "10004291",
+      "uid": "sv-8522435308677251005",
       "_source": null
     },
     {
@@ -13638,7 +11442,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-780236331617410314",
+      "uid": "sv-336163997822308108",
       "_source": null
     },
     {
@@ -13649,7 +11453,7 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/656/",
-      "uid": "sv-8298117953513168237",
+      "uid": "sv-1044666449077521117",
       "_source": null
     },
     {
@@ -13660,7 +11464,7 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "MECCA Ski Club",
       "url": "https://manitowishwaters.org/event/moonshoe-showshoe-at-mecca-trails/682/",
-      "uid": "sv-2730537523847618194",
+      "uid": "sv-8077098715852759916",
       "_source": null
     },
     {
@@ -13671,7 +11475,51 @@
       "end_utc": "2026-01-31 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-twelve-days-of-winter%3a-a-wildlife-celebration-by-sherri-maret/680/",
-      "uid": "sv-4116488029823788112",
+      "uid": "sv-3425388146044057038",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Knowledge at Night: Animal Tracking and Sign",
+      "start_utc": "2026-02-04 00:00:00",
+      "end_utc": "2026-02-04 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/knowledge-at-night%3a-animal-tracking-and-sign/693/",
+      "uid": "sv-1703231524250873493",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Knowledge at Noon: Animal Tracking & Sign",
+      "start_utc": "2026-02-04 00:00:00",
+      "end_utc": "2026-02-04 00:00:00",
+      "location": "Koller Library",
+      "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-animal-tracking-%26-sign/692/",
+      "uid": "sv-7529610817010979893",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Fat Bike Weekend Experience",
+      "start_utc": "2026-02-07 00:00:00",
+      "end_utc": "2026-02-07 00:00:00",
+      "location": "WinMan Trails",
+      "url": "https://manitowishwaters.org/event/fat-bike-weekend-experience/691/",
+      "uid": "sv-3626758361770709964",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Valentine Heart Felted Cabins Workshop",
+      "start_utc": "2026-02-07 00:00:00",
+      "end_utc": "2026-02-07 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/valentine-heart-felted-cabins-workshop/694/",
+      "uid": "sv-9155343487655008615",
       "_source": null
     },
     {
@@ -13682,7 +11530,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Pea Patch",
       "url": "https://manitowishwaters.org/event/manitowish-waters-sno-skeeters-breakfast/688/",
-      "uid": "sv-485859359084999899",
+      "uid": "sv-4548280751746682064",
       "_source": null
     },
     {
@@ -13693,7 +11541,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "MW Fire Hall",
       "url": "https://manitowishwaters.org/event/sno-skeeters-winter-rendezvous/689/",
-      "uid": "sv-5516527928769244789",
+      "uid": "sv-5266781983505271762",
       "_source": null
     },
     {
@@ -13704,7 +11552,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-2628162107495232160",
+      "uid": "sv-563727794237042231",
       "_source": null
     },
     {
@@ -13730,9 +11578,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 619,
+  "events_preview_count": 521,
   "curated_feeds": {
-    "generated_at": "2026-01-28T18:36:44.938056+00:00",
+    "generated_at": "2026-01-29T05:06:44.544900+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
