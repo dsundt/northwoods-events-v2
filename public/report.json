@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-04T07:36:44.284665+00:00",
+  "generated_at": "2026-02-04T18:50:21.567131+00:00",
   "sources_processed": 8,
   "total_events": 525,
   "source_logs": [
@@ -36,11 +36,11 @@
       "name": "St. Germain Chamber (GrowthZone)",
       "type": "growthzone_html",
       "url": "https://stgermainwi.chambermaster.com/events/calendar?o=alpha",
-      "ok": true,
-      "count": 3,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "500 Server Error: Internal Server Error for url: https://stgermainwi.chambermaster.com/events/calendar?o=alpha",
       "slug": "st-germain-chamber-growthzone",
-      "ics_path": "by-source/st-germain-chamber-growthzone.ics",
+      "ics_path": null,
       "warnings": [],
       "notes": []
     },
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 2,
+      "count": 5,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -5372,39 +5372,6 @@
       "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell 5K Run Canceled",
-      "start_utc": "2025-12-06T00:00:00",
-      "end_utc": null,
-      "location": "December 6th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-5k-run-canceled/",
-      "uid": null,
-      "_source": "growthzone_html"
-    },
-    {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell Run 2025",
-      "start_utc": "2025-12-04T10:00:00",
-      "end_utc": null,
-      "location": "December 4th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-run-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
-    },
-    {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Lighting Up St. Germain 2025",
-      "start_utc": "2025-11-29T16:30:00",
-      "end_utc": null,
-      "location": "November 29th, 2025",
-      "url": "https://st-germain.com/events/lighting-up-st-germain-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
-    },
-    {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
       "title": "Colorama 2026",
@@ -5610,7 +5577,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-5850155264644241440",
+      "uid": "sv-6882427328683284288",
       "_source": null
     },
     {
@@ -5621,7 +5588,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-6973607304358239327",
+      "uid": "sv-818029426117972696",
       "_source": null
     },
     {
@@ -5632,7 +5599,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Aqua Bowl",
       "url": "https://www.minocqua.org/event/american-pond-hockey-invitational/39368/",
-      "uid": "sv-5773531674476873167",
+      "uid": "sv-7856258473942607842",
       "_source": null
     },
     {
@@ -5643,7 +5610,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-485377424594747346",
+      "uid": "sv-7295649383376080182",
       "_source": null
     },
     {
@@ -5654,7 +5621,7 @@
       "end_utc": "2026-02-07 00:00:00",
       "location": "Rocky Reef Brewing Company to cheer on Team USA. Enjoy great beer",
       "url": "https://www.minocqua.org/event/olympic-curling-watch-party/39932/",
-      "uid": "sv-8246171069322341352",
+      "uid": "sv-1814275884234458848",
       "_source": null
     },
     {
@@ -5665,7 +5632,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-2340245942283124987",
+      "uid": "sv-2514888353165151860",
       "_source": null
     },
     {
@@ -5676,7 +5643,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-3942824485810378771",
+      "uid": "sv-562287488688995673",
       "_source": null
     },
     {
@@ -5687,7 +5654,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-4162919944863662027",
+      "uid": "sv-3120820802636555991",
       "_source": null
     },
     {
@@ -5698,7 +5665,7 @@
       "end_utc": "2026-02-12 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pokemon-%40-the-library/39702/",
-      "uid": "sv-7756770971873484754",
+      "uid": "sv-5613538273926177850",
       "_source": null
     },
     {
@@ -5709,7 +5676,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/sweethouse-decorating/39916/",
-      "uid": "sv-5252142852301298456",
+      "uid": "sv-3695449990490926126",
       "_source": null
     },
     {
@@ -5720,7 +5687,7 @@
       "end_utc": "2026-02-20 00:00:00",
       "location": "The Pines Event Center. This in-person event is your chance to mingle with",
       "url": "https://www.minocqua.org/event/womens-business-collective-networking-night-out/39903/",
-      "uid": "sv-149038151502127769",
+      "uid": "sv-5503325564443734576",
       "_source": null
     },
     {
@@ -5731,7 +5698,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "Minocqua Yacht Club",
       "url": "https://www.minocqua.org/event/2nd-annual-turkey-bowling/39923/",
-      "uid": "sv-976376247928818629",
+      "uid": "sv-2121717003134144718",
       "_source": null
     },
     {
@@ -5742,7 +5709,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-4891617551465629888",
+      "uid": "sv-648178410695605843",
       "_source": null
     },
     {
@@ -5753,7 +5720,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-4872869938368648426",
+      "uid": "sv-6262684941003227222",
       "_source": null
     },
     {
@@ -5764,7 +5731,7 @@
       "end_utc": "2026-02-04 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/knowledge-at-night%3a-animal-tracking-and-sign/693/",
-      "uid": "sv-4209929551698265130",
+      "uid": "sv-4529824265343299928",
       "_source": null
     },
     {
@@ -5775,7 +5742,7 @@
       "end_utc": "2026-02-04 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-animal-tracking-%26-sign/692/",
-      "uid": "sv-9153410461762485589",
+      "uid": "sv-1131404363127676370",
       "_source": null
     },
     {
@@ -5786,7 +5753,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-3978685926936536440",
+      "uid": "sv-5312652115427065461",
       "_source": null
     },
     {
@@ -5797,7 +5764,7 @@
       "end_utc": "2026-02-07 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/fat-bike-weekend-experience/691/",
-      "uid": "sv-7993045353553691916",
+      "uid": "sv-7609565466773646287",
       "_source": null
     },
     {
@@ -5808,7 +5775,7 @@
       "end_utc": "2026-02-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/valentine-heart-felted-cabins-workshop/694/",
-      "uid": "sv-2109087209219086579",
+      "uid": "sv-810179593879254953",
       "_source": null
     },
     {
@@ -5819,7 +5786,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Pea Patch",
       "url": "https://manitowishwaters.org/event/manitowish-waters-sno-skeeters-breakfast/688/",
-      "uid": "sv-138359005066677108",
+      "uid": "sv-3766809252616241464",
       "_source": null
     },
     {
@@ -5830,7 +5797,7 @@
       "end_utc": "2026-02-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-secret-love-lives/696/",
-      "uid": "sv-647606725290737671",
+      "uid": "sv-7736964737331252574",
       "_source": null
     },
     {
@@ -5841,7 +5808,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "MW Fire Hall",
       "url": "https://manitowishwaters.org/event/sno-skeeters-winter-rendezvous/689/",
-      "uid": "sv-4854682335296677497",
+      "uid": "sv-7237076554380554761",
       "_source": null
     },
     {
@@ -5852,7 +5819,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-9209421378666127265",
+      "uid": "sv-4825072783843061803",
       "_source": null
     },
     {
@@ -5863,7 +5830,7 @@
       "end_utc": "2026-02-19 00:00:00",
       "location": "Rustic Roadhaus",
       "url": "https://manitowishwaters.org/event/manitowish-waters-sno-skeeters-spaghetti-feed/695/",
-      "uid": "sv-1583210872808001109",
+      "uid": "sv-6492795786357501137",
       "_source": null
     },
     {
@@ -5880,12 +5847,45 @@
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Emilie Ganiere Live at Northern Highland Coffee Co",
+      "start_utc": "2026-02-07 18:00:00",
+      "end_utc": "2026-02-07 20:00:00",
+      "location": "Northern Highland Coffee Co, 2965 WI-155, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/emilie-ganiere-live-at-northern-highland-coffee-co/",
+      "uid": "1522",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Plum Lake Ice Fishing Tournament",
       "start_utc": "2026-02-14 06:00:00",
       "end_utc": "2026-02-14 14:00:00",
       "location": "Sayner Community Center, 545 WI-155, Sayner",
       "url": "https://sayner-starlake-cloverland.org/event/plum-lake-ice-fishing-tournament-2/",
       "uid": "1501",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Galentine&#8217;s Day at Northern Highland Coffee Co",
+      "start_utc": "2026-02-14 10:00:00",
+      "end_utc": "2026-02-14 14:00:00",
+      "location": "Northern Highland Coffee Co, 2965 WI-155, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/galentines-day-at-northern-highland-coffee-co/",
+      "uid": "1527",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Friends of the Plum Lake Library Trivia Night",
+      "start_utc": "2026-02-28 17:00:00",
+      "end_utc": "2026-02-28 21:00:00",
+      "location": "Saint Germain Community Center, 545 WI-155, Saint Germain, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/friends-of-the-plum-lake-library-trivia-night/",
+      "uid": "1515",
       "_source": null
     }
   ],
@@ -11149,39 +11149,6 @@
       "_source": null
     },
     {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell 5K Run Canceled",
-      "start_utc": "2025-12-06T00:00:00",
-      "end_utc": null,
-      "location": "December 6th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-5k-run-canceled/",
-      "uid": null,
-      "_source": "growthzone_html"
-    },
-    {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Jingle Bell Run 2025",
-      "start_utc": "2025-12-04T10:00:00",
-      "end_utc": null,
-      "location": "December 4th, 2025",
-      "url": "https://st-germain.com/events/jingle-bell-run-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
-    },
-    {
-      "calendar": "St. Germain Chamber (GrowthZone)",
-      "source": "St. Germain Chamber (GrowthZone)",
-      "title": "Lighting Up St. Germain 2025",
-      "start_utc": "2025-11-29T16:30:00",
-      "end_utc": null,
-      "location": "November 29th, 2025",
-      "url": "https://st-germain.com/events/lighting-up-st-germain-2025/",
-      "uid": null,
-      "_source": "growthzone_html"
-    },
-    {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
       "title": "Colorama 2026",
@@ -11387,7 +11354,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-5850155264644241440",
+      "uid": "sv-6882427328683284288",
       "_source": null
     },
     {
@@ -11398,7 +11365,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-6973607304358239327",
+      "uid": "sv-818029426117972696",
       "_source": null
     },
     {
@@ -11409,7 +11376,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Aqua Bowl",
       "url": "https://www.minocqua.org/event/american-pond-hockey-invitational/39368/",
-      "uid": "sv-5773531674476873167",
+      "uid": "sv-7856258473942607842",
       "_source": null
     },
     {
@@ -11420,7 +11387,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-485377424594747346",
+      "uid": "sv-7295649383376080182",
       "_source": null
     },
     {
@@ -11431,7 +11398,7 @@
       "end_utc": "2026-02-07 00:00:00",
       "location": "Rocky Reef Brewing Company to cheer on Team USA. Enjoy great beer",
       "url": "https://www.minocqua.org/event/olympic-curling-watch-party/39932/",
-      "uid": "sv-8246171069322341352",
+      "uid": "sv-1814275884234458848",
       "_source": null
     },
     {
@@ -11442,7 +11409,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-2340245942283124987",
+      "uid": "sv-2514888353165151860",
       "_source": null
     },
     {
@@ -11453,7 +11420,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-3942824485810378771",
+      "uid": "sv-562287488688995673",
       "_source": null
     },
     {
@@ -11464,7 +11431,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-4162919944863662027",
+      "uid": "sv-3120820802636555991",
       "_source": null
     },
     {
@@ -11475,7 +11442,7 @@
       "end_utc": "2026-02-12 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/pokemon-%40-the-library/39702/",
-      "uid": "sv-7756770971873484754",
+      "uid": "sv-5613538273926177850",
       "_source": null
     },
     {
@@ -11486,7 +11453,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/sweethouse-decorating/39916/",
-      "uid": "sv-5252142852301298456",
+      "uid": "sv-3695449990490926126",
       "_source": null
     },
     {
@@ -11497,7 +11464,7 @@
       "end_utc": "2026-02-20 00:00:00",
       "location": "The Pines Event Center. This in-person event is your chance to mingle with",
       "url": "https://www.minocqua.org/event/womens-business-collective-networking-night-out/39903/",
-      "uid": "sv-149038151502127769",
+      "uid": "sv-5503325564443734576",
       "_source": null
     },
     {
@@ -11508,7 +11475,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "Minocqua Yacht Club",
       "url": "https://www.minocqua.org/event/2nd-annual-turkey-bowling/39923/",
-      "uid": "sv-976376247928818629",
+      "uid": "sv-2121717003134144718",
       "_source": null
     },
     {
@@ -11519,7 +11486,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-4891617551465629888",
+      "uid": "sv-648178410695605843",
       "_source": null
     },
     {
@@ -11530,7 +11497,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-4872869938368648426",
+      "uid": "sv-6262684941003227222",
       "_source": null
     },
     {
@@ -11541,7 +11508,7 @@
       "end_utc": "2026-02-04 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/knowledge-at-night%3a-animal-tracking-and-sign/693/",
-      "uid": "sv-4209929551698265130",
+      "uid": "sv-4529824265343299928",
       "_source": null
     },
     {
@@ -11552,7 +11519,7 @@
       "end_utc": "2026-02-04 00:00:00",
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-animal-tracking-%26-sign/692/",
-      "uid": "sv-9153410461762485589",
+      "uid": "sv-1131404363127676370",
       "_source": null
     },
     {
@@ -11563,7 +11530,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-3978685926936536440",
+      "uid": "sv-5312652115427065461",
       "_source": null
     },
     {
@@ -11574,7 +11541,7 @@
       "end_utc": "2026-02-07 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/fat-bike-weekend-experience/691/",
-      "uid": "sv-7993045353553691916",
+      "uid": "sv-7609565466773646287",
       "_source": null
     },
     {
@@ -11585,7 +11552,7 @@
       "end_utc": "2026-02-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/valentine-heart-felted-cabins-workshop/694/",
-      "uid": "sv-2109087209219086579",
+      "uid": "sv-810179593879254953",
       "_source": null
     },
     {
@@ -11596,7 +11563,7 @@
       "end_utc": "2026-02-08 00:00:00",
       "location": "The Pea Patch",
       "url": "https://manitowishwaters.org/event/manitowish-waters-sno-skeeters-breakfast/688/",
-      "uid": "sv-138359005066677108",
+      "uid": "sv-3766809252616241464",
       "_source": null
     },
     {
@@ -11607,7 +11574,7 @@
       "end_utc": "2026-02-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-secret-love-lives/696/",
-      "uid": "sv-647606725290737671",
+      "uid": "sv-7736964737331252574",
       "_source": null
     },
     {
@@ -11618,7 +11585,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "MW Fire Hall",
       "url": "https://manitowishwaters.org/event/sno-skeeters-winter-rendezvous/689/",
-      "uid": "sv-4854682335296677497",
+      "uid": "sv-7237076554380554761",
       "_source": null
     },
     {
@@ -11629,7 +11596,7 @@
       "end_utc": "2026-02-14 00:00:00",
       "location": "Groomer Barn",
       "url": "https://manitowishwaters.org/event/winter-rendezvous/468/",
-      "uid": "sv-9209421378666127265",
+      "uid": "sv-4825072783843061803",
       "_source": null
     },
     {
@@ -11640,7 +11607,7 @@
       "end_utc": "2026-02-19 00:00:00",
       "location": "Rustic Roadhaus",
       "url": "https://manitowishwaters.org/event/manitowish-waters-sno-skeeters-spaghetti-feed/695/",
-      "uid": "sv-1583210872808001109",
+      "uid": "sv-6492795786357501137",
       "_source": null
     },
     {
@@ -11657,6 +11624,17 @@
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Emilie Ganiere Live at Northern Highland Coffee Co",
+      "start_utc": "2026-02-07 18:00:00",
+      "end_utc": "2026-02-07 20:00:00",
+      "location": "Northern Highland Coffee Co, 2965 WI-155, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/emilie-ganiere-live-at-northern-highland-coffee-co/",
+      "uid": "1522",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Plum Lake Ice Fishing Tournament",
       "start_utc": "2026-02-14 06:00:00",
       "end_utc": "2026-02-14 14:00:00",
@@ -11664,11 +11642,33 @@
       "url": "https://sayner-starlake-cloverland.org/event/plum-lake-ice-fishing-tournament-2/",
       "uid": "1501",
       "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Galentine&#8217;s Day at Northern Highland Coffee Co",
+      "start_utc": "2026-02-14 10:00:00",
+      "end_utc": "2026-02-14 14:00:00",
+      "location": "Northern Highland Coffee Co, 2965 WI-155, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/galentines-day-at-northern-highland-coffee-co/",
+      "uid": "1527",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Friends of the Plum Lake Library Trivia Night",
+      "start_utc": "2026-02-28 17:00:00",
+      "end_utc": "2026-02-28 21:00:00",
+      "location": "Saint Germain Community Center, 545 WI-155, Saint Germain, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/friends-of-the-plum-lake-library-trivia-night/",
+      "uid": "1515",
+      "_source": null
     }
   ],
   "events_preview_count": 525,
   "curated_feeds": {
-    "generated_at": "2026-02-04T07:36:44.320582+00:00",
+    "generated_at": "2026-02-04T18:50:21.604629+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
