@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-02-23T07:03:02.431633+00:00",
+  "generated_at": "2026-02-23T07:45:58.610852+00:00",
   "sources_processed": 8,
-  "total_events": 593,
+  "total_events": 594,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -103,59 +103,12 @@
       "name": "Sayner Star Lake Cloverland (TEC)",
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
-      "ok": false,
-      "count": 0,
-      "error": "HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30)",
+      "ok": true,
+      "count": 1,
+      "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
-      "ics_path": null,
-      "warnings": [
-        "tec_rest request failed: HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-02-22&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-02-22&end_date=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-02-22&endDate=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-02-22&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2026-02-22&end_date=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2026-02-22&endDate=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-02-22&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2026-02-22&end_date=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2026-02-22&endDate=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-02-22&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2026-02-22&end_date=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2026-02-22&endDate=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-02-22&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2026-02-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2026-02-22&end_date=2026-08-22)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Read timed out. (read timeout=30) (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2026-02-22&endDate=2026-08-22)"
-      ],
+      "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
+      "warnings": [],
       "notes": []
     }
   ],
@@ -6378,34 +6331,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Minocqua Winter Market",
-      "start_utc": "2025-11-09 00:00:00",
-      "end_utc": "2026-04-12 00:00:00",
-      "location": "Minocqua Area Visitors Bureau Community Room",
-      "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-4217857353723454057",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2025-02-02 00:00:00",
-      "end_utc": "2026-06-28 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-9045330119393915205",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-3005730156726978769",
+      "uid": "sv-1382528721017863679",
       "_source": null
     },
     {
@@ -6416,7 +6347,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-8352548477013509469",
+      "uid": "sv-6253777469462577782",
       "_source": null
     },
     {
@@ -6427,7 +6358,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-2708188700848181349",
+      "uid": "sv-5734316596026388164",
       "_source": null
     },
     {
@@ -6438,7 +6369,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-2703743107295694351",
+      "uid": "sv-1791537524458788803",
       "_source": null
     },
     {
@@ -6449,7 +6380,7 @@
       "end_utc": "2026-05-28 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5100807642324292761",
+      "uid": "sv-8050646086624627263",
       "_source": null
     },
     {
@@ -6460,7 +6391,7 @@
       "end_utc": "2026-02-27 00:00:00",
       "location": "Community Gym",
       "url": "https://www.minocqua.org/event/gymtime-%40-minocqua-public-library/39940/",
-      "uid": "sv-1018198474298730976",
+      "uid": "sv-6413250595430686130",
       "_source": null
     },
     {
@@ -6471,7 +6402,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-7721157103699621467",
+      "uid": "sv-3953515783322937032",
       "_source": null
     },
     {
@@ -6482,7 +6413,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "Minocqua Yacht Club",
       "url": "https://www.minocqua.org/event/2nd-annual-turkey-bowling/39923/",
-      "uid": "sv-4989493270681088730",
+      "uid": "sv-6625098620939632563",
       "_source": null
     },
     {
@@ -6493,7 +6424,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-1477327450856198389",
+      "uid": "sv-6629551877749297828",
       "_source": null
     },
     {
@@ -6504,7 +6435,29 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-5129246346382559186",
+      "uid": "sv-8099228385073573345",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Minocqua Winter Market",
+      "start_utc": "2025-11-09 00:00:00",
+      "end_utc": "2026-04-12 00:00:00",
+      "location": "Minocqua Area Visitors Bureau Community Room",
+      "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
+      "uid": "sv-2317643606870020152",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Restorative Yoga",
+      "start_utc": "2025-02-02 00:00:00",
+      "end_utc": "2026-06-28 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
+      "uid": "sv-6957124674595356617",
       "_source": null
     },
     {
@@ -6515,7 +6468,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-8178891356798317489",
+      "uid": "sv-5519801075202264871",
       "_source": null
     },
     {
@@ -6526,7 +6479,7 @@
       "end_utc": "2026-03-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/wreck-it-journals/39865/",
-      "uid": "sv-722699709530660186",
+      "uid": "sv-7664904072217039659",
       "_source": null
     },
     {
@@ -6537,7 +6490,7 @@
       "end_utc": "2026-03-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-time-at-the-library/39864/",
-      "uid": "sv-720418708409709534",
+      "uid": "sv-3467686396140960736",
       "_source": null
     },
     {
@@ -6548,7 +6501,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-3-day-instructor-led-retreat-in-the-northwoods/39920/",
-      "uid": "sv-3369247237564599091",
+      "uid": "sv-2144595973013628003",
       "_source": null
     },
     {
@@ -6559,7 +6512,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/oregon-trail-card-game-irl/39703/",
-      "uid": "sv-3811980193560868677",
+      "uid": "sv-46754641337168798",
       "_source": null
     },
     {
@@ -6570,7 +6523,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-6757872975730939887",
+      "uid": "sv-6812168392254607800",
       "_source": null
     },
     {
@@ -6581,7 +6534,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/702/",
-      "uid": "sv-506713376837754482",
+      "uid": "sv-4607330629661918670",
       "_source": null
     },
     {
@@ -6592,7 +6545,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/fat-bike-weekend-experience/703/",
-      "uid": "sv-7645092929229079767",
+      "uid": "sv-9135835182091879219",
       "_source": null
     },
     {
@@ -6603,7 +6556,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-857074594947223090",
+      "uid": "sv-5247607726382020451",
       "_source": null
     },
     {
@@ -6614,7 +6567,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-in-the-winter-woods-by-daniela-kulot/706/",
-      "uid": "sv-6858283079513161941",
+      "uid": "sv-4829775042031710465",
       "_source": null
     },
     {
@@ -6625,7 +6578,7 @@
       "end_utc": "2026-03-03 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-seed-exchange-potluck/707/",
-      "uid": "sv-4386581959913421570",
+      "uid": "sv-3915751911699787426",
       "_source": null
     },
     {
@@ -6636,7 +6589,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-693703827188174024",
+      "uid": "sv-5458495484960097395",
       "_source": null
     },
     {
@@ -6647,7 +6600,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-5798898651422227719",
+      "uid": "sv-1622675754788133201",
       "_source": null
     },
     {
@@ -6658,7 +6611,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-1383275456552243908",
+      "uid": "sv-5232751789425519559",
       "_source": null
     },
     {
@@ -6669,7 +6622,7 @@
       "end_utc": "2026-06-06 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-discovery-centers-the-big-event/710/",
-      "uid": "sv-3750617158379080381",
+      "uid": "sv-2795079389084153448",
       "_source": null
     },
     {
@@ -6680,7 +6633,18 @@
       "end_utc": "2026-07-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/summer-family-play-day/711/",
-      "uid": "sv-4752267156679322839",
+      "uid": "sv-1395399187118189455",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Friends of the Plum Lake Library Trivia Night",
+      "start_utc": "2026-02-28 17:00:00",
+      "end_utc": "2026-02-28 21:00:00",
+      "location": "Saint Germain Community Center, 545 WI-155, Saint Germain, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/friends-of-the-plum-lake-library-trivia-night/",
+      "uid": "1515",
       "_source": null
     }
   ],
@@ -12903,34 +12867,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Minocqua Winter Market",
-      "start_utc": "2025-11-09 00:00:00",
-      "end_utc": "2026-04-12 00:00:00",
-      "location": "Minocqua Area Visitors Bureau Community Room",
-      "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-4217857353723454057",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2025-02-02 00:00:00",
-      "end_utc": "2026-06-28 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-9045330119393915205",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-3005730156726978769",
+      "uid": "sv-1382528721017863679",
       "_source": null
     },
     {
@@ -12941,7 +12883,7 @@
       "end_utc": "2026-03-09 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-8352548477013509469",
+      "uid": "sv-6253777469462577782",
       "_source": null
     },
     {
@@ -12952,7 +12894,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-2708188700848181349",
+      "uid": "sv-5734316596026388164",
       "_source": null
     },
     {
@@ -12963,7 +12905,7 @@
       "end_utc": "2026-02-25 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/storytime/39727/",
-      "uid": "sv-2703743107295694351",
+      "uid": "sv-1791537524458788803",
       "_source": null
     },
     {
@@ -12974,7 +12916,7 @@
       "end_utc": "2026-05-28 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-5100807642324292761",
+      "uid": "sv-8050646086624627263",
       "_source": null
     },
     {
@@ -12985,7 +12927,7 @@
       "end_utc": "2026-02-27 00:00:00",
       "location": "Community Gym",
       "url": "https://www.minocqua.org/event/gymtime-%40-minocqua-public-library/39940/",
-      "uid": "sv-1018198474298730976",
+      "uid": "sv-6413250595430686130",
       "_source": null
     },
     {
@@ -12996,7 +12938,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-7721157103699621467",
+      "uid": "sv-3953515783322937032",
       "_source": null
     },
     {
@@ -13007,7 +12949,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "Minocqua Yacht Club",
       "url": "https://www.minocqua.org/event/2nd-annual-turkey-bowling/39923/",
-      "uid": "sv-4989493270681088730",
+      "uid": "sv-6625098620939632563",
       "_source": null
     },
     {
@@ -13018,7 +12960,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-1477327450856198389",
+      "uid": "sv-6629551877749297828",
       "_source": null
     },
     {
@@ -13029,7 +12971,29 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-5129246346382559186",
+      "uid": "sv-8099228385073573345",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Minocqua Winter Market",
+      "start_utc": "2025-11-09 00:00:00",
+      "end_utc": "2026-04-12 00:00:00",
+      "location": "Minocqua Area Visitors Bureau Community Room",
+      "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
+      "uid": "sv-2317643606870020152",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Restorative Yoga",
+      "start_utc": "2025-02-02 00:00:00",
+      "end_utc": "2026-06-28 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
+      "uid": "sv-6957124674595356617",
       "_source": null
     },
     {
@@ -13040,7 +13004,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-8178891356798317489",
+      "uid": "sv-5519801075202264871",
       "_source": null
     },
     {
@@ -13051,7 +13015,7 @@
       "end_utc": "2026-03-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/wreck-it-journals/39865/",
-      "uid": "sv-722699709530660186",
+      "uid": "sv-7664904072217039659",
       "_source": null
     },
     {
@@ -13062,7 +13026,7 @@
       "end_utc": "2026-03-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-time-at-the-library/39864/",
-      "uid": "sv-720418708409709534",
+      "uid": "sv-3467686396140960736",
       "_source": null
     },
     {
@@ -13073,7 +13037,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-3-day-instructor-led-retreat-in-the-northwoods/39920/",
-      "uid": "sv-3369247237564599091",
+      "uid": "sv-2144595973013628003",
       "_source": null
     },
     {
@@ -13084,7 +13048,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/oregon-trail-card-game-irl/39703/",
-      "uid": "sv-3811980193560868677",
+      "uid": "sv-46754641337168798",
       "_source": null
     },
     {
@@ -13095,7 +13059,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-6757872975730939887",
+      "uid": "sv-6812168392254607800",
       "_source": null
     },
     {
@@ -13106,7 +13070,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/critter-feeding-demonstration/702/",
-      "uid": "sv-506713376837754482",
+      "uid": "sv-4607330629661918670",
       "_source": null
     },
     {
@@ -13117,7 +13081,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/fat-bike-weekend-experience/703/",
-      "uid": "sv-7645092929229079767",
+      "uid": "sv-9135835182091879219",
       "_source": null
     },
     {
@@ -13128,7 +13092,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-857074594947223090",
+      "uid": "sv-5247607726382020451",
       "_source": null
     },
     {
@@ -13139,7 +13103,7 @@
       "end_utc": "2026-02-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-in-the-winter-woods-by-daniela-kulot/706/",
-      "uid": "sv-6858283079513161941",
+      "uid": "sv-4829775042031710465",
       "_source": null
     },
     {
@@ -13150,7 +13114,7 @@
       "end_utc": "2026-03-03 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-seed-exchange-potluck/707/",
-      "uid": "sv-4386581959913421570",
+      "uid": "sv-3915751911699787426",
       "_source": null
     },
     {
@@ -13161,7 +13125,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-693703827188174024",
+      "uid": "sv-5458495484960097395",
       "_source": null
     },
     {
@@ -13172,7 +13136,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-5798898651422227719",
+      "uid": "sv-1622675754788133201",
       "_source": null
     },
     {
@@ -13183,7 +13147,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-1383275456552243908",
+      "uid": "sv-5232751789425519559",
       "_source": null
     },
     {
@@ -13194,7 +13158,7 @@
       "end_utc": "2026-06-06 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-discovery-centers-the-big-event/710/",
-      "uid": "sv-3750617158379080381",
+      "uid": "sv-2795079389084153448",
       "_source": null
     },
     {
@@ -13205,13 +13169,24 @@
       "end_utc": "2026-07-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/summer-family-play-day/711/",
-      "uid": "sv-4752267156679322839",
+      "uid": "sv-1395399187118189455",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Friends of the Plum Lake Library Trivia Night",
+      "start_utc": "2026-02-28 17:00:00",
+      "end_utc": "2026-02-28 21:00:00",
+      "location": "Saint Germain Community Center, 545 WI-155, Saint Germain, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/friends-of-the-plum-lake-library-trivia-night/",
+      "uid": "1515",
       "_source": null
     }
   ],
-  "events_preview_count": 593,
+  "events_preview_count": 594,
   "curated_feeds": {
-    "generated_at": "2026-02-23T07:03:02.475234+00:00",
+    "generated_at": "2026-02-23T07:45:58.653542+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
