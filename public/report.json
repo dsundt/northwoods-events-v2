@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T05:13:29.844271+00:00",
+  "generated_at": "2026-03-03T07:39:02.171579+00:00",
   "sources_processed": 8,
   "total_events": 51,
   "source_logs": [
@@ -111,7 +111,16 @@
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
       "warnings": [
-        "Used TEC ICS fallback: https://sayner-starlake-cloverland.org/events/?ical=1"
+        "tec_rest request failed: HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /wp-json/tribe/events/v1/events?start_date=2026-03-03&end_date=2026-07-01&per_page=50&page=1 (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\"))",
+        "Used TEC ICS fallback: https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-03-02&endDate=2026-08-30",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1 (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&tribe_display=list (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&tribe_display=list&tribe-bar-date=2026-03-02 (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-03-02)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&tribe_display=list&tribe-bar-date=2026-03-02&tribe_paged=1 (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-03-02&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&eventDisplay=list (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&eventDisplay=list&eventDate=2026-03-02 (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-03-02)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): HTTPSConnectionPool(host='sayner-starlake-cloverland.org', port=443): Max retries exceeded with url: /events/?ical=1&eventDisplay=month&eventDate=2026-03-02 (Caused by NameResolutionError(\"HTTPSConnection(host='sayner-starlake-cloverland.org', port=443): Failed to resolve 'sayner-starlake-cloverland.org' ([Errno -3] Temporary failure in name resolution)\")) (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-03-02)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 500 Server Error: Internal Server Error for url: https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-03-02&end_date=2026-08-30 (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-03-02&end_date=2026-08-30)"
       ],
       "notes": []
     }
@@ -362,34 +371,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "\"The Majors\" A Northwoods Golf Classic",
-      "start_utc": "2025-11-03 00:00:00",
-      "end_utc": null,
-      "location": "Lakeland Fitness & Golf",
-      "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-808254293263464091",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Open Play at Minocqua Library",
-      "start_utc": "2026-01-05 00:00:00",
-      "end_utc": "2026-03-09 00:00:00",
-      "location": "Minocqua Library",
-      "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-4855052476010808885",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Community Game Night",
       "start_utc": "2024-04-10 00:00:00",
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-6576207890145157485",
+      "uid": "sv-3010573213129221372",
       "_source": null
     },
     {
@@ -400,7 +387,7 @@
       "end_utc": "2026-05-28 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-7188222291020668049",
+      "uid": "sv-970750817371221771",
       "_source": null
     },
     {
@@ -411,7 +398,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-7627282202809632183",
+      "uid": "sv-5390077615088128141",
       "_source": null
     },
     {
@@ -422,7 +409,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-539465195201481693",
+      "uid": "sv-9100994978258950414",
       "_source": null
     },
     {
@@ -433,7 +420,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-7114626990239066177",
+      "uid": "sv-7808099387938339839",
       "_source": null
     },
     {
@@ -444,7 +431,29 @@
       "end_utc": "2026-06-28 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-3794120984878615956",
+      "uid": "sv-2364805999303475951",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "\"The Majors\" A Northwoods Golf Classic",
+      "start_utc": "2025-11-03 00:00:00",
+      "end_utc": null,
+      "location": "Lakeland Fitness & Golf",
+      "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
+      "uid": "sv-452300523464756330",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Open Play at Minocqua Library",
+      "start_utc": "2026-01-05 00:00:00",
+      "end_utc": "2026-03-09 00:00:00",
+      "location": "Minocqua Library",
+      "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
+      "uid": "sv-7035782234793486540",
       "_source": null
     },
     {
@@ -455,7 +464,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-8553879625382097189",
+      "uid": "sv-6361977243294050738",
       "_source": null
     },
     {
@@ -466,7 +475,7 @@
       "end_utc": "2026-03-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/wreck-it-journals/39865/",
-      "uid": "sv-8731242983160561795",
+      "uid": "sv-5791830295122305320",
       "_source": null
     },
     {
@@ -477,7 +486,7 @@
       "end_utc": "2026-03-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-time-at-the-library/39864/",
-      "uid": "sv-3630730112002966487",
+      "uid": "sv-2243647942950439566",
       "_source": null
     },
     {
@@ -488,7 +497,7 @@
       "end_utc": "2026-03-25 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/roll-with-it!-paper-quilling-made-fun/39948/",
-      "uid": "sv-6411623944292889369",
+      "uid": "sv-8862009933982256953",
       "_source": null
     },
     {
@@ -499,7 +508,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-4331599768628769104",
+      "uid": "sv-7716784500085059115",
       "_source": null
     },
     {
@@ -510,7 +519,7 @@
       "end_utc": "2026-04-04 00:00:00",
       "location": "Eaglebrook Church",
       "url": "https://www.minocqua.org/event/easter-egg-hunt/39957/",
-      "uid": "sv-7801331004412071401",
+      "uid": "sv-9025623780207276863",
       "_source": null
     },
     {
@@ -521,7 +530,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-3-day-instructor-led-retreat-in-the-northwoods/39920/",
-      "uid": "sv-8637942295278329340",
+      "uid": "sv-2062842122520350117",
       "_source": null
     },
     {
@@ -532,7 +541,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/oregon-trail-card-game-irl/39703/",
-      "uid": "sv-952690862564224156",
+      "uid": "sv-6535090115591972889",
       "_source": null
     },
     {
@@ -543,7 +552,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Campanile Center For the Arts",
       "url": "https://www.minocqua.org/event/daddy-daughter-dance/39950/",
-      "uid": "sv-5782123963313595301",
+      "uid": "sv-8445463700807434712",
       "_source": null
     },
     {
@@ -554,7 +563,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/create-a-stoneware-birdhouse/39949/",
-      "uid": "sv-8169685515070744123",
+      "uid": "sv-286938293087397022",
       "_source": null
     },
     {
@@ -565,7 +574,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-3931338841665027728",
+      "uid": "sv-4153724085132739819",
       "_source": null
     },
     {
@@ -576,7 +585,7 @@
       "end_utc": "2026-03-03 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-seed-exchange-potluck/707/",
-      "uid": "sv-6684223831407138024",
+      "uid": "sv-796048358312054713",
       "_source": null
     },
     {
@@ -587,7 +596,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-5514550051165365256",
+      "uid": "sv-7706227667712224359",
       "_source": null
     },
     {
@@ -598,7 +607,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-2544613798427470776",
+      "uid": "sv-5568499999801094143",
       "_source": null
     },
     {
@@ -609,7 +618,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-3493380548178415684",
+      "uid": "sv-5075843057831806685",
       "_source": null
     },
     {
@@ -620,7 +629,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-3385899772360132898",
+      "uid": "sv-2206102048914920948",
       "_source": null
     },
     {
@@ -631,7 +640,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-4587344666963904945",
+      "uid": "sv-6820057967667322610",
       "_source": null
     },
     {
@@ -642,7 +651,7 @@
       "end_utc": "2026-06-06 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-discovery-centers-the-big-event/710/",
-      "uid": "sv-2654377413143883473",
+      "uid": "sv-3950913281357510744",
       "_source": null
     },
     {
@@ -653,7 +662,7 @@
       "end_utc": "2026-07-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/summer-family-play-day/711/",
-      "uid": "sv-5896211896255535689",
+      "uid": "sv-6369128437080620463",
       "_source": null
     },
     {
@@ -925,34 +934,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "\"The Majors\" A Northwoods Golf Classic",
-      "start_utc": "2025-11-03 00:00:00",
-      "end_utc": null,
-      "location": "Lakeland Fitness & Golf",
-      "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-808254293263464091",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Open Play at Minocqua Library",
-      "start_utc": "2026-01-05 00:00:00",
-      "end_utc": "2026-03-09 00:00:00",
-      "location": "Minocqua Library",
-      "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
-      "uid": "sv-4855052476010808885",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Community Game Night",
       "start_utc": "2024-04-10 00:00:00",
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-6576207890145157485",
+      "uid": "sv-3010573213129221372",
       "_source": null
     },
     {
@@ -963,7 +950,7 @@
       "end_utc": "2026-05-28 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-7188222291020668049",
+      "uid": "sv-970750817371221771",
       "_source": null
     },
     {
@@ -974,7 +961,7 @@
       "end_utc": "2026-03-13 00:00:00",
       "location": "Lakeland Hawks Ice Arena",
       "url": "https://www.minocqua.org/event/lakeland-hawks-ice-arena-friday-night-open-skate/39836/",
-      "uid": "sv-7627282202809632183",
+      "uid": "sv-5390077615088128141",
       "_source": null
     },
     {
@@ -985,7 +972,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-539465195201481693",
+      "uid": "sv-9100994978258950414",
       "_source": null
     },
     {
@@ -996,7 +983,7 @@
       "end_utc": "2026-04-12 00:00:00",
       "location": "Minocqua Area Visitors Bureau Community Room",
       "url": "https://www.minocqua.org/event/minocqua-winter-market/39792/",
-      "uid": "sv-7114626990239066177",
+      "uid": "sv-7808099387938339839",
       "_source": null
     },
     {
@@ -1007,7 +994,29 @@
       "end_utc": "2026-06-28 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-3794120984878615956",
+      "uid": "sv-2364805999303475951",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "\"The Majors\" A Northwoods Golf Classic",
+      "start_utc": "2025-11-03 00:00:00",
+      "end_utc": null,
+      "location": "Lakeland Fitness & Golf",
+      "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
+      "uid": "sv-452300523464756330",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Open Play at Minocqua Library",
+      "start_utc": "2026-01-05 00:00:00",
+      "end_utc": "2026-03-09 00:00:00",
+      "location": "Minocqua Library",
+      "url": "https://www.minocqua.org/event/open-play-at-minocqua-library/39847/",
+      "uid": "sv-7035782234793486540",
       "_source": null
     },
     {
@@ -1018,7 +1027,7 @@
       "end_utc": "2026-03-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/board-games-at-the-library/39866/",
-      "uid": "sv-8553879625382097189",
+      "uid": "sv-6361977243294050738",
       "_source": null
     },
     {
@@ -1029,7 +1038,7 @@
       "end_utc": "2026-03-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/wreck-it-journals/39865/",
-      "uid": "sv-8731242983160561795",
+      "uid": "sv-5791830295122305320",
       "_source": null
     },
     {
@@ -1040,7 +1049,7 @@
       "end_utc": "2026-03-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-time-at-the-library/39864/",
-      "uid": "sv-3630730112002966487",
+      "uid": "sv-2243647942950439566",
       "_source": null
     },
     {
@@ -1051,7 +1060,7 @@
       "end_utc": "2026-03-25 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/roll-with-it!-paper-quilling-made-fun/39948/",
-      "uid": "sv-6411623944292889369",
+      "uid": "sv-8862009933982256953",
       "_source": null
     },
     {
@@ -1062,7 +1071,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-4331599768628769104",
+      "uid": "sv-7716784500085059115",
       "_source": null
     },
     {
@@ -1073,7 +1082,7 @@
       "end_utc": "2026-04-04 00:00:00",
       "location": "Eaglebrook Church",
       "url": "https://www.minocqua.org/event/easter-egg-hunt/39957/",
-      "uid": "sv-7801331004412071401",
+      "uid": "sv-9025623780207276863",
       "_source": null
     },
     {
@@ -1084,7 +1093,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-3-day-instructor-led-retreat-in-the-northwoods/39920/",
-      "uid": "sv-8637942295278329340",
+      "uid": "sv-2062842122520350117",
       "_source": null
     },
     {
@@ -1095,7 +1104,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/oregon-trail-card-game-irl/39703/",
-      "uid": "sv-952690862564224156",
+      "uid": "sv-6535090115591972889",
       "_source": null
     },
     {
@@ -1106,7 +1115,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Campanile Center For the Arts",
       "url": "https://www.minocqua.org/event/daddy-daughter-dance/39950/",
-      "uid": "sv-5782123963313595301",
+      "uid": "sv-8445463700807434712",
       "_source": null
     },
     {
@@ -1117,7 +1126,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/create-a-stoneware-birdhouse/39949/",
-      "uid": "sv-8169685515070744123",
+      "uid": "sv-286938293087397022",
       "_source": null
     },
     {
@@ -1128,7 +1137,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-3931338841665027728",
+      "uid": "sv-4153724085132739819",
       "_source": null
     },
     {
@@ -1139,7 +1148,7 @@
       "end_utc": "2026-03-03 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-seed-exchange-potluck/707/",
-      "uid": "sv-6684223831407138024",
+      "uid": "sv-796048358312054713",
       "_source": null
     },
     {
@@ -1150,7 +1159,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-5514550051165365256",
+      "uid": "sv-7706227667712224359",
       "_source": null
     },
     {
@@ -1161,7 +1170,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-2544613798427470776",
+      "uid": "sv-5568499999801094143",
       "_source": null
     },
     {
@@ -1172,7 +1181,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-3493380548178415684",
+      "uid": "sv-5075843057831806685",
       "_source": null
     },
     {
@@ -1183,7 +1192,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-3385899772360132898",
+      "uid": "sv-2206102048914920948",
       "_source": null
     },
     {
@@ -1194,7 +1203,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-4587344666963904945",
+      "uid": "sv-6820057967667322610",
       "_source": null
     },
     {
@@ -1205,7 +1214,7 @@
       "end_utc": "2026-06-06 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-discovery-centers-the-big-event/710/",
-      "uid": "sv-2654377413143883473",
+      "uid": "sv-3950913281357510744",
       "_source": null
     },
     {
@@ -1216,7 +1225,7 @@
       "end_utc": "2026-07-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/summer-family-play-day/711/",
-      "uid": "sv-5896211896255535689",
+      "uid": "sv-6369128437080620463",
       "_source": null
     },
     {
@@ -1244,7 +1253,7 @@
   ],
   "events_preview_count": 51,
   "curated_feeds": {
-    "generated_at": "2026-03-03T05:13:29.849305+00:00",
+    "generated_at": "2026-03-03T07:39:02.176540+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
