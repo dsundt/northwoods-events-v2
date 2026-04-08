@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-04-07T19:02:28.717947+00:00",
+  "generated_at": "2026-04-08T05:46:33.221066+00:00",
   "sources_processed": 8,
-  "total_events": 689,
+  "total_events": 692,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-07&end_date=2026-08-05&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-08&end_date=2026-08-06&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-07&end_date=2026-08-05&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-08&end_date=2026-08-06&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 608,
+      "count": 611,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-07&end_date=2026-08-05&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-08&end_date=2026-08-06&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-07&end_date=2026-08-05&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-08&end_date=2026-08-06&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -113,94 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Spring 2026 Homeschool Program-Middle School at LOLA",
-      "start_utc": "2026-04-07 09:30:00",
-      "end_utc": "2026-04-07 11:00:00",
-      "location": "LOLA &#8211; Land O&#8217;Lakes Art Center, 4262 Cty Hwy B, Land O'Lakes, WI",
-      "url": "https://eagleriver.org/events/spring-2026-homeschool-program-middle-school-at-lola/2026-04-07/",
-      "uid": "10020160",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Story Time",
-      "start_utc": "2026-04-07 10:00:00",
-      "end_utc": "2026-04-07 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/story-time/2026-04-07/",
-      "uid": "10009439",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Spring 2026 Homeschool Program-Elementary School at LOLA",
-      "start_utc": "2026-04-07 11:00:00",
-      "end_utc": "2026-04-07 12:00:00",
-      "location": "LOLA &#8211; Land O&#8217;Lakes Art Center, 4262 Cty Hwy B, Land O'Lakes, WI",
-      "url": "https://eagleriver.org/events/spring-2026-homeschool-program-at-lola/2026-04-07/",
-      "uid": "10020144",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Seated Yoga at the Walter E. Memorial Library",
-      "start_utc": "2026-04-07 11:30:00",
-      "end_utc": "2026-04-07 12:30:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/seated-yoga-at-the-walter-e-memorial-library/2026-04-07/",
-      "uid": "10012508",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Winter BINGO at Kalmar",
-      "start_utc": "2026-04-07 13:00:00",
-      "end_utc": "2026-04-07 16:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/winter-bingo-at-kalmar-2/2026-04-07/",
-      "uid": "10019951",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "School of Business and Entrepreneurship- Start Your Own Business- at Nicolet College",
-      "start_utc": "2026-04-07 17:30:00",
-      "end_utc": "2026-04-07 20:30:00",
-      "location": "Nicloet College, 5364 College Drive, Rhinelander, WI",
-      "url": "https://eagleriver.org/events/school-of-business-and-entrepreneurship-at-nicolet-college/2026-04-07/",
-      "uid": "10020215",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Northwoods Shares Free Community Dinners",
-      "start_utc": "2026-04-07 17:30:00",
-      "end_utc": "2026-04-07 18:30:00",
-      "location": "The Rock Mission Center, 1019 East Wall Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/northwoods-shares-free-community-dinners/2026-04-07/",
-      "uid": "10017784",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Sip, Swirl &#038; Spice at Mary Kate&#8217;s Wine Bar",
-      "start_utc": "2026-04-07 18:00:00",
-      "end_utc": "2026-04-07 20:30:00",
-      "location": "Mary Kate&#8217;s Wine Bar, 205 East Wall Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/beer-vs-wine-at-mary-kates-wine-bar/",
-      "uid": "24874",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -6802,6 +6714,127 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Trees For Tomorrow &#8211;  SEEK (Science, Earth, Exploration for Kids) Day Camp",
+      "start_utc": "2026-08-06 08:00:00",
+      "end_utc": "2026-08-06 16:00:00",
+      "location": "Trees For Tomorrow, 519 East Sheridan Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/trees-for-tomorrow-jr-seek-science-earth-exploration-for-kids-day-camp-3/2026-08-06/",
+      "uid": "10020037",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Aunt Grace&#8217;s Sewing Circle",
+      "start_utc": "2026-08-06 09:00:00",
+      "end_utc": "2026-08-06 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2026-08-06/",
+      "uid": "10010098",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Conover Sno- Buddies Brats and Beer FUNdraiser",
+      "start_utc": "2026-08-06 11:00:00",
+      "end_utc": "2026-08-06 16:00:00",
+      "location": "Burnt Bridge Tavern &#038; Restaurant, 5920 W County Hwy K #9258, Conover",
+      "url": "https://eagleriver.org/events/conover-sno-buddies-brats-and-beer-fundraiser/",
+      "uid": "21492",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
+      "start_utc": "2026-08-06 12:30:00",
+      "end_utc": "2026-08-06 15:00:00",
+      "location": "Kalmar Community Center",
+      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2026-08-06/",
+      "uid": "10014358",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Compassus Grief Support Group",
+      "start_utc": "2026-08-06 13:00:00",
+      "end_utc": "2026-08-06 14:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/compassus-grief-support-group/2026-08-06/",
+      "uid": "10010315",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Kids Book Club-Walter E. Olson Memorial Library",
+      "start_utc": "2026-08-06 16:00:00",
+      "end_utc": "2026-08-06 17:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/kids-book-club-walter-e-olson-memorial-library/2026-08-06/",
+      "uid": "10017919",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "GERTA Tennis: Thursday Round Robin",
+      "start_utc": "2026-08-06 17:30:00",
+      "end_utc": "2026-08-06 20:00:00",
+      "location": "GERTA Tennis Courts",
+      "url": "https://eagleriver.org/events/gerta-round-robin-2/2026-08-06/",
+      "uid": "10019611",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Square Dance Lessons At Kalmar Community Center!",
+      "start_utc": "2026-08-06 18:00:00",
+      "end_utc": "2026-08-06 19:30:00",
+      "location": "Kalmar Community Center",
+      "url": "https://eagleriver.org/events/square-dance-lessons-at-kalmar-community-center/2026-08-06/",
+      "uid": "10020294",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Free Live Music at Pirates Hideaway",
+      "start_utc": "2026-08-06 18:00:00",
+      "end_utc": "2026-08-06 21:00:00",
+      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-4-2-3/2026-08-06/",
+      "uid": "10019795",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "LOLA Live- Summer music",
+      "start_utc": "2026-08-06 18:00:00",
+      "end_utc": "2026-08-06 20:00:00",
+      "location": "Snowflake Ice Arena, 6492 Town Hall Rd, Land O' Lakes",
+      "url": "https://eagleriver.org/events/car-park-music-series-2-2/2026-08-06/",
+      "uid": "10020058",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "The Brew Station Thursday Game Night",
+      "start_utc": "2026-08-06 19:00:00",
+      "end_utc": "2026-08-06 21:00:00",
+      "location": "The Brew Station",
+      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3/2026-08-06/",
+      "uid": "10015990",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -7051,7 +7084,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-3-day-instructor-led-retreat-in-the-northwoods/39920/",
-      "uid": "sv-8502341996198551848",
+      "uid": "sv-2963767632722164928",
       "_source": null
     },
     {
@@ -7062,7 +7095,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-922178015951263345",
+      "uid": "sv-6374663984338366906",
       "_source": null
     },
     {
@@ -7073,7 +7106,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/oregon-trail-card-game-irl/39703/",
-      "uid": "sv-5619837617866924858",
+      "uid": "sv-8155818511153561832",
       "_source": null
     },
     {
@@ -7084,7 +7117,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-752268526339404233",
+      "uid": "sv-3477781455959849300",
       "_source": null
     },
     {
@@ -7095,7 +7128,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Campanile Center For the Arts",
       "url": "https://www.minocqua.org/event/daddy-daughter-dance/39950/",
-      "uid": "sv-5227042917029450356",
+      "uid": "sv-6409544405520470787",
       "_source": null
     },
     {
@@ -7106,7 +7139,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-2890999818322530859",
+      "uid": "sv-8313551832096427246",
       "_source": null
     },
     {
@@ -7117,7 +7150,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/welcoming-our-neighbors%3a-a-faith-perspective-on-immigration/39959/",
-      "uid": "sv-269743824072975430",
+      "uid": "sv-3710209702893875549",
       "_source": null
     },
     {
@@ -7128,7 +7161,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-3015090832305707656",
+      "uid": "sv-8324784379693035940",
       "_source": null
     },
     {
@@ -7139,7 +7172,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-1436550785582404987",
+      "uid": "sv-5411084463994743454",
       "_source": null
     },
     {
@@ -7150,7 +7183,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/create-a-stoneware-birdhouse/39949/",
-      "uid": "sv-1280090083936089973",
+      "uid": "sv-5754645345654544682",
       "_source": null
     },
     {
@@ -7161,7 +7194,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-9201816389999087296",
+      "uid": "sv-3036323038545912213",
       "_source": null
     },
     {
@@ -7172,7 +7205,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-6414904253993675892",
+      "uid": "sv-8867531809310797228",
       "_source": null
     },
     {
@@ -7183,7 +7216,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://www.minocqua.org/event/photo-gala-photography-contest/39941/",
-      "uid": "sv-6470026768075770849",
+      "uid": "sv-7555375219164589878",
       "_source": null
     },
     {
@@ -7194,7 +7227,7 @@
       "end_utc": "2026-05-03 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/fiber-art-landscape-quilting-3day-retreat-in-the-northwoods/39921/",
-      "uid": "sv-248600822437350278",
+      "uid": "sv-469329744177990208",
       "_source": null
     },
     {
@@ -7205,7 +7238,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-learn-to-quilt-or-learn-new-techniques-lakeside-in-the-northwoods/39973/",
-      "uid": "sv-1429131085776786416",
+      "uid": "sv-5481272945931818203",
       "_source": null
     },
     {
@@ -7216,18 +7249,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Frost & Flame Sauna Fest",
       "url": "https://www.minocqua.org/event/frost-%26-flame-sauna-fest/39513/",
-      "uid": "sv-7885008948576409886",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "John Bates Nature Writing Workshop",
-      "start_utc": "2026-04-07 00:00:00",
-      "end_utc": "2026-04-07 00:00:00",
-      "location": "Frank B. Koller Memorial Library",
-      "url": "https://manitowishwaters.org/event/john-bates-nature-writing-workshop/760/",
-      "uid": "sv-7272340946446342892",
+      "uid": "sv-6152779136793659205",
       "_source": null
     },
     {
@@ -7238,7 +7260,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-8053022952077613826",
+      "uid": "sv-926193485800782570",
       "_source": null
     },
     {
@@ -7249,7 +7271,7 @@
       "end_utc": "2026-04-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wood-cookie-earrings-and-pendants/724/",
-      "uid": "sv-2518994263011985181",
+      "uid": "sv-8478422821743686312",
       "_source": null
     },
     {
@@ -7260,7 +7282,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-exploring-tiny-worlds-zooplankton-with-carol-warden/725/",
-      "uid": "sv-6616404951868123704",
+      "uid": "sv-1614915353031997922",
       "_source": null
     },
     {
@@ -7271,7 +7293,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-5410856311710856814",
+      "uid": "sv-6157213605161280958",
       "_source": null
     },
     {
@@ -7282,7 +7304,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/from-chick-to-table%3a-raising-chickens-for-meat/730/",
-      "uid": "sv-990760770782435670",
+      "uid": "sv-3950426876771108049",
       "_source": null
     },
     {
@@ -7293,7 +7315,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-8686555055993148196",
+      "uid": "sv-7660990704858437565",
       "_source": null
     },
     {
@@ -7304,7 +7326,7 @@
       "end_utc": "2026-04-17 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/exploring-tiny-worlds%3a-mosses-with-alex-graeff/731/",
-      "uid": "sv-8966259824959341907",
+      "uid": "sv-3653347493638821573",
       "_source": null
     },
     {
@@ -7315,7 +7337,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-landscapes-with-mary-burns/732/",
-      "uid": "sv-3024981957240747464",
+      "uid": "sv-4471862270661091396",
       "_source": null
     },
     {
@@ -7326,7 +7348,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-when-spring-comes-by-kevin-henkes/733/",
-      "uid": "sv-6496117118072579587",
+      "uid": "sv-6083513214476689931",
       "_source": null
     },
     {
@@ -7337,7 +7359,7 @@
       "end_utc": "2026-04-21 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-the-overstory-by-richard-powers/734/",
-      "uid": "sv-7302646816802322420",
+      "uid": "sv-2560652920544353445",
       "_source": null
     },
     {
@@ -7348,7 +7370,7 @@
       "end_utc": "2026-04-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natty-made%3a-diy-household-essentials/735/",
-      "uid": "sv-5010225264514176697",
+      "uid": "sv-7471054325856037561",
       "_source": null
     },
     {
@@ -7359,7 +7381,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-1181557941686866736",
+      "uid": "sv-4280096134599903347",
       "_source": null
     },
     {
@@ -7370,7 +7392,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight%3a-squirrelly-about-squirrels/736/",
-      "uid": "sv-8119825189095663784",
+      "uid": "sv-232299184602041465",
       "_source": null
     },
     {
@@ -7381,7 +7403,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/magic-of-rain-family-hike-with-life-of-a-water-drop-game/737/",
-      "uid": "sv-3361746838734622095",
+      "uid": "sv-2022231607861544716",
       "_source": null
     },
     {
@@ -7392,7 +7414,7 @@
       "end_utc": "2026-04-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wild-wisdom-game-night%3a-signs-of-spring/738/",
-      "uid": "sv-5587004067978691531",
+      "uid": "sv-7519272996040523196",
       "_source": null
     },
     {
@@ -7403,7 +7425,7 @@
       "end_utc": "2026-05-01 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/tiny-world-series%3a-lichen-with-alex-graeff/739/",
-      "uid": "sv-8215071089939121013",
+      "uid": "sv-3055427287962455869",
       "_source": null
     },
     {
@@ -7414,7 +7436,7 @@
       "end_utc": "2026-05-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/rare-plant-monitoring-volunteer-training/740/",
-      "uid": "sv-4414843939156441828",
+      "uid": "sv-415464179859754083",
       "_source": null
     },
     {
@@ -7425,7 +7447,7 @@
       "end_utc": "2026-05-04 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-a-partnership-for-timberdoodles-with-jenna-malinowski/741/",
-      "uid": "sv-4091852968239547677",
+      "uid": "sv-1019792301692536688",
       "_source": null
     },
     {
@@ -7436,7 +7458,7 @@
       "end_utc": "2026-05-05 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-flower-wreaths/747/",
-      "uid": "sv-2156580941140995004",
+      "uid": "sv-8139351634408694735",
       "_source": null
     },
     {
@@ -7447,7 +7469,7 @@
       "end_utc": "2026-05-06 00:00:00",
       "location": "Boulder Junction Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-the-native-garden-blueprint%3a-designing-planting-and-maintaining-pollinator-habitat/748/",
-      "uid": "sv-3261488725597314853",
+      "uid": "sv-5573547915914474421",
       "_source": null
     },
     {
@@ -7458,7 +7480,7 @@
       "end_utc": "2026-05-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-managing-forests-for-the-future%3a-stewardship-on-the-nhal-state-forest-nldc/749/",
-      "uid": "sv-6489015425981405130",
+      "uid": "sv-5177751291310374313",
       "_source": null
     },
     {
@@ -7469,7 +7491,7 @@
       "end_utc": "2026-05-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-flora-birds-and-buds-hike-at-mecca-trails/750/",
-      "uid": "sv-2474532808257510757",
+      "uid": "sv-3473847449674574442",
       "_source": null
     },
     {
@@ -7480,7 +7502,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-3964454396801746042",
+      "uid": "sv-4362277033890517593",
       "_source": null
     },
     {
@@ -7491,7 +7513,7 @@
       "end_utc": "2026-05-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/ink-%26-impression%3a-a-printmaking-experience/751/",
-      "uid": "sv-2277182973708194201",
+      "uid": "sv-3211721928532970481",
       "_source": null
     },
     {
@@ -7502,7 +7524,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/fabric-basket-gardening/754/",
-      "uid": "sv-5927537639062817096",
+      "uid": "sv-1743992709731785964",
       "_source": null
     },
     {
@@ -7513,7 +7535,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-exploring-amphibians/752/",
-      "uid": "sv-4595615554687992552",
+      "uid": "sv-9157348650174090072",
       "_source": null
     },
     {
@@ -7524,7 +7546,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-up-in-the-garden-and-down-in-the-dirt-by-kate-messner/753/",
-      "uid": "sv-937613445613227528",
+      "uid": "sv-4796630273358329176",
       "_source": null
     },
     {
@@ -7535,7 +7557,18 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-spring-clean-up/761/",
-      "uid": "sv-51217414828706472",
+      "uid": "sv-1124630416044857962",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Lake of the Falls Birding Hike",
+      "start_utc": "2026-05-18 00:00:00",
+      "end_utc": "2026-05-18 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/lake-of-the-falls-birding-hike/755/",
+      "uid": "sv-2823230441510206393",
       "_source": null
     },
     {
@@ -7697,94 +7730,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Spring 2026 Homeschool Program-Middle School at LOLA",
-      "start_utc": "2026-04-07 09:30:00",
-      "end_utc": "2026-04-07 11:00:00",
-      "location": "LOLA &#8211; Land O&#8217;Lakes Art Center, 4262 Cty Hwy B, Land O'Lakes, WI",
-      "url": "https://eagleriver.org/events/spring-2026-homeschool-program-middle-school-at-lola/2026-04-07/",
-      "uid": "10020160",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Story Time",
-      "start_utc": "2026-04-07 10:00:00",
-      "end_utc": "2026-04-07 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/story-time/2026-04-07/",
-      "uid": "10009439",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Spring 2026 Homeschool Program-Elementary School at LOLA",
-      "start_utc": "2026-04-07 11:00:00",
-      "end_utc": "2026-04-07 12:00:00",
-      "location": "LOLA &#8211; Land O&#8217;Lakes Art Center, 4262 Cty Hwy B, Land O'Lakes, WI",
-      "url": "https://eagleriver.org/events/spring-2026-homeschool-program-at-lola/2026-04-07/",
-      "uid": "10020144",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Seated Yoga at the Walter E. Memorial Library",
-      "start_utc": "2026-04-07 11:30:00",
-      "end_utc": "2026-04-07 12:30:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/seated-yoga-at-the-walter-e-memorial-library/2026-04-07/",
-      "uid": "10012508",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Winter BINGO at Kalmar",
-      "start_utc": "2026-04-07 13:00:00",
-      "end_utc": "2026-04-07 16:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/winter-bingo-at-kalmar-2/2026-04-07/",
-      "uid": "10019951",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "School of Business and Entrepreneurship- Start Your Own Business- at Nicolet College",
-      "start_utc": "2026-04-07 17:30:00",
-      "end_utc": "2026-04-07 20:30:00",
-      "location": "Nicloet College, 5364 College Drive, Rhinelander, WI",
-      "url": "https://eagleriver.org/events/school-of-business-and-entrepreneurship-at-nicolet-college/2026-04-07/",
-      "uid": "10020215",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Northwoods Shares Free Community Dinners",
-      "start_utc": "2026-04-07 17:30:00",
-      "end_utc": "2026-04-07 18:30:00",
-      "location": "The Rock Mission Center, 1019 East Wall Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/northwoods-shares-free-community-dinners/2026-04-07/",
-      "uid": "10017784",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Sip, Swirl &#038; Spice at Mary Kate&#8217;s Wine Bar",
-      "start_utc": "2026-04-07 18:00:00",
-      "end_utc": "2026-04-07 20:30:00",
-      "location": "Mary Kate&#8217;s Wine Bar, 205 East Wall Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/beer-vs-wine-at-mary-kates-wine-bar/",
-      "uid": "24874",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Heart and Soul Quilters Group",
       "start_utc": "2026-04-08 09:00:00",
       "end_utc": "2026-04-08 12:00:00",
@@ -14383,6 +14328,127 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Trees For Tomorrow &#8211;  SEEK (Science, Earth, Exploration for Kids) Day Camp",
+      "start_utc": "2026-08-06 08:00:00",
+      "end_utc": "2026-08-06 16:00:00",
+      "location": "Trees For Tomorrow, 519 East Sheridan Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/trees-for-tomorrow-jr-seek-science-earth-exploration-for-kids-day-camp-3/2026-08-06/",
+      "uid": "10020037",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Aunt Grace&#8217;s Sewing Circle",
+      "start_utc": "2026-08-06 09:00:00",
+      "end_utc": "2026-08-06 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2026-08-06/",
+      "uid": "10010098",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Conover Sno- Buddies Brats and Beer FUNdraiser",
+      "start_utc": "2026-08-06 11:00:00",
+      "end_utc": "2026-08-06 16:00:00",
+      "location": "Burnt Bridge Tavern &#038; Restaurant, 5920 W County Hwy K #9258, Conover",
+      "url": "https://eagleriver.org/events/conover-sno-buddies-brats-and-beer-fundraiser/",
+      "uid": "21492",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
+      "start_utc": "2026-08-06 12:30:00",
+      "end_utc": "2026-08-06 15:00:00",
+      "location": "Kalmar Community Center",
+      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2026-08-06/",
+      "uid": "10014358",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Compassus Grief Support Group",
+      "start_utc": "2026-08-06 13:00:00",
+      "end_utc": "2026-08-06 14:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/compassus-grief-support-group/2026-08-06/",
+      "uid": "10010315",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Kids Book Club-Walter E. Olson Memorial Library",
+      "start_utc": "2026-08-06 16:00:00",
+      "end_utc": "2026-08-06 17:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/kids-book-club-walter-e-olson-memorial-library/2026-08-06/",
+      "uid": "10017919",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "GERTA Tennis: Thursday Round Robin",
+      "start_utc": "2026-08-06 17:30:00",
+      "end_utc": "2026-08-06 20:00:00",
+      "location": "GERTA Tennis Courts",
+      "url": "https://eagleriver.org/events/gerta-round-robin-2/2026-08-06/",
+      "uid": "10019611",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Square Dance Lessons At Kalmar Community Center!",
+      "start_utc": "2026-08-06 18:00:00",
+      "end_utc": "2026-08-06 19:30:00",
+      "location": "Kalmar Community Center",
+      "url": "https://eagleriver.org/events/square-dance-lessons-at-kalmar-community-center/2026-08-06/",
+      "uid": "10020294",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Free Live Music at Pirates Hideaway",
+      "start_utc": "2026-08-06 18:00:00",
+      "end_utc": "2026-08-06 21:00:00",
+      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-4-2-3/2026-08-06/",
+      "uid": "10019795",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "LOLA Live- Summer music",
+      "start_utc": "2026-08-06 18:00:00",
+      "end_utc": "2026-08-06 20:00:00",
+      "location": "Snowflake Ice Arena, 6492 Town Hall Rd, Land O' Lakes",
+      "url": "https://eagleriver.org/events/car-park-music-series-2-2/2026-08-06/",
+      "uid": "10020058",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "The Brew Station Thursday Game Night",
+      "start_utc": "2026-08-06 19:00:00",
+      "end_utc": "2026-08-06 21:00:00",
+      "location": "The Brew Station",
+      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3/2026-08-06/",
+      "uid": "10015990",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -14632,7 +14698,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-3-day-instructor-led-retreat-in-the-northwoods/39920/",
-      "uid": "sv-8502341996198551848",
+      "uid": "sv-2963767632722164928",
       "_source": null
     },
     {
@@ -14643,7 +14709,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-922178015951263345",
+      "uid": "sv-6374663984338366906",
       "_source": null
     },
     {
@@ -14654,7 +14720,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/oregon-trail-card-game-irl/39703/",
-      "uid": "sv-5619837617866924858",
+      "uid": "sv-8155818511153561832",
       "_source": null
     },
     {
@@ -14665,7 +14731,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-752268526339404233",
+      "uid": "sv-3477781455959849300",
       "_source": null
     },
     {
@@ -14676,7 +14742,7 @@
       "end_utc": "2026-04-11 00:00:00",
       "location": "Campanile Center For the Arts",
       "url": "https://www.minocqua.org/event/daddy-daughter-dance/39950/",
-      "uid": "sv-5227042917029450356",
+      "uid": "sv-6409544405520470787",
       "_source": null
     },
     {
@@ -14687,7 +14753,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-2890999818322530859",
+      "uid": "sv-8313551832096427246",
       "_source": null
     },
     {
@@ -14698,7 +14764,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/welcoming-our-neighbors%3a-a-faith-perspective-on-immigration/39959/",
-      "uid": "sv-269743824072975430",
+      "uid": "sv-3710209702893875549",
       "_source": null
     },
     {
@@ -14709,7 +14775,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-3015090832305707656",
+      "uid": "sv-8324784379693035940",
       "_source": null
     },
     {
@@ -14720,7 +14786,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-1436550785582404987",
+      "uid": "sv-5411084463994743454",
       "_source": null
     },
     {
@@ -14731,7 +14797,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/create-a-stoneware-birdhouse/39949/",
-      "uid": "sv-1280090083936089973",
+      "uid": "sv-5754645345654544682",
       "_source": null
     },
     {
@@ -14742,7 +14808,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-9201816389999087296",
+      "uid": "sv-3036323038545912213",
       "_source": null
     },
     {
@@ -14753,7 +14819,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-6414904253993675892",
+      "uid": "sv-8867531809310797228",
       "_source": null
     },
     {
@@ -14764,7 +14830,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://www.minocqua.org/event/photo-gala-photography-contest/39941/",
-      "uid": "sv-6470026768075770849",
+      "uid": "sv-7555375219164589878",
       "_source": null
     },
     {
@@ -14775,7 +14841,7 @@
       "end_utc": "2026-05-03 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/fiber-art-landscape-quilting-3day-retreat-in-the-northwoods/39921/",
-      "uid": "sv-248600822437350278",
+      "uid": "sv-469329744177990208",
       "_source": null
     },
     {
@@ -14786,7 +14852,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-learn-to-quilt-or-learn-new-techniques-lakeside-in-the-northwoods/39973/",
-      "uid": "sv-1429131085776786416",
+      "uid": "sv-5481272945931818203",
       "_source": null
     },
     {
@@ -14797,18 +14863,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Frost & Flame Sauna Fest",
       "url": "https://www.minocqua.org/event/frost-%26-flame-sauna-fest/39513/",
-      "uid": "sv-7885008948576409886",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "John Bates Nature Writing Workshop",
-      "start_utc": "2026-04-07 00:00:00",
-      "end_utc": "2026-04-07 00:00:00",
-      "location": "Frank B. Koller Memorial Library",
-      "url": "https://manitowishwaters.org/event/john-bates-nature-writing-workshop/760/",
-      "uid": "sv-7272340946446342892",
+      "uid": "sv-6152779136793659205",
       "_source": null
     },
     {
@@ -14819,7 +14874,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-8053022952077613826",
+      "uid": "sv-926193485800782570",
       "_source": null
     },
     {
@@ -14830,7 +14885,7 @@
       "end_utc": "2026-04-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wood-cookie-earrings-and-pendants/724/",
-      "uid": "sv-2518994263011985181",
+      "uid": "sv-8478422821743686312",
       "_source": null
     },
     {
@@ -14841,7 +14896,7 @@
       "end_utc": "2026-04-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-exploring-tiny-worlds-zooplankton-with-carol-warden/725/",
-      "uid": "sv-6616404951868123704",
+      "uid": "sv-1614915353031997922",
       "_source": null
     },
     {
@@ -14852,7 +14907,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-5410856311710856814",
+      "uid": "sv-6157213605161280958",
       "_source": null
     },
     {
@@ -14863,7 +14918,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/from-chick-to-table%3a-raising-chickens-for-meat/730/",
-      "uid": "sv-990760770782435670",
+      "uid": "sv-3950426876771108049",
       "_source": null
     },
     {
@@ -14874,7 +14929,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-8686555055993148196",
+      "uid": "sv-7660990704858437565",
       "_source": null
     },
     {
@@ -14885,7 +14940,7 @@
       "end_utc": "2026-04-17 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/exploring-tiny-worlds%3a-mosses-with-alex-graeff/731/",
-      "uid": "sv-8966259824959341907",
+      "uid": "sv-3653347493638821573",
       "_source": null
     },
     {
@@ -14896,7 +14951,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-landscapes-with-mary-burns/732/",
-      "uid": "sv-3024981957240747464",
+      "uid": "sv-4471862270661091396",
       "_source": null
     },
     {
@@ -14907,7 +14962,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-when-spring-comes-by-kevin-henkes/733/",
-      "uid": "sv-6496117118072579587",
+      "uid": "sv-6083513214476689931",
       "_source": null
     },
     {
@@ -14918,7 +14973,7 @@
       "end_utc": "2026-04-21 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-the-overstory-by-richard-powers/734/",
-      "uid": "sv-7302646816802322420",
+      "uid": "sv-2560652920544353445",
       "_source": null
     },
     {
@@ -14929,7 +14984,7 @@
       "end_utc": "2026-04-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natty-made%3a-diy-household-essentials/735/",
-      "uid": "sv-5010225264514176697",
+      "uid": "sv-7471054325856037561",
       "_source": null
     },
     {
@@ -14940,7 +14995,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-1181557941686866736",
+      "uid": "sv-4280096134599903347",
       "_source": null
     },
     {
@@ -14951,7 +15006,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight%3a-squirrelly-about-squirrels/736/",
-      "uid": "sv-8119825189095663784",
+      "uid": "sv-232299184602041465",
       "_source": null
     },
     {
@@ -14962,7 +15017,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/magic-of-rain-family-hike-with-life-of-a-water-drop-game/737/",
-      "uid": "sv-3361746838734622095",
+      "uid": "sv-2022231607861544716",
       "_source": null
     },
     {
@@ -14973,7 +15028,7 @@
       "end_utc": "2026-04-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wild-wisdom-game-night%3a-signs-of-spring/738/",
-      "uid": "sv-5587004067978691531",
+      "uid": "sv-7519272996040523196",
       "_source": null
     },
     {
@@ -14984,7 +15039,7 @@
       "end_utc": "2026-05-01 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/tiny-world-series%3a-lichen-with-alex-graeff/739/",
-      "uid": "sv-8215071089939121013",
+      "uid": "sv-3055427287962455869",
       "_source": null
     },
     {
@@ -14995,7 +15050,7 @@
       "end_utc": "2026-05-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/rare-plant-monitoring-volunteer-training/740/",
-      "uid": "sv-4414843939156441828",
+      "uid": "sv-415464179859754083",
       "_source": null
     },
     {
@@ -15006,7 +15061,7 @@
       "end_utc": "2026-05-04 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-a-partnership-for-timberdoodles-with-jenna-malinowski/741/",
-      "uid": "sv-4091852968239547677",
+      "uid": "sv-1019792301692536688",
       "_source": null
     },
     {
@@ -15017,7 +15072,7 @@
       "end_utc": "2026-05-05 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-flower-wreaths/747/",
-      "uid": "sv-2156580941140995004",
+      "uid": "sv-8139351634408694735",
       "_source": null
     },
     {
@@ -15028,7 +15083,7 @@
       "end_utc": "2026-05-06 00:00:00",
       "location": "Boulder Junction Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-the-native-garden-blueprint%3a-designing-planting-and-maintaining-pollinator-habitat/748/",
-      "uid": "sv-3261488725597314853",
+      "uid": "sv-5573547915914474421",
       "_source": null
     },
     {
@@ -15039,7 +15094,7 @@
       "end_utc": "2026-05-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-managing-forests-for-the-future%3a-stewardship-on-the-nhal-state-forest-nldc/749/",
-      "uid": "sv-6489015425981405130",
+      "uid": "sv-5177751291310374313",
       "_source": null
     },
     {
@@ -15050,7 +15105,7 @@
       "end_utc": "2026-05-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-flora-birds-and-buds-hike-at-mecca-trails/750/",
-      "uid": "sv-2474532808257510757",
+      "uid": "sv-3473847449674574442",
       "_source": null
     },
     {
@@ -15061,7 +15116,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-3964454396801746042",
+      "uid": "sv-4362277033890517593",
       "_source": null
     },
     {
@@ -15072,7 +15127,7 @@
       "end_utc": "2026-05-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/ink-%26-impression%3a-a-printmaking-experience/751/",
-      "uid": "sv-2277182973708194201",
+      "uid": "sv-3211721928532970481",
       "_source": null
     },
     {
@@ -15083,7 +15138,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/fabric-basket-gardening/754/",
-      "uid": "sv-5927537639062817096",
+      "uid": "sv-1743992709731785964",
       "_source": null
     },
     {
@@ -15094,7 +15149,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-exploring-amphibians/752/",
-      "uid": "sv-4595615554687992552",
+      "uid": "sv-9157348650174090072",
       "_source": null
     },
     {
@@ -15105,7 +15160,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-up-in-the-garden-and-down-in-the-dirt-by-kate-messner/753/",
-      "uid": "sv-937613445613227528",
+      "uid": "sv-4796630273358329176",
       "_source": null
     },
     {
@@ -15116,7 +15171,18 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-spring-clean-up/761/",
-      "uid": "sv-51217414828706472",
+      "uid": "sv-1124630416044857962",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Lake of the Falls Birding Hike",
+      "start_utc": "2026-05-18 00:00:00",
+      "end_utc": "2026-05-18 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/lake-of-the-falls-birding-hike/755/",
+      "uid": "sv-2823230441510206393",
       "_source": null
     },
     {
@@ -15274,9 +15340,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 689,
+  "events_preview_count": 692,
   "curated_feeds": {
-    "generated_at": "2026-04-07T19:02:28.766890+00:00",
+    "generated_at": "2026-04-08T05:46:33.272948+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
