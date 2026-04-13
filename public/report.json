@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-04-12T18:48:53.933567+00:00",
+  "generated_at": "2026-04-13T06:13:17.360165+00:00",
   "sources_processed": 8,
-  "total_events": 701,
+  "total_events": 704,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-12&end_date=2026-08-10&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-13&end_date=2026-08-11&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-12&end_date=2026-08-10&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-04-13&end_date=2026-08-11&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 620,
+      "count": 623,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-12&end_date=2026-08-10&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-13&end_date=2026-08-11&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-12&end_date=2026-08-10&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-04-13&end_date=2026-08-11&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -6934,6 +6934,39 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time",
+      "start_utc": "2026-08-11 10:00:00",
+      "end_utc": "2026-08-11 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2026-08-11/",
+      "uid": "10009457",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Seated Yoga at the Walter E. Memorial Library",
+      "start_utc": "2026-08-11 11:30:00",
+      "end_utc": "2026-08-11 12:30:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/seated-yoga-at-the-walter-e-memorial-library/2026-08-11/",
+      "uid": "10012526",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "GERTA Tuesday Evening Woman&#8217;s Open Tennis",
+      "start_utc": "2026-08-11 17:30:00",
+      "end_utc": "2026-08-11 20:00:00",
+      "location": "GERTA Tennis Courts",
+      "url": "https://eagleriver.org/events/gerta-ladies-round-robin-2-3/2026-08-11/",
+      "uid": "10019674",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -7178,23 +7211,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2026-04-05 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-4490705696402240146",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-4296325198655237531",
+      "uid": "sv-4435462491714217441",
       "_source": null
     },
     {
@@ -7205,7 +7227,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-6569728039115038648",
+      "uid": "sv-899720332946738443",
       "_source": null
     },
     {
@@ -7216,7 +7238,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/create-a-stoneware-birdhouse/39949/",
-      "uid": "sv-3319917003978586364",
+      "uid": "sv-5464109781341734925",
       "_source": null
     },
     {
@@ -7227,7 +7249,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-6054406780960500761",
+      "uid": "sv-8808414696772204910",
       "_source": null
     },
     {
@@ -7238,7 +7260,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-8628076379166489816",
+      "uid": "sv-4481198618971112305",
       "_source": null
     },
     {
@@ -7249,7 +7271,18 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-4963727620644138358",
+      "uid": "sv-8886278346666362520",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Restorative Yoga",
+      "start_utc": "2026-04-05 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
+      "uid": "sv-6820133592693886624",
       "_source": null
     },
     {
@@ -7260,7 +7293,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-2029769143069085740",
+      "uid": "sv-8038512682757595886",
       "_source": null
     },
     {
@@ -7271,7 +7304,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://www.minocqua.org/event/photo-gala-photography-contest/39941/",
-      "uid": "sv-8176633019832421414",
+      "uid": "sv-7242232569948374578",
       "_source": null
     },
     {
@@ -7282,7 +7315,7 @@
       "end_utc": "2026-05-03 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/fiber-art-landscape-quilting-3day-retreat-in-the-northwoods/39921/",
-      "uid": "sv-2212174079034904663",
+      "uid": "sv-6517339798903166131",
       "_source": null
     },
     {
@@ -7293,7 +7326,7 @@
       "end_utc": "2026-04-30 00:00:00",
       "location": "American Legion - Minocqua, WI",
       "url": "https://www.minocqua.org/event/spring-rummage-%26-bake-sale/39989/",
-      "uid": "sv-7912874877751161658",
+      "uid": "sv-6672316099686292874",
       "_source": null
     },
     {
@@ -7304,7 +7337,7 @@
       "end_utc": "2026-05-01 00:00:00",
       "location": "American Legion - Minocqua, WI",
       "url": "https://www.minocqua.org/event/spring-rummage-%26-bake-sale-reduced-prices/39990/",
-      "uid": "sv-1486650744571613398",
+      "uid": "sv-7486101076082364146",
       "_source": null
     },
     {
@@ -7315,7 +7348,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-learn-to-quilt-or-learn-new-techniques-lakeside-in-the-northwoods/39973/",
-      "uid": "sv-4339117548445436500",
+      "uid": "sv-6425940775046862599",
       "_source": null
     },
     {
@@ -7326,7 +7359,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Frost & Flame Sauna Fest",
       "url": "https://www.minocqua.org/event/frost-%26-flame-sauna-fest/39513/",
-      "uid": "sv-5141293136088870794",
+      "uid": "sv-2979069496312409622",
       "_source": null
     },
     {
@@ -7337,7 +7370,7 @@
       "end_utc": null,
       "location": "Reuland's Catering",
       "url": "https://www.minocqua.org/event/womens-wellness-workshop/39992/",
-      "uid": "sv-648447629037154572",
+      "uid": "sv-6399610867033945018",
       "_source": null
     },
     {
@@ -7348,7 +7381,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/minocqua-northwoods-escape-marathon-half-marathon-and-5k/34768/",
-      "uid": "sv-1224773412112957711",
+      "uid": "sv-707329247784312934",
       "_source": null
     },
     {
@@ -7359,7 +7392,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/from-chick-to-table%3a-raising-chickens-for-meat/730/",
-      "uid": "sv-7228421019645748250",
+      "uid": "sv-8761558656864912960",
       "_source": null
     },
     {
@@ -7370,7 +7403,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-5419070608613610691",
+      "uid": "sv-7526817116299996606",
       "_source": null
     },
     {
@@ -7381,7 +7414,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-7562954936029678344",
+      "uid": "sv-5997431153452628954",
       "_source": null
     },
     {
@@ -7392,7 +7425,7 @@
       "end_utc": "2026-04-17 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/exploring-tiny-worlds%3a-mosses-with-alex-graeff/731/",
-      "uid": "sv-8349132282743450483",
+      "uid": "sv-1156831310985584733",
       "_source": null
     },
     {
@@ -7403,7 +7436,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-landscapes-with-mary-burns/732/",
-      "uid": "sv-6037744890899543280",
+      "uid": "sv-1775132445977222059",
       "_source": null
     },
     {
@@ -7414,7 +7447,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-2505920966301497416",
+      "uid": "sv-769702452401200895",
       "_source": null
     },
     {
@@ -7425,7 +7458,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-when-spring-comes-by-kevin-henkes/733/",
-      "uid": "sv-1505135878220434490",
+      "uid": "sv-7764357035080983522",
       "_source": null
     },
     {
@@ -7436,7 +7469,7 @@
       "end_utc": "2026-04-21 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-the-overstory-by-richard-powers/734/",
-      "uid": "sv-3499423299828608725",
+      "uid": "sv-1444131242504129355",
       "_source": null
     },
     {
@@ -7447,7 +7480,7 @@
       "end_utc": "2026-04-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natty-made%3a-diy-household-essentials/735/",
-      "uid": "sv-8787373111126809031",
+      "uid": "sv-6174910201880210660",
       "_source": null
     },
     {
@@ -7458,7 +7491,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-1083045180024957551",
+      "uid": "sv-8698408607155618301",
       "_source": null
     },
     {
@@ -7469,7 +7502,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight%3a-squirrelly-about-squirrels/736/",
-      "uid": "sv-5917229727620412951",
+      "uid": "sv-3228902585580415978",
       "_source": null
     },
     {
@@ -7480,7 +7513,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/magic-of-rain-family-hike-with-life-of-a-water-drop-game/737/",
-      "uid": "sv-8334610097789383794",
+      "uid": "sv-2638853541254444082",
       "_source": null
     },
     {
@@ -7491,7 +7524,7 @@
       "end_utc": "2026-04-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wild-wisdom-game-night%3a-signs-of-spring/738/",
-      "uid": "sv-7608766659171302571",
+      "uid": "sv-4811748464907441324",
       "_source": null
     },
     {
@@ -7502,7 +7535,7 @@
       "end_utc": "2026-05-01 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/tiny-world-series%3a-lichen-with-alex-graeff/739/",
-      "uid": "sv-8015325754066285663",
+      "uid": "sv-3819467474984475158",
       "_source": null
     },
     {
@@ -7513,7 +7546,7 @@
       "end_utc": "2026-05-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/rare-plant-monitoring-volunteer-training/740/",
-      "uid": "sv-6435471924493302418",
+      "uid": "sv-5576161153604511738",
       "_source": null
     },
     {
@@ -7524,7 +7557,7 @@
       "end_utc": "2026-05-04 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-a-partnership-for-timberdoodles-with-jenna-malinowski/741/",
-      "uid": "sv-1263576476001385382",
+      "uid": "sv-8161613740977402223",
       "_source": null
     },
     {
@@ -7535,7 +7568,7 @@
       "end_utc": "2026-05-05 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-flower-wreaths/747/",
-      "uid": "sv-7502524334601525860",
+      "uid": "sv-7311357488874990359",
       "_source": null
     },
     {
@@ -7546,7 +7579,7 @@
       "end_utc": "2026-05-06 00:00:00",
       "location": "Boulder Junction Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-the-native-garden-blueprint%3a-designing-planting-and-maintaining-pollinator-habitat/748/",
-      "uid": "sv-1639800690878096910",
+      "uid": "sv-5002159424504886343",
       "_source": null
     },
     {
@@ -7557,7 +7590,7 @@
       "end_utc": "2026-05-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-managing-forests-for-the-future%3a-stewardship-on-the-nhal-state-forest-nldc/749/",
-      "uid": "sv-5789238621522195792",
+      "uid": "sv-5889323558612214885",
       "_source": null
     },
     {
@@ -7568,7 +7601,7 @@
       "end_utc": "2026-05-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-flora-birds-and-buds-hike-at-mecca-trails/750/",
-      "uid": "sv-567421838050503963",
+      "uid": "sv-6938820195435442438",
       "_source": null
     },
     {
@@ -7579,7 +7612,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-5526424244256541697",
+      "uid": "sv-873782429653081898",
       "_source": null
     },
     {
@@ -7590,7 +7623,7 @@
       "end_utc": "2026-05-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/ink-%26-impression%3a-a-printmaking-experience/751/",
-      "uid": "sv-6500408254747300692",
+      "uid": "sv-2057464138000667055",
       "_source": null
     },
     {
@@ -7601,7 +7634,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/fabric-basket-gardening/754/",
-      "uid": "sv-4931302152789733913",
+      "uid": "sv-522771317453641370",
       "_source": null
     },
     {
@@ -7612,7 +7645,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-exploring-amphibians/752/",
-      "uid": "sv-1782032589368854115",
+      "uid": "sv-2764616398413842854",
       "_source": null
     },
     {
@@ -7623,7 +7656,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-up-in-the-garden-and-down-in-the-dirt-by-kate-messner/753/",
-      "uid": "sv-9063212041483599262",
+      "uid": "sv-6694502720347193657",
       "_source": null
     },
     {
@@ -7634,7 +7667,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-spring-clean-up/761/",
-      "uid": "sv-4959332918162667910",
+      "uid": "sv-1705913500673244960",
       "_source": null
     },
     {
@@ -7645,7 +7678,7 @@
       "end_utc": "2026-05-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lake-of-the-falls-birding-hike/755/",
-      "uid": "sv-702538752778528427",
+      "uid": "sv-2659606547659240230",
       "_source": null
     },
     {
@@ -7656,7 +7689,7 @@
       "end_utc": "2026-05-19 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-summer-world-by-bernd-heinrich/756/",
-      "uid": "sv-2111070548300745861",
+      "uid": "sv-1317471044100115347",
       "_source": null
     },
     {
@@ -7667,7 +7700,7 @@
       "end_utc": "2026-05-23 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/memorial-day-weekend-lions-pancake-breakfast/743/",
-      "uid": "sv-3474665795163313953",
+      "uid": "sv-1154450175370135065",
       "_source": null
     },
     {
@@ -14647,6 +14680,39 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time",
+      "start_utc": "2026-08-11 10:00:00",
+      "end_utc": "2026-08-11 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2026-08-11/",
+      "uid": "10009457",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Seated Yoga at the Walter E. Memorial Library",
+      "start_utc": "2026-08-11 11:30:00",
+      "end_utc": "2026-08-11 12:30:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/seated-yoga-at-the-walter-e-memorial-library/2026-08-11/",
+      "uid": "10012526",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "GERTA Tuesday Evening Woman&#8217;s Open Tennis",
+      "start_utc": "2026-08-11 17:30:00",
+      "end_utc": "2026-08-11 20:00:00",
+      "location": "GERTA Tennis Courts",
+      "url": "https://eagleriver.org/events/gerta-ladies-round-robin-2-3/2026-08-11/",
+      "uid": "10019674",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -14891,23 +14957,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2026-04-05 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-4490705696402240146",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-4296325198655237531",
+      "uid": "sv-4435462491714217441",
       "_source": null
     },
     {
@@ -14918,7 +14973,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-6569728039115038648",
+      "uid": "sv-899720332946738443",
       "_source": null
     },
     {
@@ -14929,7 +14984,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/create-a-stoneware-birdhouse/39949/",
-      "uid": "sv-3319917003978586364",
+      "uid": "sv-5464109781341734925",
       "_source": null
     },
     {
@@ -14940,7 +14995,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-6054406780960500761",
+      "uid": "sv-8808414696772204910",
       "_source": null
     },
     {
@@ -14951,7 +15006,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-8628076379166489816",
+      "uid": "sv-4481198618971112305",
       "_source": null
     },
     {
@@ -14962,7 +15017,18 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-4963727620644138358",
+      "uid": "sv-8886278346666362520",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Restorative Yoga",
+      "start_utc": "2026-04-05 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
+      "uid": "sv-6820133592693886624",
       "_source": null
     },
     {
@@ -14973,7 +15039,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-2029769143069085740",
+      "uid": "sv-8038512682757595886",
       "_source": null
     },
     {
@@ -14984,7 +15050,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://www.minocqua.org/event/photo-gala-photography-contest/39941/",
-      "uid": "sv-8176633019832421414",
+      "uid": "sv-7242232569948374578",
       "_source": null
     },
     {
@@ -14995,7 +15061,7 @@
       "end_utc": "2026-05-03 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/fiber-art-landscape-quilting-3day-retreat-in-the-northwoods/39921/",
-      "uid": "sv-2212174079034904663",
+      "uid": "sv-6517339798903166131",
       "_source": null
     },
     {
@@ -15006,7 +15072,7 @@
       "end_utc": "2026-04-30 00:00:00",
       "location": "American Legion - Minocqua, WI",
       "url": "https://www.minocqua.org/event/spring-rummage-%26-bake-sale/39989/",
-      "uid": "sv-7912874877751161658",
+      "uid": "sv-6672316099686292874",
       "_source": null
     },
     {
@@ -15017,7 +15083,7 @@
       "end_utc": "2026-05-01 00:00:00",
       "location": "American Legion - Minocqua, WI",
       "url": "https://www.minocqua.org/event/spring-rummage-%26-bake-sale-reduced-prices/39990/",
-      "uid": "sv-1486650744571613398",
+      "uid": "sv-7486101076082364146",
       "_source": null
     },
     {
@@ -15028,7 +15094,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Birch Trail Resort Retreat Center",
       "url": "https://www.minocqua.org/event/spring-into-quilting-learn-to-quilt-or-learn-new-techniques-lakeside-in-the-northwoods/39973/",
-      "uid": "sv-4339117548445436500",
+      "uid": "sv-6425940775046862599",
       "_source": null
     },
     {
@@ -15039,7 +15105,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "Frost & Flame Sauna Fest",
       "url": "https://www.minocqua.org/event/frost-%26-flame-sauna-fest/39513/",
-      "uid": "sv-5141293136088870794",
+      "uid": "sv-2979069496312409622",
       "_source": null
     },
     {
@@ -15050,7 +15116,7 @@
       "end_utc": null,
       "location": "Reuland's Catering",
       "url": "https://www.minocqua.org/event/womens-wellness-workshop/39992/",
-      "uid": "sv-648447629037154572",
+      "uid": "sv-6399610867033945018",
       "_source": null
     },
     {
@@ -15061,7 +15127,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/minocqua-northwoods-escape-marathon-half-marathon-and-5k/34768/",
-      "uid": "sv-1224773412112957711",
+      "uid": "sv-707329247784312934",
       "_source": null
     },
     {
@@ -15072,7 +15138,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/from-chick-to-table%3a-raising-chickens-for-meat/730/",
-      "uid": "sv-7228421019645748250",
+      "uid": "sv-8761558656864912960",
       "_source": null
     },
     {
@@ -15083,7 +15149,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-5419070608613610691",
+      "uid": "sv-7526817116299996606",
       "_source": null
     },
     {
@@ -15094,7 +15160,7 @@
       "end_utc": "2026-04-15 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/manito-art-league-open-studio/705/",
-      "uid": "sv-7562954936029678344",
+      "uid": "sv-5997431153452628954",
       "_source": null
     },
     {
@@ -15105,7 +15171,7 @@
       "end_utc": "2026-04-17 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/exploring-tiny-worlds%3a-mosses-with-alex-graeff/731/",
-      "uid": "sv-8349132282743450483",
+      "uid": "sv-1156831310985584733",
       "_source": null
     },
     {
@@ -15116,7 +15182,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-landscapes-with-mary-burns/732/",
-      "uid": "sv-6037744890899543280",
+      "uid": "sv-1775132445977222059",
       "_source": null
     },
     {
@@ -15127,7 +15193,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/698/",
-      "uid": "sv-2505920966301497416",
+      "uid": "sv-769702452401200895",
       "_source": null
     },
     {
@@ -15138,7 +15204,7 @@
       "end_utc": "2026-04-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-when-spring-comes-by-kevin-henkes/733/",
-      "uid": "sv-1505135878220434490",
+      "uid": "sv-7764357035080983522",
       "_source": null
     },
     {
@@ -15149,7 +15215,7 @@
       "end_utc": "2026-04-21 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-the-overstory-by-richard-powers/734/",
-      "uid": "sv-3499423299828608725",
+      "uid": "sv-1444131242504129355",
       "_source": null
     },
     {
@@ -15160,7 +15226,7 @@
       "end_utc": "2026-04-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natty-made%3a-diy-household-essentials/735/",
-      "uid": "sv-8787373111126809031",
+      "uid": "sv-6174910201880210660",
       "_source": null
     },
     {
@@ -15171,7 +15237,7 @@
       "end_utc": "2026-04-24 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-woods-%26-water-conference/708/",
-      "uid": "sv-1083045180024957551",
+      "uid": "sv-8698408607155618301",
       "_source": null
     },
     {
@@ -15182,7 +15248,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight%3a-squirrelly-about-squirrels/736/",
-      "uid": "sv-5917229727620412951",
+      "uid": "sv-3228902585580415978",
       "_source": null
     },
     {
@@ -15193,7 +15259,7 @@
       "end_utc": "2026-04-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/magic-of-rain-family-hike-with-life-of-a-water-drop-game/737/",
-      "uid": "sv-8334610097789383794",
+      "uid": "sv-2638853541254444082",
       "_source": null
     },
     {
@@ -15204,7 +15270,7 @@
       "end_utc": "2026-04-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/wild-wisdom-game-night%3a-signs-of-spring/738/",
-      "uid": "sv-7608766659171302571",
+      "uid": "sv-4811748464907441324",
       "_source": null
     },
     {
@@ -15215,7 +15281,7 @@
       "end_utc": "2026-05-01 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/tiny-world-series%3a-lichen-with-alex-graeff/739/",
-      "uid": "sv-8015325754066285663",
+      "uid": "sv-3819467474984475158",
       "_source": null
     },
     {
@@ -15226,7 +15292,7 @@
       "end_utc": "2026-05-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/rare-plant-monitoring-volunteer-training/740/",
-      "uid": "sv-6435471924493302418",
+      "uid": "sv-5576161153604511738",
       "_source": null
     },
     {
@@ -15237,7 +15303,7 @@
       "end_utc": "2026-05-04 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-a-partnership-for-timberdoodles-with-jenna-malinowski/741/",
-      "uid": "sv-1263576476001385382",
+      "uid": "sv-8161613740977402223",
       "_source": null
     },
     {
@@ -15248,7 +15314,7 @@
       "end_utc": "2026-05-05 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/felted-flower-wreaths/747/",
-      "uid": "sv-7502524334601525860",
+      "uid": "sv-7311357488874990359",
       "_source": null
     },
     {
@@ -15259,7 +15325,7 @@
       "end_utc": "2026-05-06 00:00:00",
       "location": "Boulder Junction Library",
       "url": "https://manitowishwaters.org/event/knowledge-at-noon%3a-the-native-garden-blueprint%3a-designing-planting-and-maintaining-pollinator-habitat/748/",
-      "uid": "sv-1639800690878096910",
+      "uid": "sv-5002159424504886343",
       "_source": null
     },
     {
@@ -15270,7 +15336,7 @@
       "end_utc": "2026-05-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-managing-forests-for-the-future%3a-stewardship-on-the-nhal-state-forest-nldc/749/",
-      "uid": "sv-5789238621522195792",
+      "uid": "sv-5889323558612214885",
       "_source": null
     },
     {
@@ -15281,7 +15347,7 @@
       "end_utc": "2026-05-08 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/northwoods-flora-birds-and-buds-hike-at-mecca-trails/750/",
-      "uid": "sv-567421838050503963",
+      "uid": "sv-6938820195435442438",
       "_source": null
     },
     {
@@ -15292,7 +15358,7 @@
       "end_utc": "2026-05-09 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/21st-annual-northwoods-bird-%26-wildlife-festival/709/",
-      "uid": "sv-5526424244256541697",
+      "uid": "sv-873782429653081898",
       "_source": null
     },
     {
@@ -15303,7 +15369,7 @@
       "end_utc": "2026-05-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/ink-%26-impression%3a-a-printmaking-experience/751/",
-      "uid": "sv-6500408254747300692",
+      "uid": "sv-2057464138000667055",
       "_source": null
     },
     {
@@ -15314,7 +15380,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/fabric-basket-gardening/754/",
-      "uid": "sv-4931302152789733913",
+      "uid": "sv-522771317453641370",
       "_source": null
     },
     {
@@ -15325,7 +15391,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-exploring-amphibians/752/",
-      "uid": "sv-1782032589368854115",
+      "uid": "sv-2764616398413842854",
       "_source": null
     },
     {
@@ -15336,7 +15402,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-up-in-the-garden-and-down-in-the-dirt-by-kate-messner/753/",
-      "uid": "sv-9063212041483599262",
+      "uid": "sv-6694502720347193657",
       "_source": null
     },
     {
@@ -15347,7 +15413,7 @@
       "end_utc": "2026-05-16 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-spring-clean-up/761/",
-      "uid": "sv-4959332918162667910",
+      "uid": "sv-1705913500673244960",
       "_source": null
     },
     {
@@ -15358,7 +15424,7 @@
       "end_utc": "2026-05-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/lake-of-the-falls-birding-hike/755/",
-      "uid": "sv-702538752778528427",
+      "uid": "sv-2659606547659240230",
       "_source": null
     },
     {
@@ -15369,7 +15435,7 @@
       "end_utc": "2026-05-19 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/natural-pages-reading-group%3a-summer-world-by-bernd-heinrich/756/",
-      "uid": "sv-2111070548300745861",
+      "uid": "sv-1317471044100115347",
       "_source": null
     },
     {
@@ -15380,7 +15446,7 @@
       "end_utc": "2026-05-23 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/memorial-day-weekend-lions-pancake-breakfast/743/",
-      "uid": "sv-3474665795163313953",
+      "uid": "sv-1154450175370135065",
       "_source": null
     },
     {
@@ -15538,9 +15604,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 701,
+  "events_preview_count": 704,
   "curated_feeds": {
-    "generated_at": "2026-04-12T18:48:53.987259+00:00",
+    "generated_at": "2026-04-13T06:13:17.411990+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
