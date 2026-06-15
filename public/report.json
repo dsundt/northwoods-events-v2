@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-14T18:33:46.760700+00:00",
+  "generated_at": "2026-06-15T05:51:13.259193+00:00",
   "sources_processed": 8,
-  "total_events": 791,
+  "total_events": 812,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-14&end_date=2026-10-12&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-15&end_date=2026-10-13&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-14&end_date=2026-10-12&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-15&end_date=2026-10-13&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 732,
+      "count": 729,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -50,7 +50,7 @@
       "type": "stgermain_wp",
       "url": "https://st-germain.com/events/",
       "ok": true,
-      "count": 18,
+      "count": 19,
       "error": null,
       "slug": "st-germain-chamber-wp",
       "ics_path": "by-source/st-germain-chamber-wp.ics",
@@ -63,7 +63,7 @@
       "type": "simpleview_html",
       "url": "https://www.minocqua.org/event/rss/",
       "ok": true,
-      "count": 14,
+      "count": 15,
       "error": null,
       "slug": "lets-minocqua-simpleview",
       "ics_path": "by-source/lets-minocqua-simpleview.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-14&end_date=2026-10-12&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-15&end_date=2026-10-13&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-14&end_date=2026-10-12&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-15&end_date=2026-10-13&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -104,57 +104,11 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 0,
+      "count": 22,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
-      "ics_path": null,
-      "warnings": [
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-06-13&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-06-13&end_date=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-06-13&endDate=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-13&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2026-06-13&end_date=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2026-06-13&endDate=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-13&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2026-06-13&end_date=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2026-06-13&endDate=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-13&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2026-06-13&end_date=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2026-06-13&endDate=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-13&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2026-06-13)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2026-06-13&end_date=2026-12-11)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2026-06-13&endDate=2026-12-11)"
-      ],
+      "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
+      "warnings": [],
       "notes": []
     }
   ],
@@ -162,61 +116,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Spring Classic Musky Tournament",
-      "start_utc": "2026-06-14 07:00:00",
-      "end_utc": "2026-06-14 12:00:00",
-      "location": "Eagle River WI",
-      "url": "https://eagleriver.org/events/spring-classic-musky-tournament/2026-06-14/",
-      "uid": "10020449",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-06-14 08:30:00",
-      "end_utc": "2026-06-14 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-2/2026-06-14/",
-      "uid": "10019879",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Sunday Woman&#8217;s Play",
-      "start_utc": "2026-06-14 09:30:00",
-      "end_utc": "2026-06-14 11:30:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-round-robin-2-2/2026-06-14/",
-      "uid": "10019651",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Take A Kid Fishing",
-      "start_utc": "2026-06-14 12:00:00",
-      "end_utc": "2026-06-14 15:00:00",
-      "location": "Conover Town Park, 4697 Park Circle, Conover",
-      "url": "https://eagleriver.org/events/take-a-kid-fishing-2/",
-      "uid": "21376",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-06-14 15:00:00",
-      "end_utc": "2026-06-14 18:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-6/2026-06-14/",
-      "uid": "10019862",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "School Walking Hours at NPHS",
       "start_utc": "2026-06-15 05:30:00",
       "end_utc": "2026-06-15 07:30:00",
@@ -8212,6 +8111,28 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2026-10-13 10:00:00",
+      "end_utc": "2026-10-13 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2026-10-13/",
+      "uid": "10009466",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
+      "start_utc": "2026-10-13 17:00:00",
+      "end_utc": "2026-10-13 21:00:00",
+      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
+      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club/2026-10-13/",
+      "uid": "10020658",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -8346,6 +8267,17 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "2026-08-05T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
       "title": "Jingle Bell 5K Run 2026",
       "start_utc": "2026-07-08T00:00:00",
       "end_utc": null,
@@ -8445,23 +8377,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2026-04-05 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-6401808171354545397",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-2299541994518868474",
+      "uid": "sv-6129914567030762019",
       "_source": null
     },
     {
@@ -8472,7 +8393,7 @@
       "end_utc": "2026-06-15 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/dino-egg-craft/40035/",
-      "uid": "sv-3430386440563102697",
+      "uid": "sv-3803593509932626129",
       "_source": null
     },
     {
@@ -8483,7 +8404,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-1679935556697424513",
+      "uid": "sv-6091522020495679890",
       "_source": null
     },
     {
@@ -8494,7 +8415,7 @@
       "end_utc": "2026-06-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/marble-painting/40043/",
-      "uid": "sv-5705447059541797118",
+      "uid": "sv-5030645559499704671",
       "_source": null
     },
     {
@@ -8505,7 +8426,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Eaglebrook Church",
       "url": "https://www.minocqua.org/event/wild-life-vbs/40016/",
-      "uid": "sv-8059069239961754084",
+      "uid": "sv-7446080936013280577",
       "_source": null
     },
     {
@@ -8516,7 +8437,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-1370208130970891424",
+      "uid": "sv-1266326544033738826",
       "_source": null
     },
     {
@@ -8527,7 +8448,7 @@
       "end_utc": "2026-06-17 00:00:00",
       "location": "Holy Family Catholic Church",
       "url": "https://www.minocqua.org/event/rummage-%26-bake-sale-boutique-day/39975/",
-      "uid": "sv-6443978869425135930",
+      "uid": "sv-8665564690127795627",
       "_source": null
     },
     {
@@ -8538,7 +8459,7 @@
       "end_utc": "2026-06-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/mammoth-hunter/40022/",
-      "uid": "sv-1170930129985319580",
+      "uid": "sv-7943020764901173269",
       "_source": null
     },
     {
@@ -8549,7 +8470,7 @@
       "end_utc": "2026-06-18 00:00:00",
       "location": "Holy Family Catholic Church",
       "url": "https://www.minocqua.org/event/rummage-%26-bake-sale-%245-bag-day/39976/",
-      "uid": "sv-9100238362792036082",
+      "uid": "sv-2735504652281254688",
       "_source": null
     },
     {
@@ -8560,7 +8481,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-1991987634460794091",
+      "uid": "sv-5073076286321477191",
       "_source": null
     },
     {
@@ -8571,7 +8492,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Redman Realty Group-Main Office",
       "url": "https://www.minocqua.org/event/100th-birthday-of-our-office-celebration/40091/",
-      "uid": "sv-49643601365638838",
+      "uid": "sv-5043496541169038042",
       "_source": null
     },
     {
@@ -8582,7 +8503,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/hazelhurst-lions-arts-and-craft-show/40088/",
-      "uid": "sv-613145848168555602",
+      "uid": "sv-8346256351053485405",
       "_source": null
     },
     {
@@ -8593,18 +8514,29 @@
       "end_utc": "2026-06-20 00:00:00",
       "location": "Minocqua Gun Club, Inc.",
       "url": "https://www.minocqua.org/event/ladies-learn-to-shoot-trap/40092/",
-      "uid": "sv-6307613402278433040",
+      "uid": "sv-5866555597107696956",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Music In The Park",
-      "start_utc": "2026-05-24 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Koller Park",
-      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-4713955926334812847",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Saturday StoryTime @the library",
+      "start_utc": "2026-04-18 00:00:00",
+      "end_utc": "2026-12-19 00:00:00",
+      "location": "Minocqua Public Library",
+      "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
+      "uid": "sv-594583667092892724",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound & Sauna Saturdays",
+      "start_utc": "2026-02-14 00:00:00",
+      "end_utc": "2027-01-02 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
+      "uid": "sv-5131953539773280612",
       "_source": null
     },
     {
@@ -8615,7 +8547,7 @@
       "end_utc": "2026-06-15 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-club%3a-looking-for-jane-by-heather-marshall/883/",
-      "uid": "sv-1152804596174438402",
+      "uid": "sv-410528079706369181",
       "_source": null
     },
     {
@@ -8626,7 +8558,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/youth-actors-skill-camp/799/",
-      "uid": "sv-8120259625755149683",
+      "uid": "sv-3294301113724234537",
       "_source": null
     },
     {
@@ -8637,7 +8569,7 @@
       "end_utc": "2026-06-16 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/nldc-presents%3a-bats-of-wisconsin/884/",
-      "uid": "sv-9212597075821513400",
+      "uid": "sv-2268946980757616751",
       "_source": null
     },
     {
@@ -8648,7 +8580,7 @@
       "end_utc": "2026-08-11 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/tuesday-kids-ride/911/",
-      "uid": "sv-3078867348764926454",
+      "uid": "sv-5342568837340853854",
       "_source": null
     },
     {
@@ -8659,7 +8591,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-2286031959149659092",
+      "uid": "sv-2086194385285948695",
       "_source": null
     },
     {
@@ -8670,7 +8602,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/skiing-skeeters-water-ski-show/901/",
-      "uid": "sv-4260026797711562346",
+      "uid": "sv-3224586752190441047",
       "_source": null
     },
     {
@@ -8681,7 +8613,7 @@
       "end_utc": "2026-06-17 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/story-walk%3a-in-grandpas-woods/814/",
-      "uid": "sv-3696071972331609305",
+      "uid": "sv-2362747073085752436",
       "_source": null
     },
     {
@@ -8692,7 +8624,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-2171130319789911690",
+      "uid": "sv-2409893458171653535",
       "_source": null
     },
     {
@@ -8703,7 +8635,7 @@
       "end_utc": "2026-06-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/eco-explorers-eco-discoverers-backyard-bird-buddies/816/",
-      "uid": "sv-158887780872057683",
+      "uid": "sv-1039073296722085965",
       "_source": null
     },
     {
@@ -8714,7 +8646,7 @@
       "end_utc": "2026-07-16 00:00:00",
       "location": "Manitowish Waters Lions Pavilion",
       "url": "https://manitowishwaters.org/event/lions-club-pork-chop-dinner/918/",
-      "uid": "sv-7546234493947898400",
+      "uid": "sv-5928557973493832002",
       "_source": null
     },
     {
@@ -8725,7 +8657,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-2600318832656593787",
+      "uid": "sv-4007219810627877743",
       "_source": null
     },
     {
@@ -8736,7 +8668,7 @@
       "end_utc": "2026-08-07 00:00:00",
       "location": "Clear Lake Boat Landing",
       "url": "https://manitowishwaters.org/event/historic-traditions-%26-mysteries-of-stone-fawn-and-clear-lakes/817/",
-      "uid": "sv-7342038762716522116",
+      "uid": "sv-2682991601444079585",
       "_source": null
     },
     {
@@ -8747,7 +8679,7 @@
       "end_utc": "2026-08-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/historic-traditions-and-mysteries-of-little-star-%26-spider-lakes-pontoon-tour/818/",
-      "uid": "sv-4743234858571363798",
+      "uid": "sv-4076228968873613981",
       "_source": null
     },
     {
@@ -8758,7 +8690,7 @@
       "end_utc": "2026-07-17 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/night-market/744/",
-      "uid": "sv-1053095370525450602",
+      "uid": "sv-1537519917909351569",
       "_source": null
     },
     {
@@ -8769,7 +8701,7 @@
       "end_utc": "2026-06-21 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/solstice-festival/745/",
-      "uid": "sv-5528114654600776982",
+      "uid": "sv-9198727327153657237",
       "_source": null
     },
     {
@@ -8780,7 +8712,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/sunset-sips%3a-an-interpretive-wine-and-cheese-pontoon-cruise/823/",
-      "uid": "sv-360271090875401925",
+      "uid": "sv-6329486585221444009",
       "_source": null
     },
     {
@@ -8791,7 +8723,18 @@
       "end_utc": "2026-07-04 00:00:00",
       "location": "Manitowish Waters Presbyterian Church",
       "url": "https://manitowishwaters.org/event/fleazaar-donations!/469/",
-      "uid": "sv-5292440725558855627",
+      "uid": "sv-7977485233244208006",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Music In The Park",
+      "start_utc": "2026-05-24 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Koller Park",
+      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
+      "uid": "sv-1743864954825304041",
       "_source": null
     },
     {
@@ -8802,7 +8745,7 @@
       "end_utc": "2026-06-21 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/waggin-tails-on-winman-trails/762/",
-      "uid": "sv-4310950031248351988",
+      "uid": "sv-5322755892830920063",
       "_source": null
     },
     {
@@ -8813,7 +8756,7 @@
       "end_utc": "2026-06-21 00:00:00",
       "location": "Manitowish Waters Chain of Lakes - Rest Lake Launch",
       "url": "https://manitowishwaters.org/event/wisco-bass-tournament/932/",
-      "uid": "sv-9030211771428119868",
+      "uid": "sv-6105176076376728110",
       "_source": null
     },
     {
@@ -8824,7 +8767,7 @@
       "end_utc": "2026-06-23 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/homemade-cinnamon-rolls-workshop/885/",
-      "uid": "sv-6293806315805941320",
+      "uid": "sv-3448469264060578429",
       "_source": null
     },
     {
@@ -8835,7 +8778,7 @@
       "end_utc": "2026-08-18 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/unearth-a-story%3a-childrens-movie-matinees/930/",
-      "uid": "sv-3732829918288857182",
+      "uid": "sv-3551662122419069292",
       "_source": null
     },
     {
@@ -8846,7 +8789,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/america-250-discussion-group/905/",
-      "uid": "sv-8891823750294444460",
+      "uid": "sv-561450199303108343",
       "_source": null
     },
     {
@@ -8857,7 +8800,249 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/commotion%3a-creedence-clearwater-revival-tribute/775/",
-      "uid": "sv-1290574943354410158",
+      "uid": "sv-700943088535820451",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-17 18:00:00",
+      "end_utc": "2026-06-17 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-06-17/",
+      "uid": "10000088",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "The 2nd Annual Great Northern Highland Paddle and Portage",
+      "start_utc": "2026-06-20 06:00:00",
+      "end_utc": "2026-06-20 13:00:00",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/the-2nd-annual-great-northern-highland-paddle-and-portage/",
+      "uid": "1533",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-20 18:00:00",
+      "end_utc": "2026-09-12 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-06-20/",
+      "uid": "10000101",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-24 18:00:00",
+      "end_utc": "2026-06-24 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-06-24/",
+      "uid": "10000089",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-27 18:00:00",
+      "end_utc": "2026-09-19 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-06-27/",
+      "uid": "10000102",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Maker’s Market on Main Street",
+      "start_utc": "2026-07-01 09:00:00",
+      "end_utc": "2026-07-29 14:00:00",
+      "location": "Cre-ate, 2933 WI-155, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/makers-market-on-main-street-2/",
+      "uid": "1549",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-01 18:00:00",
+      "end_utc": "2026-07-01 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-01/",
+      "uid": "10000090",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Lake Fire Department Annual Chicken BBQ",
+      "start_utc": "2026-07-04 12:00:00",
+      "end_utc": "2026-07-04 16:00:00",
+      "location": "Plum Lake Community Park, 8755 Lake Street, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-lake-fire-department-annual-chicken-bbq-2/",
+      "uid": "1552",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-04 18:00:00",
+      "end_utc": "2026-09-26 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-04/",
+      "uid": "10000103",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-08 18:00:00",
+      "end_utc": "2026-07-08 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-08/",
+      "uid": "10000091",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-11 18:00:00",
+      "end_utc": "2026-10-03 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-11/",
+      "uid": "10000104",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-15 18:00:00",
+      "end_utc": "2026-07-15 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-15/",
+      "uid": "10000092",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-18 18:00:00",
+      "end_utc": "2026-10-10 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-18/",
+      "uid": "10000105",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-22 18:00:00",
+      "end_utc": "2026-07-22 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-22/",
+      "uid": "10000093",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-29 18:00:00",
+      "end_utc": "2026-07-29 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-29/",
+      "uid": "10000094",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Sayner Street Fair",
+      "start_utc": "2026-08-02 10:00:00",
+      "end_utc": "2026-08-02 16:00:00",
+      "location": "Sayner Star Lake Cloverland Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/sayner-star-lake-street-fair-2/",
+      "uid": "1513",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-05 18:00:00",
+      "end_utc": "2026-08-05 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-05/",
+      "uid": "10000095",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-12 18:00:00",
+      "end_utc": "2026-08-12 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-12/",
+      "uid": "10000096",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "5th Annual Plum Lake Open",
+      "start_utc": "2026-08-16 08:00:00",
+      "end_utc": "2026-08-16 14:00:00",
+      "location": "Plum Lake Golf Club, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/5th-annual-plum-lake-open/",
+      "uid": "1511",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-19 18:00:00",
+      "end_utc": "2026-08-19 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-19/",
+      "uid": "10000097",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-26 18:00:00",
+      "end_utc": "2026-08-26 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-26/",
+      "uid": "10000098",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-09-02 18:00:00",
+      "end_utc": "2026-09-02 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-09-02/",
+      "uid": "10000099",
       "_source": null
     }
   ],
@@ -8865,61 +9050,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Spring Classic Musky Tournament",
-      "start_utc": "2026-06-14 07:00:00",
-      "end_utc": "2026-06-14 12:00:00",
-      "location": "Eagle River WI",
-      "url": "https://eagleriver.org/events/spring-classic-musky-tournament/2026-06-14/",
-      "uid": "10020449",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-06-14 08:30:00",
-      "end_utc": "2026-06-14 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-2/2026-06-14/",
-      "uid": "10019879",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Sunday Woman&#8217;s Play",
-      "start_utc": "2026-06-14 09:30:00",
-      "end_utc": "2026-06-14 11:30:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-round-robin-2-2/2026-06-14/",
-      "uid": "10019651",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Take A Kid Fishing",
-      "start_utc": "2026-06-14 12:00:00",
-      "end_utc": "2026-06-14 15:00:00",
-      "location": "Conover Town Park, 4697 Park Circle, Conover",
-      "url": "https://eagleriver.org/events/take-a-kid-fishing-2/",
-      "uid": "21376",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-06-14 15:00:00",
-      "end_utc": "2026-06-14 18:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-6/2026-06-14/",
-      "uid": "10019862",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "School Walking Hours at NPHS",
       "start_utc": "2026-06-15 05:30:00",
       "end_utc": "2026-06-15 07:30:00",
@@ -16915,6 +17045,28 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2026-10-13 10:00:00",
+      "end_utc": "2026-10-13 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2026-10-13/",
+      "uid": "10009466",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
+      "start_utc": "2026-10-13 17:00:00",
+      "end_utc": "2026-10-13 21:00:00",
+      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
+      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club/2026-10-13/",
+      "uid": "10020658",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -17049,6 +17201,17 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "2026-08-05T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
       "title": "Jingle Bell 5K Run 2026",
       "start_utc": "2026-07-08T00:00:00",
       "end_utc": null,
@@ -17148,23 +17311,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2026-04-05 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-6401808171354545397",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-2299541994518868474",
+      "uid": "sv-6129914567030762019",
       "_source": null
     },
     {
@@ -17175,7 +17327,7 @@
       "end_utc": "2026-06-15 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/dino-egg-craft/40035/",
-      "uid": "sv-3430386440563102697",
+      "uid": "sv-3803593509932626129",
       "_source": null
     },
     {
@@ -17186,7 +17338,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-1679935556697424513",
+      "uid": "sv-6091522020495679890",
       "_source": null
     },
     {
@@ -17197,7 +17349,7 @@
       "end_utc": "2026-06-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/marble-painting/40043/",
-      "uid": "sv-5705447059541797118",
+      "uid": "sv-5030645559499704671",
       "_source": null
     },
     {
@@ -17208,7 +17360,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Eaglebrook Church",
       "url": "https://www.minocqua.org/event/wild-life-vbs/40016/",
-      "uid": "sv-8059069239961754084",
+      "uid": "sv-7446080936013280577",
       "_source": null
     },
     {
@@ -17219,7 +17371,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-1370208130970891424",
+      "uid": "sv-1266326544033738826",
       "_source": null
     },
     {
@@ -17230,7 +17382,7 @@
       "end_utc": "2026-06-17 00:00:00",
       "location": "Holy Family Catholic Church",
       "url": "https://www.minocqua.org/event/rummage-%26-bake-sale-boutique-day/39975/",
-      "uid": "sv-6443978869425135930",
+      "uid": "sv-8665564690127795627",
       "_source": null
     },
     {
@@ -17241,7 +17393,7 @@
       "end_utc": "2026-06-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/mammoth-hunter/40022/",
-      "uid": "sv-1170930129985319580",
+      "uid": "sv-7943020764901173269",
       "_source": null
     },
     {
@@ -17252,7 +17404,7 @@
       "end_utc": "2026-06-18 00:00:00",
       "location": "Holy Family Catholic Church",
       "url": "https://www.minocqua.org/event/rummage-%26-bake-sale-%245-bag-day/39976/",
-      "uid": "sv-9100238362792036082",
+      "uid": "sv-2735504652281254688",
       "_source": null
     },
     {
@@ -17263,7 +17415,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-1991987634460794091",
+      "uid": "sv-5073076286321477191",
       "_source": null
     },
     {
@@ -17274,7 +17426,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Redman Realty Group-Main Office",
       "url": "https://www.minocqua.org/event/100th-birthday-of-our-office-celebration/40091/",
-      "uid": "sv-49643601365638838",
+      "uid": "sv-5043496541169038042",
       "_source": null
     },
     {
@@ -17285,7 +17437,7 @@
       "end_utc": null,
       "location": null,
       "url": "https://www.minocqua.org/event/hazelhurst-lions-arts-and-craft-show/40088/",
-      "uid": "sv-613145848168555602",
+      "uid": "sv-8346256351053485405",
       "_source": null
     },
     {
@@ -17296,18 +17448,29 @@
       "end_utc": "2026-06-20 00:00:00",
       "location": "Minocqua Gun Club, Inc.",
       "url": "https://www.minocqua.org/event/ladies-learn-to-shoot-trap/40092/",
-      "uid": "sv-6307613402278433040",
+      "uid": "sv-5866555597107696956",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Music In The Park",
-      "start_utc": "2026-05-24 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Koller Park",
-      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-4713955926334812847",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Saturday StoryTime @the library",
+      "start_utc": "2026-04-18 00:00:00",
+      "end_utc": "2026-12-19 00:00:00",
+      "location": "Minocqua Public Library",
+      "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
+      "uid": "sv-594583667092892724",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound & Sauna Saturdays",
+      "start_utc": "2026-02-14 00:00:00",
+      "end_utc": "2027-01-02 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
+      "uid": "sv-5131953539773280612",
       "_source": null
     },
     {
@@ -17318,7 +17481,7 @@
       "end_utc": "2026-06-15 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-club%3a-looking-for-jane-by-heather-marshall/883/",
-      "uid": "sv-1152804596174438402",
+      "uid": "sv-410528079706369181",
       "_source": null
     },
     {
@@ -17329,7 +17492,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/youth-actors-skill-camp/799/",
-      "uid": "sv-8120259625755149683",
+      "uid": "sv-3294301113724234537",
       "_source": null
     },
     {
@@ -17340,7 +17503,7 @@
       "end_utc": "2026-06-16 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/nldc-presents%3a-bats-of-wisconsin/884/",
-      "uid": "sv-9212597075821513400",
+      "uid": "sv-2268946980757616751",
       "_source": null
     },
     {
@@ -17351,7 +17514,7 @@
       "end_utc": "2026-08-11 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/tuesday-kids-ride/911/",
-      "uid": "sv-3078867348764926454",
+      "uid": "sv-5342568837340853854",
       "_source": null
     },
     {
@@ -17362,7 +17525,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-2286031959149659092",
+      "uid": "sv-2086194385285948695",
       "_source": null
     },
     {
@@ -17373,7 +17536,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/skiing-skeeters-water-ski-show/901/",
-      "uid": "sv-4260026797711562346",
+      "uid": "sv-3224586752190441047",
       "_source": null
     },
     {
@@ -17384,7 +17547,7 @@
       "end_utc": "2026-06-17 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/story-walk%3a-in-grandpas-woods/814/",
-      "uid": "sv-3696071972331609305",
+      "uid": "sv-2362747073085752436",
       "_source": null
     },
     {
@@ -17395,7 +17558,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-2171130319789911690",
+      "uid": "sv-2409893458171653535",
       "_source": null
     },
     {
@@ -17406,7 +17569,7 @@
       "end_utc": "2026-06-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/eco-explorers-eco-discoverers-backyard-bird-buddies/816/",
-      "uid": "sv-158887780872057683",
+      "uid": "sv-1039073296722085965",
       "_source": null
     },
     {
@@ -17417,7 +17580,7 @@
       "end_utc": "2026-07-16 00:00:00",
       "location": "Manitowish Waters Lions Pavilion",
       "url": "https://manitowishwaters.org/event/lions-club-pork-chop-dinner/918/",
-      "uid": "sv-7546234493947898400",
+      "uid": "sv-5928557973493832002",
       "_source": null
     },
     {
@@ -17428,7 +17591,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-2600318832656593787",
+      "uid": "sv-4007219810627877743",
       "_source": null
     },
     {
@@ -17439,7 +17602,7 @@
       "end_utc": "2026-08-07 00:00:00",
       "location": "Clear Lake Boat Landing",
       "url": "https://manitowishwaters.org/event/historic-traditions-%26-mysteries-of-stone-fawn-and-clear-lakes/817/",
-      "uid": "sv-7342038762716522116",
+      "uid": "sv-2682991601444079585",
       "_source": null
     },
     {
@@ -17450,7 +17613,7 @@
       "end_utc": "2026-08-07 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/historic-traditions-and-mysteries-of-little-star-%26-spider-lakes-pontoon-tour/818/",
-      "uid": "sv-4743234858571363798",
+      "uid": "sv-4076228968873613981",
       "_source": null
     },
     {
@@ -17461,7 +17624,7 @@
       "end_utc": "2026-07-17 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/night-market/744/",
-      "uid": "sv-1053095370525450602",
+      "uid": "sv-1537519917909351569",
       "_source": null
     },
     {
@@ -17472,7 +17635,7 @@
       "end_utc": "2026-06-21 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/solstice-festival/745/",
-      "uid": "sv-5528114654600776982",
+      "uid": "sv-9198727327153657237",
       "_source": null
     },
     {
@@ -17483,7 +17646,7 @@
       "end_utc": "2026-06-19 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/sunset-sips%3a-an-interpretive-wine-and-cheese-pontoon-cruise/823/",
-      "uid": "sv-360271090875401925",
+      "uid": "sv-6329486585221444009",
       "_source": null
     },
     {
@@ -17494,7 +17657,18 @@
       "end_utc": "2026-07-04 00:00:00",
       "location": "Manitowish Waters Presbyterian Church",
       "url": "https://manitowishwaters.org/event/fleazaar-donations!/469/",
-      "uid": "sv-5292440725558855627",
+      "uid": "sv-7977485233244208006",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Music In The Park",
+      "start_utc": "2026-05-24 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Koller Park",
+      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
+      "uid": "sv-1743864954825304041",
       "_source": null
     },
     {
@@ -17505,7 +17679,7 @@
       "end_utc": "2026-06-21 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/waggin-tails-on-winman-trails/762/",
-      "uid": "sv-4310950031248351988",
+      "uid": "sv-5322755892830920063",
       "_source": null
     },
     {
@@ -17516,7 +17690,7 @@
       "end_utc": "2026-06-21 00:00:00",
       "location": "Manitowish Waters Chain of Lakes - Rest Lake Launch",
       "url": "https://manitowishwaters.org/event/wisco-bass-tournament/932/",
-      "uid": "sv-9030211771428119868",
+      "uid": "sv-6105176076376728110",
       "_source": null
     },
     {
@@ -17527,7 +17701,7 @@
       "end_utc": "2026-06-23 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/homemade-cinnamon-rolls-workshop/885/",
-      "uid": "sv-6293806315805941320",
+      "uid": "sv-3448469264060578429",
       "_source": null
     },
     {
@@ -17538,7 +17712,7 @@
       "end_utc": "2026-08-18 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/unearth-a-story%3a-childrens-movie-matinees/930/",
-      "uid": "sv-3732829918288857182",
+      "uid": "sv-3551662122419069292",
       "_source": null
     },
     {
@@ -17549,7 +17723,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/america-250-discussion-group/905/",
-      "uid": "sv-8891823750294444460",
+      "uid": "sv-561450199303108343",
       "_source": null
     },
     {
@@ -17560,13 +17734,255 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/commotion%3a-creedence-clearwater-revival-tribute/775/",
-      "uid": "sv-1290574943354410158",
+      "uid": "sv-700943088535820451",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-17 18:00:00",
+      "end_utc": "2026-06-17 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-06-17/",
+      "uid": "10000088",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "The 2nd Annual Great Northern Highland Paddle and Portage",
+      "start_utc": "2026-06-20 06:00:00",
+      "end_utc": "2026-06-20 13:00:00",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/the-2nd-annual-great-northern-highland-paddle-and-portage/",
+      "uid": "1533",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-20 18:00:00",
+      "end_utc": "2026-09-12 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-06-20/",
+      "uid": "10000101",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-24 18:00:00",
+      "end_utc": "2026-06-24 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-06-24/",
+      "uid": "10000089",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-06-27 18:00:00",
+      "end_utc": "2026-09-19 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-06-27/",
+      "uid": "10000102",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Maker’s Market on Main Street",
+      "start_utc": "2026-07-01 09:00:00",
+      "end_utc": "2026-07-29 14:00:00",
+      "location": "Cre-ate, 2933 WI-155, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/makers-market-on-main-street-2/",
+      "uid": "1549",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-01 18:00:00",
+      "end_utc": "2026-07-01 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-01/",
+      "uid": "10000090",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Lake Fire Department Annual Chicken BBQ",
+      "start_utc": "2026-07-04 12:00:00",
+      "end_utc": "2026-07-04 16:00:00",
+      "location": "Plum Lake Community Park, 8755 Lake Street, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-lake-fire-department-annual-chicken-bbq-2/",
+      "uid": "1552",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-04 18:00:00",
+      "end_utc": "2026-09-26 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-04/",
+      "uid": "10000103",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-08 18:00:00",
+      "end_utc": "2026-07-08 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-08/",
+      "uid": "10000091",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-11 18:00:00",
+      "end_utc": "2026-10-03 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-11/",
+      "uid": "10000104",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-15 18:00:00",
+      "end_utc": "2026-07-15 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-15/",
+      "uid": "10000092",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-18 18:00:00",
+      "end_utc": "2026-10-10 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-18/",
+      "uid": "10000105",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-22 18:00:00",
+      "end_utc": "2026-07-22 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-22/",
+      "uid": "10000093",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-07-29 18:00:00",
+      "end_utc": "2026-07-29 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-07-29/",
+      "uid": "10000094",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Sayner Street Fair",
+      "start_utc": "2026-08-02 10:00:00",
+      "end_utc": "2026-08-02 16:00:00",
+      "location": "Sayner Star Lake Cloverland Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/sayner-star-lake-street-fair-2/",
+      "uid": "1513",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-05 18:00:00",
+      "end_utc": "2026-08-05 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-05/",
+      "uid": "10000095",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-12 18:00:00",
+      "end_utc": "2026-08-12 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-12/",
+      "uid": "10000096",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "5th Annual Plum Lake Open",
+      "start_utc": "2026-08-16 08:00:00",
+      "end_utc": "2026-08-16 14:00:00",
+      "location": "Plum Lake Golf Club, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/5th-annual-plum-lake-open/",
+      "uid": "1511",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-19 18:00:00",
+      "end_utc": "2026-08-19 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-19/",
+      "uid": "10000097",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-26 18:00:00",
+      "end_utc": "2026-08-26 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-26/",
+      "uid": "10000098",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-09-02 18:00:00",
+      "end_utc": "2026-09-02 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-09-02/",
+      "uid": "10000099",
       "_source": null
     }
   ],
-  "events_preview_count": 791,
+  "events_preview_count": 812,
   "curated_feeds": {
-    "generated_at": "2026-06-14T18:33:46.809160+00:00",
+    "generated_at": "2026-06-15T05:51:13.317429+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
@@ -17583,19 +17999,19 @@
         "id": "min-events",
         "name": "Minocqua Events",
         "enabled": true,
-        "count": 4,
+        "count": 3,
         "path": "curated/min-events.ics",
         "manual_count": 0,
-        "auto_count": 4
+        "auto_count": 3
       },
       {
         "id": "RCLMinocquaEvents",
         "name": "RCL Minocqua Events",
         "enabled": true,
-        "count": 4,
+        "count": 3,
         "path": "curated/rclminocquaevents.ics",
         "manual_count": 0,
-        "auto_count": 4
+        "auto_count": 3
       }
     ]
   }
