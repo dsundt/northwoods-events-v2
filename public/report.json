@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-06-21T18:35:43.647203+00:00",
+  "generated_at": "2026-06-22T05:52:49.570693+00:00",
   "sources_processed": 8,
-  "total_events": 789,
+  "total_events": 786,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-21&end_date=2026-10-19&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-22&end_date=2026-10-20&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-21&end_date=2026-10-19&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-06-22&end_date=2026-10-20&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 732,
+      "count": 728,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -63,7 +63,7 @@
       "type": "simpleview_html",
       "url": "https://www.minocqua.org/event/rss/",
       "ok": true,
-      "count": 12,
+      "count": 13,
       "error": null,
       "slug": "lets-minocqua-simpleview",
       "ics_path": "by-source/lets-minocqua-simpleview.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-21&end_date=2026-10-19&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-22&end_date=2026-10-20&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-21&end_date=2026-10-19&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-06-22&end_date=2026-10-20&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -111,49 +111,49 @@
       "warnings": [
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-06-20&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-06-21&tribe_paged=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-06-20&end_date=2026-12-18)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-06-20&endDate=2026-12-18)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-06-21&end_date=2026-12-19)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-06-21&endDate=2026-12-19)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-20&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-21&tribe_paged=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2026-06-20&end_date=2026-12-18)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2026-06-20&endDate=2026-12-18)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2026-06-21&end_date=2026-12-19)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2026-06-21&endDate=2026-12-19)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-20&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-21&tribe_paged=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2026-06-20&end_date=2026-12-18)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2026-06-20&endDate=2026-12-18)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2026-06-21&end_date=2026-12-19)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2026-06-21&endDate=2026-12-19)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-20&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-06-21&tribe_paged=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2026-06-20&end_date=2026-12-18)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2026-06-20&endDate=2026-12-18)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2026-06-21&end_date=2026-12-19)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2026-06-21&endDate=2026-12-19)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-20&tribe_paged=1)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-06-21&tribe_paged=1)",
         "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2026-06-20)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2026-06-20&end_date=2026-12-18)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2026-06-20&endDate=2026-12-18)"
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2026-06-21)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2026-06-21&end_date=2026-12-19)",
+        "ics fallback failed for Sayner Star Lake Cloverland (TEC): Content line could not be parsed into parts: '{\"message\": \"Access denied by Imunify360 bot-protection. IPs used for automation should be whitelisted\"': {\"message\" (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2026-06-21&endDate=2026-12-19)"
       ],
       "notes": []
     }
@@ -162,61 +162,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-06-21 08:30:00",
-      "end_utc": "2026-06-21 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-2/2026-06-21/",
-      "uid": "10019880",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "A Beautiful Calling Ethical Boutique Grand Opening Weekend Celebration",
-      "start_utc": "2026-06-21 09:00:00",
-      "end_utc": "2026-06-21 18:00:00",
-      "location": "A Beautiful Calling Ethical Boutique, 100 E Wall St, Eagle River",
-      "url": "https://eagleriver.org/events/a-beautiful-calling-ethical-boutique-grand-opening-weekend-celebration/2026-06-21/",
-      "uid": "10020750",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Sunday Woman&#8217;s Play",
-      "start_utc": "2026-06-21 09:30:00",
-      "end_utc": "2026-06-21 11:30:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-round-robin-2-2/2026-06-21/",
-      "uid": "10019652",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-06-21 15:00:00",
-      "end_utc": "2026-06-21 18:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-6/2026-06-21/",
-      "uid": "10019863",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Music Line Up at the Marina Bar",
-      "start_utc": "2026-06-21 15:00:00",
-      "end_utc": "2026-06-21 19:00:00",
-      "location": "The Everett &#038; Marina Bar, 1269 Everett Rd., Eagle River",
-      "url": "https://eagleriver.org/events/music-line-up-at-the-marina-bar-3/2026-06-21/",
-      "uid": "10020808",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Saturdays at Dutch Oven Cooking at Wildwood Outdoor Adventure",
       "start_utc": "2026-06-22 00:00:00",
       "end_utc": "2026-06-22 00:00:00",
@@ -8212,6 +8157,17 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2026-10-20 10:00:00",
+      "end_utc": "2026-10-20 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2026-10-20/",
+      "uid": "10009467",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -8445,23 +8401,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2026-04-05 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-4318031976344735834",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-8823104851916195679",
+      "uid": "sv-5956188158052964726",
       "_source": null
     },
     {
@@ -8472,7 +8417,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-4488621195728227228",
+      "uid": "sv-7111061246325171610",
       "_source": null
     },
     {
@@ -8483,7 +8428,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-6571811589387208398",
+      "uid": "sv-8254918121517705036",
       "_source": null
     },
     {
@@ -8494,7 +8439,7 @@
       "end_utc": "2026-06-24 00:00:00",
       "location": "Fox Cities Stadium",
       "url": "https://www.minocqua.org/event/wisconsin-timber-rattlers-ball-game/40082/",
-      "uid": "sv-5104551205192461644",
+      "uid": "sv-208403828653549724",
       "_source": null
     },
     {
@@ -8505,7 +8450,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/aquatic-experience/40029/",
-      "uid": "sv-9136007547577988394",
+      "uid": "sv-293442207706509843",
       "_source": null
     },
     {
@@ -8516,7 +8461,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-3974664272817622933",
+      "uid": "sv-581310646684453402",
       "_source": null
     },
     {
@@ -8527,7 +8472,7 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "Torpy Park. It will feature our three events",
       "url": "https://www.minocqua.org/event/bear-cupboard-run/40013/",
-      "uid": "sv-3214915567645983242",
+      "uid": "sv-3418836310504573636",
       "_source": null
     },
     {
@@ -8538,7 +8483,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-1607971409569261837",
+      "uid": "sv-6114940265240904443",
       "_source": null
     },
     {
@@ -8549,7 +8494,18 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-2667340003859470894",
+      "uid": "sv-6880241778808962118",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Restorative Yoga",
+      "start_utc": "2026-04-05 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
+      "uid": "sv-8727626114806987094",
       "_source": null
     },
     {
@@ -8560,7 +8516,7 @@
       "end_utc": "2026-06-29 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/movie-time/40041/",
-      "uid": "sv-6428875010181850637",
+      "uid": "sv-1865139955613096855",
       "_source": null
     },
     {
@@ -8571,51 +8527,18 @@
       "end_utc": "2026-07-02 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/bedazzled-sunglasses/40038/",
-      "uid": "sv-153579275801175918",
+      "uid": "sv-4369334107541118708",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Music In The Park",
-      "start_utc": "2026-05-24 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Koller Park",
-      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-3053692809749809789",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Solstice Festival",
-      "start_utc": "2026-06-19 00:00:00",
-      "end_utc": "2026-06-21 00:00:00",
-      "location": "Koller Park",
-      "url": "https://manitowishwaters.org/event/solstice-festival/745/",
-      "uid": "sv-5245328204000655929",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Waggin' Tails on WinMan Trails",
-      "start_utc": "2026-06-21 00:00:00",
-      "end_utc": "2026-06-21 00:00:00",
-      "location": "WinMan Trails",
-      "url": "https://manitowishwaters.org/event/waggin-tails-on-winman-trails/762/",
-      "uid": "sv-9033478339515235987",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Wisco Bass Tournament",
-      "start_utc": "2026-06-21 00:00:00",
-      "end_utc": "2026-06-21 00:00:00",
-      "location": "Manitowish Waters Chain of Lakes - Rest Lake Launch",
-      "url": "https://manitowishwaters.org/event/wisco-bass-tournament/932/",
-      "uid": "sv-1034042050861160729",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "4th of July Celebration",
+      "start_utc": "2025-07-04 00:00:00",
+      "end_utc": null,
+      "location": "Downtown Minocqua Area",
+      "url": "https://www.minocqua.org/event/4th-of-july-celebration/29456/",
+      "uid": "sv-1880514526526327116",
       "_source": null
     },
     {
@@ -8626,7 +8549,7 @@
       "end_utc": "2026-06-23 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/homemade-cinnamon-rolls-workshop/885/",
-      "uid": "sv-1304973680739483382",
+      "uid": "sv-1497058243663323015",
       "_source": null
     },
     {
@@ -8637,7 +8560,7 @@
       "end_utc": "2026-08-11 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/tuesday-kids-ride/911/",
-      "uid": "sv-1050195072472328537",
+      "uid": "sv-3380773445304815476",
       "_source": null
     },
     {
@@ -8648,7 +8571,7 @@
       "end_utc": "2026-08-18 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/unearth-a-story%3a-childrens-movie-matinees/930/",
-      "uid": "sv-6338280084350607967",
+      "uid": "sv-1207662186910327819",
       "_source": null
     },
     {
@@ -8659,7 +8582,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-4249265322565277293",
+      "uid": "sv-1695701023919157634",
       "_source": null
     },
     {
@@ -8670,7 +8593,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/skiing-skeeters-water-ski-show/901/",
-      "uid": "sv-7628074510988547421",
+      "uid": "sv-4264609748776522685",
       "_source": null
     },
     {
@@ -8681,7 +8604,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-8560699876648323788",
+      "uid": "sv-2211831519858433561",
       "_source": null
     },
     {
@@ -8692,7 +8615,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/america-250-discussion-group/905/",
-      "uid": "sv-6937450121137741078",
+      "uid": "sv-5928163228907284469",
       "_source": null
     },
     {
@@ -8703,7 +8626,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/commotion%3a-creedence-clearwater-revival-tribute/775/",
-      "uid": "sv-1108280191739923775",
+      "uid": "sv-8132231827009314616",
       "_source": null
     },
     {
@@ -8714,7 +8637,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/eco-explorers-eco-discoverers-aquatic-critters/820/",
-      "uid": "sv-2526899768917638807",
+      "uid": "sv-676240820726911410",
       "_source": null
     },
     {
@@ -8725,7 +8648,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/manitowish-waters-pub-crawl/821/",
-      "uid": "sv-2804706806652802780",
+      "uid": "sv-7561085807386627147",
       "_source": null
     },
     {
@@ -8736,7 +8659,7 @@
       "end_utc": "2026-08-06 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/photo-explorers-with-christina-meyers/904/",
-      "uid": "sv-7732578215283903035",
+      "uid": "sv-7980634343561594040",
       "_source": null
     },
     {
@@ -8747,7 +8670,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-7192379801340088743",
+      "uid": "sv-485197187216945045",
       "_source": null
     },
     {
@@ -8758,7 +8681,7 @@
       "end_utc": "2026-06-26 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-binding-workshop/886/",
-      "uid": "sv-8911407362888251652",
+      "uid": "sv-7789279003939572466",
       "_source": null
     },
     {
@@ -8769,7 +8692,7 @@
       "end_utc": "2026-06-26 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/mushsrooms-%26-mysteries%3a-a-fun-adventure-for-kids/822/",
-      "uid": "sv-8707510944088665990",
+      "uid": "sv-2139931997374093758",
       "_source": null
     },
     {
@@ -8780,7 +8703,7 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-beavers/824/",
-      "uid": "sv-1881328462599154063",
+      "uid": "sv-1028101849541315119",
       "_source": null
     },
     {
@@ -8791,7 +8714,7 @@
       "end_utc": "2026-07-04 00:00:00",
       "location": "Manitowish Waters Presbyterian Church",
       "url": "https://manitowishwaters.org/event/fleazaar-donations!/469/",
-      "uid": "sv-1248800046970183872",
+      "uid": "sv-3743785096565228663",
       "_source": null
     },
     {
@@ -8802,7 +8725,7 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "Village Market Manitowish Waters",
       "url": "https://manitowishwaters.org/event/friends-of-the-library-brat-sale/931/",
-      "uid": "sv-7853455157146345773",
+      "uid": "sv-614313645463820171",
       "_source": null
     },
     {
@@ -8813,7 +8736,7 @@
       "end_utc": "2026-06-28 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/ninja-mountain-bike-camp-and-clinics/787/",
-      "uid": "sv-611816782497916731",
+      "uid": "sv-876514548528659379",
       "_source": null
     },
     {
@@ -8824,7 +8747,18 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/tall-tale-day%3a-a-northwoods-forest-history-experience-program/825/",
-      "uid": "sv-7850444734715939219",
+      "uid": "sv-5416976936518931051",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Music In The Park",
+      "start_utc": "2026-05-24 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Koller Park",
+      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
+      "uid": "sv-347006520818953772",
       "_source": null
     },
     {
@@ -8835,7 +8769,40 @@
       "end_utc": "2026-06-30 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/nldc-prehistoric-mega-creatures-for-kids/887/",
-      "uid": "sv-3099980536668215857",
+      "uid": "sv-405916146760899005",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Wisconsin's Gangster Past: Turning the Badger State into the Crime State with Chad Lewis",
+      "start_utc": "2026-06-30 00:00:00",
+      "end_utc": "2026-06-30 00:00:00",
+      "location": "Frank B. Koller Memorial Library",
+      "url": "https://manitowishwaters.org/event/wisconsins-gangster-past%3a-turning-the-badger-state-into-the-crime-state-with-chad-lewis/797/",
+      "uid": "sv-6750042478423281992",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "StoryWalk ® Trail Program: Huck and Loona by Emily Kilgore",
+      "start_utc": "2026-07-01 00:00:00",
+      "end_utc": "2026-07-01 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-huck-and-loona-by-emily-kilgore/826/",
+      "uid": "sv-4175728121742166278",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Kids Learn to Mountain Bike Clinic",
+      "start_utc": "2026-07-02 00:00:00",
+      "end_utc": "2026-07-02 00:00:00",
+      "location": "WinMan Trails",
+      "url": "https://manitowishwaters.org/event/kids-learn-to-mountain-bike-clinic/788/",
+      "uid": "sv-8670022731199882290",
       "_source": null
     }
   ],
@@ -8843,61 +8810,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-06-21 08:30:00",
-      "end_utc": "2026-06-21 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-2/2026-06-21/",
-      "uid": "10019880",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "A Beautiful Calling Ethical Boutique Grand Opening Weekend Celebration",
-      "start_utc": "2026-06-21 09:00:00",
-      "end_utc": "2026-06-21 18:00:00",
-      "location": "A Beautiful Calling Ethical Boutique, 100 E Wall St, Eagle River",
-      "url": "https://eagleriver.org/events/a-beautiful-calling-ethical-boutique-grand-opening-weekend-celebration/2026-06-21/",
-      "uid": "10020750",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Sunday Woman&#8217;s Play",
-      "start_utc": "2026-06-21 09:30:00",
-      "end_utc": "2026-06-21 11:30:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-round-robin-2-2/2026-06-21/",
-      "uid": "10019652",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-06-21 15:00:00",
-      "end_utc": "2026-06-21 18:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-6/2026-06-21/",
-      "uid": "10019863",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Music Line Up at the Marina Bar",
-      "start_utc": "2026-06-21 15:00:00",
-      "end_utc": "2026-06-21 19:00:00",
-      "location": "The Everett &#038; Marina Bar, 1269 Everett Rd., Eagle River",
-      "url": "https://eagleriver.org/events/music-line-up-at-the-marina-bar-3/2026-06-21/",
-      "uid": "10020808",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Saturdays at Dutch Oven Cooking at Wildwood Outdoor Adventure",
       "start_utc": "2026-06-22 00:00:00",
       "end_utc": "2026-06-22 00:00:00",
@@ -16893,6 +16805,17 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2026-10-20 10:00:00",
+      "end_utc": "2026-10-20 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2026-10-20/",
+      "uid": "10009467",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -17126,23 +17049,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Restorative Yoga",
-      "start_utc": "2026-04-05 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-4318031976344735834",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "\"The Majors\" A Northwoods Golf Classic",
       "start_utc": "2025-11-03 00:00:00",
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-8823104851916195679",
+      "uid": "sv-5956188158052964726",
       "_source": null
     },
     {
@@ -17153,7 +17065,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-4488621195728227228",
+      "uid": "sv-7111061246325171610",
       "_source": null
     },
     {
@@ -17164,7 +17076,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-6571811589387208398",
+      "uid": "sv-8254918121517705036",
       "_source": null
     },
     {
@@ -17175,7 +17087,7 @@
       "end_utc": "2026-06-24 00:00:00",
       "location": "Fox Cities Stadium",
       "url": "https://www.minocqua.org/event/wisconsin-timber-rattlers-ball-game/40082/",
-      "uid": "sv-5104551205192461644",
+      "uid": "sv-208403828653549724",
       "_source": null
     },
     {
@@ -17186,7 +17098,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/aquatic-experience/40029/",
-      "uid": "sv-9136007547577988394",
+      "uid": "sv-293442207706509843",
       "_source": null
     },
     {
@@ -17197,7 +17109,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-3974664272817622933",
+      "uid": "sv-581310646684453402",
       "_source": null
     },
     {
@@ -17208,7 +17120,7 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "Torpy Park. It will feature our three events",
       "url": "https://www.minocqua.org/event/bear-cupboard-run/40013/",
-      "uid": "sv-3214915567645983242",
+      "uid": "sv-3418836310504573636",
       "_source": null
     },
     {
@@ -17219,7 +17131,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-1607971409569261837",
+      "uid": "sv-6114940265240904443",
       "_source": null
     },
     {
@@ -17230,7 +17142,18 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-2667340003859470894",
+      "uid": "sv-6880241778808962118",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Restorative Yoga",
+      "start_utc": "2026-04-05 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
+      "uid": "sv-8727626114806987094",
       "_source": null
     },
     {
@@ -17241,7 +17164,7 @@
       "end_utc": "2026-06-29 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/movie-time/40041/",
-      "uid": "sv-6428875010181850637",
+      "uid": "sv-1865139955613096855",
       "_source": null
     },
     {
@@ -17252,51 +17175,18 @@
       "end_utc": "2026-07-02 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/bedazzled-sunglasses/40038/",
-      "uid": "sv-153579275801175918",
+      "uid": "sv-4369334107541118708",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Music In The Park",
-      "start_utc": "2026-05-24 00:00:00",
-      "end_utc": "2026-09-06 00:00:00",
-      "location": "Koller Park",
-      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-3053692809749809789",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Solstice Festival",
-      "start_utc": "2026-06-19 00:00:00",
-      "end_utc": "2026-06-21 00:00:00",
-      "location": "Koller Park",
-      "url": "https://manitowishwaters.org/event/solstice-festival/745/",
-      "uid": "sv-5245328204000655929",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Waggin' Tails on WinMan Trails",
-      "start_utc": "2026-06-21 00:00:00",
-      "end_utc": "2026-06-21 00:00:00",
-      "location": "WinMan Trails",
-      "url": "https://manitowishwaters.org/event/waggin-tails-on-winman-trails/762/",
-      "uid": "sv-9033478339515235987",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Wisco Bass Tournament",
-      "start_utc": "2026-06-21 00:00:00",
-      "end_utc": "2026-06-21 00:00:00",
-      "location": "Manitowish Waters Chain of Lakes - Rest Lake Launch",
-      "url": "https://manitowishwaters.org/event/wisco-bass-tournament/932/",
-      "uid": "sv-1034042050861160729",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "4th of July Celebration",
+      "start_utc": "2025-07-04 00:00:00",
+      "end_utc": null,
+      "location": "Downtown Minocqua Area",
+      "url": "https://www.minocqua.org/event/4th-of-july-celebration/29456/",
+      "uid": "sv-1880514526526327116",
       "_source": null
     },
     {
@@ -17307,7 +17197,7 @@
       "end_utc": "2026-06-23 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/homemade-cinnamon-rolls-workshop/885/",
-      "uid": "sv-1304973680739483382",
+      "uid": "sv-1497058243663323015",
       "_source": null
     },
     {
@@ -17318,7 +17208,7 @@
       "end_utc": "2026-08-11 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/tuesday-kids-ride/911/",
-      "uid": "sv-1050195072472328537",
+      "uid": "sv-3380773445304815476",
       "_source": null
     },
     {
@@ -17329,7 +17219,7 @@
       "end_utc": "2026-08-18 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/unearth-a-story%3a-childrens-movie-matinees/930/",
-      "uid": "sv-6338280084350607967",
+      "uid": "sv-1207662186910327819",
       "_source": null
     },
     {
@@ -17340,7 +17230,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-4249265322565277293",
+      "uid": "sv-1695701023919157634",
       "_source": null
     },
     {
@@ -17351,7 +17241,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/skiing-skeeters-water-ski-show/901/",
-      "uid": "sv-7628074510988547421",
+      "uid": "sv-4264609748776522685",
       "_source": null
     },
     {
@@ -17362,7 +17252,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-8560699876648323788",
+      "uid": "sv-2211831519858433561",
       "_source": null
     },
     {
@@ -17373,7 +17263,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/america-250-discussion-group/905/",
-      "uid": "sv-6937450121137741078",
+      "uid": "sv-5928163228907284469",
       "_source": null
     },
     {
@@ -17384,7 +17274,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/commotion%3a-creedence-clearwater-revival-tribute/775/",
-      "uid": "sv-1108280191739923775",
+      "uid": "sv-8132231827009314616",
       "_source": null
     },
     {
@@ -17395,7 +17285,7 @@
       "end_utc": "2026-06-25 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/eco-explorers-eco-discoverers-aquatic-critters/820/",
-      "uid": "sv-2526899768917638807",
+      "uid": "sv-676240820726911410",
       "_source": null
     },
     {
@@ -17406,7 +17296,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/manitowish-waters-pub-crawl/821/",
-      "uid": "sv-2804706806652802780",
+      "uid": "sv-7561085807386627147",
       "_source": null
     },
     {
@@ -17417,7 +17307,7 @@
       "end_utc": "2026-08-06 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/photo-explorers-with-christina-meyers/904/",
-      "uid": "sv-7732578215283903035",
+      "uid": "sv-7980634343561594040",
       "_source": null
     },
     {
@@ -17428,7 +17318,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-7192379801340088743",
+      "uid": "sv-485197187216945045",
       "_source": null
     },
     {
@@ -17439,7 +17329,7 @@
       "end_utc": "2026-06-26 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-binding-workshop/886/",
-      "uid": "sv-8911407362888251652",
+      "uid": "sv-7789279003939572466",
       "_source": null
     },
     {
@@ -17450,7 +17340,7 @@
       "end_utc": "2026-06-26 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/mushsrooms-%26-mysteries%3a-a-fun-adventure-for-kids/822/",
-      "uid": "sv-8707510944088665990",
+      "uid": "sv-2139931997374093758",
       "_source": null
     },
     {
@@ -17461,7 +17351,7 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-beavers/824/",
-      "uid": "sv-1881328462599154063",
+      "uid": "sv-1028101849541315119",
       "_source": null
     },
     {
@@ -17472,7 +17362,7 @@
       "end_utc": "2026-07-04 00:00:00",
       "location": "Manitowish Waters Presbyterian Church",
       "url": "https://manitowishwaters.org/event/fleazaar-donations!/469/",
-      "uid": "sv-1248800046970183872",
+      "uid": "sv-3743785096565228663",
       "_source": null
     },
     {
@@ -17483,7 +17373,7 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "Village Market Manitowish Waters",
       "url": "https://manitowishwaters.org/event/friends-of-the-library-brat-sale/931/",
-      "uid": "sv-7853455157146345773",
+      "uid": "sv-614313645463820171",
       "_source": null
     },
     {
@@ -17494,7 +17384,7 @@
       "end_utc": "2026-06-28 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/ninja-mountain-bike-camp-and-clinics/787/",
-      "uid": "sv-611816782497916731",
+      "uid": "sv-876514548528659379",
       "_source": null
     },
     {
@@ -17505,7 +17395,18 @@
       "end_utc": "2026-06-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/tall-tale-day%3a-a-northwoods-forest-history-experience-program/825/",
-      "uid": "sv-7850444734715939219",
+      "uid": "sv-5416976936518931051",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Music In The Park",
+      "start_utc": "2026-05-24 00:00:00",
+      "end_utc": "2026-09-06 00:00:00",
+      "location": "Koller Park",
+      "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
+      "uid": "sv-347006520818953772",
       "_source": null
     },
     {
@@ -17516,13 +17417,46 @@
       "end_utc": "2026-06-30 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/nldc-prehistoric-mega-creatures-for-kids/887/",
-      "uid": "sv-3099980536668215857",
+      "uid": "sv-405916146760899005",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Wisconsin's Gangster Past: Turning the Badger State into the Crime State with Chad Lewis",
+      "start_utc": "2026-06-30 00:00:00",
+      "end_utc": "2026-06-30 00:00:00",
+      "location": "Frank B. Koller Memorial Library",
+      "url": "https://manitowishwaters.org/event/wisconsins-gangster-past%3a-turning-the-badger-state-into-the-crime-state-with-chad-lewis/797/",
+      "uid": "sv-6750042478423281992",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "StoryWalk ® Trail Program: Huck and Loona by Emily Kilgore",
+      "start_utc": "2026-07-01 00:00:00",
+      "end_utc": "2026-07-01 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-huck-and-loona-by-emily-kilgore/826/",
+      "uid": "sv-4175728121742166278",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Kids Learn to Mountain Bike Clinic",
+      "start_utc": "2026-07-02 00:00:00",
+      "end_utc": "2026-07-02 00:00:00",
+      "location": "WinMan Trails",
+      "url": "https://manitowishwaters.org/event/kids-learn-to-mountain-bike-clinic/788/",
+      "uid": "sv-8670022731199882290",
       "_source": null
     }
   ],
-  "events_preview_count": 789,
+  "events_preview_count": 786,
   "curated_feeds": {
-    "generated_at": "2026-06-21T18:35:43.705314+00:00",
+    "generated_at": "2026-06-22T05:52:49.628792+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
