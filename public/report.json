@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-11T18:19:54.168814+00:00",
+  "generated_at": "2026-07-12T05:06:20.889870+00:00",
   "sources_processed": 8,
-  "total_events": 684,
+  "total_events": 680,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-11&end_date=2026-11-08&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-12&end_date=2026-11-09&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-11&end_date=2026-11-08&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-12&end_date=2026-11-09&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 646,
+      "count": 643,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-11&end_date=2026-11-08&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-12&end_date=2026-11-09&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-11&end_date=2026-11-08&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-12&end_date=2026-11-09&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 16,
+      "count": 15,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -113,94 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "School Walking Hours at NPHS",
-      "start_utc": "2026-07-11 07:00:00",
-      "end_utc": "2026-07-11 12:00:00",
-      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-07-11/",
-      "uid": "10013607",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Pedal in the Pines",
-      "start_utc": "2026-07-11 07:30:00",
-      "end_utc": "2026-07-11 15:00:00",
-      "location": "St. Germain Community Park",
-      "url": "https://eagleriver.org/events/pedal-in-the-pines/",
-      "uid": "22482",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Book Sale at Walter E. Olson Memorial Library",
-      "start_utc": "2026-07-11 09:00:00",
-      "end_utc": "2026-07-11 15:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/family-storytime-stuffed-animal-slumber-party-at-walter-e-olson-memorial-library/2026-07-11/",
-      "uid": "10020859",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Phelps Historical Museum presents Wisconsin Remembers: A Face for Every Name",
-      "start_utc": "2026-07-11 10:00:00",
-      "end_utc": "2026-07-11 15:00:00",
-      "location": "Phelps Historical Museum, 4534 County Rd. E, Phelps",
-      "url": "https://eagleriver.org/events/phelps-historical-museum-presents-wisconsin-remembers-a-face-for-every-name/2026-07-11/",
-      "uid": "10020905",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Bee Day At The Marsh",
-      "start_utc": "2026-07-11 12:00:00",
-      "end_utc": "2026-07-11 17:00:00",
-      "location": "Lake Nokomis Cranberries, Inc., 6041 County Road D, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/bee-day-at-the-marsh/",
-      "uid": "27392",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-07-11 18:00:00",
-      "end_utc": "2026-07-11 21:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-5/2026-07-11/",
-      "uid": "10019836",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Music Line Up at the Marina Bar",
-      "start_utc": "2026-07-11 19:00:00",
-      "end_utc": "2026-07-11 23:00:00",
-      "location": "The Everett &#038; Marina Bar, 1269 Everett Rd., Eagle River",
-      "url": "https://eagleriver.org/events/music-line-up-at-the-marina-bar-2/2026-07-11/",
-      "uid": "10020795",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-07-11 21:00:00",
-      "end_utc": "2026-07-11 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-07-11/",
-      "uid": "10018745",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -7220,6 +7132,61 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-11-09 05:30:00",
+      "end_utc": "2026-11-09 07:30:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs/2026-11-09/",
+      "uid": "10011590",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-11-09 14:00:00",
+      "end_utc": "2026-11-09 16:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-09/",
+      "uid": "10013088",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Ukulele Practice/ Jam Session",
+      "start_utc": "2026-11-09 14:30:00",
+      "end_utc": "2026-11-09 16:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/ukulele-practice-jam-session/2026-11-09/",
+      "uid": "10009731",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Fact &#038; Fiction Book Group",
+      "start_utc": "2026-11-09 17:30:00",
+      "end_utc": "2026-11-09 19:30:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/fact-fiction-book-group-2/2026-11-09/",
+      "uid": "10010834",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Hatha Yoga Monday Nights at The Warehouse Community Art Center",
+      "start_utc": "2026-11-09 18:00:00",
+      "end_utc": "2026-11-09 19:30:00",
+      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/hatha-yoga-monday-nights-at-the-warehouse-community-art-center/2026-11-09/",
+      "uid": "10016496",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -7460,17 +7427,6 @@
       "url": "https://st-germain.com/events/page/6/",
       "uid": null,
       "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Plum Ski-ters Water Ski Show",
-      "start_utc": "2026-07-11 18:00:00",
-      "end_utc": "2026-10-03 21:00:00",
-      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
-      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-11/",
-      "uid": "10000104",
-      "_source": null
     },
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
@@ -7642,94 +7598,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "School Walking Hours at NPHS",
-      "start_utc": "2026-07-11 07:00:00",
-      "end_utc": "2026-07-11 12:00:00",
-      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-07-11/",
-      "uid": "10013607",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Pedal in the Pines",
-      "start_utc": "2026-07-11 07:30:00",
-      "end_utc": "2026-07-11 15:00:00",
-      "location": "St. Germain Community Park",
-      "url": "https://eagleriver.org/events/pedal-in-the-pines/",
-      "uid": "22482",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Book Sale at Walter E. Olson Memorial Library",
-      "start_utc": "2026-07-11 09:00:00",
-      "end_utc": "2026-07-11 15:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/family-storytime-stuffed-animal-slumber-party-at-walter-e-olson-memorial-library/2026-07-11/",
-      "uid": "10020859",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Phelps Historical Museum presents Wisconsin Remembers: A Face for Every Name",
-      "start_utc": "2026-07-11 10:00:00",
-      "end_utc": "2026-07-11 15:00:00",
-      "location": "Phelps Historical Museum, 4534 County Rd. E, Phelps",
-      "url": "https://eagleriver.org/events/phelps-historical-museum-presents-wisconsin-remembers-a-face-for-every-name/2026-07-11/",
-      "uid": "10020905",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Bee Day At The Marsh",
-      "start_utc": "2026-07-11 12:00:00",
-      "end_utc": "2026-07-11 17:00:00",
-      "location": "Lake Nokomis Cranberries, Inc., 6041 County Road D, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/bee-day-at-the-marsh/",
-      "uid": "27392",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-07-11 18:00:00",
-      "end_utc": "2026-07-11 21:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-5/2026-07-11/",
-      "uid": "10019836",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Music Line Up at the Marina Bar",
-      "start_utc": "2026-07-11 19:00:00",
-      "end_utc": "2026-07-11 23:00:00",
-      "location": "The Everett &#038; Marina Bar, 1269 Everett Rd., Eagle River",
-      "url": "https://eagleriver.org/events/music-line-up-at-the-marina-bar-2/2026-07-11/",
-      "uid": "10020795",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-07-11 21:00:00",
-      "end_utc": "2026-07-11 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-07-11/",
-      "uid": "10018745",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Eagle River Farmers Market and Artisans Market",
       "start_utc": "2026-07-12 08:30:00",
       "end_utc": "2026-07-12 13:00:00",
@@ -14746,6 +14614,61 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-11-09 05:30:00",
+      "end_utc": "2026-11-09 07:30:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs/2026-11-09/",
+      "uid": "10011590",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-11-09 14:00:00",
+      "end_utc": "2026-11-09 16:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-09/",
+      "uid": "10013088",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Ukulele Practice/ Jam Session",
+      "start_utc": "2026-11-09 14:30:00",
+      "end_utc": "2026-11-09 16:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/ukulele-practice-jam-session/2026-11-09/",
+      "uid": "10009731",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Fact &#038; Fiction Book Group",
+      "start_utc": "2026-11-09 17:30:00",
+      "end_utc": "2026-11-09 19:30:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/fact-fiction-book-group-2/2026-11-09/",
+      "uid": "10010834",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Hatha Yoga Monday Nights at The Warehouse Community Art Center",
+      "start_utc": "2026-11-09 18:00:00",
+      "end_utc": "2026-11-09 19:30:00",
+      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/hatha-yoga-monday-nights-at-the-warehouse-community-art-center/2026-11-09/",
+      "uid": "10016496",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -14991,17 +14914,6 @@
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Plum Ski-ters Water Ski Show",
-      "start_utc": "2026-07-11 18:00:00",
-      "end_utc": "2026-10-03 21:00:00",
-      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
-      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-07-11/",
-      "uid": "10000104",
-      "_source": null
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Plum Ski-ters Water Ski Show",
       "start_utc": "2026-07-15 18:00:00",
       "end_utc": "2026-07-15 21:00:00",
       "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
@@ -15164,9 +15076,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 684,
+  "events_preview_count": 680,
   "curated_feeds": {
-    "generated_at": "2026-07-11T18:19:54.206758+00:00",
+    "generated_at": "2026-07-12T05:06:20.938572+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
