@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-16T18:27:26.106411+00:00",
+  "generated_at": "2026-07-17T05:04:56.595171+00:00",
   "sources_processed": 8,
-  "total_events": 703,
+  "total_events": 714,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-16&end_date=2026-11-13&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-17&end_date=2026-11-14&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-16&end_date=2026-11-13&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-07-17&end_date=2026-11-14&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 626,
+      "count": 634,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-16&end_date=2026-11-13&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-17&end_date=2026-11-14&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-16&end_date=2026-11-13&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-07-17&end_date=2026-11-14&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -91,7 +91,7 @@
       "type": "simpleview_html",
       "url": "https://manitowishwaters.org/event/rss/",
       "ok": true,
-      "count": 24,
+      "count": 26,
       "error": null,
       "slug": "manitowish-waters-chamber-tec",
       "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 14,
+      "count": 15,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -113,149 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Trees For Tomorrow &#8211;  SEEK (Science, Earth, Exploration for Kids) Day Camp",
-      "start_utc": "2026-07-16 08:00:00",
-      "end_utc": "2026-07-16 16:00:00",
-      "location": "Trees For Tomorrow, 519 East Sheridan Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/trees-for-tomorrow-jr-seek-science-earth-exploration-for-kids-day-camp-3/2026-07-16/",
-      "uid": "10020034",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Aunt Grace&#8217;s Sewing Circle",
-      "start_utc": "2026-07-16 09:00:00",
-      "end_utc": "2026-07-16 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2026-07-16/",
-      "uid": "10010095",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "All Ages Story Time with Walter E. Olson Memorial Library at Pirates Hideway",
-      "start_utc": "2026-07-16 10:00:00",
-      "end_utc": "2026-07-16 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/hygge-hangout-at-walter-e-olson-memorial-library/2026-07-16/",
-      "uid": "10020856",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dementia Care Giver Support Group",
-      "start_utc": "2026-07-16 10:30:00",
-      "end_utc": "2026-07-16 11:30:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/dementia-care-giver-support-group/2026-07-16/",
-      "uid": "10014559",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
-      "start_utc": "2026-07-16 12:30:00",
-      "end_utc": "2026-07-16 15:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2026-07-16/",
-      "uid": "10014355",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Genealogical Society",
-      "start_utc": "2026-07-16 14:00:00",
-      "end_utc": "2026-07-16 16:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/eagle-river-genealogical-society/2026-07-16/",
-      "uid": "10009873",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
-      "start_utc": "2026-07-16 17:00:00",
-      "end_utc": "2026-07-16 21:00:00",
-      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
-      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club-3/2026-07-16/",
-      "uid": "10020729",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Tennis: Thursday Round Robin",
-      "start_utc": "2026-07-16 17:30:00",
-      "end_utc": "2026-07-16 20:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-round-robin-2/2026-07-16/",
-      "uid": "10019608",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Square Dance Lessons At Kalmar Community Center!",
-      "start_utc": "2026-07-16 18:00:00",
-      "end_utc": "2026-07-16 19:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/square-dance-lessons-at-kalmar-community-center/2026-07-16/",
-      "uid": "10020291",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-07-16 18:00:00",
-      "end_utc": "2026-07-16 21:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-4-2-3/2026-07-16/",
-      "uid": "10019792",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "LOLA Live- Summer music",
-      "start_utc": "2026-07-16 18:00:00",
-      "end_utc": "2026-07-16 20:00:00",
-      "location": "Snowflake Ice Arena, 6492 Town Hall Rd, Land O' Lakes",
-      "url": "https://eagleriver.org/events/car-park-music-series-2-2/2026-07-16/",
-      "uid": "10020055",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Brew Station Thursday Game Night",
-      "start_utc": "2026-07-16 19:00:00",
-      "end_utc": "2026-07-16 21:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3/2026-07-16/",
-      "uid": "10015987",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Music Line Up at the Marina Bar",
-      "start_utc": "2026-07-16 19:00:00",
-      "end_utc": "2026-07-16 23:00:00",
-      "location": "The Everett &#038; Marina Bar, 1269 Everett Rd., Eagle River",
-      "url": "https://eagleriver.org/events/music-line-up-at-the-marina-bar/2026-07-16/",
-      "uid": "10020759",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -347,6 +204,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Fest",
+      "start_utc": "2026-07-18 09:00:00",
+      "end_utc": "2026-07-18 14:30:00",
+      "location": "Seasons of Life Garden, 8951 Woodruff Rd, Woodruff, WI",
+      "url": "https://eagleriver.org/events/garden-fest/",
+      "uid": "27732",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Burger Bash",
       "start_utc": "2026-07-18 10:00:00",
       "end_utc": "2026-07-18 16:00:00",
@@ -364,6 +232,17 @@
       "location": "Northland Pines Auditorium, 1800 Pleasure Island Rd, Eagle River",
       "url": "https://eagleriver.org/events/quilt-show-and-sale-cranberry-country-quilters/",
       "uid": "21436",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-07-18 10:00:00",
+      "end_utc": "2026-07-18 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-07-18/",
+      "uid": "10018990",
       "_source": null
     },
     {
@@ -1095,6 +974,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-07-25 10:00:00",
+      "end_utc": "2026-07-25 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-07-25/",
+      "uid": "10020918",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "FREE Kids Fishing Tip Programs-by Headwaters Chapter  Muskies, Inc.",
       "start_utc": "2026-07-25 13:00:00",
       "end_utc": "2026-07-25 14:00:00",
@@ -1612,6 +1502,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Habitat for Humanity Groundbreaking Ceremony",
+      "start_utc": "2026-07-31 11:00:00",
+      "end_utc": "2026-07-31 14:00:00",
+      "location": "614 Acacia Ln, 614 Acacia Ln, Rhinelander, WI",
+      "url": "https://eagleriver.org/events/habitat-for-humanity-groundbreaking-ceremony/",
+      "uid": "27722",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Happy Hour at The Brew Station",
       "start_utc": "2026-07-31 16:00:00",
       "end_utc": "2026-07-31 18:00:00",
@@ -1684,6 +1585,17 @@
       "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
       "url": "https://eagleriver.org/events/free-mending-day-at-walter-e-olson-memorial-library/2026-08-01/",
       "uid": "10008929",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-01 10:00:00",
+      "end_utc": "2026-08-01 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-01/",
+      "uid": "10020919",
       "_source": null
     },
     {
@@ -2294,6 +2206,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-08 10:00:00",
+      "end_utc": "2026-08-08 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-08/",
+      "uid": "10020920",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Free Live Music at Pirates Hideaway",
       "start_utc": "2026-08-08 18:00:00",
       "end_utc": "2026-08-08 21:00:00",
@@ -2839,6 +2762,17 @@
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
       "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-08-15/",
       "uid": "10013612",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-15 10:00:00",
+      "end_utc": "2026-08-15 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-15/",
+      "uid": "10020921",
       "_source": null
     },
     {
@@ -3405,6 +3339,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-22 10:00:00",
+      "end_utc": "2026-08-22 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-22/",
+      "uid": "10020922",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Free Live Music at Pirates Hideaway",
       "start_utc": "2026-08-22 18:00:00",
       "end_utc": "2026-08-22 21:00:00",
@@ -3862,6 +3807,17 @@
       "location": "Downtown Eagle River, 201 E Wall St, Eagle River, WI",
       "url": "https://eagleriver.org/events/eagle-river-car-and-truck-show/",
       "uid": "16443",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-29 10:00:00",
+      "end_utc": "2026-08-29 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-29/",
+      "uid": "10020923",
       "_source": null
     },
     {
@@ -4329,6 +4285,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-05 10:00:00",
+      "end_utc": "2026-09-05 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-05/",
+      "uid": "10020924",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Sno-Eagle Party and Cash Raffle Drawing",
       "start_utc": "2026-09-05 11:00:00",
       "end_utc": "2026-09-05 15:00:00",
@@ -4736,6 +4703,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-12 10:00:00",
+      "end_utc": "2026-09-12 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-12/",
+      "uid": "10020925",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Summer Events On The Farm-At Lake Nokomis",
       "start_utc": "2026-09-12 11:00:00",
       "end_utc": "2026-09-12 15:00:00",
@@ -5088,6 +5066,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-19 10:00:00",
+      "end_utc": "2026-09-19 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-19/",
+      "uid": "10020926",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Live Music Weekends at Sweetwater Spirits and Resort",
       "start_utc": "2026-09-19 21:00:00",
       "end_utc": "2026-09-19 23:00:00",
@@ -5418,6 +5407,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-26 10:00:00",
+      "end_utc": "2026-09-26 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-26/",
+      "uid": "10020927",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Live Music Weekends at Sweetwater Spirits and Resort",
       "start_utc": "2026-09-26 21:00:00",
       "end_utc": "2026-09-26 23:00:00",
@@ -5726,6 +5726,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-03 10:00:00",
+      "end_utc": "2026-10-03 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-03/",
+      "uid": "10020928",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Bogside Bash at The Brew Station",
       "start_utc": "2026-10-03 12:00:00",
       "end_utc": "2026-10-03 21:00:00",
@@ -5979,6 +5990,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-10 10:00:00",
+      "end_utc": "2026-10-10 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-10/",
+      "uid": "10020929",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Ikons of Rock- Presented by: Headwaters Council for the Performing Arts",
       "start_utc": "2026-10-10 18:30:00",
       "end_utc": "2026-10-10 22:00:00",
@@ -6221,6 +6243,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-17 10:00:00",
+      "end_utc": "2026-10-17 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-17/",
+      "uid": "10020930",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Trees for Tomorrow Outdoor Adventure At Tara Lila-Orienteering",
       "start_utc": "2026-10-17 12:00:00",
       "end_utc": "2026-10-17 15:00:00",
@@ -6419,6 +6452,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-24 10:00:00",
+      "end_utc": "2026-10-24 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-24/",
+      "uid": "10020931",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Harry Houdini Tribute Performance",
       "start_utc": "2026-10-24 19:00:00",
       "end_utc": "2026-10-24 22:00:00",
@@ -6612,6 +6656,17 @@
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
       "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-31/",
       "uid": "10013623",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-31 10:00:00",
+      "end_utc": "2026-10-31 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-31/",
+      "uid": "10020932",
       "_source": null
     },
     {
@@ -7000,6 +7055,39 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-11-14 07:00:00",
+      "end_utc": "2026-11-14 12:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-14/",
+      "uid": "10013625",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Old Fashioneds Up North",
+      "start_utc": "2026-11-14 18:00:00",
+      "end_utc": "2026-11-14 21:00:00",
+      "location": "Eagle Waters Resort, 3958 Eagle Waters Rd, Eagle River",
+      "url": "https://eagleriver.org/events/old-fashioneds-up-north/",
+      "uid": "17118",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-11-14 21:00:00",
+      "end_utc": "2026-11-14 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-11-14/",
+      "uid": "10018763",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -7249,7 +7337,7 @@
       "end_utc": "2026-07-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/everything-fossils/40034/",
-      "uid": "sv-1244297321424748579",
+      "uid": "sv-1076546249734216646",
       "_source": null
     },
     {
@@ -7260,7 +7348,7 @@
       "end_utc": "2026-08-20 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40132/",
-      "uid": "sv-481824106836201956",
+      "uid": "sv-8585415647962529499",
       "_source": null
     },
     {
@@ -7271,7 +7359,7 @@
       "end_utc": "2026-08-20 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass/40128/",
-      "uid": "sv-7259352234498555867",
+      "uid": "sv-5306747887751211605",
       "_source": null
     },
     {
@@ -7282,7 +7370,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-3850215013723565306",
+      "uid": "sv-6050558143840881126",
       "_source": null
     },
     {
@@ -7293,7 +7381,7 @@
       "end_utc": "2026-07-17 00:00:00",
       "location": "Lakeland Union High School",
       "url": "https://www.minocqua.org/event/57th-annual-gem-%26-mineral-show/40026/",
-      "uid": "sv-7652861881510896502",
+      "uid": "sv-356113143246663517",
       "_source": null
     },
     {
@@ -7304,7 +7392,7 @@
       "end_utc": "2026-07-24 00:00:00",
       "location": "Torpy Park",
       "url": "https://www.minocqua.org/event/tai-chi-at-torpy-park/40153/",
-      "uid": "sv-6701429034262687232",
+      "uid": "sv-9019432043138017940",
       "_source": null
     },
     {
@@ -7315,7 +7403,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "Lakeland Union High School",
       "url": "https://www.minocqua.org/event/57th-annual-gem-%26-mineral-show/40027/",
-      "uid": "sv-5097250178980030790",
+      "uid": "sv-6435308467113137262",
       "_source": null
     },
     {
@@ -7326,7 +7414,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "Aspirus Seasons of Life Hospice Garden",
       "url": "https://www.minocqua.org/event/gardenfest/40142/",
-      "uid": "sv-6835550089241272685",
+      "uid": "sv-5028420611871786301",
       "_source": null
     },
     {
@@ -7337,7 +7425,7 @@
       "end_utc": "2026-08-19 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40133/",
-      "uid": "sv-3529554783055332287",
+      "uid": "sv-8199358305340383147",
       "_source": null
     },
     {
@@ -7348,7 +7436,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class-saturdays/40130/",
-      "uid": "sv-2799173024946076004",
+      "uid": "sv-5228626130314640346",
       "_source": null
     },
     {
@@ -7359,7 +7447,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "Rollie & Helen's Musky Shop",
       "url": "https://www.minocqua.org/event/musky-shop-summer-bash/40141/",
-      "uid": "sv-3852252624212776044",
+      "uid": "sv-4398661766294975768",
       "_source": null
     },
     {
@@ -7370,7 +7458,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-999350639452093343",
+      "uid": "sv-2105600576686491182",
       "_source": null
     },
     {
@@ -7381,7 +7469,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-6222440102654872878",
+      "uid": "sv-4035660100490565167",
       "_source": null
     },
     {
@@ -7392,7 +7480,7 @@
       "end_utc": "2026-07-23 00:00:00",
       "location": "Ascension Lutheran Church in Minocqua",
       "url": "https://www.minocqua.org/event/day-camp-(aka-vacation-bible-school)/40150/",
-      "uid": "sv-5532233181607420771",
+      "uid": "sv-7622820750109635218",
       "_source": null
     },
     {
@@ -7403,7 +7491,7 @@
       "end_utc": "2026-08-16 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class-sundays/40131/",
-      "uid": "sv-2954214181205679540",
+      "uid": "sv-2970850781897009734",
       "_source": null
     },
     {
@@ -7414,7 +7502,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-2739940029078352948",
+      "uid": "sv-2914569621466741524",
       "_source": null
     },
     {
@@ -7425,73 +7513,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-3678343555199681835",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Author Event: Victoria Houston",
-      "start_utc": "2026-07-16 00:00:00",
-      "end_utc": "2026-07-16 00:00:00",
-      "location": "Frank B. Koller Memorial Library",
-      "url": "https://manitowishwaters.org/event/author-event%3a-victoria-houston/907/",
-      "uid": "sv-3013950996457262754",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Eco Discoverers/Eco Explorers: Wild Connections",
-      "start_utc": "2026-07-16 00:00:00",
-      "end_utc": "2026-07-16 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/eco-discoverers-eco-explorers%3a-wild-connections/839/",
-      "uid": "sv-7511488205975975419",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Lions Club Pork Chop Dinner",
-      "start_utc": "2026-06-18 00:00:00",
-      "end_utc": "2026-07-16 00:00:00",
-      "location": "Manitowish Waters Lions Pavilion",
-      "url": "https://manitowishwaters.org/event/lions-club-pork-chop-dinner/918/",
-      "uid": "sv-3773530390601585036",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Photo Explorers with Christina Meyers",
-      "start_utc": "2026-06-25 00:00:00",
-      "end_utc": "2026-08-06 00:00:00",
-      "location": "Frank B. Koller Memorial Library",
-      "url": "https://manitowishwaters.org/event/photo-explorers-with-christina-meyers/904/",
-      "uid": "sv-539310768822121446",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Tech Thursdays",
-      "start_utc": "2026-04-30 00:00:00",
-      "end_utc": null,
-      "location": "Winchester Public Library",
-      "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-8713726247981973673",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Youth Actor's Summer Workshop/Performance",
-      "start_utc": "2026-07-06 00:00:00",
-      "end_utc": "2026-07-17 00:00:00",
-      "location": "Campanile Center for the Arts",
-      "url": "https://manitowishwaters.org/event/youth-actors-summer-workshop-performance/800/",
-      "uid": "sv-1301741302047277056",
+      "uid": "sv-1406356247853364086",
       "_source": null
     },
     {
@@ -7502,7 +7524,7 @@
       "end_utc": "2026-08-21 00:00:00",
       "location": "Little Bohemia Lodge",
       "url": "https://manitowishwaters.org/event/historic-dillinger-pontoon-tour/808/",
-      "uid": "sv-4436618987382197873",
+      "uid": "sv-2558158892081777232",
       "_source": null
     },
     {
@@ -7513,7 +7535,7 @@
       "end_utc": "2026-07-17 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/night-market/744/",
-      "uid": "sv-6355647355281756549",
+      "uid": "sv-7367943239296857031",
       "_source": null
     },
     {
@@ -7524,7 +7546,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/connect-with-tree-spirits-a-deep-dive-inward-and-outward/844/",
-      "uid": "sv-5289075405223249918",
+      "uid": "sv-528837695594913295",
       "_source": null
     },
     {
@@ -7535,7 +7557,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/creating-your-own-log-stamp%3a-a-northwoods-forest-history-experience-program/843/",
-      "uid": "sv-5512410639277565973",
+      "uid": "sv-2297541441113264417",
       "_source": null
     },
     {
@@ -7546,7 +7568,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-exploring-flowers/842/",
-      "uid": "sv-3085014031643049636",
+      "uid": "sv-2989231114069284850",
       "_source": null
     },
     {
@@ -7557,7 +7579,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/skiing-skeeters-water-ski-show/901/",
-      "uid": "sv-8523197713508678126",
+      "uid": "sv-9222548429153061773",
       "_source": null
     },
     {
@@ -7568,7 +7590,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-8128745002457736046",
+      "uid": "sv-325207959146398718",
       "_source": null
     },
     {
@@ -7579,7 +7601,7 @@
       "end_utc": "2026-08-11 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/tuesday-kids-ride/911/",
-      "uid": "sv-428157766271148707",
+      "uid": "sv-6612062345105759399",
       "_source": null
     },
     {
@@ -7590,7 +7612,7 @@
       "end_utc": "2026-08-18 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/unearth-a-story%3a-childrens-movie-matinees/930/",
-      "uid": "sv-4863538398133902055",
+      "uid": "sv-7432353920098569003",
       "_source": null
     },
     {
@@ -7601,7 +7623,7 @@
       "end_utc": "2026-07-22 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-club%3a-becoming-bibi-kay-by-kay-oursler/927/",
-      "uid": "sv-1990412109040806789",
+      "uid": "sv-4949955224149014059",
       "_source": null
     },
     {
@@ -7612,7 +7634,7 @@
       "end_utc": "2026-07-22 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/john-bates-presents%3a-birds-of-northern-lakes-rivers-and-wetlands/926/",
-      "uid": "sv-7724085501491987351",
+      "uid": "sv-2845621290799860615",
       "_source": null
     },
     {
@@ -7623,7 +7645,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-78663217111752785",
+      "uid": "sv-7038663043163767343",
       "_source": null
     },
     {
@@ -7634,7 +7656,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-5151717664550976879",
+      "uid": "sv-4353524964697985274",
       "_source": null
     },
     {
@@ -7645,7 +7667,7 @@
       "end_utc": "2026-07-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/turtle-flambeau-flowage-historic-%26-natural-pizza-pontoon-tour/845/",
-      "uid": "sv-1856128650384509377",
+      "uid": "sv-1844345332706748287",
       "_source": null
     },
     {
@@ -7656,7 +7678,7 @@
       "end_utc": "2026-07-23 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/alive-again%3a-tribute-to-chicago/776/",
-      "uid": "sv-1549262308600519721",
+      "uid": "sv-4641322176666805652",
       "_source": null
     },
     {
@@ -7667,7 +7689,18 @@
       "end_utc": "2026-07-23 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/eco-discoverers-eco-adventurers%3a-life-in-the-pond/846/",
-      "uid": "sv-1118497599983306162",
+      "uid": "sv-5962756652864391415",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Upcycled Art Workshop",
+      "start_utc": "2026-07-23 00:00:00",
+      "end_utc": "2026-07-23 00:00:00",
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/upcycled-art-workshop/933/",
+      "uid": "sv-7938158355743209499",
       "_source": null
     },
     {
@@ -7678,7 +7711,7 @@
       "end_utc": "2026-07-24 00:00:00",
       "location": "Rest Lake Boat Launch",
       "url": "https://manitowishwaters.org/event/exploring-rest-lakes-amazing-history-pontoon-tour-and-shore-lunch/847/",
-      "uid": "sv-9060720945936285453",
+      "uid": "sv-386795354117468233",
       "_source": null
     },
     {
@@ -7689,7 +7722,84 @@
       "end_utc": "2026-10-11 00:00:00",
       "location": "Self Guided Tour",
       "url": "https://manitowishwaters.org/event/northwoods-art-tour/343/",
-      "uid": "sv-2926862741910734664",
+      "uid": "sv-4439723243919383018",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Animal Spotlight Hour: Turtles",
+      "start_utc": "2026-07-25 00:00:00",
+      "end_utc": "2026-07-25 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-turtles/849/",
+      "uid": "sv-2855859681650193028",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Emerging Professional Program Presentations and Volunteer Appreciation",
+      "start_utc": "2026-07-28 00:00:00",
+      "end_utc": "2026-07-28 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/emerging-professional-program-presentations-and-volunteer-appreciation/850/",
+      "uid": "sv-4265771939925924793",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Full Moon Paddle on Statehouse",
+      "start_utc": "2026-07-28 00:00:00",
+      "end_utc": "2026-07-28 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/full-moon-paddle-on-statehouse/851/",
+      "uid": "sv-9195244107156893868",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "North Lakeland Discovery Center Presents: Carnivorous Plants",
+      "start_utc": "2026-07-28 00:00:00",
+      "end_utc": "2026-07-28 00:00:00",
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/north-lakeland-discovery-center-presents%3a-carnivorous-plants/934/",
+      "uid": "sv-2336801089249503985",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "America@250 Discussion Group",
+      "start_utc": "2026-07-29 00:00:00",
+      "end_utc": "2026-07-29 00:00:00",
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/america%40250-discussion-group/935/",
+      "uid": "sv-3218814205609234517",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "StoryWalk: Weedy Garden by Margaret Renkl",
+      "start_utc": "2026-07-29 00:00:00",
+      "end_utc": "2026-07-29 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/storywalk%3a-weedy-garden-by-margaret-renkl/852/",
+      "uid": "sv-271128009275299592",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Eco Discoverers/Eco Explorers: Beaver Builders",
+      "start_utc": "2026-07-30 00:00:00",
+      "end_utc": "2026-07-30 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/eco-discoverers-eco-explorers%3a-beaver-builders/855/",
+      "uid": "sv-3055625061810298283",
       "_source": null
     },
     {
@@ -7822,6 +7932,17 @@
       "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
       "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-19/",
       "uid": "10000097",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-22 18:00:00",
+      "end_utc": "2026-11-14 20:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-08-22/",
+      "uid": "10000110",
       "_source": null
     },
     {
@@ -7851,149 +7972,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Trees For Tomorrow &#8211;  SEEK (Science, Earth, Exploration for Kids) Day Camp",
-      "start_utc": "2026-07-16 08:00:00",
-      "end_utc": "2026-07-16 16:00:00",
-      "location": "Trees For Tomorrow, 519 East Sheridan Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/trees-for-tomorrow-jr-seek-science-earth-exploration-for-kids-day-camp-3/2026-07-16/",
-      "uid": "10020034",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Aunt Grace&#8217;s Sewing Circle",
-      "start_utc": "2026-07-16 09:00:00",
-      "end_utc": "2026-07-16 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2026-07-16/",
-      "uid": "10010095",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "All Ages Story Time with Walter E. Olson Memorial Library at Pirates Hideway",
-      "start_utc": "2026-07-16 10:00:00",
-      "end_utc": "2026-07-16 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/hygge-hangout-at-walter-e-olson-memorial-library/2026-07-16/",
-      "uid": "10020856",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dementia Care Giver Support Group",
-      "start_utc": "2026-07-16 10:30:00",
-      "end_utc": "2026-07-16 11:30:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/dementia-care-giver-support-group/2026-07-16/",
-      "uid": "10014559",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
-      "start_utc": "2026-07-16 12:30:00",
-      "end_utc": "2026-07-16 15:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2026-07-16/",
-      "uid": "10014355",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Genealogical Society",
-      "start_utc": "2026-07-16 14:00:00",
-      "end_utc": "2026-07-16 16:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/eagle-river-genealogical-society/2026-07-16/",
-      "uid": "10009873",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
-      "start_utc": "2026-07-16 17:00:00",
-      "end_utc": "2026-07-16 21:00:00",
-      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
-      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club-3/2026-07-16/",
-      "uid": "10020729",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Tennis: Thursday Round Robin",
-      "start_utc": "2026-07-16 17:30:00",
-      "end_utc": "2026-07-16 20:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-round-robin-2/2026-07-16/",
-      "uid": "10019608",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Square Dance Lessons At Kalmar Community Center!",
-      "start_utc": "2026-07-16 18:00:00",
-      "end_utc": "2026-07-16 19:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/square-dance-lessons-at-kalmar-community-center/2026-07-16/",
-      "uid": "10020291",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-07-16 18:00:00",
-      "end_utc": "2026-07-16 21:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-4-2-3/2026-07-16/",
-      "uid": "10019792",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "LOLA Live- Summer music",
-      "start_utc": "2026-07-16 18:00:00",
-      "end_utc": "2026-07-16 20:00:00",
-      "location": "Snowflake Ice Arena, 6492 Town Hall Rd, Land O' Lakes",
-      "url": "https://eagleriver.org/events/car-park-music-series-2-2/2026-07-16/",
-      "uid": "10020055",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Brew Station Thursday Game Night",
-      "start_utc": "2026-07-16 19:00:00",
-      "end_utc": "2026-07-16 21:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3/2026-07-16/",
-      "uid": "10015987",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Music Line Up at the Marina Bar",
-      "start_utc": "2026-07-16 19:00:00",
-      "end_utc": "2026-07-16 23:00:00",
-      "location": "The Everett &#038; Marina Bar, 1269 Everett Rd., Eagle River",
-      "url": "https://eagleriver.org/events/music-line-up-at-the-marina-bar/2026-07-16/",
-      "uid": "10020759",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "GERTA Friday Woman&#8217;s Play",
       "start_utc": "2026-07-17 09:30:00",
       "end_utc": "2026-07-17 11:00:00",
@@ -8082,6 +8060,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Fest",
+      "start_utc": "2026-07-18 09:00:00",
+      "end_utc": "2026-07-18 14:30:00",
+      "location": "Seasons of Life Garden, 8951 Woodruff Rd, Woodruff, WI",
+      "url": "https://eagleriver.org/events/garden-fest/",
+      "uid": "27732",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Burger Bash",
       "start_utc": "2026-07-18 10:00:00",
       "end_utc": "2026-07-18 16:00:00",
@@ -8099,6 +8088,17 @@
       "location": "Northland Pines Auditorium, 1800 Pleasure Island Rd, Eagle River",
       "url": "https://eagleriver.org/events/quilt-show-and-sale-cranberry-country-quilters/",
       "uid": "21436",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-07-18 10:00:00",
+      "end_utc": "2026-07-18 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-07-18/",
+      "uid": "10018990",
       "_source": null
     },
     {
@@ -8830,6 +8830,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-07-25 10:00:00",
+      "end_utc": "2026-07-25 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-07-25/",
+      "uid": "10020918",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "FREE Kids Fishing Tip Programs-by Headwaters Chapter  Muskies, Inc.",
       "start_utc": "2026-07-25 13:00:00",
       "end_utc": "2026-07-25 14:00:00",
@@ -9347,6 +9358,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Habitat for Humanity Groundbreaking Ceremony",
+      "start_utc": "2026-07-31 11:00:00",
+      "end_utc": "2026-07-31 14:00:00",
+      "location": "614 Acacia Ln, 614 Acacia Ln, Rhinelander, WI",
+      "url": "https://eagleriver.org/events/habitat-for-humanity-groundbreaking-ceremony/",
+      "uid": "27722",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Happy Hour at The Brew Station",
       "start_utc": "2026-07-31 16:00:00",
       "end_utc": "2026-07-31 18:00:00",
@@ -9419,6 +9441,17 @@
       "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
       "url": "https://eagleriver.org/events/free-mending-day-at-walter-e-olson-memorial-library/2026-08-01/",
       "uid": "10008929",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-01 10:00:00",
+      "end_utc": "2026-08-01 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-01/",
+      "uid": "10020919",
       "_source": null
     },
     {
@@ -10029,6 +10062,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-08 10:00:00",
+      "end_utc": "2026-08-08 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-08/",
+      "uid": "10020920",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Free Live Music at Pirates Hideaway",
       "start_utc": "2026-08-08 18:00:00",
       "end_utc": "2026-08-08 21:00:00",
@@ -10574,6 +10618,17 @@
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
       "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-08-15/",
       "uid": "10013612",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-15 10:00:00",
+      "end_utc": "2026-08-15 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-15/",
+      "uid": "10020921",
       "_source": null
     },
     {
@@ -11140,6 +11195,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-22 10:00:00",
+      "end_utc": "2026-08-22 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-22/",
+      "uid": "10020922",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Free Live Music at Pirates Hideaway",
       "start_utc": "2026-08-22 18:00:00",
       "end_utc": "2026-08-22 21:00:00",
@@ -11597,6 +11663,17 @@
       "location": "Downtown Eagle River, 201 E Wall St, Eagle River, WI",
       "url": "https://eagleriver.org/events/eagle-river-car-and-truck-show/",
       "uid": "16443",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-08-29 10:00:00",
+      "end_utc": "2026-08-29 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-29/",
+      "uid": "10020923",
       "_source": null
     },
     {
@@ -12064,6 +12141,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-05 10:00:00",
+      "end_utc": "2026-09-05 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-05/",
+      "uid": "10020924",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Sno-Eagle Party and Cash Raffle Drawing",
       "start_utc": "2026-09-05 11:00:00",
       "end_utc": "2026-09-05 15:00:00",
@@ -12471,6 +12559,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-12 10:00:00",
+      "end_utc": "2026-09-12 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-12/",
+      "uid": "10020925",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Summer Events On The Farm-At Lake Nokomis",
       "start_utc": "2026-09-12 11:00:00",
       "end_utc": "2026-09-12 15:00:00",
@@ -12823,6 +12922,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-19 10:00:00",
+      "end_utc": "2026-09-19 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-19/",
+      "uid": "10020926",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Live Music Weekends at Sweetwater Spirits and Resort",
       "start_utc": "2026-09-19 21:00:00",
       "end_utc": "2026-09-19 23:00:00",
@@ -13153,6 +13263,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-09-26 10:00:00",
+      "end_utc": "2026-09-26 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-09-26/",
+      "uid": "10020927",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Live Music Weekends at Sweetwater Spirits and Resort",
       "start_utc": "2026-09-26 21:00:00",
       "end_utc": "2026-09-26 23:00:00",
@@ -13461,6 +13582,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-03 10:00:00",
+      "end_utc": "2026-10-03 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-03/",
+      "uid": "10020928",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Bogside Bash at The Brew Station",
       "start_utc": "2026-10-03 12:00:00",
       "end_utc": "2026-10-03 21:00:00",
@@ -13714,6 +13846,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-10 10:00:00",
+      "end_utc": "2026-10-10 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-10/",
+      "uid": "10020929",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Ikons of Rock- Presented by: Headwaters Council for the Performing Arts",
       "start_utc": "2026-10-10 18:30:00",
       "end_utc": "2026-10-10 22:00:00",
@@ -13956,6 +14099,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-17 10:00:00",
+      "end_utc": "2026-10-17 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-17/",
+      "uid": "10020930",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Trees for Tomorrow Outdoor Adventure At Tara Lila-Orienteering",
       "start_utc": "2026-10-17 12:00:00",
       "end_utc": "2026-10-17 15:00:00",
@@ -14154,6 +14308,17 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-24 10:00:00",
+      "end_utc": "2026-10-24 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-24/",
+      "uid": "10020931",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
       "title": "Harry Houdini Tribute Performance",
       "start_utc": "2026-10-24 19:00:00",
       "end_utc": "2026-10-24 22:00:00",
@@ -14347,6 +14512,17 @@
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
       "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-31/",
       "uid": "10013623",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Garden Railroad on Display at St. Mary of the Snows",
+      "start_utc": "2026-10-31 10:00:00",
+      "end_utc": "2026-10-31 12:00:00",
+      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
+      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-10-31/",
+      "uid": "10020932",
       "_source": null
     },
     {
@@ -14735,6 +14911,39 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-11-14 07:00:00",
+      "end_utc": "2026-11-14 12:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-14/",
+      "uid": "10013625",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Old Fashioneds Up North",
+      "start_utc": "2026-11-14 18:00:00",
+      "end_utc": "2026-11-14 21:00:00",
+      "location": "Eagle Waters Resort, 3958 Eagle Waters Rd, Eagle River",
+      "url": "https://eagleriver.org/events/old-fashioneds-up-north/",
+      "uid": "17118",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-11-14 21:00:00",
+      "end_utc": "2026-11-14 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-11-14/",
+      "uid": "10018763",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -14984,7 +15193,7 @@
       "end_utc": "2026-07-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/everything-fossils/40034/",
-      "uid": "sv-1244297321424748579",
+      "uid": "sv-1076546249734216646",
       "_source": null
     },
     {
@@ -14995,7 +15204,7 @@
       "end_utc": "2026-08-20 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40132/",
-      "uid": "sv-481824106836201956",
+      "uid": "sv-8585415647962529499",
       "_source": null
     },
     {
@@ -15006,7 +15215,7 @@
       "end_utc": "2026-08-20 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass/40128/",
-      "uid": "sv-7259352234498555867",
+      "uid": "sv-5306747887751211605",
       "_source": null
     },
     {
@@ -15017,7 +15226,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-3850215013723565306",
+      "uid": "sv-6050558143840881126",
       "_source": null
     },
     {
@@ -15028,7 +15237,7 @@
       "end_utc": "2026-07-17 00:00:00",
       "location": "Lakeland Union High School",
       "url": "https://www.minocqua.org/event/57th-annual-gem-%26-mineral-show/40026/",
-      "uid": "sv-7652861881510896502",
+      "uid": "sv-356113143246663517",
       "_source": null
     },
     {
@@ -15039,7 +15248,7 @@
       "end_utc": "2026-07-24 00:00:00",
       "location": "Torpy Park",
       "url": "https://www.minocqua.org/event/tai-chi-at-torpy-park/40153/",
-      "uid": "sv-6701429034262687232",
+      "uid": "sv-9019432043138017940",
       "_source": null
     },
     {
@@ -15050,7 +15259,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "Lakeland Union High School",
       "url": "https://www.minocqua.org/event/57th-annual-gem-%26-mineral-show/40027/",
-      "uid": "sv-5097250178980030790",
+      "uid": "sv-6435308467113137262",
       "_source": null
     },
     {
@@ -15061,7 +15270,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "Aspirus Seasons of Life Hospice Garden",
       "url": "https://www.minocqua.org/event/gardenfest/40142/",
-      "uid": "sv-6835550089241272685",
+      "uid": "sv-5028420611871786301",
       "_source": null
     },
     {
@@ -15072,7 +15281,7 @@
       "end_utc": "2026-08-19 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40133/",
-      "uid": "sv-3529554783055332287",
+      "uid": "sv-8199358305340383147",
       "_source": null
     },
     {
@@ -15083,7 +15292,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class-saturdays/40130/",
-      "uid": "sv-2799173024946076004",
+      "uid": "sv-5228626130314640346",
       "_source": null
     },
     {
@@ -15094,7 +15303,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "Rollie & Helen's Musky Shop",
       "url": "https://www.minocqua.org/event/musky-shop-summer-bash/40141/",
-      "uid": "sv-3852252624212776044",
+      "uid": "sv-4398661766294975768",
       "_source": null
     },
     {
@@ -15105,7 +15314,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-999350639452093343",
+      "uid": "sv-2105600576686491182",
       "_source": null
     },
     {
@@ -15116,7 +15325,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-6222440102654872878",
+      "uid": "sv-4035660100490565167",
       "_source": null
     },
     {
@@ -15127,7 +15336,7 @@
       "end_utc": "2026-07-23 00:00:00",
       "location": "Ascension Lutheran Church in Minocqua",
       "url": "https://www.minocqua.org/event/day-camp-(aka-vacation-bible-school)/40150/",
-      "uid": "sv-5532233181607420771",
+      "uid": "sv-7622820750109635218",
       "_source": null
     },
     {
@@ -15138,7 +15347,7 @@
       "end_utc": "2026-08-16 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class-sundays/40131/",
-      "uid": "sv-2954214181205679540",
+      "uid": "sv-2970850781897009734",
       "_source": null
     },
     {
@@ -15149,7 +15358,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-2739940029078352948",
+      "uid": "sv-2914569621466741524",
       "_source": null
     },
     {
@@ -15160,73 +15369,7 @@
       "end_utc": null,
       "location": "Lakeland Fitness & Golf",
       "url": "https://www.minocqua.org/event/the-majors-a-northwoods-golf-classic/39798/",
-      "uid": "sv-3678343555199681835",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Author Event: Victoria Houston",
-      "start_utc": "2026-07-16 00:00:00",
-      "end_utc": "2026-07-16 00:00:00",
-      "location": "Frank B. Koller Memorial Library",
-      "url": "https://manitowishwaters.org/event/author-event%3a-victoria-houston/907/",
-      "uid": "sv-3013950996457262754",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Eco Discoverers/Eco Explorers: Wild Connections",
-      "start_utc": "2026-07-16 00:00:00",
-      "end_utc": "2026-07-16 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/eco-discoverers-eco-explorers%3a-wild-connections/839/",
-      "uid": "sv-7511488205975975419",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Lions Club Pork Chop Dinner",
-      "start_utc": "2026-06-18 00:00:00",
-      "end_utc": "2026-07-16 00:00:00",
-      "location": "Manitowish Waters Lions Pavilion",
-      "url": "https://manitowishwaters.org/event/lions-club-pork-chop-dinner/918/",
-      "uid": "sv-3773530390601585036",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Photo Explorers with Christina Meyers",
-      "start_utc": "2026-06-25 00:00:00",
-      "end_utc": "2026-08-06 00:00:00",
-      "location": "Frank B. Koller Memorial Library",
-      "url": "https://manitowishwaters.org/event/photo-explorers-with-christina-meyers/904/",
-      "uid": "sv-539310768822121446",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Tech Thursdays",
-      "start_utc": "2026-04-30 00:00:00",
-      "end_utc": null,
-      "location": "Winchester Public Library",
-      "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-8713726247981973673",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Youth Actor's Summer Workshop/Performance",
-      "start_utc": "2026-07-06 00:00:00",
-      "end_utc": "2026-07-17 00:00:00",
-      "location": "Campanile Center for the Arts",
-      "url": "https://manitowishwaters.org/event/youth-actors-summer-workshop-performance/800/",
-      "uid": "sv-1301741302047277056",
+      "uid": "sv-1406356247853364086",
       "_source": null
     },
     {
@@ -15237,7 +15380,7 @@
       "end_utc": "2026-08-21 00:00:00",
       "location": "Little Bohemia Lodge",
       "url": "https://manitowishwaters.org/event/historic-dillinger-pontoon-tour/808/",
-      "uid": "sv-4436618987382197873",
+      "uid": "sv-2558158892081777232",
       "_source": null
     },
     {
@@ -15248,7 +15391,7 @@
       "end_utc": "2026-07-17 00:00:00",
       "location": "Manitowish Waters Community Center",
       "url": "https://manitowishwaters.org/event/night-market/744/",
-      "uid": "sv-6355647355281756549",
+      "uid": "sv-7367943239296857031",
       "_source": null
     },
     {
@@ -15259,7 +15402,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/connect-with-tree-spirits-a-deep-dive-inward-and-outward/844/",
-      "uid": "sv-5289075405223249918",
+      "uid": "sv-528837695594913295",
       "_source": null
     },
     {
@@ -15270,7 +15413,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/creating-your-own-log-stamp%3a-a-northwoods-forest-history-experience-program/843/",
-      "uid": "sv-5512410639277565973",
+      "uid": "sv-2297541441113264417",
       "_source": null
     },
     {
@@ -15281,7 +15424,7 @@
       "end_utc": "2026-07-18 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-exploring-flowers/842/",
-      "uid": "sv-3085014031643049636",
+      "uid": "sv-2989231114069284850",
       "_source": null
     },
     {
@@ -15292,7 +15435,7 @@
       "end_utc": "2026-08-15 00:00:00",
       "location": "Rest Lake Park",
       "url": "https://manitowishwaters.org/event/skiing-skeeters-water-ski-show/901/",
-      "uid": "sv-8523197713508678126",
+      "uid": "sv-9222548429153061773",
       "_source": null
     },
     {
@@ -15303,7 +15446,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-8128745002457736046",
+      "uid": "sv-325207959146398718",
       "_source": null
     },
     {
@@ -15314,7 +15457,7 @@
       "end_utc": "2026-08-11 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/tuesday-kids-ride/911/",
-      "uid": "sv-428157766271148707",
+      "uid": "sv-6612062345105759399",
       "_source": null
     },
     {
@@ -15325,7 +15468,7 @@
       "end_utc": "2026-08-18 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/unearth-a-story%3a-childrens-movie-matinees/930/",
-      "uid": "sv-4863538398133902055",
+      "uid": "sv-7432353920098569003",
       "_source": null
     },
     {
@@ -15336,7 +15479,7 @@
       "end_utc": "2026-07-22 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-club%3a-becoming-bibi-kay-by-kay-oursler/927/",
-      "uid": "sv-1990412109040806789",
+      "uid": "sv-4949955224149014059",
       "_source": null
     },
     {
@@ -15347,7 +15490,7 @@
       "end_utc": "2026-07-22 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/john-bates-presents%3a-birds-of-northern-lakes-rivers-and-wetlands/926/",
-      "uid": "sv-7724085501491987351",
+      "uid": "sv-2845621290799860615",
       "_source": null
     },
     {
@@ -15358,7 +15501,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-78663217111752785",
+      "uid": "sv-7038663043163767343",
       "_source": null
     },
     {
@@ -15369,7 +15512,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-5151717664550976879",
+      "uid": "sv-4353524964697985274",
       "_source": null
     },
     {
@@ -15380,7 +15523,7 @@
       "end_utc": "2026-07-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/turtle-flambeau-flowage-historic-%26-natural-pizza-pontoon-tour/845/",
-      "uid": "sv-1856128650384509377",
+      "uid": "sv-1844345332706748287",
       "_source": null
     },
     {
@@ -15391,7 +15534,7 @@
       "end_utc": "2026-07-23 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/alive-again%3a-tribute-to-chicago/776/",
-      "uid": "sv-1549262308600519721",
+      "uid": "sv-4641322176666805652",
       "_source": null
     },
     {
@@ -15402,7 +15545,18 @@
       "end_utc": "2026-07-23 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/eco-discoverers-eco-adventurers%3a-life-in-the-pond/846/",
-      "uid": "sv-1118497599983306162",
+      "uid": "sv-5962756652864391415",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Upcycled Art Workshop",
+      "start_utc": "2026-07-23 00:00:00",
+      "end_utc": "2026-07-23 00:00:00",
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/upcycled-art-workshop/933/",
+      "uid": "sv-7938158355743209499",
       "_source": null
     },
     {
@@ -15413,7 +15567,7 @@
       "end_utc": "2026-07-24 00:00:00",
       "location": "Rest Lake Boat Launch",
       "url": "https://manitowishwaters.org/event/exploring-rest-lakes-amazing-history-pontoon-tour-and-shore-lunch/847/",
-      "uid": "sv-9060720945936285453",
+      "uid": "sv-386795354117468233",
       "_source": null
     },
     {
@@ -15424,7 +15578,84 @@
       "end_utc": "2026-10-11 00:00:00",
       "location": "Self Guided Tour",
       "url": "https://manitowishwaters.org/event/northwoods-art-tour/343/",
-      "uid": "sv-2926862741910734664",
+      "uid": "sv-4439723243919383018",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Animal Spotlight Hour: Turtles",
+      "start_utc": "2026-07-25 00:00:00",
+      "end_utc": "2026-07-25 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-turtles/849/",
+      "uid": "sv-2855859681650193028",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Emerging Professional Program Presentations and Volunteer Appreciation",
+      "start_utc": "2026-07-28 00:00:00",
+      "end_utc": "2026-07-28 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/emerging-professional-program-presentations-and-volunteer-appreciation/850/",
+      "uid": "sv-4265771939925924793",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Full Moon Paddle on Statehouse",
+      "start_utc": "2026-07-28 00:00:00",
+      "end_utc": "2026-07-28 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/full-moon-paddle-on-statehouse/851/",
+      "uid": "sv-9195244107156893868",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "North Lakeland Discovery Center Presents: Carnivorous Plants",
+      "start_utc": "2026-07-28 00:00:00",
+      "end_utc": "2026-07-28 00:00:00",
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/north-lakeland-discovery-center-presents%3a-carnivorous-plants/934/",
+      "uid": "sv-2336801089249503985",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "America@250 Discussion Group",
+      "start_utc": "2026-07-29 00:00:00",
+      "end_utc": "2026-07-29 00:00:00",
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/america%40250-discussion-group/935/",
+      "uid": "sv-3218814205609234517",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "StoryWalk: Weedy Garden by Margaret Renkl",
+      "start_utc": "2026-07-29 00:00:00",
+      "end_utc": "2026-07-29 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/storywalk%3a-weedy-garden-by-margaret-renkl/852/",
+      "uid": "sv-271128009275299592",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Eco Discoverers/Eco Explorers: Beaver Builders",
+      "start_utc": "2026-07-30 00:00:00",
+      "end_utc": "2026-07-30 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/eco-discoverers-eco-explorers%3a-beaver-builders/855/",
+      "uid": "sv-3055625061810298283",
       "_source": null
     },
     {
@@ -15563,6 +15794,17 @@
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-08-22 18:00:00",
+      "end_utc": "2026-11-14 20:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-08-22/",
+      "uid": "10000110",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
       "start_utc": "2026-08-26 18:00:00",
       "end_utc": "2026-08-26 21:00:00",
       "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
@@ -15582,9 +15824,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 703,
+  "events_preview_count": 714,
   "curated_feeds": {
-    "generated_at": "2026-07-16T18:27:26.157251+00:00",
+    "generated_at": "2026-07-17T05:04:56.646619+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
