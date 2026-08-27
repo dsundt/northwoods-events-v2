@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-26T19:46:20.515998+00:00",
+  "generated_at": "2026-08-27T14:59:19.131235+00:00",
   "sources_processed": 8,
-  "total_events": 580,
+  "total_events": 571,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-26&end_date=2026-12-24&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-27&end_date=2026-12-25&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-26&end_date=2026-12-24&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-27&end_date=2026-12-25&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 505,
+      "count": 496,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-26&end_date=2026-12-24&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-27&end_date=2026-12-25&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-26&end_date=2026-12-24&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-27&end_date=2026-12-25&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -91,7 +91,7 @@
       "type": "simpleview_html",
       "url": "https://manitowishwaters.org/event/rss/",
       "ok": true,
-      "count": 25,
+      "count": 26,
       "error": null,
       "slug": "manitowish-waters-chamber-tec",
       "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 11,
+      "count": 10,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -113,127 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-08-26 08:30:00",
-      "end_utc": "2026-08-26 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-3/2026-08-26/",
-      "uid": "10019932",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Heart and Soul Quilters Group",
-      "start_utc": "2026-08-26 09:00:00",
-      "end_utc": "2026-08-26 12:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/heart-and-soul-quilters-group/2026-08-26/",
-      "uid": "10015261",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Ladies Wednesday Morning Play",
-      "start_utc": "2026-08-26 09:30:00",
-      "end_utc": "2026-08-26 11:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-wednesday-morning-play-2/2026-08-26/",
-      "uid": "10019630",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Weekly Guided Paddling Adventures",
-      "start_utc": "2026-08-26 10:30:00",
-      "end_utc": "2026-08-26 14:30:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/weekly-guided-paddling-adventures/2026-08-26/",
-      "uid": "10020609",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Art Camp at the Warehouse Community Art Center",
-      "start_utc": "2026-08-26 12:00:00",
-      "end_utc": "2026-08-26 13:30:00",
-      "location": "Warehouse Community Art Center",
-      "url": "https://eagleriver.org/events/art-camp-at-the-warehouse-community-art-center/2026-08-26/",
-      "uid": "10020827",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Northwoods Carvers/Scrabble/Cribbage",
-      "start_utc": "2026-08-26 12:30:00",
-      "end_utc": "2026-08-26 16:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/northwoods-carvers-scrabble-cribbage/2026-08-26/",
-      "uid": "10015000",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Care Giver Support Group",
-      "start_utc": "2026-08-26 13:00:00",
-      "end_utc": "2026-08-26 14:00:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/care-giver-support-group/2026-08-26/",
-      "uid": "10014740",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Sizzling Summer Clay Projects- Wednesdays at The Warehouse Community Arts Center",
-      "start_utc": "2026-08-26 16:30:00",
-      "end_utc": "2026-08-26 18:00:00",
-      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/sizzling-summer-clay-projects-wednesdays-at-the-warehouse-community-arts-center/2026-08-26/",
-      "uid": "10020525",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
-      "start_utc": "2026-08-26 17:00:00",
-      "end_utc": "2026-08-26 21:00:00",
-      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
-      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club-2/2026-08-26/",
-      "uid": "10020693",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Red Ball Tennis",
-      "start_utc": "2026-08-26 17:30:00",
-      "end_utc": "2026-08-26 19:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/adult-red-ball-tennis-program-2/2026-08-26/",
-      "uid": "10019686",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Plum Ski-ters Water Ski Show",
-      "start_utc": "2026-08-26 18:30:00",
-      "end_utc": "2026-08-26 19:30:00",
-      "location": "State House Point Boat Landing, 3230 State House Point, Sayner, Wisconsin",
-      "url": "https://eagleriver.org/events/plum-ski-ters-water-ski-show/2026-08-26/",
-      "uid": "10020050",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -395,7 +274,7 @@
       "start_utc": "2026-08-29 07:00:00",
       "end_utc": "2026-08-29 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-08-29/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-08-29/",
       "uid": "10013614",
       "_source": null
     },
@@ -593,7 +472,7 @@
       "start_utc": "2026-08-31 14:00:00",
       "end_utc": "2026-08-31 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-08-31/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-08-31/",
       "uid": "10013078",
       "_source": null
     },
@@ -912,7 +791,7 @@
       "start_utc": "2026-09-05 07:00:00",
       "end_utc": "2026-09-05 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-05/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-05/",
       "uid": "10013615",
       "_source": null
     },
@@ -1088,7 +967,7 @@
       "start_utc": "2026-09-07 14:00:00",
       "end_utc": "2026-09-07 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-07/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-07/",
       "uid": "10013079",
       "_source": null
     },
@@ -1418,7 +1297,7 @@
       "start_utc": "2026-09-12 07:00:00",
       "end_utc": "2026-09-12 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-12/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-12/",
       "uid": "10013616",
       "_source": null
     },
@@ -1561,7 +1440,7 @@
       "start_utc": "2026-09-14 14:00:00",
       "end_utc": "2026-09-14 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-14/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-14/",
       "uid": "10013080",
       "_source": null
     },
@@ -1880,7 +1759,7 @@
       "start_utc": "2026-09-19 07:00:00",
       "end_utc": "2026-09-19 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-19/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-19/",
       "uid": "10013617",
       "_source": null
     },
@@ -2034,7 +1913,7 @@
       "start_utc": "2026-09-21 14:00:00",
       "end_utc": "2026-09-21 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-21/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-21/",
       "uid": "10013081",
       "_source": null
     },
@@ -2364,7 +2243,7 @@
       "start_utc": "2026-09-26 07:00:00",
       "end_utc": "2026-09-26 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-26/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-26/",
       "uid": "10013618",
       "_source": null
     },
@@ -2485,7 +2364,7 @@
       "start_utc": "2026-09-28 14:00:00",
       "end_utc": "2026-09-28 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-28/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-28/",
       "uid": "10013082",
       "_source": null
     },
@@ -2760,7 +2639,7 @@
       "start_utc": "2026-10-03 07:00:00",
       "end_utc": "2026-10-03 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-03/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-03/",
       "uid": "10013619",
       "_source": null
     },
@@ -2903,7 +2782,7 @@
       "start_utc": "2026-10-05 14:00:00",
       "end_utc": "2026-10-05 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-05/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-05/",
       "uid": "10013083",
       "_source": null
     },
@@ -3145,7 +3024,7 @@
       "start_utc": "2026-10-10 07:00:00",
       "end_utc": "2026-10-10 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-10/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-10/",
       "uid": "10013620",
       "_source": null
     },
@@ -3255,7 +3134,7 @@
       "start_utc": "2026-10-12 14:00:00",
       "end_utc": "2026-10-12 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-12/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-12/",
       "uid": "10013084",
       "_source": null
     },
@@ -3486,7 +3365,7 @@
       "start_utc": "2026-10-17 07:00:00",
       "end_utc": "2026-10-17 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-17/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-17/",
       "uid": "10013621",
       "_source": null
     },
@@ -3607,7 +3486,7 @@
       "start_utc": "2026-10-19 14:00:00",
       "end_utc": "2026-10-19 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-19/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-19/",
       "uid": "10013085",
       "_source": null
     },
@@ -3783,7 +3662,7 @@
       "start_utc": "2026-10-24 07:00:00",
       "end_utc": "2026-10-24 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-24/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-24/",
       "uid": "10013622",
       "_source": null
     },
@@ -3882,7 +3761,7 @@
       "start_utc": "2026-10-26 14:00:00",
       "end_utc": "2026-10-26 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-26/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-26/",
       "uid": "10013086",
       "_source": null
     },
@@ -4069,7 +3948,7 @@
       "start_utc": "2026-10-31 07:00:00",
       "end_utc": "2026-10-31 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-31/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-31/",
       "uid": "10013623",
       "_source": null
     },
@@ -4135,7 +4014,7 @@
       "start_utc": "2026-11-02 14:00:00",
       "end_utc": "2026-11-02 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-02/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-02/",
       "uid": "10013087",
       "_source": null
     },
@@ -4278,7 +4157,7 @@
       "start_utc": "2026-11-07 07:00:00",
       "end_utc": "2026-11-07 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-07/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-07/",
       "uid": "10013624",
       "_source": null
     },
@@ -4355,7 +4234,7 @@
       "start_utc": "2026-11-09 14:00:00",
       "end_utc": "2026-11-09 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-09/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-09/",
       "uid": "10013088",
       "_source": null
     },
@@ -4498,7 +4377,7 @@
       "start_utc": "2026-11-14 07:00:00",
       "end_utc": "2026-11-14 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-14/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-14/",
       "uid": "10013625",
       "_source": null
     },
@@ -4564,7 +4443,7 @@
       "start_utc": "2026-11-16 14:00:00",
       "end_utc": "2026-11-16 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-16/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-16/",
       "uid": "10013089",
       "_source": null
     },
@@ -4729,7 +4608,7 @@
       "start_utc": "2026-11-21 07:00:00",
       "end_utc": "2026-11-21 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-21/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-21/",
       "uid": "10013626",
       "_source": null
     },
@@ -4784,7 +4663,7 @@
       "start_utc": "2026-11-23 14:00:00",
       "end_utc": "2026-11-23 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-23/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-23/",
       "uid": "10013090",
       "_source": null
     },
@@ -4916,7 +4795,7 @@
       "start_utc": "2026-11-28 07:00:00",
       "end_utc": "2026-11-28 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-28/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-28/",
       "uid": "10013627",
       "_source": null
     },
@@ -4960,7 +4839,7 @@
       "start_utc": "2026-11-30 14:00:00",
       "end_utc": "2026-11-30 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-30/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-30/",
       "uid": "10013091",
       "_source": null
     },
@@ -5114,7 +4993,7 @@
       "start_utc": "2026-12-05 07:00:00",
       "end_utc": "2026-12-05 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-12-05/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-12-05/",
       "uid": "10013628",
       "_source": null
     },
@@ -5202,7 +5081,7 @@
       "start_utc": "2026-12-07 14:00:00",
       "end_utc": "2026-12-07 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-12-07/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-07/",
       "uid": "10013092",
       "_source": null
     },
@@ -5323,7 +5202,7 @@
       "start_utc": "2026-12-12 07:00:00",
       "end_utc": "2026-12-12 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-12-12/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-12-12/",
       "uid": "10013629",
       "_source": null
     },
@@ -5367,7 +5246,7 @@
       "start_utc": "2026-12-14 14:00:00",
       "end_utc": "2026-12-14 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-12-14/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-14/",
       "uid": "10013093",
       "_source": null
     },
@@ -5521,7 +5400,7 @@
       "start_utc": "2026-12-19 07:00:00",
       "end_utc": "2026-12-19 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-12-19/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-12-19/",
       "uid": "10013630",
       "_source": null
     },
@@ -5565,7 +5444,7 @@
       "start_utc": "2026-12-21 14:00:00",
       "end_utc": "2026-12-21 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-12-21/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-21/",
       "uid": "10013094",
       "_source": null
     },
@@ -5666,6 +5545,28 @@
       "location": "The Brew Station",
       "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3-2/2026-12-24/",
       "uid": "10016010",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Happy Hour at The Brew Station",
+      "start_utc": "2026-12-25 16:00:00",
+      "end_utc": "2026-12-25 18:00:00",
+      "location": "The Brew Station",
+      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-12-25/",
+      "uid": "10013936",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-12-25 21:00:00",
+      "end_utc": "2026-12-25 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-12-25/",
+      "uid": "10018247",
       "_source": null
     },
     {
@@ -5913,23 +5814,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Community Game Night",
-      "start_utc": "2024-04-10 00:00:00",
-      "end_utc": null,
-      "location": "TalonSong are for play",
-      "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-850358192929672923",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Aspirus Seminar on Atrial fibrillation in Minocqua",
       "start_utc": "2026-08-27 00:00:00",
       "end_utc": "2026-08-27 00:00:00",
       "location": "The Pointe Hotel & Suites",
       "url": "https://www.minocqua.org/event/aspirus-seminar-on-atrial-fibrillation-in-minocqua/40216/",
-      "uid": "sv-8822951787386414848",
+      "uid": "sv-4460596260729003467",
       "_source": null
     },
     {
@@ -5940,7 +5830,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-8099903898508936634",
+      "uid": "sv-9161836397121899028",
       "_source": null
     },
     {
@@ -5951,7 +5841,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-1653698393485957576",
+      "uid": "sv-2970340630682624060",
       "_source": null
     },
     {
@@ -5962,7 +5852,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-6544477934407078340",
+      "uid": "sv-6735397301760770886",
       "_source": null
     },
     {
@@ -5973,7 +5863,7 @@
       "end_utc": "2026-08-30 00:00:00",
       "location": "Trout Lake Golf & Country Club.",
       "url": "https://www.minocqua.org/event/generations-charity-golf-tournament/40201/",
-      "uid": "sv-6203636356812563713",
+      "uid": "sv-6675860233635186740",
       "_source": null
     },
     {
@@ -5984,7 +5874,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-3860009624646930725",
+      "uid": "sv-4274385927522410321",
       "_source": null
     },
     {
@@ -5995,7 +5885,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-5366824470300430252",
+      "uid": "sv-7307838471379621285",
       "_source": null
     },
     {
@@ -6006,7 +5896,7 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-minocqua-public-library/40158/",
-      "uid": "sv-6668475371477845624",
+      "uid": "sv-3242503095741115051",
       "_source": null
     },
     {
@@ -6017,7 +5907,18 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-the-library/40183/",
-      "uid": "sv-5680545282400775138",
+      "uid": "sv-3871902029773332597",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Community Game Night",
+      "start_utc": "2024-04-10 00:00:00",
+      "end_utc": null,
+      "location": "TalonSong are for play",
+      "url": "https://www.minocqua.org/event/community-game-night/38936/",
+      "uid": "sv-4133827872266074737",
       "_source": null
     },
     {
@@ -6028,7 +5929,7 @@
       "end_utc": "2026-11-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime/40221/",
-      "uid": "sv-8543228271543347232",
+      "uid": "sv-5663034543862027181",
       "_source": null
     },
     {
@@ -6039,7 +5940,7 @@
       "end_utc": null,
       "location": "Torpy Park in Minocqua on Saturday",
       "url": "https://www.minocqua.org/event/mklpa-annual-pig-roast-fundraiser-2026/39995/",
-      "uid": "sv-9012250265818983241",
+      "uid": "sv-6242241902081154806",
       "_source": null
     },
     {
@@ -6050,7 +5951,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Bearskin Trail",
       "url": "https://www.minocqua.org/event/minocqua-no-frills-marathon-%e2%84%a2-half-marathon-%26-marathon-relay%3b-and-5k/31394/",
-      "uid": "sv-1137144825055759398",
+      "uid": "sv-5652952907631475413",
       "_source": null
     },
     {
@@ -6061,7 +5962,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/diy-craft-night/40217/",
-      "uid": "sv-2714178971874573705",
+      "uid": "sv-5460680906055159798",
       "_source": null
     },
     {
@@ -6072,7 +5973,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "Royce Gracie Jiu Jitsu",
       "url": "https://www.minocqua.org/event/royce-gracie-returns-to-the-northwoods/40204/",
-      "uid": "sv-320976753675228584",
+      "uid": "sv-1584811071732089717",
       "_source": null
     },
     {
@@ -6083,7 +5984,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/micro-macro-photography/40212/",
-      "uid": "sv-3363571608642373852",
+      "uid": "sv-2054660539035218107",
       "_source": null
     },
     {
@@ -6094,40 +5995,7 @@
       "end_utc": "2026-11-16 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/book-babies/40222/",
-      "uid": "sv-3850044876223663215",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Mahjong – American Style",
-      "start_utc": "2024-05-29 00:00:00",
-      "end_utc": null,
-      "location": "Koller Library",
-      "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-6269708146891188437",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Trail Side Vinyasa Yoga",
-      "start_utc": "2026-06-03 00:00:00",
-      "end_utc": "2026-09-30 00:00:00",
-      "location": "WinMan Trails",
-      "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-1141350616262248626",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Travel the Trails Through Time Historical & Naturalist Bike Tour",
-      "start_utc": "2026-08-26 00:00:00",
-      "end_utc": "2026-08-26 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/travel-the-trails-through-time-historical-%26-naturalist-bike-tour/922/",
-      "uid": "sv-5070988025882420542",
+      "uid": "sv-5134456807315898900",
       "_source": null
     },
     {
@@ -6138,7 +6006,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/jake-hoot-season-17-winner-of-nbcs-the-voice/777/",
-      "uid": "sv-437241005099986953",
+      "uid": "sv-5804996038831902288",
       "_source": null
     },
     {
@@ -6149,7 +6017,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/manitowish-waters-pub-crawl/821/",
-      "uid": "sv-8737911320522017462",
+      "uid": "sv-234777177869153947",
       "_source": null
     },
     {
@@ -6160,7 +6028,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-987795811064472966",
+      "uid": "sv-4516121834757950954",
       "_source": null
     },
     {
@@ -6171,7 +6039,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/the-powerful-prescription-for-healthy-aging-with-ember-reichgott-junge/983/",
-      "uid": "sv-4408502269867672677",
+      "uid": "sv-2725800139390631077",
       "_source": null
     },
     {
@@ -6182,7 +6050,7 @@
       "end_utc": "2026-08-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/foraged-feast-with-the-naturalists/923/",
-      "uid": "sv-8779517887894726355",
+      "uid": "sv-6735677657626890110",
       "_source": null
     },
     {
@@ -6193,7 +6061,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-bobcats/924/",
-      "uid": "sv-7931110842812001281",
+      "uid": "sv-1190507742705120617",
       "_source": null
     },
     {
@@ -6204,7 +6072,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/medicinal-first-aid-field-kit/925/",
-      "uid": "sv-3254436100359843758",
+      "uid": "sv-8005335896125060576",
       "_source": null
     },
     {
@@ -6215,7 +6083,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-8090430982243303134",
+      "uid": "sv-6206388992801750220",
       "_source": null
     },
     {
@@ -6226,7 +6094,29 @@
       "end_utc": "2026-09-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/overnight-brule-river-paddle/961/",
-      "uid": "sv-7302096775148903201",
+      "uid": "sv-2186566233664926158",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Mahjong – American Style",
+      "start_utc": "2024-05-29 00:00:00",
+      "end_utc": null,
+      "location": "Koller Library",
+      "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
+      "uid": "sv-4326734959535155056",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Trail Side Vinyasa Yoga",
+      "start_utc": "2026-06-03 00:00:00",
+      "end_utc": "2026-09-30 00:00:00",
+      "location": "WinMan Trails",
+      "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
+      "uid": "sv-2834091933542699676",
       "_source": null
     },
     {
@@ -6237,7 +6127,7 @@
       "end_utc": "2026-09-03 00:00:00",
       "location": "Frank B. Koller Memorial Library or Rest Lake Park",
       "url": "https://manitowishwaters.org/event/book-club-atmosphere/984/",
-      "uid": "sv-4586255923467629726",
+      "uid": "sv-1559943760290620812",
       "_source": null
     },
     {
@@ -6248,7 +6138,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "Statehouse Lake Beach",
       "url": "https://manitowishwaters.org/event/historical-statehouse-lake-family-canoe-exploration/964/",
-      "uid": "sv-1040192339055955527",
+      "uid": "sv-8817262228910140621",
       "_source": null
     },
     {
@@ -6259,7 +6149,7 @@
       "end_utc": "2026-11-28 00:00:00",
       "location": "North Lakeland Discovery Lodge",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/962/",
-      "uid": "sv-2961684476119808728",
+      "uid": "sv-8492600135562700373",
       "_source": null
     },
     {
@@ -6270,7 +6160,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "North Lakeland Discovery Center/Water Room",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-camping-adventures/963/",
-      "uid": "sv-5080218088177179571",
+      "uid": "sv-34121080843770089",
       "_source": null
     },
     {
@@ -6281,7 +6171,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/manitowish-waters-lions-fall-raffle-drawing/920/",
-      "uid": "sv-3021497308442221840",
+      "uid": "sv-2681080267470278842",
       "_source": null
     },
     {
@@ -6292,7 +6182,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park.",
       "url": "https://manitowishwaters.org/event/mw-17th-annual-sno-skeeters-dam-duck-race/917/",
-      "uid": "sv-7790897034084520270",
+      "uid": "sv-7552913361922333130",
       "_source": null
     },
     {
@@ -6303,7 +6193,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Little Bohemia Lodge or Rest Lake - Check Location with NLDC",
       "url": "https://manitowishwaters.org/event/historic-dillinger-pontoon-tour/808/",
-      "uid": "sv-7912667202111967593",
+      "uid": "sv-7288246892001899400",
       "_source": null
     },
     {
@@ -6314,7 +6204,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Frank B. Koller Public Library",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-our-living-ancestors-by-john-bates/965/",
-      "uid": "sv-5580080529952005291",
+      "uid": "sv-2065135754075971704",
       "_source": null
     },
     {
@@ -6325,7 +6215,7 @@
       "end_utc": "2026-09-09 00:00:00",
       "location": "South Trout Lake Boat Landing",
       "url": "https://manitowishwaters.org/event/trout-lake-history-pontoon/966/",
-      "uid": "sv-7066146785140398012",
+      "uid": "sv-3610748094741737244",
       "_source": null
     },
     {
@@ -6336,7 +6226,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-paddling-through-history-the-lake-mendota-canoes-with-amy-l-rosebrough/967/",
-      "uid": "sv-905624653578637366",
+      "uid": "sv-8487118788718521911",
       "_source": null
     },
     {
@@ -6347,7 +6237,7 @@
       "end_utc": "2026-09-13 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/creator-camp-2026/914/",
-      "uid": "sv-7608524891137798684",
+      "uid": "sv-100941018513141098",
       "_source": null
     },
     {
@@ -6358,7 +6248,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/plant-powered-tea%3a-herbal-infusions-from-your-garden/968/",
-      "uid": "sv-8777668184462346761",
+      "uid": "sv-8063501702094205481",
       "_source": null
     },
     {
@@ -6369,18 +6259,29 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/family-fall-hike/969/",
-      "uid": "sv-6249820398041933099",
+      "uid": "sv-9155639598098238791",
       "_source": null
     },
     {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Plum Ski-ters Water Ski Show",
-      "start_utc": "2026-08-26 18:00:00",
-      "end_utc": "2026-08-26 21:00:00",
-      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
-      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-26/",
-      "uid": "10000098",
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Bird Club Program: Wisconsin Breeding Bird Atlas Update With Nick Anich",
+      "start_utc": "2026-09-14 00:00:00",
+      "end_utc": "2026-09-14 00:00:00",
+      "location": "North Lakeland Discovery Center Lodge",
+      "url": "https://manitowishwaters.org/event/bird-club-program%3a-wisconsin-breeding-bird-atlas-update-with-nick-anich/970/",
+      "uid": "sv-461217785719905935",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Soy Wax Batik and Dyeing Workshop",
+      "start_utc": "2026-09-17 00:00:00",
+      "end_utc": "2026-09-17 00:00:00",
+      "location": "North Lakeland Discovery Center/Forest Room",
+      "url": "https://manitowishwaters.org/event/soy-wax-batik-and-dyeing-workshop/972/",
+      "uid": "sv-9108059530794364955",
       "_source": null
     },
     {
@@ -6498,127 +6399,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-08-26 08:30:00",
-      "end_utc": "2026-08-26 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-3/2026-08-26/",
-      "uid": "10019932",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Heart and Soul Quilters Group",
-      "start_utc": "2026-08-26 09:00:00",
-      "end_utc": "2026-08-26 12:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/heart-and-soul-quilters-group/2026-08-26/",
-      "uid": "10015261",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Ladies Wednesday Morning Play",
-      "start_utc": "2026-08-26 09:30:00",
-      "end_utc": "2026-08-26 11:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-wednesday-morning-play-2/2026-08-26/",
-      "uid": "10019630",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Weekly Guided Paddling Adventures",
-      "start_utc": "2026-08-26 10:30:00",
-      "end_utc": "2026-08-26 14:30:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/weekly-guided-paddling-adventures/2026-08-26/",
-      "uid": "10020609",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Art Camp at the Warehouse Community Art Center",
-      "start_utc": "2026-08-26 12:00:00",
-      "end_utc": "2026-08-26 13:30:00",
-      "location": "Warehouse Community Art Center",
-      "url": "https://eagleriver.org/events/art-camp-at-the-warehouse-community-art-center/2026-08-26/",
-      "uid": "10020827",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Northwoods Carvers/Scrabble/Cribbage",
-      "start_utc": "2026-08-26 12:30:00",
-      "end_utc": "2026-08-26 16:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/northwoods-carvers-scrabble-cribbage/2026-08-26/",
-      "uid": "10015000",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Care Giver Support Group",
-      "start_utc": "2026-08-26 13:00:00",
-      "end_utc": "2026-08-26 14:00:00",
-      "location": "ADRC of Vilas County, 330 Court Street, Eagle River, WI",
-      "url": "https://eagleriver.org/events/care-giver-support-group/2026-08-26/",
-      "uid": "10014740",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Sizzling Summer Clay Projects- Wednesdays at The Warehouse Community Arts Center",
-      "start_utc": "2026-08-26 16:30:00",
-      "end_utc": "2026-08-26 18:00:00",
-      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/sizzling-summer-clay-projects-wednesdays-at-the-warehouse-community-arts-center/2026-08-26/",
-      "uid": "10020525",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
-      "start_utc": "2026-08-26 17:00:00",
-      "end_utc": "2026-08-26 21:00:00",
-      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
-      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club-2/2026-08-26/",
-      "uid": "10020693",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Red Ball Tennis",
-      "start_utc": "2026-08-26 17:30:00",
-      "end_utc": "2026-08-26 19:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/adult-red-ball-tennis-program-2/2026-08-26/",
-      "uid": "10019686",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Plum Ski-ters Water Ski Show",
-      "start_utc": "2026-08-26 18:30:00",
-      "end_utc": "2026-08-26 19:30:00",
-      "location": "State House Point Boat Landing, 3230 State House Point, Sayner, Wisconsin",
-      "url": "https://eagleriver.org/events/plum-ski-ters-water-ski-show/2026-08-26/",
-      "uid": "10020050",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Aunt Grace&#8217;s Sewing Circle",
       "start_utc": "2026-08-27 09:00:00",
       "end_utc": "2026-08-27 11:00:00",
@@ -6777,7 +6557,7 @@
       "start_utc": "2026-08-29 07:00:00",
       "end_utc": "2026-08-29 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-08-29/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-08-29/",
       "uid": "10013614",
       "_source": null
     },
@@ -6975,7 +6755,7 @@
       "start_utc": "2026-08-31 14:00:00",
       "end_utc": "2026-08-31 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-08-31/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-08-31/",
       "uid": "10013078",
       "_source": null
     },
@@ -7294,7 +7074,7 @@
       "start_utc": "2026-09-05 07:00:00",
       "end_utc": "2026-09-05 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-05/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-05/",
       "uid": "10013615",
       "_source": null
     },
@@ -7470,7 +7250,7 @@
       "start_utc": "2026-09-07 14:00:00",
       "end_utc": "2026-09-07 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-07/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-07/",
       "uid": "10013079",
       "_source": null
     },
@@ -7800,7 +7580,7 @@
       "start_utc": "2026-09-12 07:00:00",
       "end_utc": "2026-09-12 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-12/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-12/",
       "uid": "10013616",
       "_source": null
     },
@@ -7943,7 +7723,7 @@
       "start_utc": "2026-09-14 14:00:00",
       "end_utc": "2026-09-14 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-14/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-14/",
       "uid": "10013080",
       "_source": null
     },
@@ -8262,7 +8042,7 @@
       "start_utc": "2026-09-19 07:00:00",
       "end_utc": "2026-09-19 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-19/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-19/",
       "uid": "10013617",
       "_source": null
     },
@@ -8416,7 +8196,7 @@
       "start_utc": "2026-09-21 14:00:00",
       "end_utc": "2026-09-21 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-21/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-21/",
       "uid": "10013081",
       "_source": null
     },
@@ -8746,7 +8526,7 @@
       "start_utc": "2026-09-26 07:00:00",
       "end_utc": "2026-09-26 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-09-26/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-09-26/",
       "uid": "10013618",
       "_source": null
     },
@@ -8867,7 +8647,7 @@
       "start_utc": "2026-09-28 14:00:00",
       "end_utc": "2026-09-28 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-09-28/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-09-28/",
       "uid": "10013082",
       "_source": null
     },
@@ -9142,7 +8922,7 @@
       "start_utc": "2026-10-03 07:00:00",
       "end_utc": "2026-10-03 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-03/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-03/",
       "uid": "10013619",
       "_source": null
     },
@@ -9285,7 +9065,7 @@
       "start_utc": "2026-10-05 14:00:00",
       "end_utc": "2026-10-05 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-05/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-05/",
       "uid": "10013083",
       "_source": null
     },
@@ -9527,7 +9307,7 @@
       "start_utc": "2026-10-10 07:00:00",
       "end_utc": "2026-10-10 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-10/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-10/",
       "uid": "10013620",
       "_source": null
     },
@@ -9637,7 +9417,7 @@
       "start_utc": "2026-10-12 14:00:00",
       "end_utc": "2026-10-12 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-12/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-12/",
       "uid": "10013084",
       "_source": null
     },
@@ -9868,7 +9648,7 @@
       "start_utc": "2026-10-17 07:00:00",
       "end_utc": "2026-10-17 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-17/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-17/",
       "uid": "10013621",
       "_source": null
     },
@@ -9989,7 +9769,7 @@
       "start_utc": "2026-10-19 14:00:00",
       "end_utc": "2026-10-19 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-19/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-19/",
       "uid": "10013085",
       "_source": null
     },
@@ -10165,7 +9945,7 @@
       "start_utc": "2026-10-24 07:00:00",
       "end_utc": "2026-10-24 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-24/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-24/",
       "uid": "10013622",
       "_source": null
     },
@@ -10264,7 +10044,7 @@
       "start_utc": "2026-10-26 14:00:00",
       "end_utc": "2026-10-26 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-10-26/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-10-26/",
       "uid": "10013086",
       "_source": null
     },
@@ -10451,7 +10231,7 @@
       "start_utc": "2026-10-31 07:00:00",
       "end_utc": "2026-10-31 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-10-31/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-10-31/",
       "uid": "10013623",
       "_source": null
     },
@@ -10517,7 +10297,7 @@
       "start_utc": "2026-11-02 14:00:00",
       "end_utc": "2026-11-02 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-02/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-02/",
       "uid": "10013087",
       "_source": null
     },
@@ -10660,7 +10440,7 @@
       "start_utc": "2026-11-07 07:00:00",
       "end_utc": "2026-11-07 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-07/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-07/",
       "uid": "10013624",
       "_source": null
     },
@@ -10737,7 +10517,7 @@
       "start_utc": "2026-11-09 14:00:00",
       "end_utc": "2026-11-09 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-09/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-09/",
       "uid": "10013088",
       "_source": null
     },
@@ -10880,7 +10660,7 @@
       "start_utc": "2026-11-14 07:00:00",
       "end_utc": "2026-11-14 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-14/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-14/",
       "uid": "10013625",
       "_source": null
     },
@@ -10946,7 +10726,7 @@
       "start_utc": "2026-11-16 14:00:00",
       "end_utc": "2026-11-16 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-16/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-16/",
       "uid": "10013089",
       "_source": null
     },
@@ -11111,7 +10891,7 @@
       "start_utc": "2026-11-21 07:00:00",
       "end_utc": "2026-11-21 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-21/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-21/",
       "uid": "10013626",
       "_source": null
     },
@@ -11166,7 +10946,7 @@
       "start_utc": "2026-11-23 14:00:00",
       "end_utc": "2026-11-23 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-23/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-23/",
       "uid": "10013090",
       "_source": null
     },
@@ -11298,7 +11078,7 @@
       "start_utc": "2026-11-28 07:00:00",
       "end_utc": "2026-11-28 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-11-28/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-11-28/",
       "uid": "10013627",
       "_source": null
     },
@@ -11342,7 +11122,7 @@
       "start_utc": "2026-11-30 14:00:00",
       "end_utc": "2026-11-30 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-11-30/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-11-30/",
       "uid": "10013091",
       "_source": null
     },
@@ -11496,7 +11276,7 @@
       "start_utc": "2026-12-05 07:00:00",
       "end_utc": "2026-12-05 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-12-05/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-12-05/",
       "uid": "10013628",
       "_source": null
     },
@@ -11584,7 +11364,7 @@
       "start_utc": "2026-12-07 14:00:00",
       "end_utc": "2026-12-07 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-12-07/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-07/",
       "uid": "10013092",
       "_source": null
     },
@@ -11705,7 +11485,7 @@
       "start_utc": "2026-12-12 07:00:00",
       "end_utc": "2026-12-12 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-12-12/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-12-12/",
       "uid": "10013629",
       "_source": null
     },
@@ -11749,7 +11529,7 @@
       "start_utc": "2026-12-14 14:00:00",
       "end_utc": "2026-12-14 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-12-14/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-14/",
       "uid": "10013093",
       "_source": null
     },
@@ -11903,7 +11683,7 @@
       "start_utc": "2026-12-19 07:00:00",
       "end_utc": "2026-12-19 12:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3/2026-12-19/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-12-19/",
       "uid": "10013630",
       "_source": null
     },
@@ -11947,7 +11727,7 @@
       "start_utc": "2026-12-21 14:00:00",
       "end_utc": "2026-12-21 16:00:00",
       "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2/2026-12-21/",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-21/",
       "uid": "10013094",
       "_source": null
     },
@@ -12048,6 +11828,28 @@
       "location": "The Brew Station",
       "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3-2/2026-12-24/",
       "uid": "10016010",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Happy Hour at The Brew Station",
+      "start_utc": "2026-12-25 16:00:00",
+      "end_utc": "2026-12-25 18:00:00",
+      "location": "The Brew Station",
+      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-12-25/",
+      "uid": "10013936",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2026-12-25 21:00:00",
+      "end_utc": "2026-12-25 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-12-25/",
+      "uid": "10018247",
       "_source": null
     },
     {
@@ -12295,23 +12097,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Community Game Night",
-      "start_utc": "2024-04-10 00:00:00",
-      "end_utc": null,
-      "location": "TalonSong are for play",
-      "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-850358192929672923",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Aspirus Seminar on Atrial fibrillation in Minocqua",
       "start_utc": "2026-08-27 00:00:00",
       "end_utc": "2026-08-27 00:00:00",
       "location": "The Pointe Hotel & Suites",
       "url": "https://www.minocqua.org/event/aspirus-seminar-on-atrial-fibrillation-in-minocqua/40216/",
-      "uid": "sv-8822951787386414848",
+      "uid": "sv-4460596260729003467",
       "_source": null
     },
     {
@@ -12322,7 +12113,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-8099903898508936634",
+      "uid": "sv-9161836397121899028",
       "_source": null
     },
     {
@@ -12333,7 +12124,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
       "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-1653698393485957576",
+      "uid": "sv-2970340630682624060",
       "_source": null
     },
     {
@@ -12344,7 +12135,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-6544477934407078340",
+      "uid": "sv-6735397301760770886",
       "_source": null
     },
     {
@@ -12355,7 +12146,7 @@
       "end_utc": "2026-08-30 00:00:00",
       "location": "Trout Lake Golf & Country Club.",
       "url": "https://www.minocqua.org/event/generations-charity-golf-tournament/40201/",
-      "uid": "sv-6203636356812563713",
+      "uid": "sv-6675860233635186740",
       "_source": null
     },
     {
@@ -12366,7 +12157,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-3860009624646930725",
+      "uid": "sv-4274385927522410321",
       "_source": null
     },
     {
@@ -12377,7 +12168,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-5366824470300430252",
+      "uid": "sv-7307838471379621285",
       "_source": null
     },
     {
@@ -12388,7 +12179,7 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-minocqua-public-library/40158/",
-      "uid": "sv-6668475371477845624",
+      "uid": "sv-3242503095741115051",
       "_source": null
     },
     {
@@ -12399,7 +12190,18 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-the-library/40183/",
-      "uid": "sv-5680545282400775138",
+      "uid": "sv-3871902029773332597",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Community Game Night",
+      "start_utc": "2024-04-10 00:00:00",
+      "end_utc": null,
+      "location": "TalonSong are for play",
+      "url": "https://www.minocqua.org/event/community-game-night/38936/",
+      "uid": "sv-4133827872266074737",
       "_source": null
     },
     {
@@ -12410,7 +12212,7 @@
       "end_utc": "2026-11-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime/40221/",
-      "uid": "sv-8543228271543347232",
+      "uid": "sv-5663034543862027181",
       "_source": null
     },
     {
@@ -12421,7 +12223,7 @@
       "end_utc": null,
       "location": "Torpy Park in Minocqua on Saturday",
       "url": "https://www.minocqua.org/event/mklpa-annual-pig-roast-fundraiser-2026/39995/",
-      "uid": "sv-9012250265818983241",
+      "uid": "sv-6242241902081154806",
       "_source": null
     },
     {
@@ -12432,7 +12234,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Bearskin Trail",
       "url": "https://www.minocqua.org/event/minocqua-no-frills-marathon-%e2%84%a2-half-marathon-%26-marathon-relay%3b-and-5k/31394/",
-      "uid": "sv-1137144825055759398",
+      "uid": "sv-5652952907631475413",
       "_source": null
     },
     {
@@ -12443,7 +12245,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/diy-craft-night/40217/",
-      "uid": "sv-2714178971874573705",
+      "uid": "sv-5460680906055159798",
       "_source": null
     },
     {
@@ -12454,7 +12256,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "Royce Gracie Jiu Jitsu",
       "url": "https://www.minocqua.org/event/royce-gracie-returns-to-the-northwoods/40204/",
-      "uid": "sv-320976753675228584",
+      "uid": "sv-1584811071732089717",
       "_source": null
     },
     {
@@ -12465,7 +12267,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/micro-macro-photography/40212/",
-      "uid": "sv-3363571608642373852",
+      "uid": "sv-2054660539035218107",
       "_source": null
     },
     {
@@ -12476,40 +12278,7 @@
       "end_utc": "2026-11-16 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/book-babies/40222/",
-      "uid": "sv-3850044876223663215",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Mahjong – American Style",
-      "start_utc": "2024-05-29 00:00:00",
-      "end_utc": null,
-      "location": "Koller Library",
-      "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-6269708146891188437",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Trail Side Vinyasa Yoga",
-      "start_utc": "2026-06-03 00:00:00",
-      "end_utc": "2026-09-30 00:00:00",
-      "location": "WinMan Trails",
-      "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-1141350616262248626",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Travel the Trails Through Time Historical & Naturalist Bike Tour",
-      "start_utc": "2026-08-26 00:00:00",
-      "end_utc": "2026-08-26 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/travel-the-trails-through-time-historical-%26-naturalist-bike-tour/922/",
-      "uid": "sv-5070988025882420542",
+      "uid": "sv-5134456807315898900",
       "_source": null
     },
     {
@@ -12520,7 +12289,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "Campanile Center for the Arts",
       "url": "https://manitowishwaters.org/event/jake-hoot-season-17-winner-of-nbcs-the-voice/777/",
-      "uid": "sv-437241005099986953",
+      "uid": "sv-5804996038831902288",
       "_source": null
     },
     {
@@ -12531,7 +12300,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/manitowish-waters-pub-crawl/821/",
-      "uid": "sv-8737911320522017462",
+      "uid": "sv-234777177869153947",
       "_source": null
     },
     {
@@ -12542,7 +12311,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-987795811064472966",
+      "uid": "sv-4516121834757950954",
       "_source": null
     },
     {
@@ -12553,7 +12322,7 @@
       "end_utc": "2026-08-27 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/the-powerful-prescription-for-healthy-aging-with-ember-reichgott-junge/983/",
-      "uid": "sv-4408502269867672677",
+      "uid": "sv-2725800139390631077",
       "_source": null
     },
     {
@@ -12564,7 +12333,7 @@
       "end_utc": "2026-08-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/foraged-feast-with-the-naturalists/923/",
-      "uid": "sv-8779517887894726355",
+      "uid": "sv-6735677657626890110",
       "_source": null
     },
     {
@@ -12575,7 +12344,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-bobcats/924/",
-      "uid": "sv-7931110842812001281",
+      "uid": "sv-1190507742705120617",
       "_source": null
     },
     {
@@ -12586,7 +12355,7 @@
       "end_utc": "2026-08-29 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/medicinal-first-aid-field-kit/925/",
-      "uid": "sv-3254436100359843758",
+      "uid": "sv-8005335896125060576",
       "_source": null
     },
     {
@@ -12597,7 +12366,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-8090430982243303134",
+      "uid": "sv-6206388992801750220",
       "_source": null
     },
     {
@@ -12608,7 +12377,29 @@
       "end_utc": "2026-09-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/overnight-brule-river-paddle/961/",
-      "uid": "sv-7302096775148903201",
+      "uid": "sv-2186566233664926158",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Mahjong – American Style",
+      "start_utc": "2024-05-29 00:00:00",
+      "end_utc": null,
+      "location": "Koller Library",
+      "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
+      "uid": "sv-4326734959535155056",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Trail Side Vinyasa Yoga",
+      "start_utc": "2026-06-03 00:00:00",
+      "end_utc": "2026-09-30 00:00:00",
+      "location": "WinMan Trails",
+      "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
+      "uid": "sv-2834091933542699676",
       "_source": null
     },
     {
@@ -12619,7 +12410,7 @@
       "end_utc": "2026-09-03 00:00:00",
       "location": "Frank B. Koller Memorial Library or Rest Lake Park",
       "url": "https://manitowishwaters.org/event/book-club-atmosphere/984/",
-      "uid": "sv-4586255923467629726",
+      "uid": "sv-1559943760290620812",
       "_source": null
     },
     {
@@ -12630,7 +12421,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "Statehouse Lake Beach",
       "url": "https://manitowishwaters.org/event/historical-statehouse-lake-family-canoe-exploration/964/",
-      "uid": "sv-1040192339055955527",
+      "uid": "sv-8817262228910140621",
       "_source": null
     },
     {
@@ -12641,7 +12432,7 @@
       "end_utc": "2026-11-28 00:00:00",
       "location": "North Lakeland Discovery Lodge",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/962/",
-      "uid": "sv-2961684476119808728",
+      "uid": "sv-8492600135562700373",
       "_source": null
     },
     {
@@ -12652,7 +12443,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "North Lakeland Discovery Center/Water Room",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-camping-adventures/963/",
-      "uid": "sv-5080218088177179571",
+      "uid": "sv-34121080843770089",
       "_source": null
     },
     {
@@ -12663,7 +12454,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/manitowish-waters-lions-fall-raffle-drawing/920/",
-      "uid": "sv-3021497308442221840",
+      "uid": "sv-2681080267470278842",
       "_source": null
     },
     {
@@ -12674,7 +12465,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park.",
       "url": "https://manitowishwaters.org/event/mw-17th-annual-sno-skeeters-dam-duck-race/917/",
-      "uid": "sv-7790897034084520270",
+      "uid": "sv-7552913361922333130",
       "_source": null
     },
     {
@@ -12685,7 +12476,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Little Bohemia Lodge or Rest Lake - Check Location with NLDC",
       "url": "https://manitowishwaters.org/event/historic-dillinger-pontoon-tour/808/",
-      "uid": "sv-7912667202111967593",
+      "uid": "sv-7288246892001899400",
       "_source": null
     },
     {
@@ -12696,7 +12487,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Frank B. Koller Public Library",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-our-living-ancestors-by-john-bates/965/",
-      "uid": "sv-5580080529952005291",
+      "uid": "sv-2065135754075971704",
       "_source": null
     },
     {
@@ -12707,7 +12498,7 @@
       "end_utc": "2026-09-09 00:00:00",
       "location": "South Trout Lake Boat Landing",
       "url": "https://manitowishwaters.org/event/trout-lake-history-pontoon/966/",
-      "uid": "sv-7066146785140398012",
+      "uid": "sv-3610748094741737244",
       "_source": null
     },
     {
@@ -12718,7 +12509,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-paddling-through-history-the-lake-mendota-canoes-with-amy-l-rosebrough/967/",
-      "uid": "sv-905624653578637366",
+      "uid": "sv-8487118788718521911",
       "_source": null
     },
     {
@@ -12729,7 +12520,7 @@
       "end_utc": "2026-09-13 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/creator-camp-2026/914/",
-      "uid": "sv-7608524891137798684",
+      "uid": "sv-100941018513141098",
       "_source": null
     },
     {
@@ -12740,7 +12531,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/plant-powered-tea%3a-herbal-infusions-from-your-garden/968/",
-      "uid": "sv-8777668184462346761",
+      "uid": "sv-8063501702094205481",
       "_source": null
     },
     {
@@ -12751,18 +12542,29 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/family-fall-hike/969/",
-      "uid": "sv-6249820398041933099",
+      "uid": "sv-9155639598098238791",
       "_source": null
     },
     {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Plum Ski-ters Water Ski Show",
-      "start_utc": "2026-08-26 18:00:00",
-      "end_utc": "2026-08-26 21:00:00",
-      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
-      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-08-26/",
-      "uid": "10000098",
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Bird Club Program: Wisconsin Breeding Bird Atlas Update With Nick Anich",
+      "start_utc": "2026-09-14 00:00:00",
+      "end_utc": "2026-09-14 00:00:00",
+      "location": "North Lakeland Discovery Center Lodge",
+      "url": "https://manitowishwaters.org/event/bird-club-program%3a-wisconsin-breeding-bird-atlas-update-with-nick-anich/970/",
+      "uid": "sv-461217785719905935",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Soy Wax Batik and Dyeing Workshop",
+      "start_utc": "2026-09-17 00:00:00",
+      "end_utc": "2026-09-17 00:00:00",
+      "location": "North Lakeland Discovery Center/Forest Room",
+      "url": "https://manitowishwaters.org/event/soy-wax-batik-and-dyeing-workshop/972/",
+      "uid": "sv-9108059530794364955",
       "_source": null
     },
     {
@@ -12876,9 +12678,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 580,
+  "events_preview_count": 571,
   "curated_feeds": {
-    "generated_at": "2026-08-26T19:46:20.558740+00:00",
+    "generated_at": "2026-08-27T14:59:19.172190+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
