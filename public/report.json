@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-29T20:28:20.083868+00:00",
+  "generated_at": "2026-08-30T09:44:06.085405+00:00",
   "sources_processed": 8,
-  "total_events": 566,
+  "total_events": 571,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-29&end_date=2026-12-27&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-30&end_date=2026-12-28&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-29&end_date=2026-12-27&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-08-30&end_date=2026-12-28&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 502,
+      "count": 496,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -50,7 +50,7 @@
       "type": "stgermain_wp",
       "url": "https://st-germain.com/events/",
       "ok": true,
-      "count": 18,
+      "count": 19,
       "error": null,
       "slug": "st-germain-chamber-wp",
       "ics_path": "by-source/st-germain-chamber-wp.ics",
@@ -63,7 +63,7 @@
       "type": "simpleview_html",
       "url": "https://www.minocqua.org/event/rss/",
       "ok": true,
-      "count": 17,
+      "count": 18,
       "error": null,
       "slug": "lets-minocqua-simpleview",
       "ics_path": "by-source/lets-minocqua-simpleview.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-29&end_date=2026-12-27&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-30&end_date=2026-12-28&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-29&end_date=2026-12-27&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-08-30&end_date=2026-12-28&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -103,59 +103,12 @@
       "name": "Sayner Star Lake Cloverland (TEC)",
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
-      "ok": false,
-      "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/wp-json/tribe/events/v1/events?start_date=2026-08-29&end_date=2026-12-27&per_page=50&page=1",
+      "ok": true,
+      "count": 9,
+      "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
-      "ics_path": null,
-      "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/wp-json/tribe/events/v1/events?start_date=2026-08-29&end_date=2026-12-27&per_page=50&page=1",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1 (https://sayner-starlake-cloverland.org/events/?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-08-28 (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1 (https://sayner-starlake-cloverland.org/events/?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=list&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/events/?ical=1&eventDisplay=month&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-08-28&end_date=2027-02-25 (https://sayner-starlake-cloverland.org/events/?ical=1&start_date=2026-08-28&end_date=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-08-28&endDate=2027-02-25 (https://sayner-starlake-cloverland.org/events/?ical=1&startDate=2026-08-28&endDate=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1 (https://sayner-starlake-cloverland.org/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28 (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1 (https://sayner-starlake-cloverland.org/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=list&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/events?ical=1&eventDisplay=month&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&start_date=2026-08-28&end_date=2027-02-25 (https://sayner-starlake-cloverland.org/events?ical=1&start_date=2026-08-28&end_date=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events?ical=1&startDate=2026-08-28&endDate=2027-02-25 (https://sayner-starlake-cloverland.org/events?ical=1&startDate=2026-08-28&endDate=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1 (https://sayner-starlake-cloverland.org/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28 (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1 (https://sayner-starlake-cloverland.org/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=list&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/events/list?ical=1&eventDisplay=month&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2026-08-28&end_date=2027-02-25 (https://sayner-starlake-cloverland.org/events/list?ical=1&start_date=2026-08-28&end_date=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2026-08-28&endDate=2027-02-25 (https://sayner-starlake-cloverland.org/events/list?ical=1&startDate=2026-08-28&endDate=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1 (https://sayner-starlake-cloverland.org/index.php/events?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28 (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1 (https://sayner-starlake-cloverland.org/index.php/events?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=list&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/index.php/events?ical=1&eventDisplay=month&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2026-08-28&end_date=2027-02-25 (https://sayner-starlake-cloverland.org/index.php/events?ical=1&start_date=2026-08-28&end_date=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2026-08-28&endDate=2027-02-25 (https://sayner-starlake-cloverland.org/index.php/events?ical=1&startDate=2026-08-28&endDate=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&tribe_display=list&tribe-bar-date=2026-08-28&tribe_paged=1)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=list&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2026-08-28 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&eventDisplay=month&eventDate=2026-08-28)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2026-08-28&end_date=2027-02-25 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&start_date=2026-08-28&end_date=2027-02-25)",
-        "ics fallback failed for Sayner Star Lake Cloverland (TEC): 403 Client Error: Forbidden for url: https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2026-08-28&endDate=2027-02-25 (https://sayner-starlake-cloverland.org/index.php/events/list?ical=1&startDate=2026-08-28&endDate=2027-02-25)"
-      ],
+      "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
+      "warnings": [],
       "notes": []
     }
   ],
@@ -163,116 +116,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "School Walking Hours at NPHS",
-      "start_utc": "2026-08-29 07:00:00",
-      "end_utc": "2026-08-29 12:00:00",
-      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-08-29/",
-      "uid": "10013614",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "46th Eagle River Car and Truck Show",
-      "start_utc": "2026-08-29 09:00:00",
-      "end_utc": "2026-08-29 15:00:00",
-      "location": "Downtown Eagle River, 201 E Wall St, Eagle River, WI",
-      "url": "https://eagleriver.org/events/eagle-river-car-and-truck-show/",
-      "uid": "16443",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "LOLA Art Harvest",
-      "start_utc": "2026-08-29 09:00:00",
-      "end_utc": "2026-08-29 14:00:00",
-      "location": "VFW Grounds",
-      "url": "https://eagleriver.org/events/lola-art-harvest/",
-      "uid": "20858",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Garden Railroad on Display at St. Mary of the Snows",
-      "start_utc": "2026-08-29 10:00:00",
-      "end_utc": "2026-08-29 12:00:00",
-      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
-      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-29/",
-      "uid": "10020923",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Mystical Realms Expo &#038; Market",
-      "start_utc": "2026-08-29 10:00:00",
-      "end_utc": "2026-08-30 17:00:00",
-      "location": "Northern Waters Casino Resort",
-      "url": "https://eagleriver.org/events/mystical-realms-expo-market/",
-      "uid": "27947",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Makers Slow Crafting Show &#038; Tell and Demonstration",
-      "start_utc": "2026-08-29 13:00:00",
-      "end_utc": "2026-08-29 14:30:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/the-makers-slow-crafting-show-tell-and-demonstration/",
-      "uid": "27941",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Summer Events On The Farm-At Lake Nokomis",
-      "start_utc": "2026-08-29 15:00:00",
-      "end_utc": "2026-08-29 18:00:00",
-      "location": "Lake Nokomis Cranberries, Inc., 6041 County Road D, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/summer-events-on-the-farm-at-lake-nokomis/2026-08-29/",
-      "uid": "10020886",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-08-29 18:00:00",
-      "end_utc": "2026-08-29 21:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-5/2026-08-29/",
-      "uid": "10019843",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Tennessee Whiskey Revival Featuring Scott Kirby Presented by: Headwaters Council for the Performing Arts",
-      "start_utc": "2026-08-29 18:30:00",
-      "end_utc": "2026-08-29 22:00:00",
-      "location": "Northland Pines Auditorium, 1800 Pleasure Island Rd, Eagle River",
-      "url": "https://eagleriver.org/events/tennessee-whiskey-revival-featuring-scott-kirby-presented-by-headwaters-council-for-the-performing-arts/",
-      "uid": "26633",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-08-29 21:00:00",
-      "end_utc": "2026-08-29 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-08-29/",
-      "uid": "10018752",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Northwoods Throw Down Disc Golf Tournament",
       "start_utc": "2026-08-30 08:00:00",
       "end_utc": "2026-08-30 17:00:00",
@@ -5683,6 +5526,50 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-12-28 05:30:00",
+      "end_utc": "2026-12-28 07:30:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-4/2026-12-28/",
+      "uid": "10011597",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-12-28 14:00:00",
+      "end_utc": "2026-12-28 16:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-28/",
+      "uid": "10013095",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Ukulele Practice/ Jam Session",
+      "start_utc": "2026-12-28 14:30:00",
+      "end_utc": "2026-12-28 16:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/ukulele-practice-jam-session/2026-12-28/",
+      "uid": "10009738",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Hatha Yoga Monday Nights at The Warehouse Community Art Center",
+      "start_utc": "2026-12-28 18:00:00",
+      "end_utc": "2026-12-28 19:30:00",
+      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/hatha-yoga-monday-nights-at-the-warehouse-community-art-center/2026-12-28/",
+      "uid": "10016503",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -5778,6 +5665,17 @@
       "end_utc": null,
       "location": "September 19th, 2026",
       "url": "https://st-germain.com/events/fall-cruisin-car-show-2026/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "2026-07-08T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
       "uid": null,
       "_source": "stgermain_wp"
     },
@@ -5916,34 +5814,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Builder's Club at Minocqua Public Library",
-      "start_utc": "2026-01-31 00:00:00",
-      "end_utc": "2026-08-29 00:00:00",
-      "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
-      "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-4711011899721031560",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Sound & Sauna Saturdays",
-      "start_utc": "2026-02-14 00:00:00",
-      "end_utc": "2027-01-02 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-2212180050498428018",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Generations Charity Golf Tournament",
       "start_utc": "2026-08-30 00:00:00",
       "end_utc": "2026-08-30 00:00:00",
       "location": "Trout Lake Golf & Country Club.",
       "url": "https://www.minocqua.org/event/generations-charity-golf-tournament/40201/",
-      "uid": "sv-6944657432552567730",
+      "uid": "sv-7672861440112094457",
       "_source": null
     },
     {
@@ -5954,7 +5830,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-4361189945555270803",
+      "uid": "sv-5317187694516190669",
       "_source": null
     },
     {
@@ -5965,7 +5841,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-8516063667072527443",
+      "uid": "sv-245048248185260858",
       "_source": null
     },
     {
@@ -5976,7 +5852,7 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-minocqua-public-library/40158/",
-      "uid": "sv-8567292874317584537",
+      "uid": "sv-6662518737157247267",
       "_source": null
     },
     {
@@ -5987,7 +5863,7 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-the-library/40183/",
-      "uid": "sv-1397459883963706757",
+      "uid": "sv-2327109974048359757",
       "_source": null
     },
     {
@@ -5998,7 +5874,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-298492538221951259",
+      "uid": "sv-8475608089203075965",
       "_source": null
     },
     {
@@ -6009,7 +5885,7 @@
       "end_utc": "2026-11-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime/40221/",
-      "uid": "sv-3422722730640891148",
+      "uid": "sv-6007892456869785240",
       "_source": null
     },
     {
@@ -6020,7 +5896,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-3929076454783415794",
+      "uid": "sv-6781521475758589847",
       "_source": null
     },
     {
@@ -6031,7 +5907,18 @@
       "end_utc": null,
       "location": "Torpy Park in Minocqua on Saturday",
       "url": "https://www.minocqua.org/event/mklpa-annual-pig-roast-fundraiser-2026/39995/",
-      "uid": "sv-725964272205509230",
+      "uid": "sv-6328534712578229839",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound & Sauna Saturdays",
+      "start_utc": "2026-02-14 00:00:00",
+      "end_utc": "2027-01-02 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
+      "uid": "sv-6211182811822665732",
       "_source": null
     },
     {
@@ -6042,7 +5929,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Bearskin Trail",
       "url": "https://www.minocqua.org/event/minocqua-no-frills-marathon-%e2%84%a2-half-marathon-%26-marathon-relay%3b-and-5k/31394/",
-      "uid": "sv-1212262374306965539",
+      "uid": "sv-8591827649650520537",
       "_source": null
     },
     {
@@ -6053,7 +5940,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/diy-craft-night/40217/",
-      "uid": "sv-302773671554575433",
+      "uid": "sv-2086085867779602683",
       "_source": null
     },
     {
@@ -6064,7 +5951,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "Royce Gracie Jiu Jitsu",
       "url": "https://www.minocqua.org/event/royce-gracie-returns-to-the-northwoods/40204/",
-      "uid": "sv-5905051339519803208",
+      "uid": "sv-2539169579990202812",
       "_source": null
     },
     {
@@ -6075,7 +5962,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/community-cribbage-tournament/40254/",
-      "uid": "sv-8258445335283351094",
+      "uid": "sv-3053069853465566019",
       "_source": null
     },
     {
@@ -6086,7 +5973,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/micro-macro-photography/40212/",
-      "uid": "sv-4903744918660720298",
+      "uid": "sv-1629735767596244267",
       "_source": null
     },
     {
@@ -6097,29 +5984,29 @@
       "end_utc": "2026-11-16 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/book-babies/40222/",
-      "uid": "sv-2077406945407144701",
+      "uid": "sv-4160278184851182806",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Animal Spotlight Hour: Bobcats",
-      "start_utc": "2026-08-29 00:00:00",
-      "end_utc": "2026-08-29 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-bobcats/924/",
-      "uid": "sv-3886296238175216400",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Free Bingo",
+      "start_utc": "2026-09-18 00:00:00",
+      "end_utc": "2026-09-18 00:00:00",
+      "location": "Minocqua Public Library",
+      "url": "https://www.minocqua.org/event/free-bingo/40259/",
+      "uid": "sv-2689279208754349529",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Medicinal First Aid Field Kit",
-      "start_utc": "2026-08-29 00:00:00",
-      "end_utc": "2026-08-29 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/medicinal-first-aid-field-kit/925/",
-      "uid": "sv-7658285372320818362",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Fish Fry Fundraiser",
+      "start_utc": "2026-09-19 00:00:00",
+      "end_utc": "2026-09-19 00:00:00",
+      "location": "Holy Family Catholic Church",
+      "url": "https://www.minocqua.org/event/fish-fry-fundraiser/40195/",
+      "uid": "sv-3846197917218138366",
       "_source": null
     },
     {
@@ -6130,7 +6017,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-7093599672982175959",
+      "uid": "sv-5071473778655624609",
       "_source": null
     },
     {
@@ -6141,7 +6028,7 @@
       "end_utc": "2026-09-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/overnight-brule-river-paddle/961/",
-      "uid": "sv-4759865000814331844",
+      "uid": "sv-6663484425705966707",
       "_source": null
     },
     {
@@ -6152,7 +6039,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-4824812675643958312",
+      "uid": "sv-6257070300421218127",
       "_source": null
     },
     {
@@ -6163,7 +6050,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-757501934922735664",
+      "uid": "sv-2555097864661586848",
       "_source": null
     },
     {
@@ -6174,7 +6061,7 @@
       "end_utc": "2026-09-03 00:00:00",
       "location": "Frank B. Koller Memorial Library or Rest Lake Park",
       "url": "https://manitowishwaters.org/event/book-club-atmosphere/984/",
-      "uid": "sv-1272510132632423308",
+      "uid": "sv-1111338592892476149",
       "_source": null
     },
     {
@@ -6185,7 +6072,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-4081047538033756430",
+      "uid": "sv-4930479501101133809",
       "_source": null
     },
     {
@@ -6196,7 +6083,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "Statehouse Lake Beach",
       "url": "https://manitowishwaters.org/event/historical-statehouse-lake-family-canoe-exploration/964/",
-      "uid": "sv-3482653639612981200",
+      "uid": "sv-3251270223453693043",
       "_source": null
     },
     {
@@ -6207,7 +6094,7 @@
       "end_utc": "2026-11-28 00:00:00",
       "location": "North Lakeland Discovery Lodge",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/962/",
-      "uid": "sv-4172398299684193938",
+      "uid": "sv-4254963715349710058",
       "_source": null
     },
     {
@@ -6218,7 +6105,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "North Lakeland Discovery Center/Water Room",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-camping-adventures/963/",
-      "uid": "sv-9111375023152192738",
+      "uid": "sv-588950619935621428",
       "_source": null
     },
     {
@@ -6229,7 +6116,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/manitowish-waters-lions-fall-raffle-drawing/920/",
-      "uid": "sv-6167864639320700811",
+      "uid": "sv-7637824543718776486",
       "_source": null
     },
     {
@@ -6240,7 +6127,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park.",
       "url": "https://manitowishwaters.org/event/mw-17th-annual-sno-skeeters-dam-duck-race/917/",
-      "uid": "sv-8671287332811258929",
+      "uid": "sv-654361113548358724",
       "_source": null
     },
     {
@@ -6251,7 +6138,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Little Bohemia Lodge or Rest Lake - Check Location with NLDC",
       "url": "https://manitowishwaters.org/event/historic-dillinger-pontoon-tour/808/",
-      "uid": "sv-1976949942960326184",
+      "uid": "sv-4552859632722628200",
       "_source": null
     },
     {
@@ -6262,7 +6149,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Frank B. Koller Public Library",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-our-living-ancestors-by-john-bates/965/",
-      "uid": "sv-4120400813514235161",
+      "uid": "sv-6254592340100559884",
       "_source": null
     },
     {
@@ -6273,7 +6160,7 @@
       "end_utc": "2026-09-09 00:00:00",
       "location": "South Trout Lake Boat Landing",
       "url": "https://manitowishwaters.org/event/trout-lake-history-pontoon/966/",
-      "uid": "sv-3232434602785785433",
+      "uid": "sv-1231798367319351458",
       "_source": null
     },
     {
@@ -6284,7 +6171,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-paddling-through-history-the-lake-mendota-canoes-with-amy-l-rosebrough/967/",
-      "uid": "sv-6233490628222149377",
+      "uid": "sv-5310153034022529405",
       "_source": null
     },
     {
@@ -6295,7 +6182,7 @@
       "end_utc": "2026-09-13 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/creator-camp-2026/914/",
-      "uid": "sv-6154829945182515323",
+      "uid": "sv-791308421258449049",
       "_source": null
     },
     {
@@ -6306,7 +6193,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/plant-powered-tea%3a-herbal-infusions-from-your-garden/968/",
-      "uid": "sv-4624125446208051136",
+      "uid": "sv-8659313220724154764",
       "_source": null
     },
     {
@@ -6317,7 +6204,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/family-fall-hike/969/",
-      "uid": "sv-5812488071705880768",
+      "uid": "sv-2658275144852426557",
       "_source": null
     },
     {
@@ -6328,7 +6215,7 @@
       "end_utc": "2026-09-14 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-wisconsin-breeding-bird-atlas-update-with-nick-anich/970/",
-      "uid": "sv-2120722955187152952",
+      "uid": "sv-5921433832781707961",
       "_source": null
     },
     {
@@ -6339,7 +6226,7 @@
       "end_utc": "2026-09-17 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/soy-wax-batik-and-dyeing-workshop/972/",
-      "uid": "sv-7107543066703487459",
+      "uid": "sv-8123523220766649308",
       "_source": null
     },
     {
@@ -6350,7 +6237,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan trails exploring the hidden wonders and changes occurring during the fall months. Exploring topics like",
       "url": "https://manitowishwaters.org/event/autumns-hidden-wonders-hike-at-winman-trails/973/",
-      "uid": "sv-8416235962142086237",
+      "uid": "sv-2204928104793111209",
       "_source": null
     },
     {
@@ -6361,7 +6248,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Koller Park in downtown Manitowish Waters",
       "url": "https://manitowishwaters.org/event/manitowish-waters-harvest-festival/945/",
-      "uid": "sv-4436106713184907225",
+      "uid": "sv-4409548640004881828",
       "_source": null
     },
     {
@@ -6372,7 +6259,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-poo-dunit%3f-a-forest-floor-mystery-by-katelyn-aronson/974/",
-      "uid": "sv-4839873828660396582",
+      "uid": "sv-2592421668915637650",
       "_source": null
     },
     {
@@ -6383,7 +6270,128 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-fall-clean-up/947/",
-      "uid": "sv-826258624847845163",
+      "uid": "sv-444522984680591259",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Discovering Wisconsin's Amazing Forestry Legacy: Driving Tour & Short Hikes with Jim Bokern",
+      "start_utc": "2026-09-22 00:00:00",
+      "end_utc": "2026-09-22 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/discovering-wisconsins-amazing-forestry-legacy%3a-driving-tour-%26-short-hikes-with-jim-bokern/975/",
+      "uid": "sv-4019313653552237135",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Midwest Onewheel Enduro and Dual Slalom",
+      "start_utc": "2026-09-25 00:00:00",
+      "end_utc": "2026-09-27 00:00:00",
+      "location": "WinMan Trails for a 6 stage",
+      "url": "https://manitowishwaters.org/event/midwest-onewheel-enduro-and-dual-slalom/946/",
+      "uid": "sv-4799815293235110540",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-09-02 18:00:00",
+      "end_utc": "2026-09-02 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-09-02/",
+      "uid": "10000099",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-09-05 18:00:00",
+      "end_utc": "2026-11-28 20:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-09-05/",
+      "uid": "10000112",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "24th Annual Stillwaters Star Lake Mayor’s Race",
+      "start_utc": "2026-09-06 15:00:00",
+      "end_utc": "2026-09-06 19:00:00",
+      "location": "Stillwaters, 7914 Co. Rd K, Star Lake",
+      "url": "https://sayner-starlake-cloverland.org/event/24th-annual-stillwaters-star-lake-mayors-race/",
+      "uid": "1650",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Lake EMS Annual Pork Loin Benefit Dinner",
+      "start_utc": "2026-09-14 16:00:00",
+      "end_utc": "2026-09-14 20:00:00",
+      "location": "Whitetail Inn, 9038 WI-70, St. Germain",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-lake-ems-annual-pork-loin-benefit-dinner-2/",
+      "uid": "1644",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Colorama Weekend",
+      "start_utc": "2026-09-25 00:00:00",
+      "end_utc": "2026-09-27 23:59:59",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/colorama-weekend-2/",
+      "uid": "1641",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "15th Annual Harvest Dinner",
+      "start_utc": "2026-10-19 16:00:00",
+      "end_utc": "2026-10-19 19:00:00",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/15th-annual-harvest-dinner/",
+      "uid": "1639",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Trunk-N-Treat",
+      "start_utc": "2026-10-30 16:00:00",
+      "end_utc": "2026-10-30 18:00:00",
+      "location": "Plum Lake Library, 8789 Peterson St., Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/trunk-n-treat-2/",
+      "uid": "1637",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Christmas in Downtown Sayner-Star Lake",
+      "start_utc": "2026-11-27 00:00:00",
+      "end_utc": "2026-11-29 23:59:59",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/christmas-in-downtown-sayner-star-lake-2/",
+      "uid": "1648",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Hometown Holiday Celebration",
+      "start_utc": "2026-12-05 16:00:00",
+      "end_utc": "2026-12-05 21:00:00",
+      "location": "Sayner Community Center, 545 WI-155, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/hometown-holiday-celebration-2/",
+      "uid": "1646",
       "_source": null
     }
   ],
@@ -6391,116 +6399,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "School Walking Hours at NPHS",
-      "start_utc": "2026-08-29 07:00:00",
-      "end_utc": "2026-08-29 12:00:00",
-      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2026-08-29/",
-      "uid": "10013614",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "46th Eagle River Car and Truck Show",
-      "start_utc": "2026-08-29 09:00:00",
-      "end_utc": "2026-08-29 15:00:00",
-      "location": "Downtown Eagle River, 201 E Wall St, Eagle River, WI",
-      "url": "https://eagleriver.org/events/eagle-river-car-and-truck-show/",
-      "uid": "16443",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "LOLA Art Harvest",
-      "start_utc": "2026-08-29 09:00:00",
-      "end_utc": "2026-08-29 14:00:00",
-      "location": "VFW Grounds",
-      "url": "https://eagleriver.org/events/lola-art-harvest/",
-      "uid": "20858",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Garden Railroad on Display at St. Mary of the Snows",
-      "start_utc": "2026-08-29 10:00:00",
-      "end_utc": "2026-08-29 12:00:00",
-      "location": "St. Mary of the Snows, 1019 E. Wall St, Eagle River, WI",
-      "url": "https://eagleriver.org/events/garden-railroad-on-display-at-st-mary-of-the-snows-2/2026-08-29/",
-      "uid": "10020923",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Mystical Realms Expo &#038; Market",
-      "start_utc": "2026-08-29 10:00:00",
-      "end_utc": "2026-08-30 17:00:00",
-      "location": "Northern Waters Casino Resort",
-      "url": "https://eagleriver.org/events/mystical-realms-expo-market/",
-      "uid": "27947",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Makers Slow Crafting Show &#038; Tell and Demonstration",
-      "start_utc": "2026-08-29 13:00:00",
-      "end_utc": "2026-08-29 14:30:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/the-makers-slow-crafting-show-tell-and-demonstration/",
-      "uid": "27941",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Summer Events On The Farm-At Lake Nokomis",
-      "start_utc": "2026-08-29 15:00:00",
-      "end_utc": "2026-08-29 18:00:00",
-      "location": "Lake Nokomis Cranberries, Inc., 6041 County Road D, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/summer-events-on-the-farm-at-lake-nokomis/2026-08-29/",
-      "uid": "10020886",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Free Live Music at Pirates Hideaway",
-      "start_utc": "2026-08-29 18:00:00",
-      "end_utc": "2026-08-29 21:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/free-live-music-at-pirates-hideaway-5/2026-08-29/",
-      "uid": "10019843",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Tennessee Whiskey Revival Featuring Scott Kirby Presented by: Headwaters Council for the Performing Arts",
-      "start_utc": "2026-08-29 18:30:00",
-      "end_utc": "2026-08-29 22:00:00",
-      "location": "Northland Pines Auditorium, 1800 Pleasure Island Rd, Eagle River",
-      "url": "https://eagleriver.org/events/tennessee-whiskey-revival-featuring-scott-kirby-presented-by-headwaters-council-for-the-performing-arts/",
-      "uid": "26633",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-08-29 21:00:00",
-      "end_utc": "2026-08-29 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2026-08-29/",
-      "uid": "10018752",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "Northwoods Throw Down Disc Golf Tournament",
       "start_utc": "2026-08-30 08:00:00",
       "end_utc": "2026-08-30 17:00:00",
@@ -11911,6 +11809,50 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-12-28 05:30:00",
+      "end_utc": "2026-12-28 07:30:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-4/2026-12-28/",
+      "uid": "10011597",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2026-12-28 14:00:00",
+      "end_utc": "2026-12-28 16:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-2-2/2026-12-28/",
+      "uid": "10013095",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Ukulele Practice/ Jam Session",
+      "start_utc": "2026-12-28 14:30:00",
+      "end_utc": "2026-12-28 16:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/ukulele-practice-jam-session/2026-12-28/",
+      "uid": "10009738",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Hatha Yoga Monday Nights at The Warehouse Community Art Center",
+      "start_utc": "2026-12-28 18:00:00",
+      "end_utc": "2026-12-28 19:30:00",
+      "location": "The Warehouse Art Center, 107 South Railroad Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/hatha-yoga-monday-nights-at-the-warehouse-community-art-center/2026-12-28/",
+      "uid": "10016503",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -12006,6 +11948,17 @@
       "end_utc": null,
       "location": "September 19th, 2026",
       "url": "https://st-germain.com/events/fall-cruisin-car-show-2026/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "2026-07-08T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
       "uid": null,
       "_source": "stgermain_wp"
     },
@@ -12144,34 +12097,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "Builder's Club at Minocqua Public Library",
-      "start_utc": "2026-01-31 00:00:00",
-      "end_utc": "2026-08-29 00:00:00",
-      "location": "Minocqua Public Library the last Saturday of the month 10 am -12 pm.",
-      "url": "https://www.minocqua.org/event/builders-club-at-minocqua-public-library/39886/",
-      "uid": "sv-4711011899721031560",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Sound & Sauna Saturdays",
-      "start_utc": "2026-02-14 00:00:00",
-      "end_utc": "2027-01-02 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-2212180050498428018",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Generations Charity Golf Tournament",
       "start_utc": "2026-08-30 00:00:00",
       "end_utc": "2026-08-30 00:00:00",
       "location": "Trout Lake Golf & Country Club.",
       "url": "https://www.minocqua.org/event/generations-charity-golf-tournament/40201/",
-      "uid": "sv-6944657432552567730",
+      "uid": "sv-7672861440112094457",
       "_source": null
     },
     {
@@ -12182,7 +12113,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/restorative-yoga/39407/",
-      "uid": "sv-4361189945555270803",
+      "uid": "sv-5317187694516190669",
       "_source": null
     },
     {
@@ -12193,7 +12124,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Northern Waters Distillery",
       "url": "https://www.minocqua.org/event/distilled-yoga-lakeside!/40077/",
-      "uid": "sv-8516063667072527443",
+      "uid": "sv-245048248185260858",
       "_source": null
     },
     {
@@ -12204,7 +12135,7 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-minocqua-public-library/40158/",
-      "uid": "sv-8567292874317584537",
+      "uid": "sv-6662518737157247267",
       "_source": null
     },
     {
@@ -12215,7 +12146,7 @@
       "end_utc": "2026-12-01 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/trivia-at-the-library/40183/",
-      "uid": "sv-1397459883963706757",
+      "uid": "sv-2327109974048359757",
       "_source": null
     },
     {
@@ -12226,7 +12157,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-298492538221951259",
+      "uid": "sv-8475608089203075965",
       "_source": null
     },
     {
@@ -12237,7 +12168,7 @@
       "end_utc": "2026-11-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime/40221/",
-      "uid": "sv-3422722730640891148",
+      "uid": "sv-6007892456869785240",
       "_source": null
     },
     {
@@ -12248,7 +12179,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-3929076454783415794",
+      "uid": "sv-6781521475758589847",
       "_source": null
     },
     {
@@ -12259,7 +12190,18 @@
       "end_utc": null,
       "location": "Torpy Park in Minocqua on Saturday",
       "url": "https://www.minocqua.org/event/mklpa-annual-pig-roast-fundraiser-2026/39995/",
-      "uid": "sv-725964272205509230",
+      "uid": "sv-6328534712578229839",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound & Sauna Saturdays",
+      "start_utc": "2026-02-14 00:00:00",
+      "end_utc": "2027-01-02 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
+      "uid": "sv-6211182811822665732",
       "_source": null
     },
     {
@@ -12270,7 +12212,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Bearskin Trail",
       "url": "https://www.minocqua.org/event/minocqua-no-frills-marathon-%e2%84%a2-half-marathon-%26-marathon-relay%3b-and-5k/31394/",
-      "uid": "sv-1212262374306965539",
+      "uid": "sv-8591827649650520537",
       "_source": null
     },
     {
@@ -12281,7 +12223,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/diy-craft-night/40217/",
-      "uid": "sv-302773671554575433",
+      "uid": "sv-2086085867779602683",
       "_source": null
     },
     {
@@ -12292,7 +12234,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "Royce Gracie Jiu Jitsu",
       "url": "https://www.minocqua.org/event/royce-gracie-returns-to-the-northwoods/40204/",
-      "uid": "sv-5905051339519803208",
+      "uid": "sv-2539169579990202812",
       "_source": null
     },
     {
@@ -12303,7 +12245,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/community-cribbage-tournament/40254/",
-      "uid": "sv-8258445335283351094",
+      "uid": "sv-3053069853465566019",
       "_source": null
     },
     {
@@ -12314,7 +12256,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/micro-macro-photography/40212/",
-      "uid": "sv-4903744918660720298",
+      "uid": "sv-1629735767596244267",
       "_source": null
     },
     {
@@ -12325,29 +12267,29 @@
       "end_utc": "2026-11-16 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/book-babies/40222/",
-      "uid": "sv-2077406945407144701",
+      "uid": "sv-4160278184851182806",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Animal Spotlight Hour: Bobcats",
-      "start_utc": "2026-08-29 00:00:00",
-      "end_utc": "2026-08-29 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-bobcats/924/",
-      "uid": "sv-3886296238175216400",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Free Bingo",
+      "start_utc": "2026-09-18 00:00:00",
+      "end_utc": "2026-09-18 00:00:00",
+      "location": "Minocqua Public Library",
+      "url": "https://www.minocqua.org/event/free-bingo/40259/",
+      "uid": "sv-2689279208754349529",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Medicinal First Aid Field Kit",
-      "start_utc": "2026-08-29 00:00:00",
-      "end_utc": "2026-08-29 00:00:00",
-      "location": "North Lakeland Discovery Center",
-      "url": "https://manitowishwaters.org/event/medicinal-first-aid-field-kit/925/",
-      "uid": "sv-7658285372320818362",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Fish Fry Fundraiser",
+      "start_utc": "2026-09-19 00:00:00",
+      "end_utc": "2026-09-19 00:00:00",
+      "location": "Holy Family Catholic Church",
+      "url": "https://www.minocqua.org/event/fish-fry-fundraiser/40195/",
+      "uid": "sv-3846197917218138366",
       "_source": null
     },
     {
@@ -12358,7 +12300,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/music-in-the-park/865/",
-      "uid": "sv-7093599672982175959",
+      "uid": "sv-5071473778655624609",
       "_source": null
     },
     {
@@ -12369,7 +12311,7 @@
       "end_utc": "2026-09-02 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/overnight-brule-river-paddle/961/",
-      "uid": "sv-4759865000814331844",
+      "uid": "sv-6663484425705966707",
       "_source": null
     },
     {
@@ -12380,7 +12322,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-4824812675643958312",
+      "uid": "sv-6257070300421218127",
       "_source": null
     },
     {
@@ -12391,7 +12333,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-757501934922735664",
+      "uid": "sv-2555097864661586848",
       "_source": null
     },
     {
@@ -12402,7 +12344,7 @@
       "end_utc": "2026-09-03 00:00:00",
       "location": "Frank B. Koller Memorial Library or Rest Lake Park",
       "url": "https://manitowishwaters.org/event/book-club-atmosphere/984/",
-      "uid": "sv-1272510132632423308",
+      "uid": "sv-1111338592892476149",
       "_source": null
     },
     {
@@ -12413,7 +12355,7 @@
       "end_utc": null,
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-4081047538033756430",
+      "uid": "sv-4930479501101133809",
       "_source": null
     },
     {
@@ -12424,7 +12366,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "Statehouse Lake Beach",
       "url": "https://manitowishwaters.org/event/historical-statehouse-lake-family-canoe-exploration/964/",
-      "uid": "sv-3482653639612981200",
+      "uid": "sv-3251270223453693043",
       "_source": null
     },
     {
@@ -12435,7 +12377,7 @@
       "end_utc": "2026-11-28 00:00:00",
       "location": "North Lakeland Discovery Lodge",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/962/",
-      "uid": "sv-4172398299684193938",
+      "uid": "sv-4254963715349710058",
       "_source": null
     },
     {
@@ -12446,7 +12388,7 @@
       "end_utc": "2026-09-05 00:00:00",
       "location": "North Lakeland Discovery Center/Water Room",
       "url": "https://manitowishwaters.org/event/nature-sprouts%3a-camping-adventures/963/",
-      "uid": "sv-9111375023152192738",
+      "uid": "sv-588950619935621428",
       "_source": null
     },
     {
@@ -12457,7 +12399,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park",
       "url": "https://manitowishwaters.org/event/manitowish-waters-lions-fall-raffle-drawing/920/",
-      "uid": "sv-6167864639320700811",
+      "uid": "sv-7637824543718776486",
       "_source": null
     },
     {
@@ -12468,7 +12410,7 @@
       "end_utc": "2026-09-06 00:00:00",
       "location": "Koller Park.",
       "url": "https://manitowishwaters.org/event/mw-17th-annual-sno-skeeters-dam-duck-race/917/",
-      "uid": "sv-8671287332811258929",
+      "uid": "sv-654361113548358724",
       "_source": null
     },
     {
@@ -12479,7 +12421,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Little Bohemia Lodge or Rest Lake - Check Location with NLDC",
       "url": "https://manitowishwaters.org/event/historic-dillinger-pontoon-tour/808/",
-      "uid": "sv-1976949942960326184",
+      "uid": "sv-4552859632722628200",
       "_source": null
     },
     {
@@ -12490,7 +12432,7 @@
       "end_utc": "2026-09-08 00:00:00",
       "location": "Frank B. Koller Public Library",
       "url": "https://manitowishwaters.org/event/natural-pages%3a-our-living-ancestors-by-john-bates/965/",
-      "uid": "sv-4120400813514235161",
+      "uid": "sv-6254592340100559884",
       "_source": null
     },
     {
@@ -12501,7 +12443,7 @@
       "end_utc": "2026-09-09 00:00:00",
       "location": "South Trout Lake Boat Landing",
       "url": "https://manitowishwaters.org/event/trout-lake-history-pontoon/966/",
-      "uid": "sv-3232434602785785433",
+      "uid": "sv-1231798367319351458",
       "_source": null
     },
     {
@@ -12512,7 +12454,7 @@
       "end_utc": "2026-09-10 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-paddling-through-history-the-lake-mendota-canoes-with-amy-l-rosebrough/967/",
-      "uid": "sv-6233490628222149377",
+      "uid": "sv-5310153034022529405",
       "_source": null
     },
     {
@@ -12523,7 +12465,7 @@
       "end_utc": "2026-09-13 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/creator-camp-2026/914/",
-      "uid": "sv-6154829945182515323",
+      "uid": "sv-791308421258449049",
       "_source": null
     },
     {
@@ -12534,7 +12476,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/plant-powered-tea%3a-herbal-infusions-from-your-garden/968/",
-      "uid": "sv-4624125446208051136",
+      "uid": "sv-8659313220724154764",
       "_source": null
     },
     {
@@ -12545,7 +12487,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/family-fall-hike/969/",
-      "uid": "sv-5812488071705880768",
+      "uid": "sv-2658275144852426557",
       "_source": null
     },
     {
@@ -12556,7 +12498,7 @@
       "end_utc": "2026-09-14 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-wisconsin-breeding-bird-atlas-update-with-nick-anich/970/",
-      "uid": "sv-2120722955187152952",
+      "uid": "sv-5921433832781707961",
       "_source": null
     },
     {
@@ -12567,7 +12509,7 @@
       "end_utc": "2026-09-17 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/soy-wax-batik-and-dyeing-workshop/972/",
-      "uid": "sv-7107543066703487459",
+      "uid": "sv-8123523220766649308",
       "_source": null
     },
     {
@@ -12578,7 +12520,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan trails exploring the hidden wonders and changes occurring during the fall months. Exploring topics like",
       "url": "https://manitowishwaters.org/event/autumns-hidden-wonders-hike-at-winman-trails/973/",
-      "uid": "sv-8416235962142086237",
+      "uid": "sv-2204928104793111209",
       "_source": null
     },
     {
@@ -12589,7 +12531,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Koller Park in downtown Manitowish Waters",
       "url": "https://manitowishwaters.org/event/manitowish-waters-harvest-festival/945/",
-      "uid": "sv-4436106713184907225",
+      "uid": "sv-4409548640004881828",
       "_source": null
     },
     {
@@ -12600,7 +12542,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-poo-dunit%3f-a-forest-floor-mystery-by-katelyn-aronson/974/",
-      "uid": "sv-4839873828660396582",
+      "uid": "sv-2592421668915637650",
       "_source": null
     },
     {
@@ -12611,13 +12553,134 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-fall-clean-up/947/",
-      "uid": "sv-826258624847845163",
+      "uid": "sv-444522984680591259",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Discovering Wisconsin's Amazing Forestry Legacy: Driving Tour & Short Hikes with Jim Bokern",
+      "start_utc": "2026-09-22 00:00:00",
+      "end_utc": "2026-09-22 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/discovering-wisconsins-amazing-forestry-legacy%3a-driving-tour-%26-short-hikes-with-jim-bokern/975/",
+      "uid": "sv-4019313653552237135",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Midwest Onewheel Enduro and Dual Slalom",
+      "start_utc": "2026-09-25 00:00:00",
+      "end_utc": "2026-09-27 00:00:00",
+      "location": "WinMan Trails for a 6 stage",
+      "url": "https://manitowishwaters.org/event/midwest-onewheel-enduro-and-dual-slalom/946/",
+      "uid": "sv-4799815293235110540",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-09-02 18:00:00",
+      "end_utc": "2026-09-02 21:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-wednesdays/2026-09-02/",
+      "uid": "10000099",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Ski-ters Water Ski Show",
+      "start_utc": "2026-09-05 18:00:00",
+      "end_utc": "2026-11-28 20:00:00",
+      "location": "Plum Lake, 3230 State House Point Road, Sayner, WI",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-ski-ters-water-ski-show-3/2026-09-05/",
+      "uid": "10000112",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "24th Annual Stillwaters Star Lake Mayor’s Race",
+      "start_utc": "2026-09-06 15:00:00",
+      "end_utc": "2026-09-06 19:00:00",
+      "location": "Stillwaters, 7914 Co. Rd K, Star Lake",
+      "url": "https://sayner-starlake-cloverland.org/event/24th-annual-stillwaters-star-lake-mayors-race/",
+      "uid": "1650",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Plum Lake EMS Annual Pork Loin Benefit Dinner",
+      "start_utc": "2026-09-14 16:00:00",
+      "end_utc": "2026-09-14 20:00:00",
+      "location": "Whitetail Inn, 9038 WI-70, St. Germain",
+      "url": "https://sayner-starlake-cloverland.org/event/plum-lake-ems-annual-pork-loin-benefit-dinner-2/",
+      "uid": "1644",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Colorama Weekend",
+      "start_utc": "2026-09-25 00:00:00",
+      "end_utc": "2026-09-27 23:59:59",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/colorama-weekend-2/",
+      "uid": "1641",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "15th Annual Harvest Dinner",
+      "start_utc": "2026-10-19 16:00:00",
+      "end_utc": "2026-10-19 19:00:00",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/15th-annual-harvest-dinner/",
+      "uid": "1639",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Trunk-N-Treat",
+      "start_utc": "2026-10-30 16:00:00",
+      "end_utc": "2026-10-30 18:00:00",
+      "location": "Plum Lake Library, 8789 Peterson St., Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/trunk-n-treat-2/",
+      "uid": "1637",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Christmas in Downtown Sayner-Star Lake",
+      "start_utc": "2026-11-27 00:00:00",
+      "end_utc": "2026-11-29 23:59:59",
+      "location": "Sayner Star Lake Chamber, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/christmas-in-downtown-sayner-star-lake-2/",
+      "uid": "1648",
+      "_source": null
+    },
+    {
+      "calendar": "Sayner Star Lake Cloverland (TEC)",
+      "source": "Sayner Star Lake Cloverland (TEC)",
+      "title": "Hometown Holiday Celebration",
+      "start_utc": "2026-12-05 16:00:00",
+      "end_utc": "2026-12-05 21:00:00",
+      "location": "Sayner Community Center, 545 WI-155, Sayner",
+      "url": "https://sayner-starlake-cloverland.org/event/hometown-holiday-celebration-2/",
+      "uid": "1646",
       "_source": null
     }
   ],
-  "events_preview_count": 566,
+  "events_preview_count": 571,
   "curated_feeds": {
-    "generated_at": "2026-08-29T20:28:20.114312+00:00",
+    "generated_at": "2026-08-30T09:44:06.128145+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
@@ -12634,19 +12697,19 @@
         "id": "min-events",
         "name": "Minocqua Events",
         "enabled": true,
-        "count": 6,
+        "count": 7,
         "path": "curated/min-events.ics",
         "manual_count": 0,
-        "auto_count": 6
+        "auto_count": 7
       },
       {
         "id": "RCLMinocquaEvents",
         "name": "RCL Minocqua Events",
         "enabled": true,
-        "count": 6,
+        "count": 7,
         "path": "curated/rclminocquaevents.ics",
         "manual_count": 0,
-        "auto_count": 6
+        "auto_count": 7
       }
     ]
   }
