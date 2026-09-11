@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-10T20:26:44.686826+00:00",
+  "generated_at": "2026-09-11T08:33:18.775382+00:00",
   "sources_processed": 8,
-  "total_events": 505,
+  "total_events": 500,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-10&end_date=2027-01-08&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-11&end_date=2027-01-09&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-10&end_date=2027-01-08&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-11&end_date=2027-01-09&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 428,
+      "count": 423,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-10&end_date=2027-01-08&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-11&end_date=2027-01-09&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-10&end_date=2027-01-08&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-11&end_date=2027-01-09&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -113,83 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Aunt Grace&#8217;s Sewing Circle",
-      "start_utc": "2026-09-10 09:00:00",
-      "end_utc": "2026-09-10 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2026-09-10/",
-      "uid": "10010103",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
-      "start_utc": "2026-09-10 12:30:00",
-      "end_utc": "2026-09-10 15:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2026-09-10/",
-      "uid": "10014363",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Border Troubadours Present 3 Original One-Act Plays!",
-      "start_utc": "2026-09-10 16:00:00",
-      "end_utc": "2026-09-10 21:30:00",
-      "location": "Land O&#8217; Lakes Pavillion Park, 6480 Chippewa Dr, Land O' Lakes",
-      "url": "https://eagleriver.org/events/boarder-troubadours-three-lakes-center-for-the-arts/",
-      "uid": "24495",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
-      "start_utc": "2026-09-10 17:00:00",
-      "end_utc": "2026-09-10 21:00:00",
-      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
-      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club-3/2026-09-10/",
-      "uid": "10020737",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Tennis: Thursday Round Robin",
-      "start_utc": "2026-09-10 17:30:00",
-      "end_utc": "2026-09-10 20:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-round-robin-2/2026-09-10/",
-      "uid": "10019616",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Square Dance Lessons At Kalmar Community Center!",
-      "start_utc": "2026-09-10 18:00:00",
-      "end_utc": "2026-09-10 19:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/square-dance-lessons-at-kalmar-community-center/2026-09-10/",
-      "uid": "10020299",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Brew Station Thursday Game Night",
-      "start_utc": "2026-09-10 19:00:00",
-      "end_utc": "2026-09-10 21:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3-2/2026-09-10/",
-      "uid": "10015995",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -4822,6 +4745,28 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2027-01-09 07:00:00",
+      "end_utc": "2027-01-09 12:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2027-01-09/",
+      "uid": "10013633",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2027-01-09 21:00:00",
+      "end_utc": "2027-01-09 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2027-01-09/",
+      "uid": "10018771",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -5066,56 +5011,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "DIY CRAFT NIGHT",
-      "start_utc": "2026-09-10 00:00:00",
-      "end_utc": "2026-09-10 00:00:00",
-      "location": "Minocqua Public Library",
-      "url": "https://www.minocqua.org/event/diy-craft-night/40217/",
-      "uid": "sv-4552240350333630147",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Make and Take Crushed Glass Class",
-      "start_utc": "2026-09-03 00:00:00",
-      "end_utc": "2026-09-29 00:00:00",
-      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
-      "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40279/",
-      "uid": "sv-2910894743805935893",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Make and Take Stained Glass Class",
-      "start_utc": "2026-09-03 00:00:00",
-      "end_utc": "2026-09-29 00:00:00",
-      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
-      "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40275/",
-      "uid": "sv-8298243475044187071",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Sound Bath",
-      "start_utc": "2026-02-05 00:00:00",
-      "end_utc": "2026-09-24 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-7839555041481676081",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Royce Gracie Returns to the Northwoods",
       "start_utc": "2026-09-11 00:00:00",
       "end_utc": "2026-09-11 00:00:00",
       "location": "Royce Gracie Jiu Jitsu",
       "url": "https://www.minocqua.org/event/royce-gracie-returns-to-the-northwoods/40204/",
-      "uid": "sv-2536666737468021612",
+      "uid": "sv-4882104543070475155",
       "_source": null
     },
     {
@@ -5126,7 +5027,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/community-cribbage-tournament/40254/",
-      "uid": "sv-2175043587244590076",
+      "uid": "sv-4665167961065202391",
       "_source": null
     },
     {
@@ -5137,7 +5038,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40280/",
-      "uid": "sv-5205841614035774527",
+      "uid": "sv-7928224602607116145",
       "_source": null
     },
     {
@@ -5148,7 +5049,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40277/",
-      "uid": "sv-4218418479259627370",
+      "uid": "sv-2487502766774420302",
       "_source": null
     },
     {
@@ -5159,7 +5060,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/micro-macro-photography/40212/",
-      "uid": "sv-9057333842702505815",
+      "uid": "sv-3509439856538032802",
       "_source": null
     },
     {
@@ -5170,7 +5071,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-821979166332867914",
+      "uid": "sv-6030659574130020814",
       "_source": null
     },
     {
@@ -5181,7 +5082,18 @@
       "end_utc": "2026-09-27 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40278/",
-      "uid": "sv-5246867534312435210",
+      "uid": "sv-7873151297898114271",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Make and Take Stained Glass Class",
+      "start_utc": "2026-09-03 00:00:00",
+      "end_utc": "2026-09-29 00:00:00",
+      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
+      "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40275/",
+      "uid": "sv-5112147268249019272",
       "_source": null
     },
     {
@@ -5192,7 +5104,18 @@
       "end_utc": "2026-11-16 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/book-babies/40222/",
-      "uid": "sv-5847638082139290347",
+      "uid": "sv-6502255345253075458",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Make and Take Crushed Glass Class",
+      "start_utc": "2026-09-03 00:00:00",
+      "end_utc": "2026-09-29 00:00:00",
+      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
+      "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40279/",
+      "uid": "sv-6467977333863107819",
       "_source": null
     },
     {
@@ -5203,7 +5126,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-4676417431934428729",
+      "uid": "sv-6875726807675863160",
       "_source": null
     },
     {
@@ -5214,7 +5137,7 @@
       "end_utc": "2026-09-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/lakeland-area-photo-club-travelogue/40260/",
-      "uid": "sv-4186073519823217213",
+      "uid": "sv-1520842556120804908",
       "_source": null
     },
     {
@@ -5225,7 +5148,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40276/",
-      "uid": "sv-797416825067197774",
+      "uid": "sv-5707182708009161328",
       "_source": null
     },
     {
@@ -5236,7 +5159,18 @@
       "end_utc": "2026-11-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime/40221/",
-      "uid": "sv-9198388765661206416",
+      "uid": "sv-3316309648371028401",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound Bath",
+      "start_utc": "2026-02-05 00:00:00",
+      "end_utc": "2026-09-24 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-bath/39307/",
+      "uid": "sv-6028225163683700872",
       "_source": null
     },
     {
@@ -5247,7 +5181,7 @@
       "end_utc": "2026-09-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/free-bingo/40259/",
-      "uid": "sv-7041865777899039196",
+      "uid": "sv-2958413255152339734",
       "_source": null
     },
     {
@@ -5258,7 +5192,7 @@
       "end_utc": "2026-09-18 00:00:00",
       "location": "Natural Northern, 221 Front Street",
       "url": "https://www.minocqua.org/event/natural-tinted-cheek-%2b-lip-balm-workshop/40285/",
-      "uid": "sv-1159380161744116337",
+      "uid": "sv-5550857803927850635",
       "_source": null
     },
     {
@@ -5269,7 +5203,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Holy Family Catholic Church",
       "url": "https://www.minocqua.org/event/fish-fry-fundraiser/40195/",
-      "uid": "sv-7746352105524078695",
+      "uid": "sv-7282425112499955721",
       "_source": null
     },
     {
@@ -5280,7 +5214,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-4967301696866780760",
+      "uid": "sv-8073084211956557313",
       "_source": null
     },
     {
@@ -5291,7 +5225,7 @@
       "end_utc": "2026-09-20 00:00:00",
       "location": "Natural Northern, 221 Front Street",
       "url": "https://www.minocqua.org/event/fire-cider-workshop/40286/",
-      "uid": "sv-8783272570058212972",
+      "uid": "sv-839528323851532733",
       "_source": null
     },
     {
@@ -5302,29 +5236,18 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/teen-time/40223/",
-      "uid": "sv-2517534138544347007",
+      "uid": "sv-2148740772325464386",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Nibbles n' Knowledge: Paddling Through History - The Lake Mendota Canoes with Amy L. Rosebrough",
-      "start_utc": "2026-09-10 00:00:00",
-      "end_utc": "2026-09-10 00:00:00",
-      "location": "North Lakeland Discovery Center Lodge",
-      "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-paddling-through-history-the-lake-mendota-canoes-with-amy-l-rosebrough/967/",
-      "uid": "sv-8617176026621910547",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Tech Thursdays",
-      "start_utc": "2026-04-30 00:00:00",
-      "end_utc": null,
-      "location": "Winchester Public Library",
-      "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-8498188903108095316",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "20th Annual Spaghetti Dinner",
+      "start_utc": "2026-09-23 00:00:00",
+      "end_utc": "2026-09-23 00:00:00",
+      "location": "Peace Lutheran Church",
+      "url": "https://www.minocqua.org/event/20th-annual-spaghetti-dinner/40289/",
+      "uid": "sv-3744214930439992877",
       "_source": null
     },
     {
@@ -5335,7 +5258,7 @@
       "end_utc": "2026-09-13 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/creator-camp-2026/914/",
-      "uid": "sv-2848559187156984684",
+      "uid": "sv-3892339686636121449",
       "_source": null
     },
     {
@@ -5346,7 +5269,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/plant-powered-tea%3a-herbal-infusions-from-your-garden/968/",
-      "uid": "sv-4614861882286171200",
+      "uid": "sv-8975518899031908692",
       "_source": null
     },
     {
@@ -5357,7 +5280,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/family-fall-hike/969/",
-      "uid": "sv-8594775569632749251",
+      "uid": "sv-5687991605305039469",
       "_source": null
     },
     {
@@ -5368,7 +5291,7 @@
       "end_utc": "2026-11-28 00:00:00",
       "location": "North Lakeland Discovery Lodge",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/962/",
-      "uid": "sv-1354450090371864917",
+      "uid": "sv-5463076879067247204",
       "_source": null
     },
     {
@@ -5379,7 +5302,7 @@
       "end_utc": "2026-09-14 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-wisconsin-breeding-bird-atlas-update-with-nick-anich/970/",
-      "uid": "sv-3959933270857615260",
+      "uid": "sv-7957982620051201385",
       "_source": null
     },
     {
@@ -5390,7 +5313,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-694420752290966018",
+      "uid": "sv-8254299835398878115",
       "_source": null
     },
     {
@@ -5401,7 +5324,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-5346052323611137065",
+      "uid": "sv-2300401555606767131",
       "_source": null
     },
     {
@@ -5412,7 +5335,18 @@
       "end_utc": "2026-09-17 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/soy-wax-batik-and-dyeing-workshop/972/",
-      "uid": "sv-1424939584048062072",
+      "uid": "sv-8258593232491481417",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Tech Thursdays",
+      "start_utc": "2026-04-30 00:00:00",
+      "end_utc": null,
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
+      "uid": "sv-268448325001070642",
       "_source": null
     },
     {
@@ -5423,7 +5357,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan trails exploring the hidden wonders and changes occurring during the fall months. Exploring topics like",
       "url": "https://manitowishwaters.org/event/autumns-hidden-wonders-hike-at-winman-trails/973/",
-      "uid": "sv-4832306479043090230",
+      "uid": "sv-4490636275201417151",
       "_source": null
     },
     {
@@ -5434,7 +5368,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Koller Park in downtown Manitowish Waters",
       "url": "https://manitowishwaters.org/event/manitowish-waters-harvest-festival/945/",
-      "uid": "sv-8186073216822465431",
+      "uid": "sv-5441270309828043797",
       "_source": null
     },
     {
@@ -5445,7 +5379,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/mietzi-bleck-pop-up-exhibit/1015/",
-      "uid": "sv-425346806741153790",
+      "uid": "sv-6740046282562728067",
       "_source": null
     },
     {
@@ -5456,7 +5390,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-poo-dunit%3f-a-forest-floor-mystery-by-katelyn-aronson/974/",
-      "uid": "sv-1888160190130018688",
+      "uid": "sv-8679687791865217080",
       "_source": null
     },
     {
@@ -5467,7 +5401,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-fall-clean-up/947/",
-      "uid": "sv-554527174742850524",
+      "uid": "sv-2375637609826996642",
       "_source": null
     },
     {
@@ -5478,7 +5412,7 @@
       "end_utc": "2026-09-21 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-club%3a-table-for-two-by-amor-towles/1009/",
-      "uid": "sv-1390290439377155609",
+      "uid": "sv-5222892398604434965",
       "_source": null
     },
     {
@@ -5489,7 +5423,7 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/branch-weaving-workshop/1014/",
-      "uid": "sv-4781833854322397193",
+      "uid": "sv-2079779168494934690",
       "_source": null
     },
     {
@@ -5500,7 +5434,7 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "Airport Road and Highway 51 in Manitowish Waters. To sign up please call Diane",
       "url": "https://manitowishwaters.org/event/community-blood-center-blood-drive/1017/",
-      "uid": "sv-8231245657528326652",
+      "uid": "sv-5667608309361411466",
       "_source": null
     },
     {
@@ -5511,7 +5445,7 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/discovering-wisconsins-amazing-forestry-legacy%3a-driving-tour-%26-short-hikes-with-jim-bokern/975/",
-      "uid": "sv-2927642597868810916",
+      "uid": "sv-7490610134852356282",
       "_source": null
     },
     {
@@ -5522,7 +5456,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/fat-bear-week/1010/",
-      "uid": "sv-3123921047015000449",
+      "uid": "sv-870036828554702241",
       "_source": null
     },
     {
@@ -5533,7 +5467,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/history-walk/1011/",
-      "uid": "sv-1555859940097310746",
+      "uid": "sv-2560474526721388488",
       "_source": null
     },
     {
@@ -5544,7 +5478,7 @@
       "end_utc": "2026-09-27 00:00:00",
       "location": "WinMan Trails for a 6 stage",
       "url": "https://manitowishwaters.org/event/midwest-onewheel-enduro-and-dual-slalom/946/",
-      "uid": "sv-66191339924201798",
+      "uid": "sv-7564634801242646467",
       "_source": null
     },
     {
@@ -5555,7 +5489,7 @@
       "end_utc": "2026-09-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-discovery-fall-colors-retreat/943/",
-      "uid": "sv-3766752045712503817",
+      "uid": "sv-953318404980566173",
       "_source": null
     },
     {
@@ -5566,7 +5500,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "North Lakeland Discovery Center/Nature Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-macroinvertebrates/976/",
-      "uid": "sv-4331961431308878140",
+      "uid": "sv-8489640378939160428",
       "_source": null
     },
     {
@@ -5577,7 +5511,7 @@
       "end_utc": "2026-10-01 00:00:00",
       "location": "Frank B. Koller Public Library",
       "url": "https://manitowishwaters.org/event/book-club-isola/985/",
-      "uid": "sv-5021890762015472927",
+      "uid": "sv-6509454882432199833",
       "_source": null
     },
     {
@@ -5588,7 +5522,7 @@
       "end_utc": "2026-10-03 00:00:00",
       "location": "Van Vliet Hemlocks",
       "url": "https://manitowishwaters.org/event/fall-hike-at-van-vliet-hemlocks/979/",
-      "uid": "sv-679553782411440692",
+      "uid": "sv-6253809390747917160",
       "_source": null
     },
     {
@@ -5599,7 +5533,18 @@
       "end_utc": "2026-10-03 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/naturally-painted-autumn-landscapes/977/",
-      "uid": "sv-892920606666117291",
+      "uid": "sv-7350942012421859566",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Bird Club Program: Eagles, Ospreys, and Goshawks - Raptors of the Northwoods with Rich Staffen",
+      "start_utc": "2026-10-05 00:00:00",
+      "end_utc": "2026-10-05 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/bird-club-program%3a-eagles-ospreys-and-goshawks-raptors-of-the-northwoods-with-rich-staffen/980/",
+      "uid": "sv-4890225742894719357",
       "_source": null
     },
     {
@@ -5673,83 +5618,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Aunt Grace&#8217;s Sewing Circle",
-      "start_utc": "2026-09-10 09:00:00",
-      "end_utc": "2026-09-10 11:00:00",
-      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/aunt-graces-sewing-circle/2026-09-10/",
-      "uid": "10010103",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Kalmar Community Center: Sheepshead / Mahjongg",
-      "start_utc": "2026-09-10 12:30:00",
-      "end_utc": "2026-09-10 15:00:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/kalmar-community-center-sheepshead-mahjong/2026-09-10/",
-      "uid": "10014363",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Border Troubadours Present 3 Original One-Act Plays!",
-      "start_utc": "2026-09-10 16:00:00",
-      "end_utc": "2026-09-10 21:30:00",
-      "location": "Land O&#8217; Lakes Pavillion Park, 6480 Chippewa Dr, Land O' Lakes",
-      "url": "https://eagleriver.org/events/boarder-troubadours-three-lakes-center-for-the-arts/",
-      "uid": "24495",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Dale &#038; Gayle at Chef Rene&#8217;s at the Inn Supper Club",
-      "start_utc": "2026-09-10 17:00:00",
-      "end_utc": "2026-09-10 21:00:00",
-      "location": "Chef Rene&#8217;s, 5260 Hwy 70 W, Vilas County, WI",
-      "url": "https://eagleriver.org/events/dale-gayle-at-chef-renes-at-the-inn-supper-club-3/2026-09-10/",
-      "uid": "10020737",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Tennis: Thursday Round Robin",
-      "start_utc": "2026-09-10 17:30:00",
-      "end_utc": "2026-09-10 20:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-round-robin-2/2026-09-10/",
-      "uid": "10019616",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Square Dance Lessons At Kalmar Community Center!",
-      "start_utc": "2026-09-10 18:00:00",
-      "end_utc": "2026-09-10 19:30:00",
-      "location": "Kalmar Community Center",
-      "url": "https://eagleriver.org/events/square-dance-lessons-at-kalmar-community-center/2026-09-10/",
-      "uid": "10020299",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "The Brew Station Thursday Game Night",
-      "start_utc": "2026-09-10 19:00:00",
-      "end_utc": "2026-09-10 21:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/the-brew-station-thursday-game-night-3-2/2026-09-10/",
-      "uid": "10015995",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "GERTA Friday Woman&#8217;s Play",
       "start_utc": "2026-09-11 09:30:00",
       "end_utc": "2026-09-11 11:00:00",
@@ -10379,6 +10247,28 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "School Walking Hours at NPHS",
+      "start_utc": "2027-01-09 07:00:00",
+      "end_utc": "2027-01-09 12:00:00",
+      "location": "Northland Pines High School, 1800 Pleasure Island Road, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/school-walking-hours-at-nphs-3-2/2027-01-09/",
+      "uid": "10013633",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
+      "start_utc": "2027-01-09 21:00:00",
+      "end_utc": "2027-01-09 23:00:00",
+      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
+      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort-2/2027-01-09/",
+      "uid": "10018771",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -10623,56 +10513,12 @@
     {
       "calendar": "Let’s Minocqua (Simpleview)",
       "source": "Let’s Minocqua (Simpleview)",
-      "title": "DIY CRAFT NIGHT",
-      "start_utc": "2026-09-10 00:00:00",
-      "end_utc": "2026-09-10 00:00:00",
-      "location": "Minocqua Public Library",
-      "url": "https://www.minocqua.org/event/diy-craft-night/40217/",
-      "uid": "sv-4552240350333630147",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Make and Take Crushed Glass Class",
-      "start_utc": "2026-09-03 00:00:00",
-      "end_utc": "2026-09-29 00:00:00",
-      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
-      "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40279/",
-      "uid": "sv-2910894743805935893",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Make and Take Stained Glass Class",
-      "start_utc": "2026-09-03 00:00:00",
-      "end_utc": "2026-09-29 00:00:00",
-      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
-      "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40275/",
-      "uid": "sv-8298243475044187071",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
-      "title": "Sound Bath",
-      "start_utc": "2026-02-05 00:00:00",
-      "end_utc": "2026-09-24 00:00:00",
-      "location": "Unwind",
-      "url": "https://www.minocqua.org/event/sound-bath/39307/",
-      "uid": "sv-7839555041481676081",
-      "_source": null
-    },
-    {
-      "calendar": "Let’s Minocqua (Simpleview)",
-      "source": "Let’s Minocqua (Simpleview)",
       "title": "Royce Gracie Returns to the Northwoods",
       "start_utc": "2026-09-11 00:00:00",
       "end_utc": "2026-09-11 00:00:00",
       "location": "Royce Gracie Jiu Jitsu",
       "url": "https://www.minocqua.org/event/royce-gracie-returns-to-the-northwoods/40204/",
-      "uid": "sv-2536666737468021612",
+      "uid": "sv-4882104543070475155",
       "_source": null
     },
     {
@@ -10683,7 +10529,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Generations Community Senior Center",
       "url": "https://www.minocqua.org/event/community-cribbage-tournament/40254/",
-      "uid": "sv-2175043587244590076",
+      "uid": "sv-4665167961065202391",
       "_source": null
     },
     {
@@ -10694,7 +10540,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40280/",
-      "uid": "sv-5205841614035774527",
+      "uid": "sv-7928224602607116145",
       "_source": null
     },
     {
@@ -10705,7 +10551,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40277/",
-      "uid": "sv-4218418479259627370",
+      "uid": "sv-2487502766774420302",
       "_source": null
     },
     {
@@ -10716,7 +10562,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "Campanile Center For The Arts",
       "url": "https://www.minocqua.org/event/micro-macro-photography/40212/",
-      "uid": "sv-9057333842702505815",
+      "uid": "sv-3509439856538032802",
       "_source": null
     },
     {
@@ -10727,7 +10573,7 @@
       "end_utc": "2027-01-02 00:00:00",
       "location": "Unwind",
       "url": "https://www.minocqua.org/event/sound-%26-sauna-saturdays/39007/",
-      "uid": "sv-821979166332867914",
+      "uid": "sv-6030659574130020814",
       "_source": null
     },
     {
@@ -10738,7 +10584,18 @@
       "end_utc": "2026-09-27 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40278/",
-      "uid": "sv-5246867534312435210",
+      "uid": "sv-7873151297898114271",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Make and Take Stained Glass Class",
+      "start_utc": "2026-09-03 00:00:00",
+      "end_utc": "2026-09-29 00:00:00",
+      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
+      "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40275/",
+      "uid": "sv-5112147268249019272",
       "_source": null
     },
     {
@@ -10749,7 +10606,18 @@
       "end_utc": "2026-11-16 00:00:00",
       "location": "Minocqua Library",
       "url": "https://www.minocqua.org/event/book-babies/40222/",
-      "uid": "sv-5847638082139290347",
+      "uid": "sv-6502255345253075458",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Make and Take Crushed Glass Class",
+      "start_utc": "2026-09-03 00:00:00",
+      "end_utc": "2026-09-29 00:00:00",
+      "location": "Zodiac Stained Glass Studio - Woodruff, WI",
+      "url": "https://www.minocqua.org/event/make-and-take-crushed-glass-class/40279/",
+      "uid": "sv-6467977333863107819",
       "_source": null
     },
     {
@@ -10760,7 +10628,7 @@
       "end_utc": null,
       "location": "TalonSong are for play",
       "url": "https://www.minocqua.org/event/community-game-night/38936/",
-      "uid": "sv-4676417431934428729",
+      "uid": "sv-6875726807675863160",
       "_source": null
     },
     {
@@ -10771,7 +10639,7 @@
       "end_utc": "2026-09-16 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/lakeland-area-photo-club-travelogue/40260/",
-      "uid": "sv-4186073519823217213",
+      "uid": "sv-1520842556120804908",
       "_source": null
     },
     {
@@ -10782,7 +10650,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "Zodiac Stained Glass Studio - Woodruff, WI",
       "url": "https://www.minocqua.org/event/make-and-take-stained-glass-class/40276/",
-      "uid": "sv-797416825067197774",
+      "uid": "sv-5707182708009161328",
       "_source": null
     },
     {
@@ -10793,7 +10661,18 @@
       "end_utc": "2026-11-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/storytime/40221/",
-      "uid": "sv-9198388765661206416",
+      "uid": "sv-3316309648371028401",
+      "_source": null
+    },
+    {
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "Sound Bath",
+      "start_utc": "2026-02-05 00:00:00",
+      "end_utc": "2026-09-24 00:00:00",
+      "location": "Unwind",
+      "url": "https://www.minocqua.org/event/sound-bath/39307/",
+      "uid": "sv-6028225163683700872",
       "_source": null
     },
     {
@@ -10804,7 +10683,7 @@
       "end_utc": "2026-09-18 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/free-bingo/40259/",
-      "uid": "sv-7041865777899039196",
+      "uid": "sv-2958413255152339734",
       "_source": null
     },
     {
@@ -10815,7 +10694,7 @@
       "end_utc": "2026-09-18 00:00:00",
       "location": "Natural Northern, 221 Front Street",
       "url": "https://www.minocqua.org/event/natural-tinted-cheek-%2b-lip-balm-workshop/40285/",
-      "uid": "sv-1159380161744116337",
+      "uid": "sv-5550857803927850635",
       "_source": null
     },
     {
@@ -10826,7 +10705,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Holy Family Catholic Church",
       "url": "https://www.minocqua.org/event/fish-fry-fundraiser/40195/",
-      "uid": "sv-7746352105524078695",
+      "uid": "sv-7282425112499955721",
       "_source": null
     },
     {
@@ -10837,7 +10716,7 @@
       "end_utc": "2026-12-19 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/saturday-storytime-%40the-library/39951/",
-      "uid": "sv-4967301696866780760",
+      "uid": "sv-8073084211956557313",
       "_source": null
     },
     {
@@ -10848,7 +10727,7 @@
       "end_utc": "2026-09-20 00:00:00",
       "location": "Natural Northern, 221 Front Street",
       "url": "https://www.minocqua.org/event/fire-cider-workshop/40286/",
-      "uid": "sv-8783272570058212972",
+      "uid": "sv-839528323851532733",
       "_source": null
     },
     {
@@ -10859,29 +10738,18 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "Minocqua Public Library",
       "url": "https://www.minocqua.org/event/teen-time/40223/",
-      "uid": "sv-2517534138544347007",
+      "uid": "sv-2148740772325464386",
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Nibbles n' Knowledge: Paddling Through History - The Lake Mendota Canoes with Amy L. Rosebrough",
-      "start_utc": "2026-09-10 00:00:00",
-      "end_utc": "2026-09-10 00:00:00",
-      "location": "North Lakeland Discovery Center Lodge",
-      "url": "https://manitowishwaters.org/event/nibbles-n-knowledge%3a-paddling-through-history-the-lake-mendota-canoes-with-amy-l-rosebrough/967/",
-      "uid": "sv-8617176026621910547",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Tech Thursdays",
-      "start_utc": "2026-04-30 00:00:00",
-      "end_utc": null,
-      "location": "Winchester Public Library",
-      "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
-      "uid": "sv-8498188903108095316",
+      "calendar": "Let’s Minocqua (Simpleview)",
+      "source": "Let’s Minocqua (Simpleview)",
+      "title": "20th Annual Spaghetti Dinner",
+      "start_utc": "2026-09-23 00:00:00",
+      "end_utc": "2026-09-23 00:00:00",
+      "location": "Peace Lutheran Church",
+      "url": "https://www.minocqua.org/event/20th-annual-spaghetti-dinner/40289/",
+      "uid": "sv-3744214930439992877",
       "_source": null
     },
     {
@@ -10892,7 +10760,7 @@
       "end_utc": "2026-09-13 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/creator-camp-2026/914/",
-      "uid": "sv-2848559187156984684",
+      "uid": "sv-3892339686636121449",
       "_source": null
     },
     {
@@ -10903,7 +10771,7 @@
       "end_utc": "2026-09-11 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/plant-powered-tea%3a-herbal-infusions-from-your-garden/968/",
-      "uid": "sv-4614861882286171200",
+      "uid": "sv-8975518899031908692",
       "_source": null
     },
     {
@@ -10914,7 +10782,7 @@
       "end_utc": "2026-09-12 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/family-fall-hike/969/",
-      "uid": "sv-8594775569632749251",
+      "uid": "sv-5687991605305039469",
       "_source": null
     },
     {
@@ -10925,7 +10793,7 @@
       "end_utc": "2026-11-28 00:00:00",
       "location": "North Lakeland Discovery Lodge",
       "url": "https://manitowishwaters.org/event/lakeside-yoga-stretch/962/",
-      "uid": "sv-1354450090371864917",
+      "uid": "sv-5463076879067247204",
       "_source": null
     },
     {
@@ -10936,7 +10804,7 @@
       "end_utc": "2026-09-14 00:00:00",
       "location": "North Lakeland Discovery Center Lodge",
       "url": "https://manitowishwaters.org/event/bird-club-program%3a-wisconsin-breeding-bird-atlas-update-with-nick-anich/970/",
-      "uid": "sv-3959933270857615260",
+      "uid": "sv-7957982620051201385",
       "_source": null
     },
     {
@@ -10947,7 +10815,7 @@
       "end_utc": null,
       "location": "Koller Library",
       "url": "https://manitowishwaters.org/event/mahjong-%26%238211%3b-american-style/70/",
-      "uid": "sv-694420752290966018",
+      "uid": "sv-8254299835398878115",
       "_source": null
     },
     {
@@ -10958,7 +10826,7 @@
       "end_utc": "2026-09-30 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/trail-side-vinyasa-yoga/915/",
-      "uid": "sv-5346052323611137065",
+      "uid": "sv-2300401555606767131",
       "_source": null
     },
     {
@@ -10969,7 +10837,18 @@
       "end_utc": "2026-09-17 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/soy-wax-batik-and-dyeing-workshop/972/",
-      "uid": "sv-1424939584048062072",
+      "uid": "sv-8258593232491481417",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Tech Thursdays",
+      "start_utc": "2026-04-30 00:00:00",
+      "end_utc": null,
+      "location": "Winchester Public Library",
+      "url": "https://manitowishwaters.org/event/tech-thursdays/784/",
+      "uid": "sv-268448325001070642",
       "_source": null
     },
     {
@@ -10980,7 +10859,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan trails exploring the hidden wonders and changes occurring during the fall months. Exploring topics like",
       "url": "https://manitowishwaters.org/event/autumns-hidden-wonders-hike-at-winman-trails/973/",
-      "uid": "sv-4832306479043090230",
+      "uid": "sv-4490636275201417151",
       "_source": null
     },
     {
@@ -10991,7 +10870,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Koller Park in downtown Manitowish Waters",
       "url": "https://manitowishwaters.org/event/manitowish-waters-harvest-festival/945/",
-      "uid": "sv-8186073216822465431",
+      "uid": "sv-5441270309828043797",
       "_source": null
     },
     {
@@ -11002,7 +10881,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/mietzi-bleck-pop-up-exhibit/1015/",
-      "uid": "sv-425346806741153790",
+      "uid": "sv-6740046282562728067",
       "_source": null
     },
     {
@@ -11013,7 +10892,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/storywalk-%c2%ae-trail-program%3a-poo-dunit%3f-a-forest-floor-mystery-by-katelyn-aronson/974/",
-      "uid": "sv-1888160190130018688",
+      "uid": "sv-8679687791865217080",
       "_source": null
     },
     {
@@ -11024,7 +10903,7 @@
       "end_utc": "2026-09-19 00:00:00",
       "location": "WinMan Trails",
       "url": "https://manitowishwaters.org/event/volunteer-event%3a-fall-clean-up/947/",
-      "uid": "sv-554527174742850524",
+      "uid": "sv-2375637609826996642",
       "_source": null
     },
     {
@@ -11035,7 +10914,7 @@
       "end_utc": "2026-09-21 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/book-club%3a-table-for-two-by-amor-towles/1009/",
-      "uid": "sv-1390290439377155609",
+      "uid": "sv-5222892398604434965",
       "_source": null
     },
     {
@@ -11046,7 +10925,7 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "Frank B. Koller Memorial Library",
       "url": "https://manitowishwaters.org/event/branch-weaving-workshop/1014/",
-      "uid": "sv-4781833854322397193",
+      "uid": "sv-2079779168494934690",
       "_source": null
     },
     {
@@ -11057,7 +10936,7 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "Airport Road and Highway 51 in Manitowish Waters. To sign up please call Diane",
       "url": "https://manitowishwaters.org/event/community-blood-center-blood-drive/1017/",
-      "uid": "sv-8231245657528326652",
+      "uid": "sv-5667608309361411466",
       "_source": null
     },
     {
@@ -11068,7 +10947,7 @@
       "end_utc": "2026-09-22 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/discovering-wisconsins-amazing-forestry-legacy%3a-driving-tour-%26-short-hikes-with-jim-bokern/975/",
-      "uid": "sv-2927642597868810916",
+      "uid": "sv-7490610134852356282",
       "_source": null
     },
     {
@@ -11079,7 +10958,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/fat-bear-week/1010/",
-      "uid": "sv-3123921047015000449",
+      "uid": "sv-870036828554702241",
       "_source": null
     },
     {
@@ -11090,7 +10969,7 @@
       "end_utc": "2026-09-24 00:00:00",
       "location": "Winchester Public Library",
       "url": "https://manitowishwaters.org/event/history-walk/1011/",
-      "uid": "sv-1555859940097310746",
+      "uid": "sv-2560474526721388488",
       "_source": null
     },
     {
@@ -11101,7 +10980,7 @@
       "end_utc": "2026-09-27 00:00:00",
       "location": "WinMan Trails for a 6 stage",
       "url": "https://manitowishwaters.org/event/midwest-onewheel-enduro-and-dual-slalom/946/",
-      "uid": "sv-66191339924201798",
+      "uid": "sv-7564634801242646467",
       "_source": null
     },
     {
@@ -11112,7 +10991,7 @@
       "end_utc": "2026-09-28 00:00:00",
       "location": "North Lakeland Discovery Center",
       "url": "https://manitowishwaters.org/event/north-lakeland-discovery-fall-colors-retreat/943/",
-      "uid": "sv-3766752045712503817",
+      "uid": "sv-953318404980566173",
       "_source": null
     },
     {
@@ -11123,7 +11002,7 @@
       "end_utc": "2026-09-26 00:00:00",
       "location": "North Lakeland Discovery Center/Nature Center",
       "url": "https://manitowishwaters.org/event/animal-spotlight-hour%3a-macroinvertebrates/976/",
-      "uid": "sv-4331961431308878140",
+      "uid": "sv-8489640378939160428",
       "_source": null
     },
     {
@@ -11134,7 +11013,7 @@
       "end_utc": "2026-10-01 00:00:00",
       "location": "Frank B. Koller Public Library",
       "url": "https://manitowishwaters.org/event/book-club-isola/985/",
-      "uid": "sv-5021890762015472927",
+      "uid": "sv-6509454882432199833",
       "_source": null
     },
     {
@@ -11145,7 +11024,7 @@
       "end_utc": "2026-10-03 00:00:00",
       "location": "Van Vliet Hemlocks",
       "url": "https://manitowishwaters.org/event/fall-hike-at-van-vliet-hemlocks/979/",
-      "uid": "sv-679553782411440692",
+      "uid": "sv-6253809390747917160",
       "_source": null
     },
     {
@@ -11156,7 +11035,18 @@
       "end_utc": "2026-10-03 00:00:00",
       "location": "North Lakeland Discovery Center/Forest Room",
       "url": "https://manitowishwaters.org/event/naturally-painted-autumn-landscapes/977/",
-      "uid": "sv-892920606666117291",
+      "uid": "sv-7350942012421859566",
+      "_source": null
+    },
+    {
+      "calendar": "Manitowish Waters Chamber (TEC)",
+      "source": "Manitowish Waters Chamber (TEC)",
+      "title": "Bird Club Program: Eagles, Ospreys, and Goshawks - Raptors of the Northwoods with Rich Staffen",
+      "start_utc": "2026-10-05 00:00:00",
+      "end_utc": "2026-10-05 00:00:00",
+      "location": "North Lakeland Discovery Center",
+      "url": "https://manitowishwaters.org/event/bird-club-program%3a-eagles-ospreys-and-goshawks-raptors-of-the-northwoods-with-rich-staffen/980/",
+      "uid": "sv-4890225742894719357",
       "_source": null
     },
     {
@@ -11226,9 +11116,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 505,
+  "events_preview_count": 500,
   "curated_feeds": {
-    "generated_at": "2026-09-10T20:26:44.723647+00:00",
+    "generated_at": "2026-09-11T08:33:18.812873+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
