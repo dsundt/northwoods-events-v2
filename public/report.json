@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-25T21:07:16.269376+00:00",
+  "generated_at": "2026-09-26T09:06:05.446957+00:00",
   "sources_processed": 8,
-  "total_events": 438,
+  "total_events": 433,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-25&end_date=2027-01-23&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-26&end_date=2027-01-24&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-25&end_date=2027-01-23&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-09-26&end_date=2027-01-24&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 411,
+      "count": 407,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-25&end_date=2027-01-23&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-26&end_date=2027-01-24&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-25&end_date=2027-01-23&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-09-26&end_date=2027-01-24&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 5,
+      "count": 4,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -113,50 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Friday Woman&#8217;s Play",
-      "start_utc": "2026-09-25 09:30:00",
-      "end_utc": "2026-09-25 11:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-wednesday-morning-play-3/2026-09-25/",
-      "uid": "10019650",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Wildwood Outdoor Adventures Bone to be Wild Halloween Extravaganza",
-      "start_utc": "2026-09-25 14:00:00",
-      "end_utc": "2026-09-25 17:00:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/wildwood-outdoor-adventures-bone-to-be-wild-halloween-extravaganza/2026-09-25/",
-      "uid": "10021378",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Happy Hour at The Brew Station",
-      "start_utc": "2026-09-25 16:00:00",
-      "end_utc": "2026-09-25 18:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-09-25/",
-      "uid": "10013923",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-09-25 21:00:00",
-      "end_utc": "2026-09-25 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-09-25/",
-      "uid": "10018234",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -4875,17 +4831,6 @@
       "url": "https://st-germain.com/events/trail-of-treats-and-costume-contest/",
       "uid": null,
       "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Colorama Weekend",
-      "start_utc": "2026-09-25 00:00:00",
-      "end_utc": "2026-09-27 23:59:59",
-      "location": "Sayner Star Lake Chamber, Sayner",
-      "url": "https://sayner-starlake-cloverland.org/event/colorama-weekend-2/",
-      "uid": "1641",
-      "_source": null
     },
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
@@ -4936,50 +4881,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "GERTA Friday Woman&#8217;s Play",
-      "start_utc": "2026-09-25 09:30:00",
-      "end_utc": "2026-09-25 11:00:00",
-      "location": "GERTA Tennis Courts",
-      "url": "https://eagleriver.org/events/gerta-ladies-wednesday-morning-play-3/2026-09-25/",
-      "uid": "10019650",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Wildwood Outdoor Adventures Bone to be Wild Halloween Extravaganza",
-      "start_utc": "2026-09-25 14:00:00",
-      "end_utc": "2026-09-25 17:00:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/wildwood-outdoor-adventures-bone-to-be-wild-halloween-extravaganza/2026-09-25/",
-      "uid": "10021378",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Happy Hour at The Brew Station",
-      "start_utc": "2026-09-25 16:00:00",
-      "end_utc": "2026-09-25 18:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-09-25/",
-      "uid": "10013923",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-09-25 21:00:00",
-      "end_utc": "2026-09-25 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-09-25/",
-      "uid": "10018234",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "School Walking Hours at NPHS",
       "start_utc": "2026-09-26 07:00:00",
       "end_utc": "2026-09-26 12:00:00",
@@ -9699,17 +9600,6 @@
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Colorama Weekend",
-      "start_utc": "2026-09-25 00:00:00",
-      "end_utc": "2026-09-27 23:59:59",
-      "location": "Sayner Star Lake Chamber, Sayner",
-      "url": "https://sayner-starlake-cloverland.org/event/colorama-weekend-2/",
-      "uid": "1641",
-      "_source": null
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Fall Chicken Harvest Dinner Festival",
       "start_utc": "2026-10-19 16:00:00",
       "end_utc": "2026-10-19 19:00:00",
@@ -9752,9 +9642,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 438,
+  "events_preview_count": 433,
   "curated_feeds": {
-    "generated_at": "2026-09-25T21:07:16.301353+00:00",
+    "generated_at": "2026-09-26T09:06:05.480298+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
@@ -9771,19 +9661,19 @@
         "id": "min-events",
         "name": "Minocqua Events",
         "enabled": true,
-        "count": 1,
+        "count": 0,
         "path": "curated/min-events.ics",
         "manual_count": 0,
-        "auto_count": 1
+        "auto_count": 0
       },
       {
         "id": "RCLMinocquaEvents",
         "name": "RCL Minocqua Events",
         "enabled": true,
-        "count": 1,
+        "count": 0,
         "path": "curated/rclminocquaevents.ics",
         "manual_count": 0,
-        "auto_count": 1
+        "auto_count": 0
       }
     ]
   }
