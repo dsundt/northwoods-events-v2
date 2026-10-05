@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-04T20:53:19.028731+00:00",
+  "generated_at": "2026-10-05T11:10:52.426483+00:00",
   "sources_processed": 8,
-  "total_events": 424,
+  "total_events": 423,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-04&end_date=2027-02-01&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-05&end_date=2027-02-02&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-04&end_date=2027-02-01&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-05&end_date=2027-02-02&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 397,
+      "count": 396,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-04&end_date=2027-02-01&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-05&end_date=2027-02-02&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-04&end_date=2027-02-01&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-05&end_date=2027-02-02&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -113,39 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-10-04 08:30:00",
-      "end_utc": "2026-10-04 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-2/2026-10-04/",
-      "uid": "10019895",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Fall Pontoon Boat Tours at Pirates Hideaway",
-      "start_utc": "2026-10-04 12:00:00",
-      "end_utc": "2026-10-04 14:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/fall-pontoon-boat-tours-at-pirates-hideaway-2/2026-10-04/",
-      "uid": "10021334",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Wildwood Outdoor Adventures Bone to be Wild Halloween Extravaganza",
-      "start_utc": "2026-10-04 14:00:00",
-      "end_utc": "2026-10-04 17:00:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/wildwood-outdoor-adventures-bone-to-be-wild-halloween-extravaganza/2026-10-04/",
-      "uid": "10021387",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -4481,6 +4448,28 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2027-02-02 10:00:00",
+      "end_utc": "2027-02-02 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2027-02-02/",
+      "uid": "10009482",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Northwoods Shares Free Community Dinners",
+      "start_utc": "2027-02-02 16:30:00",
+      "end_utc": "2027-02-02 18:30:00",
+      "location": "The Rock Mission Center, 1019 East Wall Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/northwoods-shares-free-community-dinners/2027-02-02/",
+      "uid": "10021353",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -4730,7 +4719,7 @@
       "end_utc": null,
       "location": "Calvary Lutheran Church",
       "url": "https://www.minocqua.org/event/scandinavian-bake-%26-craft-sale/40178/",
-      "uid": "sv-32089184831433069",
+      "uid": "sv-9194702994460059129",
       "_source": null
     },
     {
@@ -4782,39 +4771,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Eagle River Farmers Market and Artisans Market",
-      "start_utc": "2026-10-04 08:30:00",
-      "end_utc": "2026-10-04 13:00:00",
-      "location": "Eagle River Farmers Market Lot",
-      "url": "https://eagleriver.org/events/eagle-river-farmers-market-and-artisans-market-2/2026-10-04/",
-      "uid": "10019895",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Fall Pontoon Boat Tours at Pirates Hideaway",
-      "start_utc": "2026-10-04 12:00:00",
-      "end_utc": "2026-10-04 14:00:00",
-      "location": "Pirates Hideaway, 1998 US-45, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/fall-pontoon-boat-tours-at-pirates-hideaway-2/2026-10-04/",
-      "uid": "10021334",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Wildwood Outdoor Adventures Bone to be Wild Halloween Extravaganza",
-      "start_utc": "2026-10-04 14:00:00",
-      "end_utc": "2026-10-04 17:00:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/wildwood-outdoor-adventures-bone-to-be-wild-halloween-extravaganza/2026-10-04/",
-      "uid": "10021387",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "School Walking Hours at NPHS",
       "start_utc": "2026-10-05 05:30:00",
       "end_utc": "2026-10-05 07:30:00",
@@ -9147,6 +9103,28 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2027-02-02 10:00:00",
+      "end_utc": "2027-02-02 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2027-02-02/",
+      "uid": "10009482",
+      "_source": null
+    },
+    {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Northwoods Shares Free Community Dinners",
+      "start_utc": "2027-02-02 16:30:00",
+      "end_utc": "2027-02-02 18:30:00",
+      "location": "The Rock Mission Center, 1019 East Wall Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/northwoods-shares-free-community-dinners/2027-02-02/",
+      "uid": "10021353",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -9396,7 +9374,7 @@
       "end_utc": null,
       "location": "Calvary Lutheran Church",
       "url": "https://www.minocqua.org/event/scandinavian-bake-%26-craft-sale/40178/",
-      "uid": "sv-32089184831433069",
+      "uid": "sv-9194702994460059129",
       "_source": null
     },
     {
@@ -9444,9 +9422,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 424,
+  "events_preview_count": 423,
   "curated_feeds": {
-    "generated_at": "2026-10-04T20:53:19.060515+00:00",
+    "generated_at": "2026-10-05T11:10:52.447861+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
