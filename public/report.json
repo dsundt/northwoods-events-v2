@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-11T21:30:13.113405+00:00",
+  "generated_at": "2026-10-12T11:39:13.302425+00:00",
   "sources_processed": 8,
-  "total_events": 414,
+  "total_events": 413,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-11&end_date=2027-02-08&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-12&end_date=2027-02-09&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-11&end_date=2027-02-08&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-12&end_date=2027-02-09&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-11&end_date=2027-02-08&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-12&end_date=2027-02-09&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-11&end_date=2027-02-08&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-12&end_date=2027-02-09&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 5,
+      "count": 4,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -113,17 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Wildwood Outdoor Adventures Bone to be Wild Halloween Extravaganza",
-      "start_utc": "2026-10-11 14:00:00",
-      "end_utc": "2026-10-11 17:00:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/wildwood-outdoor-adventures-bone-to-be-wild-halloween-extravaganza/2026-10-11/",
-      "uid": "10021394",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -4382,6 +4371,17 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2027-02-09 10:00:00",
+      "end_utc": "2027-02-09 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2027-02-09/",
+      "uid": "10009483",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -4611,17 +4611,6 @@
       "url": "https://st-germain.com/events/trail-of-treats-and-costume-contest/",
       "uid": null,
       "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Fall ATV/UTV Ride &#038; Family Fun",
-      "start_utc": "2026-10-11 10:00:00",
-      "end_utc": "2026-10-11 17:00:00",
-      "location": "Sayner Pub, 2962 WIS-155, Sayner",
-      "url": "https://sayner-starlake-cloverland.org/event/atv-utv-ride-celebration/",
-      "uid": "1678",
-      "_source": null
     },
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
@@ -4672,17 +4661,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Wildwood Outdoor Adventures Bone to be Wild Halloween Extravaganza",
-      "start_utc": "2026-10-11 14:00:00",
-      "end_utc": "2026-10-11 17:00:00",
-      "location": "Wildwood Outdoor Adventures and Campground",
-      "url": "https://eagleriver.org/events/wildwood-outdoor-adventures-bone-to-be-wild-halloween-extravaganza/2026-10-11/",
-      "uid": "10021394",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "School Walking Hours at NPHS",
       "start_utc": "2026-10-12 05:30:00",
       "end_utc": "2026-10-12 07:30:00",
@@ -8938,6 +8916,17 @@
       "_source": null
     },
     {
+      "calendar": "Eagle River Chamber (TEC)",
+      "source": "Eagle River Chamber (TEC)",
+      "title": "Story Time at the Walter E. Olson Memorial Library",
+      "start_utc": "2027-02-09 10:00:00",
+      "end_utc": "2027-02-09 11:00:00",
+      "location": "Walter E. Olson Memorial Library, 203 North Main Street, Eagle River, Wisconsin",
+      "url": "https://eagleriver.org/events/story-time/2027-02-09/",
+      "uid": "10009483",
+      "_source": null
+    },
+    {
       "calendar": "St. Germain Chamber (GrowthZone)",
       "source": "St. Germain Chamber (GrowthZone)",
       "title": "Jingle Bell 5K Run Canceled",
@@ -9171,17 +9160,6 @@
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Fall ATV/UTV Ride &#038; Family Fun",
-      "start_utc": "2026-10-11 10:00:00",
-      "end_utc": "2026-10-11 17:00:00",
-      "location": "Sayner Pub, 2962 WIS-155, Sayner",
-      "url": "https://sayner-starlake-cloverland.org/event/atv-utv-ride-celebration/",
-      "uid": "1678",
-      "_source": null
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Fall Chicken Harvest Dinner Festival",
       "start_utc": "2026-10-26 16:00:00",
       "end_utc": "2026-10-26 19:00:00",
@@ -9224,9 +9202,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 414,
+  "events_preview_count": 413,
   "curated_feeds": {
-    "generated_at": "2026-10-11T21:30:13.133404+00:00",
+    "generated_at": "2026-10-12T11:39:13.323008+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
