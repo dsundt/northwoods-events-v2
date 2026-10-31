@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-30T21:57:14.554225+00:00",
+  "generated_at": "2026-10-31T10:11:03.388205+00:00",
   "sources_processed": 8,
-  "total_events": 391,
+  "total_events": 388,
   "source_logs": [
     {
       "id": "boulder-junction-tec",
@@ -10,11 +10,11 @@
       "url": "https://boulderjct.org/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-30&end_date=2027-02-27&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-31&end_date=2027-02-28&per_page=50&page=1",
       "slug": "boulder-junction-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-30&end_date=2027-02-27&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://boulderjct.org/wp-json/tribe/events/v1/events?start_date=2026-10-31&end_date=2027-02-28&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -24,7 +24,7 @@
       "type": "tec_rest",
       "url": "https://eagleriver.org/",
       "ok": true,
-      "count": 367,
+      "count": 364,
       "error": null,
       "slug": "eagle-river-chamber-tec",
       "ics_path": "by-source/eagle-river-chamber-tec.ics",
@@ -50,7 +50,7 @@
       "type": "stgermain_wp",
       "url": "https://st-germain.com/events/",
       "ok": true,
-      "count": 18,
+      "count": 19,
       "error": null,
       "slug": "st-germain-chamber-wp",
       "ics_path": "by-source/st-germain-chamber-wp.ics",
@@ -77,11 +77,11 @@
       "url": "https://vilaswi.com/",
       "ok": false,
       "count": 0,
-      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-30&end_date=2027-02-27&per_page=50&page=1",
+      "error": "403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-31&end_date=2027-02-28&per_page=50&page=1",
       "slug": "vilas-county-tourism-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-30&end_date=2027-02-27&per_page=50&page=1"
+        "tec_rest request failed: 403 Client Error: Forbidden for url: https://vilaswi.com/wp-json/tribe/events/v1/events?start_date=2026-10-31&end_date=2027-02-28&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -104,7 +104,7 @@
       "type": "tec_rest",
       "url": "https://sayner-starlake-cloverland.org/",
       "ok": true,
-      "count": 3,
+      "count": 2,
       "error": null,
       "slug": "sayner-star-lake-cloverland-tec",
       "ics_path": "by-source/sayner-star-lake-cloverland-tec.ics",
@@ -113,39 +113,6 @@
     }
   ],
   "events_preview": [
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Happy Hour at The Brew Station",
-      "start_utc": "2026-10-30 16:00:00",
-      "end_utc": "2026-10-30 18:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-10-30/",
-      "uid": "10013928",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Halloween Weekend at Tribute Brewing Co.",
-      "start_utc": "2026-10-30 16:00:00",
-      "end_utc": "2026-10-30 21:00:00",
-      "location": "Tribute Brewing Company, 1106 North Bluebird Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/halloween-weekend-at-tribute-brewing-co/2026-10-30/",
-      "uid": "10021849",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-10-30 21:00:00",
-      "end_utc": "2026-10-30 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-10-30/",
-      "uid": "10018239",
-      "_source": null
-    },
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
@@ -4186,11 +4153,33 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
+      "title": "Bo-Boen Chili Fest 2026",
+      "start_utc": "2026-12-13T00:00:00",
+      "end_utc": null,
+      "location": "December 13th, 2026",
+      "url": "https://st-germain.com/events/bo-boen-chili-fest-2026/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
       "title": "Chamber October Membership Meeting 2026",
       "start_utc": "2026-10-27T00:00:00",
       "end_utc": null,
       "location": "October 27th, 2026",
       "url": "https://st-germain.com/events/chamber-october-membership-meeting-2026/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "1985-01-01T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
       "uid": null,
       "_source": "stgermain_wp"
     },
@@ -4297,7 +4286,7 @@
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
       "title": "(untitled)",
-      "start_utc": "2025-10-31T00:00:00",
+      "start_utc": "2025-11-04T00:00:00",
       "end_utc": null,
       "location": null,
       "url": "https://st-germain.com/events/page/8/",
@@ -4318,22 +4307,11 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
-      "title": "St Germain ATV Club Fall Fest 2026",
-      "start_utc": "2026-09-26T00:00:00",
+      "title": "Snowmobile Safety Class 2026",
+      "start_utc": "2026-12-12T00:00:00",
       "end_utc": null,
-      "location": "September 26th, 2026",
-      "url": "https://st-germain.com/events/st-germain-atv-club-fall-fest-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "St. Germain",
-      "start_utc": "2025-11-29T00:00:00",
-      "end_utc": null,
-      "location": null,
-      "url": "https://st-germain.com/events/st-germain-radar-run-2027/",
+      "location": "December 12th, 2026",
+      "url": "https://st-germain.com/events/snowmobile-safety-class-2026/",
       "uid": null,
       "_source": "stgermain_wp"
     },
@@ -4380,17 +4358,6 @@
       "url": "https://st-germain.com/events/womens-wellness-retreat/",
       "uid": null,
       "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Trunk-N-Treat",
-      "start_utc": "2026-10-30 16:00:00",
-      "end_utc": "2026-10-30 18:00:00",
-      "location": "Plum Lake Library, 8789 Peterson St., Sayner",
-      "url": "https://sayner-starlake-cloverland.org/event/trunk-n-treat-2/",
-      "uid": "1637",
-      "_source": null
     },
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
@@ -4419,39 +4386,6 @@
     {
       "calendar": "Eagle River Chamber (TEC)",
       "source": "Eagle River Chamber (TEC)",
-      "title": "Happy Hour at The Brew Station",
-      "start_utc": "2026-10-30 16:00:00",
-      "end_utc": "2026-10-30 18:00:00",
-      "location": "The Brew Station",
-      "url": "https://eagleriver.org/events/happy-hour-at-the-brew-station/2026-10-30/",
-      "uid": "10013928",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Halloween Weekend at Tribute Brewing Co.",
-      "start_utc": "2026-10-30 16:00:00",
-      "end_utc": "2026-10-30 21:00:00",
-      "location": "Tribute Brewing Company, 1106 North Bluebird Road, Eagle River, Wisconsin",
-      "url": "https://eagleriver.org/events/halloween-weekend-at-tribute-brewing-co/2026-10-30/",
-      "uid": "10021849",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
-      "title": "Live Music Weekends at Sweetwater Spirits and Resort",
-      "start_utc": "2026-10-30 21:00:00",
-      "end_utc": "2026-10-30 23:00:00",
-      "location": "Sweetwater Sprits and Resort, 2010 US Hwy 45, Eagle River",
-      "url": "https://eagleriver.org/events/live-music-weekends-at-sweetwater-spirits-and-resort/2026-10-30/",
-      "uid": "10018239",
-      "_source": null
-    },
-    {
-      "calendar": "Eagle River Chamber (TEC)",
-      "source": "Eagle River Chamber (TEC)",
       "title": "School Walking Hours at NPHS",
       "start_utc": "2026-10-31 07:00:00",
       "end_utc": "2026-10-31 12:00:00",
@@ -8489,11 +8423,33 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
+      "title": "Bo-Boen Chili Fest 2026",
+      "start_utc": "2026-12-13T00:00:00",
+      "end_utc": null,
+      "location": "December 13th, 2026",
+      "url": "https://st-germain.com/events/bo-boen-chili-fest-2026/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
       "title": "Chamber October Membership Meeting 2026",
       "start_utc": "2026-10-27T00:00:00",
       "end_utc": null,
       "location": "October 27th, 2026",
       "url": "https://st-germain.com/events/chamber-october-membership-meeting-2026/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "1985-01-01T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
       "uid": null,
       "_source": "stgermain_wp"
     },
@@ -8600,7 +8556,7 @@
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
       "title": "(untitled)",
-      "start_utc": "2025-10-31T00:00:00",
+      "start_utc": "2025-11-04T00:00:00",
       "end_utc": null,
       "location": null,
       "url": "https://st-germain.com/events/page/8/",
@@ -8621,22 +8577,11 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
-      "title": "St Germain ATV Club Fall Fest 2026",
-      "start_utc": "2026-09-26T00:00:00",
+      "title": "Snowmobile Safety Class 2026",
+      "start_utc": "2026-12-12T00:00:00",
       "end_utc": null,
-      "location": "September 26th, 2026",
-      "url": "https://st-germain.com/events/st-germain-atv-club-fall-fest-2026/",
-      "uid": null,
-      "_source": "stgermain_wp"
-    },
-    {
-      "calendar": "St. Germain Chamber (WP)",
-      "source": "St. Germain Chamber (WP)",
-      "title": "St. Germain",
-      "start_utc": "2025-11-29T00:00:00",
-      "end_utc": null,
-      "location": null,
-      "url": "https://st-germain.com/events/st-germain-radar-run-2027/",
+      "location": "December 12th, 2026",
+      "url": "https://st-germain.com/events/snowmobile-safety-class-2026/",
       "uid": null,
       "_source": "stgermain_wp"
     },
@@ -8687,17 +8632,6 @@
     {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
-      "title": "Trunk-N-Treat",
-      "start_utc": "2026-10-30 16:00:00",
-      "end_utc": "2026-10-30 18:00:00",
-      "location": "Plum Lake Library, 8789 Peterson St., Sayner",
-      "url": "https://sayner-starlake-cloverland.org/event/trunk-n-treat-2/",
-      "uid": "1637",
-      "_source": null
-    },
-    {
-      "calendar": "Sayner Star Lake Cloverland (TEC)",
-      "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Christmas in Downtown Sayner-Star Lake",
       "start_utc": "2026-11-27 00:00:00",
       "end_utc": "2026-11-29 23:59:59",
@@ -8718,9 +8652,9 @@
       "_source": null
     }
   ],
-  "events_preview_count": 391,
+  "events_preview_count": 388,
   "curated_feeds": {
-    "generated_at": "2026-10-30T21:57:14.583218+00:00",
+    "generated_at": "2026-10-31T10:11:03.404353+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
