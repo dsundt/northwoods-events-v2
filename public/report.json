@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T07:02:02.934377+00:00",
+  "generated_at": "2026-11-19T18:08:51.219791+00:00",
   "sources_processed": 8,
   "total_events": 444,
   "source_logs": [
@@ -48,7 +48,7 @@
       "type": "stgermain_wp",
       "url": "https://st-germain.com/events/",
       "ok": true,
-      "count": 18,
+      "count": 19,
       "error": null,
       "slug": "st-germain-chamber-wp",
       "ics_path": "by-source/st-germain-chamber-wp.ics",
@@ -86,11 +86,11 @@
       "name": "Manitowish Waters Chamber (TEC)",
       "type": "simpleview_html",
       "url": "https://manitowishwaters.org/event/rss/",
-      "ok": true,
-      "count": 1,
-      "error": null,
+      "ok": false,
+      "count": 0,
+      "error": "403 Client Error: Forbidden for url: https://manitowishwaters.org/event/rss/",
       "slug": "manitowish-waters-chamber-tec",
-      "ics_path": "by-source/manitowish-waters-chamber-tec.ics",
+      "ics_path": null,
       "warnings": [],
       "notes": []
     },
@@ -4666,6 +4666,17 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "1985-01-01T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
       "title": "Fern Ridge by Candlelight",
       "start_utc": "2026-12-26T00:00:00",
       "end_utc": null,
@@ -4958,17 +4969,6 @@
       "location": "Pipke Park Presque Isle",
       "url": "https://vilaswi.com/event/presque-isle-olde-time-christmas-2/",
       "uid": "10836",
-      "_source": null
-    },
-    {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Wreaths Across America",
-      "start_utc": "2026-12-19 00:00:00",
-      "end_utc": null,
-      "location": "Pine Lawn Cemetery to Remember and Honor our veterans through the laying of",
-      "url": "https://manitowishwaters.org/event/wreaths-across-america/1034/",
-      "uid": "sv-7280278770824217882",
       "_source": null
     },
     {
@@ -9552,6 +9552,17 @@
     {
       "calendar": "St. Germain Chamber (WP)",
       "source": "St. Germain Chamber (WP)",
+      "title": "(untitled)",
+      "start_utc": "1985-01-01T00:00:00",
+      "end_utc": null,
+      "location": null,
+      "url": "https://st-germain.com/events/feed/",
+      "uid": null,
+      "_source": "stgermain_wp"
+    },
+    {
+      "calendar": "St. Germain Chamber (WP)",
+      "source": "St. Germain Chamber (WP)",
       "title": "Fern Ridge by Candlelight",
       "start_utc": "2026-12-26T00:00:00",
       "end_utc": null,
@@ -9847,17 +9858,6 @@
       "_source": null
     },
     {
-      "calendar": "Manitowish Waters Chamber (TEC)",
-      "source": "Manitowish Waters Chamber (TEC)",
-      "title": "Wreaths Across America",
-      "start_utc": "2026-12-19 00:00:00",
-      "end_utc": null,
-      "location": "Pine Lawn Cemetery to Remember and Honor our veterans through the laying of",
-      "url": "https://manitowishwaters.org/event/wreaths-across-america/1034/",
-      "uid": "sv-7280278770824217882",
-      "_source": null
-    },
-    {
       "calendar": "Sayner Star Lake Cloverland (TEC)",
       "source": "Sayner Star Lake Cloverland (TEC)",
       "title": "Christmas in Downtown Sayner-Star Lake",
@@ -9882,7 +9882,7 @@
   ],
   "events_preview_count": 444,
   "curated_feeds": {
-    "generated_at": "2026-11-19T07:02:02.954774+00:00",
+    "generated_at": "2026-11-19T18:08:51.242523+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
