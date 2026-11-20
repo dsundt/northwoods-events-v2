@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-20T04:08:35.312823+00:00",
+  "generated_at": "2026-11-20T07:02:19.624125+00:00",
   "sources_processed": 8,
   "total_events": 78,
   "source_logs": [
@@ -23,11 +23,11 @@
       "url": "https://eagleriver.org/",
       "ok": false,
       "count": 0,
-      "error": "502 Server Error: Bad Gateway for url: https://eagleriver.org/wp-json/tribe/events/v1/events?start_date=2026-11-20&end_date=2027-03-20&per_page=50&page=5",
+      "error": "504 Server Error: Gateway Timeout for url: https://eagleriver.org/wp-json/tribe/events/v1/events?start_date=2026-11-20&end_date=2027-03-20&per_page=50&page=1",
       "slug": "eagle-river-chamber-tec",
       "ics_path": null,
       "warnings": [
-        "tec_rest request failed: 502 Server Error: Bad Gateway for url: https://eagleriver.org/wp-json/tribe/events/v1/events?start_date=2026-11-20&end_date=2027-03-20&per_page=50&page=5"
+        "tec_rest request failed: 504 Server Error: Gateway Timeout for url: https://eagleriver.org/wp-json/tribe/events/v1/events?start_date=2026-11-20&end_date=2027-03-20&per_page=50&page=1"
       ],
       "notes": []
     },
@@ -944,7 +944,7 @@
       "end_utc": null,
       "location": "Pine Lawn Cemetery to Remember and Honor our veterans through the laying of",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/1034/",
-      "uid": "sv-504873323903238377",
+      "uid": "sv-5232684455557964797",
       "_source": null
     },
     {
@@ -1804,7 +1804,7 @@
       "end_utc": null,
       "location": "Pine Lawn Cemetery to Remember and Honor our veterans through the laying of",
       "url": "https://manitowishwaters.org/event/wreaths-across-america/1034/",
-      "uid": "sv-504873323903238377",
+      "uid": "sv-5232684455557964797",
       "_source": null
     },
     {
@@ -1832,7 +1832,7 @@
   ],
   "events_preview_count": 78,
   "curated_feeds": {
-    "generated_at": "2026-11-20T04:08:35.319509+00:00",
+    "generated_at": "2026-11-20T07:02:19.628590+00:00",
     "total_feeds": 3,
     "enabled_feeds": 3,
     "feeds": [
